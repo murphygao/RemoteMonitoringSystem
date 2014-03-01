@@ -11,8 +11,6 @@ namespace RMS.Agent.WCF
     [ServiceContract]
     public interface IAgentService
     {
-        [OperationContract]
-        void DoWork();
 
         [OperationContract]
         void AutoUpdate(string type);

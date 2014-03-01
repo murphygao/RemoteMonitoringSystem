@@ -14,9 +14,6 @@ namespace RMS.Agent.WCF
         private BSL.AutoUpate.AutoUpdateService auoUpdateService;
         private BSL.RemoteCommand.RemoteCommandService commandService;
 
-        public void DoWork()
-        {
-        }
 
         public void AutoUpdate(string type)
         {
