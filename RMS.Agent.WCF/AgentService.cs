@@ -11,14 +11,14 @@ namespace RMS.Agent.WCF
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "AgentService" in both code and config file together.
     public class AgentService : IAgentService
     {
-        private BSL.AutoUpate.AutoUpdateService auoUpdateService;
+        private BSL.AutoUpate.AutoUpdateService autoUpdateService;
         private BSL.RemoteCommand.RemoteCommandService commandService;
 
 
         public void AutoUpdate(string type)
         {
-            auoUpdateService = new BSL.AutoUpate.AutoUpdateService();
-            auoUpdateService.Command(type);
+            autoUpdateService = new BSL.AutoUpate.AutoUpdateService();
+            autoUpdateService.Command(type);
 
         }
 

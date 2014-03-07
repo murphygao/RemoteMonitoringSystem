@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RMS.Core.Monitoring")]
+[assembly: AssemblyTitle("RMS.Monitoring.Device.WebCamera")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RMS.Core.Monitoring")]
+[assembly: AssemblyProduct("RMS.Monitoring.Device.WebCamera")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("d36214e1-5b4c-4540-aaae-794b119883e5")]
+[assembly: Guid("6ffaba97-eace-412c-a8fc-d5a225d4acb7")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -42,6 +42,12 @@
     <Compile Include="MonitoringService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RMS.Agent.Entity\RMS.Agent.Entity.csproj">
+      <Project>{f63949c0-3f8d-4508-92c9-980c2db5c15c}</Project>
+      <Name>RMS.Agent.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Management;
-using RMS.Core.Monitoring.DeviceManager;
+﻿using System.Management;
 
-namespace RMS.Core.Monitoring.Device.Printer
+namespace RMS.Monitoring.Device.Printer
 {
     public class Printer : Device
     {
@@ -22,16 +20,16 @@ namespace RMS.Core.Monitoring.Device.Printer
         /// </summary>
         /// <param name="brand"></param>
         /// <param name="model"></param>
-        /// <param name="deviceName">Device's name is shown in Device Manager.</param>
-        /// <param name="deviceID"></param>
+        /// <param name="deviceManagerName">Device's name is shown in Device Manager.</param>
+        /// <param name="deviceManagerID"></param>
         /// <param name="printerName">Printer's name is shown in "Devices and Printers"</param>
         /// <param name="useCOMPort">If using COM-USB adapter, useCOMPort is true;</param>
-        public Printer(string brand, string model, string deviceName, string deviceID, string printerName, bool useCOMPort)
+        public Printer(string brand, string model, string deviceManagerName, string deviceManagerID, string printerName, bool useCOMPort)
         {
             this.brand = brand;
             this.model = model;
-            this.deviceName = deviceName;
-            this.deviceID = deviceID;
+            this.deviceManagerName = deviceManagerName;
+            this.deviceManagerID = deviceManagerID;
             this.printerName = printerName;
             this.useCOMPort = useCOMPort;
         }
@@ -41,17 +39,17 @@ namespace RMS.Core.Monitoring.Device.Printer
         /// </summary>
         /// <param name="brand"></param>
         /// <param name="model"></param>
-        /// <param name="deviceName">Device's name is shown in Device Manager.</param>
-        /// <param name="deviceID"></param>
+        /// <param name="deviceManagerName">Device's name is shown in Device Manager.</param>
+        /// <param name="deviceManagerID"></param>
         /// <param name="printerName">Printer's name is shown in "Devices and Printers"</param>
         /// <param name="useCOMPort">If using COM-USB adapter, useCOMPort is true;</param>
         /// <param name="comPort">COM1, COM2, COM3, COM4, ...</param>
-        public Printer(string brand, string model, string deviceName, string deviceID, string printerName, bool useCOMPort, string comPort)
+        public Printer(string brand, string model, string deviceManagerName, string deviceManagerID, string printerName, bool useCOMPort, string comPort)
         {
             this.brand = brand;
             this.model = model;
-            this.deviceName = deviceName;
-            this.deviceID = deviceID;
+            this.deviceManagerName = deviceManagerName;
+            this.deviceManagerID = deviceManagerID;
             this.printerName = printerName;
             this.useCOMPort = useCOMPort;
             this.comPort = comPort;

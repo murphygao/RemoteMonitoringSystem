@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO.Ports;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace RMS.Core.Monitoring.Device.Printer
+namespace RMS.Monitoring.Device.Printer
 {
     public class WinPOS : Printer
     {
-        public WinPOS(string model, string deviceName, string deviceID, string printerName, bool useCOMPort) : base("WinPOS", model, deviceName, deviceID, printerName, useCOMPort)
+        public WinPOS(string model, string deviceManagerName, string deviceManagerID, string printerName, bool useCOMPort)
+            : base("WinPOS", model, deviceManagerName, deviceManagerID, printerName, useCOMPort)
         {
         }
 
-        public WinPOS(string model, string deviceName, string deviceID, string printerName, bool useCOMPort, string comPort) : base("WinPOS", model, deviceName, deviceID, printerName, useCOMPort, comPort)
+        public WinPOS(string model, string deviceManagerName, string deviceManagerID, string printerName, bool useCOMPort, string comPort)
+            : base("WinPOS", model, deviceManagerName, deviceManagerID, printerName, useCOMPort, comPort)
         {
         }
 

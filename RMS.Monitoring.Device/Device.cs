@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Management;
-using System.Text;
-using System.Threading.Tasks;
-using RMS.Core.Monitoring.DeviceManager;
+using RMS.Monitoring.Device.DeviceManager;
 
-namespace RMS.Core.Monitoring.Device
+namespace RMS.Monitoring.Device
 {
     public class Device
     {
@@ -16,18 +12,18 @@ namespace RMS.Core.Monitoring.Device
         /// <summary>
         /// Device's name is shown in Device Manager. Normally it's the same as printerName, but not for peripheral which is using COM-USB adapter
         /// </summary>
-        public string deviceName;
-        public string deviceID;
+        public string deviceManagerName;
+        public string deviceManagerID;
 
         protected Device()
         {
         }
 
-        protected Device(string brand, string model, string deviceName, string deviceID)
+        protected Device(string brand, string model, string deviceManagerName, string deviceManagerID)
         {
             this.brand = brand;
-            this.deviceID = deviceID;
-            this.deviceName = deviceName;
+            this.deviceManagerName = deviceManagerName;
+            this.deviceManagerID = deviceManagerID;
             this.model = model;
         }
 
@@ -35,12 +31,12 @@ namespace RMS.Core.Monitoring.Device
         {
             try
             {
-                ManagementObject device = DeviceManagerService.GetPnPDeviceByName(deviceName);
+                ManagementObject device = DeviceManagerService.GetPnPDeviceByName(deviceManagerName);
                 if (device != null) return 1;
 
-                if (string.IsNullOrEmpty(deviceID)) return 0;
+                if (string.IsNullOrEmpty(deviceManagerID)) return 0;
 
-                device = DeviceManagerService.GetPnPDeviceByID(deviceID);
+                device = DeviceManagerService.GetPnPDeviceByID(deviceManagerID);
                 if (device != null) return 1;
 
                 return 0;

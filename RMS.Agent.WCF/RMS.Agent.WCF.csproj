@@ -68,9 +68,12 @@
       <Name>RMS.Agent.BSL.RemoteCommand</Name>
     </ProjectReference>
     <ProjectReference Include="..\RMS.Agent.Entity\RMS.Agent.Entity.csproj">
-      <Project>{F63949C0-3F8D-4508-92C9-980C2DB5C15C}</Project>
+      <Project>{f63949c0-3f8d-4508-92c9-980c2db5c15c}</Project>
       <Name>RMS.Agent.Entity</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
