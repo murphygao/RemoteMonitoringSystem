@@ -1,0 +1,64 @@
+/*
+ * It is advised not to edit the smartadmin_production.css
+ * as this will override any changes you make in the 
+ * later versions of this theme. 
+ * 
+ * We advise that you use use this CSS to override 
+ * SmartAdmin styles. 
+ * 
+ * Rename the stylesheet to whatever your liking so it will stay
+ * unique to you with each update of SmartAdmin.
+ */
+
+/*
+ * INDEX
+ * 
+ * - HTML
+ * - BODY
+ * - CUSTOM STYLES
+ */
+
+.bg-color-grayLight {
+    background-color: #f5f5f5 !important;
+}
+
+.padding-15 {
+    padding: 15px !important;
+}
+
+.dt-kiosk-info {
+    overflow: inherit !important;
+    white-space: normal !important;
+    vertical-align: middle;
+}
+
+.td-device-status {
+    background-color: #f9f9f9 !important;
+    border-bottom: 3px solid #fff !important;
+    border-top: 0px !important;
+    padding: 5px 5px 4px 5px !important;
+}
+
+.td-device-status-name {
+    background-color: #ffffff !important;
+    border-bottom: 3px solid #fff !important;
+    border-top: 0px !important;
+    text-align: right;
+    padding-right: 20px!important;
+    font-weight: bold;
+    padding: 5px 5px 4px 5px !important;
+}
+
+.table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
+    background-color: #ecf3f8!important;
+}
+.td-hidden-row {
+    line-height: 0!important;
+    visibility: collapse;
+}
+
+.device-severity-status {
+    display: inline-block;
+    min-width: 80px;
+    line-height: inherit!important;
+}
