@@ -16,7 +16,7 @@ namespace RMS.Centralize.WebService
     public class ActionProfileService : IActionProfileService
     {
 
-        public SearchResult Search(JQueryDataTableParamModel param, string txtActionProfile, string txtEmail, string txtSms)
+        public ActionProfileResult Search(JQueryDataTableParamModel param, string txtActionProfile, string txtEmail, string txtSms)
         {
 
             List<RmsActionProfile> listRmsActionProfile = new List<RmsActionProfile>();
@@ -81,9 +81,10 @@ namespace RMS.Centralize.WebService
 
                     listRmsActionProfile = new List<RmsActionProfile>(listOfType.ToList());
 
-                    SearchResult sr = new SearchResult
+                    ActionProfileResult sr = new ActionProfileResult
                     {
-                        ListActionProfile = listRmsActionProfile, 
+                        IsSuccess = true,
+                        ListActionProfiles = listRmsActionProfile, 
                         TotalRecords = (int) parameters[7].Value
                     };
                     return sr;
@@ -93,21 +94,142 @@ namespace RMS.Centralize.WebService
             catch (Exception ex)
             {
 
-                throw ex;
+                return new ActionProfileResult
+                {
+                    IsSuccess = false
+                };
             }
 
         }
 
-        public void Delete()
+        public Result Delete(int? actionProfileID)
         {
+            if (actionProfileID == null) throw new ArgumentNullException("actionProfileID");
+
+            string ret;
+
+            try
+            {
+                using (var db = new MyDbContext())
+                {
+                    var actionProfile = db.RmsActionProfiles.Create();
+                    actionProfile.ActionProfileId = actionProfileID.Value;
+                    db.RmsActionProfiles.Attach(actionProfile);
+                    db.RmsActionProfiles.Remove(actionProfile);
+                    db.SaveChanges();
+
+                    return new Result {IsSuccess = true};
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Result { IsSuccess = false };
+            }
+
         }
 
-        public void Get()
+        public ActionProfileResult Get(int? id)
         {
+            if (id == null) throw new ArgumentNullException("ActionProfileID");
+
+            try
+            {
+                using (var db = new MyDbContext())
+                {
+                    db.Configuration.ProxyCreationEnabled = false;
+                    db.Configuration.LazyLoadingEnabled = false;
+                   
+                    RmsActionProfile actionProfile = db.RmsActionProfiles.Find(id);
+
+                    var sr = new ActionProfileResult
+                    {
+                        IsSuccess = true,
+                        ActionProfile = actionProfile,
+                    };
+                    return sr;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                var sr = new ActionProfileResult
+                {
+                    IsSuccess = false
+                };
+                return sr;
+            }
         }
 
-        public void Update()
+        public Result Update(int? id, string m, string ActionProfileName, string Email, string SMS, bool ActiveList)
         {
+            if (string.IsNullOrEmpty(ActionProfileName)) throw new ArgumentNullException("ActionProfileName");
+
+            if (m == "e" && id == null) throw new ArgumentNullException("id");
+
+            if (string.IsNullOrEmpty(m))
+            {
+                try
+                {
+                    using (var db = new MyDbContext())
+                    {
+                        var actionProfile = db.RmsActionProfiles.Create();
+                        actionProfile.ActionProfileName = ActionProfileName;
+                        actionProfile.Email = Email;
+                        actionProfile.Sms = SMS;
+                        actionProfile.ActiveList = ActiveList;
+                        db.RmsActionProfiles.Add(actionProfile);
+
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new Result
+                    {
+                        IsSuccess = false,
+                        ErrorMessage = ex.Message
+                    };
+                }
+            }
+            else if (m == "e")
+            {
+                try
+                {
+                    using (var db = new MyDbContext())
+                    {
+                        var actionProfile = db.RmsActionProfiles.Find(id);
+                        actionProfile.ActionProfileName = ActionProfileName;
+                        actionProfile.Email = Email;
+                        actionProfile.Sms = SMS;
+                        actionProfile.ActiveList = ActiveList;
+
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new Result
+                    {
+                        IsSuccess = false,
+                        ErrorMessage = ex.Message
+                    };
+
+                }
+            }
+            else
+            {
+                return new Result
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "Missing Parameter"
+                };
+
+            }
+
+            return new Result
+            {
+                IsSuccess = true
+            };
         }
     }
 }

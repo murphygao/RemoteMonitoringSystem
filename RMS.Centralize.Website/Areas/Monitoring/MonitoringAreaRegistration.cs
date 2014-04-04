@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Bootstrap.Areas.Monitoring
+namespace RMS.Centralize.Website.Areas.Monitoring
 {
     public class MonitoringAreaRegistration : AreaRegistration 
     {

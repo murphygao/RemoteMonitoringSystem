@@ -273,7 +273,7 @@
                     aoData.push({ "name": "txtActionProfile", "value": $('#txtActionProfile').val() });
                     aoData.push({ "name": "txtEmail", "value": $('#txtEmail').val() });
                     aoData.push({ "name": "txtSms", "value": $('#txtSms').val() });
-                    //Pace.restart();
+                    Pace.restart();
                     $.ajax({
                         "type": "GET",
                         "dataType": 'json',
@@ -498,7 +498,7 @@
             params["m"] = 'e';
             params["id1"] = id;
 
-            post_to_url("actionedit.aspx", params, null);
+            post_to_url("ActionEdit.aspx", params, null);
         }
 
     </script>

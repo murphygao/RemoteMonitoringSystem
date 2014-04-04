@@ -48,6 +48,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Centralize.Website", "R
 		{55DE9DC6-2ABA-4F31-A456-E0DE6873763C} = {55DE9DC6-2ABA-4F31-A456-E0DE6873763C}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Centralize.WebSite.Proxy", "RMS.Centralize.WebSite.Proxy\RMS.Centralize.WebSite.Proxy.csproj", "{499DE468-4E59-4C42-91E2-F2A0070131B0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{55DE9DC6-2ABA-4F31-A456-E0DE6873763C} = {55DE9DC6-2ABA-4F31-A456-E0DE6873763C}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -130,6 +135,10 @@ Global
 		{BD2326EF-D0F7-450E-8285-D360485246DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD2326EF-D0F7-450E-8285-D360485246DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD2326EF-D0F7-450E-8285-D360485246DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{499DE468-4E59-4C42-91E2-F2A0070131B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{499DE468-4E59-4C42-91E2-F2A0070131B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{499DE468-4E59-4C42-91E2-F2A0070131B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{499DE468-4E59-4C42-91E2-F2A0070131B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

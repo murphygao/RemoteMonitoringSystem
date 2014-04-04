@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="78de801d-85f6-4a38-8d95-ea9d3e77b5a6" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost/RMS.Centralize.WebService/ActionProfileService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ActionProfileService.wsdl" MetadataType="Wsdl" ID="fc7214ae-a198-4d5b-a53b-142c54500a34" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/ActionProfileService.svc?wsdl" />
+    <MetadataFile FileName="ActionProfileService.xsd" MetadataType="Schema" ID="0f378610-0a4e-4cda-82c7-130d2c8831cc" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/ActionProfileService.svc?xsd=xsd3" />
+    <MetadataFile FileName="ActionProfileService1.xsd" MetadataType="Schema" ID="88c4335e-11e5-48fd-9caf-9b4b21c8055e" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/ActionProfileService.svc?xsd=xsd1" />
+    <MetadataFile FileName="ActionProfileService.disco" MetadataType="Disco" ID="16d88551-a28e-45cf-a30a-884c1825ebf6" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/ActionProfileService.svc?disco" />
+    <MetadataFile FileName="ActionProfileService2.xsd" MetadataType="Schema" ID="161232f6-4372-4ef7-892c-bd0dbd8514a6" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/ActionProfileService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ActionProfileService3.xsd" MetadataType="Schema" ID="1479f4cd-aed1-4d45-93ec-fa8bc0e53ecb" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/ActionProfileService.svc?xsd=xsd4" />
+    <MetadataFile FileName="ActionProfileService4.xsd" MetadataType="Schema" ID="3abcbde8-d815-4cf9-9e91-de33f5e88fbb" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/ActionProfileService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

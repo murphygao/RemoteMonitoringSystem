@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.ServiceModel;
-using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
-using RMS.Centralize.Website.ActionProfileProxy;
-using JQueryDataTableParamModel = RMS.Centralize.Website.ActionProfileProxy.JQueryDataTableParamModel;
+using RMS.Centralize.WebSite.Proxy;
+using RMS.Centralize.WebSite.Proxy.ActionProfileProxy;
 
-namespace Bootstrap.Areas.Monitoring.Controllers
+namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 {
     public class ActionProfileController : Controller
     {
@@ -27,8 +22,8 @@ namespace Bootstrap.Areas.Monitoring.Controllers
             var sortDirection = Request["sSortDir_0"]; // asc or desc
             param.iSortColumn = (Request["mDataProp_" + sortColumnIndex] + "_" + sortDirection).ToLower();
 
-            ActionProfileServiceClient apClient = new ActionProfileServiceClient();
-            apClient.Endpoint.Address = new EndpointAddress("http://localhost/RMS.Centralize.WebService/ActionProfileService.svc");
+            var apClient = new RMS.Centralize.WebSite.Proxy.ActionProfileService().actionProfileService;
+
             var searchResult = apClient.Search(param, txtActionProfile, txtEmail, txtSms);
 
             int? totalRecords = 0;
@@ -39,13 +34,112 @@ namespace Bootstrap.Areas.Monitoring.Controllers
                 sEcho = param.sEcho,
                 iTotalRecords = totalRecords,
                 iTotalDisplayRecords = totalRecords,
-                aaData = searchResult.ListActionProfile
+                aaData = searchResult.ListActionProfiles
             };
 
             return Json(data, JsonRequestBehavior.AllowGet); ;
         }
 
+        // GET: /Monitoring/ActionProfile/DeleteActionProfile/
+        public ActionResult DeleteActionProfile(int? ActionProfileID)
+        {
 
+            if (ActionProfileID == null) throw new ArgumentNullException("ActionProfileID");
+
+            string ret;
+
+            try
+            {
+                var apClient = new RMS.Centralize.WebSite.Proxy.ActionProfileService().actionProfileService;
+
+                var result = apClient.Delete(ActionProfileID);
+
+                if (result.IsSuccess)
+                {
+                    ret = "1";
+                }
+                else
+                {
+                    ret = "0";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ret = "0";
+            }
+
+
+
+            return Json(ret); ;
+        }
+
+        // GET: /Monitoring/ActionProfile/GetActionProfile/
+        public ActionResult GetActionProfile(int? id)
+        {
+            if (id == null) throw new ArgumentNullException("ActionProfileID");
+
+            try
+            {
+                var apClient = new RMS.Centralize.WebSite.Proxy.ActionProfileService().actionProfileService;
+
+                var result = apClient.Get(id);
+
+
+                    var ret = new
+                    {
+                        status = (result.IsSuccess) ? 1 : 0,
+                        ActionProfileID = result.ActionProfile.ActionProfileId,
+                        ActionProfileName = result.ActionProfile.ActionProfileName,
+                        data = JsonConvert.SerializeObject(result.ActionProfile, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })
+                    };
+                    return Json(ret);
+
+            }
+            catch (Exception ex)
+            {
+                var ret = new
+                {
+                    status = -1,
+                    error = ex.Message
+                };
+                return Json(ret);
+            }
+
+        }
+
+        // GET: /Monitoring/ActionProfile/UpdateActionProfile/
+        public ActionResult UpdateActionProfile(int? id, string m, string ActionProfileName, string Email, string SMS, bool ActiveList)
+        {
+
+            if (string.IsNullOrEmpty(ActionProfileName)) throw new ArgumentNullException("ActionProfileName");
+
+            if (m == "e" && id == null) throw new ArgumentNullException("id");
+
+            try
+            {
+                var apClient = new ActionProfileService().actionProfileService;
+                var result = apClient.Update(id, m, ActionProfileName, Email, SMS, ActiveList);
+
+                var ret = new
+                {
+                    status = (result.IsSuccess) ? 1 : 0,
+                    error = (result.IsSuccess) ? "" : result.ErrorMessage
+                };
+
+                return Json(ret);
+
+            }
+            catch (Exception ex)
+            {
+                var ret = new
+                {
+                    status = 0,
+                    error = ex.Message
+                };
+                return Json(ret);
+            }
+        }
 
     }
 }

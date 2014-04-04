@@ -14,25 +14,28 @@ namespace RMS.Centralize.WebService
     public interface IActionProfileService
     {
         [OperationContract]
-        SearchResult Search(JQueryDataTableParamModel param, string txtActionProfile, string txtEmail, string txtSms);
+        ActionProfileResult Search(JQueryDataTableParamModel param, string txtActionProfile, string txtEmail, string txtSms);
 
         [OperationContract]
-        void Delete();
+        Result Delete(int? actionProfileID);
 
         [OperationContract]
-        void Get();
+        ActionProfileResult Get(int? id);
 
         [OperationContract]
-        void Update();
+        Result Update(int? id, string m, string ActionProfileName, string Email, string SMS, bool ActiveList);
     }
 
     // Use a data contract as illustrated in the sample below to add composite types to service operations.
     [DataContract]
-    public class SearchResult
+    public class ActionProfileResult : Result
     {
 
         [DataMember]
-        public List<RmsActionProfile> ListActionProfile { get; set; }
+        public List<RmsActionProfile> ListActionProfiles { get; set; }
+
+        [DataMember]
+        public RmsActionProfile ActionProfile { get; set; }
 
         [DataMember]
         public int TotalRecords { get; set; }
