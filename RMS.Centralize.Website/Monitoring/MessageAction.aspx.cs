@@ -2,12 +2,11 @@
 
 namespace RMS.Centralize.Website.Monitoring
 {
-    public partial class ActionEdit : System.Web.UI.Page
+    public partial class MessageAction : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-        
-        }
 
+        }
     }
 }

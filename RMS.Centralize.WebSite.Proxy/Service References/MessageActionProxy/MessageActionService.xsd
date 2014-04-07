@@ -10,7 +10,7 @@
   <xs:element name="InitDataForMeesageActionResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="InitDataForMeesageActionResult" nillable="true" type="q1:InitialResult" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="InitDataForMeesageActionResult" nillable="true" type="q1:InitMessageActionResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -20,7 +20,7 @@
         <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" minOccurs="0" name="param" nillable="true" type="q2:JQueryDataTableParamModel" />
         <xs:element minOccurs="0" name="messageGroupID" nillable="true" type="xs:int" />
         <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="activeStatus" type="xs:boolean" />
+        <xs:element minOccurs="0" name="activeStatus" nillable="true" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -34,7 +34,7 @@
   <xs:element name="Delete">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="actionProfileID" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="id" nillable="true" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -53,7 +53,7 @@
   <xs:element name="InitDataForMeesageEditResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="InitDataForMeesageEditResult" nillable="true" type="q5:InitialResult" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="InitDataForMeesageEditResult" nillable="true" type="q5:InitMessageActionResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

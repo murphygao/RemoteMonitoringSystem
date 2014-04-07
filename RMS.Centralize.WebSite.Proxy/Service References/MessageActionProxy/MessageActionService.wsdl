@@ -6,6 +6,7 @@
       <xsd:import schemaLocation="http://localhost/RMS.Centralize.WebService/MessageActionService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost/RMS.Centralize.WebService/MessageActionService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" />
       <xsd:import schemaLocation="http://localhost/RMS.Centralize.WebService/MessageActionService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" />
+      <xsd:import schemaLocation="http://localhost/RMS.Centralize.WebService/MessageActionService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IMessageActionService_InitDataForMeesageAction_InputMessage">

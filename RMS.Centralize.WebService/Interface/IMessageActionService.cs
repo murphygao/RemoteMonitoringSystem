@@ -16,13 +16,13 @@ namespace RMS.Centralize.WebService
         #region Page: MessageAction
 
         [OperationContract]
-        InitialResult InitDataForMeesageAction();
+        InitMessageActionResult InitDataForMeesageAction();
 
         [OperationContract]
-        MessageActionResult Search(JQueryDataTableParamModel param, int? messageGroupID, string message, bool activeStatus);
+        MessageActionResult Search(JQueryDataTableParamModel param, int? messageGroupID, string message, bool? activeStatus);
 
         [OperationContract]
-        Result Delete(int? actionProfileID);
+        Result Delete(int? id);
 
         #endregion
 
@@ -31,7 +31,7 @@ namespace RMS.Centralize.WebService
 
 
         [OperationContract]
-        InitialResult InitDataForMeesageEdit();
+        InitMessageActionResult InitDataForMeesageEdit();
 
         [OperationContract]
         MessageActionResult Get(int? id);
@@ -52,7 +52,7 @@ namespace RMS.Centralize.WebService
         public List<RmsMessageAction> ListMessageActions { get; set; }
 
         [DataMember]
-        public RmsMessageAction MessageAction { get; set; }
+        public RmsMessage Message { get; set; }
 
         [DataMember]
         public int TotalRecords { get; set; }
@@ -60,7 +60,7 @@ namespace RMS.Centralize.WebService
 
 
     [DataContract]
-    public class InitialResult : Result
+    public class InitMessageActionResult : Result
     {
         [DataMember]
         public string MessageGroup { get; set; }

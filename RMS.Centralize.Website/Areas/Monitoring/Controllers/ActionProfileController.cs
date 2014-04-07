@@ -22,22 +22,38 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             var sortDirection = Request["sSortDir_0"]; // asc or desc
             param.iSortColumn = (Request["mDataProp_" + sortColumnIndex] + "_" + sortDirection).ToLower();
 
-            var apClient = new RMS.Centralize.WebSite.Proxy.ActionProfileService().actionProfileService;
-
-            var searchResult = apClient.Search(param, txtActionProfile, txtEmail, txtSms);
-
-            int? totalRecords = 0;
-            totalRecords = searchResult.TotalRecords;
-
-            var data = new
+            try
             {
-                sEcho = param.sEcho,
-                iTotalRecords = totalRecords,
-                iTotalDisplayRecords = totalRecords,
-                aaData = searchResult.ListActionProfiles
-            };
+                var apClient = new ActionProfileService().actionProfileService;
 
-            return Json(data, JsonRequestBehavior.AllowGet); ;
+                var searchResult = apClient.Search(param, txtActionProfile, txtEmail, txtSms);
+
+                int? totalRecords = 0;
+                totalRecords = searchResult.TotalRecords;
+
+                var data = new
+                {
+                    sEcho = param.sEcho,
+                    iTotalRecords = totalRecords,
+                    iTotalDisplayRecords = totalRecords,
+                    aaData = searchResult.ListActionProfiles,
+                    isSuccess = searchResult.IsSuccess,
+                    errorMessage = searchResult.ErrorMessage
+                };
+
+                return Json(data, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+                var data = new
+                {
+                    isSuccess = false,
+                    errorMessage = ex.Message
+                };
+
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
         }
 
         // GET: /Monitoring/ActionProfile/DeleteActionProfile/
@@ -54,14 +70,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
                 var result = apClient.Delete(ActionProfileID);
 
-                if (result.IsSuccess)
-                {
-                    ret = "1";
-                }
-                else
-                {
-                    ret = "0";
-                }
+                ret = result.IsSuccess ? "1" : "0";
 
             }
             catch (Exception ex)
@@ -71,7 +80,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
 
 
-            return Json(ret); ;
+            return Json(ret);
         }
 
         // GET: /Monitoring/ActionProfile/GetActionProfile/

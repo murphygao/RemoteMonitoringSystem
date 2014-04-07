@@ -146,6 +146,8 @@
     <Content Include="js\plugin\datatables\media\js\TableTools.min.js.gz" />
     <Content Include="js\plugin\slickgrid\slick.editors.js--" />
     <Content Include="Monitoring\ActionEdit.aspx" />
+    <Content Include="Monitoring\MessageAction.aspx" />
+    <Content Include="Monitoring\MessageEdit.aspx" />
     <Content Include="Scripts\jquery-2.1.0.min.map" />
     <Content Include="sound\bigbox.ogg" />
     <Content Include="sound\messagebox.ogg" />
@@ -922,11 +924,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Monitoring\Controllers\ActionProfileController.cs" />
+    <Compile Include="Areas\Monitoring\Controllers\MessageActionController.cs" />
     <Compile Include="Areas\Monitoring\MonitoringAreaRegistration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\JQueryDataTableParamModel.cs" />
     <Compile Include="Monitoring\ActionEdit.aspx.cs">
       <DependentUpon>ActionEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -941,6 +943,20 @@
     <Compile Include="Monitoring\ActionList.aspx.designer.cs">
       <DependentUpon>ActionList.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Monitoring\MessageAction.aspx.cs">
+      <DependentUpon>MessageAction.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\MessageAction.aspx.designer.cs">
+      <DependentUpon>MessageAction.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\MessageEdit.aspx.cs">
+      <DependentUpon>MessageEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\MessageEdit.aspx.designer.cs">
+      <DependentUpon>MessageEdit.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SmartAdmin.Master.cs">
       <DependentUpon>SmartAdmin.Master</DependentUpon>
@@ -953,7 +969,9 @@
   <ItemGroup>
     <Folder Include="Areas\Monitoring\Models\" />
     <Folder Include="Areas\Monitoring\Views\ActionProfile\" />
+    <Folder Include="Areas\Monitoring\Views\MessageAction\" />
     <Folder Include="Areas\Monitoring\Views\Shared\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

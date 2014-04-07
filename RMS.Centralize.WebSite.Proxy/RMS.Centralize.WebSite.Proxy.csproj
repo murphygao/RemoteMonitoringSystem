@@ -96,7 +96,10 @@
     <None Include="Service References\MessageActionProxy\MessageActionService3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MessageActionProxy\RMS.Centralize.WebSite.Proxy.MessageActionProxy.InitialResult.datasource">
+    <None Include="Service References\MessageActionProxy\MessageActionService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MessageActionProxy\RMS.Centralize.WebSite.Proxy.MessageActionProxy.InitMessageActionResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\MessageActionProxy\RMS.Centralize.WebSite.Proxy.MessageActionProxy.MessageActionResult.datasource">

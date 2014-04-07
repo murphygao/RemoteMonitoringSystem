@@ -166,10 +166,10 @@
                     <a href="#"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i><span class="menu-item-parent">Remote Monitoring</span></a>
                     <ul>
                         <li>
-                            <a href="<%= HttpContext.Current.Request.ApplicationPath %>/Reports/MonitoringReport.aspx">Monitoring Report</a>
+                            <a href="<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/MonitoringReport.aspx">Monitoring Report</a>
                         </li>
                         <li>
-                            <a href="<%= HttpContext.Current.Request.ApplicationPath %>/Setup/MessageAction.aspx">Message Action</a>
+                            <a href="<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/MessageAction.aspx">Message Action</a>
                         </li>
                         <li>
                             <a href="<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/ActionList.aspx">Action Profile</a>

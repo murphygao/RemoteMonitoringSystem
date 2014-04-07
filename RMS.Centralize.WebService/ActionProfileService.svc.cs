@@ -96,7 +96,8 @@ namespace RMS.Centralize.WebService
 
                 return new ActionProfileResult
                 {
-                    IsSuccess = false
+                    IsSuccess = false,
+                    ErrorMessage = ex.Message
                 };
             }
 
@@ -105,8 +106,6 @@ namespace RMS.Centralize.WebService
         public Result Delete(int? actionProfileID)
         {
             if (actionProfileID == null) throw new ArgumentNullException("actionProfileID");
-
-            string ret;
 
             try
             {
@@ -154,7 +153,8 @@ namespace RMS.Centralize.WebService
             {
                 var sr = new ActionProfileResult
                 {
-                    IsSuccess = false
+                    IsSuccess = false,
+                    ErrorMessage = ex.Message
                 };
                 return sr;
             }

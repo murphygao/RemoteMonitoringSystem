@@ -18,7 +18,7 @@ namespace RMS.Centralize.WebSite.Proxy.MessageActionProxy {
     [System.Runtime.Serialization.DataContractAttribute(Name="Result", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model")]
     [System.SerializableAttribute()]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Centralize.WebSite.Proxy.MessageActionProxy.MessageActionResult))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Centralize.WebSite.Proxy.MessageActionProxy.InitialResult))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Centralize.WebSite.Proxy.MessageActionProxy.InitMessageActionResult))]
     public partial class Result : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -102,7 +102,7 @@ namespace RMS.Centralize.WebSite.Proxy.MessageActionProxy {
         private RMS.Centralize.WebSite.Proxy.MessageActionProxy.RmsMessageAction[] ListMessageActionsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private RMS.Centralize.WebSite.Proxy.MessageActionProxy.RmsMessageAction MessageActionField;
+        private RMS.Centralize.WebSite.Proxy.MessageActionProxy.RmsMessage MessageField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int TotalRecordsField;
@@ -121,14 +121,14 @@ namespace RMS.Centralize.WebSite.Proxy.MessageActionProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public RMS.Centralize.WebSite.Proxy.MessageActionProxy.RmsMessageAction MessageAction {
+        public RMS.Centralize.WebSite.Proxy.MessageActionProxy.RmsMessage Message {
             get {
-                return this.MessageActionField;
+                return this.MessageField;
             }
             set {
-                if ((object.ReferenceEquals(this.MessageActionField, value) != true)) {
-                    this.MessageActionField = value;
-                    this.RaisePropertyChanged("MessageAction");
+                if ((object.ReferenceEquals(this.MessageField, value) != true)) {
+                    this.MessageField = value;
+                    this.RaisePropertyChanged("Message");
                 }
             }
         }
@@ -149,9 +149,9 @@ namespace RMS.Centralize.WebSite.Proxy.MessageActionProxy {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="InitialResult", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="InitMessageActionResult", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService")]
     [System.SerializableAttribute()]
-    public partial class InitialResult : RMS.Centralize.WebSite.Proxy.MessageActionProxy.Result {
+    public partial class InitMessageActionResult : RMS.Centralize.WebSite.Proxy.MessageActionProxy.Result {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string MessageGroupField;
@@ -182,6 +182,210 @@ namespace RMS.Centralize.WebSite.Proxy.MessageActionProxy {
                     this.SeverityLevelField = value;
                     this.RaisePropertyChanged("SeverityLevel");
                 }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RmsMessage", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL")]
+    [System.SerializableAttribute()]
+    public partial class RmsMessage : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private int MessageIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> MessageGroupIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MessageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> SeverityLevelIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> ReadOnlyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> ActiveListField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> ActiveStatusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> CreatedDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CreatedByField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> UpdatedDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UpdatedByField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int MessageId {
+            get {
+                return this.MessageIdField;
+            }
+            set {
+                if ((this.MessageIdField.Equals(value) != true)) {
+                    this.MessageIdField = value;
+                    this.RaisePropertyChanged("MessageId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+        public System.Nullable<int> MessageGroupId {
+            get {
+                return this.MessageGroupIdField;
+            }
+            set {
+                if ((this.MessageGroupIdField.Equals(value) != true)) {
+                    this.MessageGroupIdField = value;
+                    this.RaisePropertyChanged("MessageGroupId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+        public string Message {
+            get {
+                return this.MessageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MessageField, value) != true)) {
+                    this.MessageField = value;
+                    this.RaisePropertyChanged("Message");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+        public System.Nullable<int> SeverityLevelId {
+            get {
+                return this.SeverityLevelIdField;
+            }
+            set {
+                if ((this.SeverityLevelIdField.Equals(value) != true)) {
+                    this.SeverityLevelIdField = value;
+                    this.RaisePropertyChanged("SeverityLevelId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+        public System.Nullable<bool> ReadOnly {
+            get {
+                return this.ReadOnlyField;
+            }
+            set {
+                if ((this.ReadOnlyField.Equals(value) != true)) {
+                    this.ReadOnlyField = value;
+                    this.RaisePropertyChanged("ReadOnly");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+        public System.Nullable<bool> ActiveList {
+            get {
+                return this.ActiveListField;
+            }
+            set {
+                if ((this.ActiveListField.Equals(value) != true)) {
+                    this.ActiveListField = value;
+                    this.RaisePropertyChanged("ActiveList");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+        public System.Nullable<bool> ActiveStatus {
+            get {
+                return this.ActiveStatusField;
+            }
+            set {
+                if ((this.ActiveStatusField.Equals(value) != true)) {
+                    this.ActiveStatusField = value;
+                    this.RaisePropertyChanged("ActiveStatus");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+        public System.Nullable<System.DateTime> CreatedDate {
+            get {
+                return this.CreatedDateField;
+            }
+            set {
+                if ((this.CreatedDateField.Equals(value) != true)) {
+                    this.CreatedDateField = value;
+                    this.RaisePropertyChanged("CreatedDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+        public string CreatedBy {
+            get {
+                return this.CreatedByField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CreatedByField, value) != true)) {
+                    this.CreatedByField = value;
+                    this.RaisePropertyChanged("CreatedBy");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+        public System.Nullable<System.DateTime> UpdatedDate {
+            get {
+                return this.UpdatedDateField;
+            }
+            set {
+                if ((this.UpdatedDateField.Equals(value) != true)) {
+                    this.UpdatedDateField = value;
+                    this.RaisePropertyChanged("UpdatedDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+        public string UpdatedBy {
+            get {
+                return this.UpdatedByField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UpdatedByField, value) != true)) {
+                    this.UpdatedByField = value;
+                    this.RaisePropertyChanged("UpdatedBy");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
     }
@@ -553,28 +757,28 @@ namespace RMS.Centralize.WebSite.Proxy.MessageActionProxy {
     public interface IMessageActionService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageActionService/InitDataForMeesageAction", ReplyAction="http://tempuri.org/IMessageActionService/InitDataForMeesageActionResponse")]
-        RMS.Centralize.WebSite.Proxy.MessageActionProxy.InitialResult InitDataForMeesageAction();
+        RMS.Centralize.WebSite.Proxy.MessageActionProxy.InitMessageActionResult InitDataForMeesageAction();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageActionService/InitDataForMeesageAction", ReplyAction="http://tempuri.org/IMessageActionService/InitDataForMeesageActionResponse")]
-        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MessageActionProxy.InitialResult> InitDataForMeesageActionAsync();
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MessageActionProxy.InitMessageActionResult> InitDataForMeesageActionAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageActionService/Search", ReplyAction="http://tempuri.org/IMessageActionService/SearchResponse")]
-        RMS.Centralize.WebSite.Proxy.MessageActionProxy.MessageActionResult Search(RMS.Centralize.WebSite.Proxy.MessageActionProxy.JQueryDataTableParamModel param, System.Nullable<int> messageGroupID, string message, bool activeStatus);
+        RMS.Centralize.WebSite.Proxy.MessageActionProxy.MessageActionResult Search(RMS.Centralize.WebSite.Proxy.MessageActionProxy.JQueryDataTableParamModel param, System.Nullable<int> messageGroupID, string message, System.Nullable<bool> activeStatus);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageActionService/Search", ReplyAction="http://tempuri.org/IMessageActionService/SearchResponse")]
-        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MessageActionProxy.MessageActionResult> SearchAsync(RMS.Centralize.WebSite.Proxy.MessageActionProxy.JQueryDataTableParamModel param, System.Nullable<int> messageGroupID, string message, bool activeStatus);
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MessageActionProxy.MessageActionResult> SearchAsync(RMS.Centralize.WebSite.Proxy.MessageActionProxy.JQueryDataTableParamModel param, System.Nullable<int> messageGroupID, string message, System.Nullable<bool> activeStatus);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageActionService/Delete", ReplyAction="http://tempuri.org/IMessageActionService/DeleteResponse")]
-        RMS.Centralize.WebSite.Proxy.MessageActionProxy.Result Delete(System.Nullable<int> actionProfileID);
+        RMS.Centralize.WebSite.Proxy.MessageActionProxy.Result Delete(System.Nullable<int> id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageActionService/Delete", ReplyAction="http://tempuri.org/IMessageActionService/DeleteResponse")]
-        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MessageActionProxy.Result> DeleteAsync(System.Nullable<int> actionProfileID);
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MessageActionProxy.Result> DeleteAsync(System.Nullable<int> id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageActionService/InitDataForMeesageEdit", ReplyAction="http://tempuri.org/IMessageActionService/InitDataForMeesageEditResponse")]
-        RMS.Centralize.WebSite.Proxy.MessageActionProxy.InitialResult InitDataForMeesageEdit();
+        RMS.Centralize.WebSite.Proxy.MessageActionProxy.InitMessageActionResult InitDataForMeesageEdit();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageActionService/InitDataForMeesageEdit", ReplyAction="http://tempuri.org/IMessageActionService/InitDataForMeesageEditResponse")]
-        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MessageActionProxy.InitialResult> InitDataForMeesageEditAsync();
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MessageActionProxy.InitMessageActionResult> InitDataForMeesageEditAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageActionService/Get", ReplyAction="http://tempuri.org/IMessageActionService/GetResponse")]
         RMS.Centralize.WebSite.Proxy.MessageActionProxy.MessageActionResult Get(System.Nullable<int> id);
@@ -616,35 +820,35 @@ namespace RMS.Centralize.WebSite.Proxy.MessageActionProxy {
                 base(binding, remoteAddress) {
         }
         
-        public RMS.Centralize.WebSite.Proxy.MessageActionProxy.InitialResult InitDataForMeesageAction() {
+        public RMS.Centralize.WebSite.Proxy.MessageActionProxy.InitMessageActionResult InitDataForMeesageAction() {
             return base.Channel.InitDataForMeesageAction();
         }
         
-        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MessageActionProxy.InitialResult> InitDataForMeesageActionAsync() {
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MessageActionProxy.InitMessageActionResult> InitDataForMeesageActionAsync() {
             return base.Channel.InitDataForMeesageActionAsync();
         }
         
-        public RMS.Centralize.WebSite.Proxy.MessageActionProxy.MessageActionResult Search(RMS.Centralize.WebSite.Proxy.MessageActionProxy.JQueryDataTableParamModel param, System.Nullable<int> messageGroupID, string message, bool activeStatus) {
+        public RMS.Centralize.WebSite.Proxy.MessageActionProxy.MessageActionResult Search(RMS.Centralize.WebSite.Proxy.MessageActionProxy.JQueryDataTableParamModel param, System.Nullable<int> messageGroupID, string message, System.Nullable<bool> activeStatus) {
             return base.Channel.Search(param, messageGroupID, message, activeStatus);
         }
         
-        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MessageActionProxy.MessageActionResult> SearchAsync(RMS.Centralize.WebSite.Proxy.MessageActionProxy.JQueryDataTableParamModel param, System.Nullable<int> messageGroupID, string message, bool activeStatus) {
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MessageActionProxy.MessageActionResult> SearchAsync(RMS.Centralize.WebSite.Proxy.MessageActionProxy.JQueryDataTableParamModel param, System.Nullable<int> messageGroupID, string message, System.Nullable<bool> activeStatus) {
             return base.Channel.SearchAsync(param, messageGroupID, message, activeStatus);
         }
         
-        public RMS.Centralize.WebSite.Proxy.MessageActionProxy.Result Delete(System.Nullable<int> actionProfileID) {
-            return base.Channel.Delete(actionProfileID);
+        public RMS.Centralize.WebSite.Proxy.MessageActionProxy.Result Delete(System.Nullable<int> id) {
+            return base.Channel.Delete(id);
         }
         
-        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MessageActionProxy.Result> DeleteAsync(System.Nullable<int> actionProfileID) {
-            return base.Channel.DeleteAsync(actionProfileID);
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MessageActionProxy.Result> DeleteAsync(System.Nullable<int> id) {
+            return base.Channel.DeleteAsync(id);
         }
         
-        public RMS.Centralize.WebSite.Proxy.MessageActionProxy.InitialResult InitDataForMeesageEdit() {
+        public RMS.Centralize.WebSite.Proxy.MessageActionProxy.InitMessageActionResult InitDataForMeesageEdit() {
             return base.Channel.InitDataForMeesageEdit();
         }
         
-        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MessageActionProxy.InitialResult> InitDataForMeesageEditAsync() {
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MessageActionProxy.InitMessageActionResult> InitDataForMeesageEditAsync() {
             return base.Channel.InitDataForMeesageEditAsync();
         }
         

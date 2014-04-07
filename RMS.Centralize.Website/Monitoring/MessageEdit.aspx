@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SmartAdmin.Master" AutoEventWireup="true" CodeBehind="ActionEdit.aspx.cs" Inherits="RMS.Centralize.Website.Monitoring.ActionEdit" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SmartAdmin.Master" AutoEventWireup="true" CodeBehind="MessageEdit.aspx.cs" Inherits="RMS.Centralize.Website.Monitoring.MessageEdit" %>
 <%@ Import Namespace="System.Web.Optimization" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -13,7 +13,7 @@
                     <i class="fa fa-bar-chart-o fa-fw "></i>
                     Remote Monitoring
 							<span>> 
-								Action Profile
+								Message Action
                             </span>
                     <span>> 
 								Setup
@@ -68,7 +68,7 @@
 								-->
                         <header>
                             <span class="widget-icon"><i class="fa fa-edit"></i></span>
-                            <h2>Action Profile Setup</h2>
+                            <h2>Message Setup</h2>
 
                         </header>
 
@@ -86,15 +86,29 @@
                             <!-- widget content -->
                             <div class="widget-body no-padding">
 
-                                <form id="smartForm" class="smart-form" method="post">
+                                <form id="smartForm" class="smart-form" runat="server" method="post">
 
                                     <fieldset>
 
                                         <div class="row">
                                             <section class="col col-8">
-                                                <label class="label">Action Profile Name</label>
+                                                <label class="label">Message Group</label>
+                                                <label class="select">
+                                                    <select id="ddlMessageGroupID" class="input-sm">
+                                                    </select>
+                                                    <i></i>
+                                                </label>
+                                                <div class="note">
+                                                    <strong>Required Field</strong>
+                                                </div>
+                                            </section>
+                                        </div>
+
+                                        <div class="row">
+                                            <section class="col col-8">
+                                                <label class="label">Message</label>
                                                 <label class="input">
-                                                    <input type="text" name="txtActionProfileName" class="input-sm">
+                                                    <input type="text" id="txtMessage" class="input-sm">
                                                 </label>
                                                 <div class="note">
                                                     <strong>Required Field</strong>
@@ -105,46 +119,46 @@
 
                                         <div class="row">
                                             <section class="col col-8">
-                                                <label class="label">Email</label>
-                                                <label class="textarea">
-                                                    <textarea rows="5" name="txtEmail" class="custom-scroll" placeholder="user@sample.com; it@sample.com; vendor@sample.com"></textarea>
+                                                <label class="label">Default Severity Level</label>
+                                                <label class="select">
+                                                    <select id="ddlSeverityLevelID" class="input-sm">
+                                                    </select>
+                                                    <i></i>
                                                 </label>
                                                 <div class="note">
-                                                    <strong>Maxlength</strong> is 500 characters.
+                                                    <strong>Required Field</strong>
                                                 </div>
+
                                             </section>
                                         </div>
 
-                                        <div class="row">
-                                            <section class="col col-8">
-                                                <label class="label">SMS</label>
-                                                <label class="textarea">
-                                                    <textarea rows="5" name="txtSMS" class="custom-scroll" placeholder="0811111111; 0812222222; 0813333333"></textarea>
-                                                </label>
-                                                <div class="note">
-                                                    <strong>Maxlength</strong> is 500 characters.
-                                                </div>
-                                            </section>
-                                        </div>
 
                                         <div class="row">
-                                            <section class="col col-2">
+                                            <section class="col col-4">
                                                 <label class="toggle">
-                                                    <input type="checkbox" name="cbxActiveList">
+                                                    <input type="checkbox" id="cbxActiveList" checked="checked">
                                                     <i data-swchon-text="ON" data-swchoff-text="OFF"></i>Active List</label>
                                             </section>
                                         </div>
 
 
+                                        <div class="row">
+                                            <section class="col col-4">
+                                                <label class="toggle">
+                                                    <input type="checkbox" id="cbxActiveStatus" checked="checked">
+                                                    <i data-swchon-text="ON" data-swchoff-text="OFF"></i>Active Status</label>
+                                            </section>
+                                        </div>
+
                                     </fieldset>
 
                                     <footer>
                                         <button type="submit" class="btn btn-primary" style="float: left;" ID="btnSubmit" onclick="update();">Submit</button>
-                                        <button type="button" class="btn btn-default" style="float: left;" onclick="window.location='ActionList.aspx';">
+                                        <button type="button" class="btn btn-default" style="float: left;" onclick="window.location='MessageAction.aspx';">
                                             Back
                                         </button>
-                                        <input type="hidden" name="id1" />
-                                        <input type="hidden" name="m" />
+                                        <input type="hidden" id="id1" />
+                                        <input type="hidden" id="m" />
 
                                     </footer>
                                 </form>
@@ -180,10 +194,11 @@
     <script type="text/javascript">
 
         // DO NOT REMOVE : GLOBAL FUNCTIONS!
+        initialData();
 
         $(document).ready(function () {
 
-            var fullPath = "<%=HttpContext.Current.Request.Url.AbsolutePath.Substring(0, HttpContext.Current.Request.Url.AbsolutePath.LastIndexOf("/"))%>/ActionList.aspx";
+            var fullPath = "<%=HttpContext.Current.Request.Url.AbsolutePath.Substring(0, HttpContext.Current.Request.Url.AbsolutePath.LastIndexOf("/"))%>/MessageAction.aspx";
             if (!$('nav li:has(a[href="' + fullPath + '"])').hasClass("active")) {
 
                 $('nav').find('li.active:first').removeClass('active');
@@ -205,24 +220,23 @@
 
 
             pageSetUp();
-            drawBreadCrumb();
 
             // PAGE RELATED SCRIPTS
 
             var $checkoutForm = $('#smartForm').validate({
                 // Rules for form validation
-                rules : {
+                rules: {
                     txtActionProfileName: {
                         required: true
                     }
                 },
-                messages : {
-                    txtActionProfileName: {
+                messages: {
+                    fname: {
                         required: 'Please enter action profile name'
                     }
                 },
 
-                errorPlacement : function (error, element) {
+                errorPlacement: function (error, element) {
                     error.insertAfter(element.parent());
                 }
 
@@ -230,32 +244,33 @@
 
             if ("<%=Request["m"]%>" == "e" && "<%=Request["id1"]%>" != "") {
 
-                var actionProfileId = '<%=Request["id1"]%>';
                 Pace.restart();
                 $.ajax({
                     "type": "POST",
                     "dataType": 'json',
                     "contentType": "application/json; charset=utf-8",
-                    "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/ActionProfile/GetActionProfile/",
-                    "data": "{'id' : " + actionProfileId + "}",
+                    "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/MessageAction/GetMessage/",
+                    "data": "{'id' : " + <%=Request["id1"]%> + "}",
                     "success": function (ret) {
 
                         if (ret.status == "1") {
 
                             var myData = JSON.parse(ret.data);
 
-                            $('input[name="txtActionProfileName"]').val(myData.ActionProfileName);
+                            $('#ddlMessageGroupID').val(myData.MessageGroupId);
+                            $('#txtMessage').val(myData.Message);
+                            $('#ddlSeverityLevelID').val(myData.SeverityLevelId);
+
 
                             $('textarea[name="txtEmail"]').val(myData.Email);
                             $('textarea[name="txtSMS"]').val(myData.Sms);
 
-                            if (myData.ActiveList)
-                                $('input[name="cbxActiveList"]').attr('checked', true);
-                            else
-                                $('input[name="cbxActiveList"]').attr('checked', false);
+                            $('#cbxActiveList').attr('checked', myData.ActiveList);
+                            $('#cbxActiveStatus').attr('checked', myData.ActiveStatus);
 
-                            $('input[name="id1"]').val(myData.ActionProfileId);
-                            $('input[name="m"]').val("e");
+                            $('#id1').val(myData.MessageId);
+                            $('#m').val("e");
+
 
                         } else if (ret.status == "-1") {
 
@@ -269,7 +284,7 @@
 
                         } else if (ret.status == "0") {
                             $.smallBox({
-                                title: "Get Action Profile Failed",
+                                title: "Get Object Failed",
                                 content: "<i class='fa fa-clock-o'></i> <i>Failed to complete this operation.</i>",
                                 color: "#C46A69",
                                 iconSmall: "fa fa-times fa-2x fadeInRight animated",
@@ -285,27 +300,43 @@
             }
         });
 
-        function update() {
-
-            event.preventDefault();
-
-            if (!$('#smartForm').valid()) return;
-
-            tmpObj = function () {
-                this.id = $('input[name="id1"]').val();
-                this.m = $('input[name="m"]').val();
-                this.ActionProfileName = $('input[name="txtActionProfileName"]').val();
-                this.Email = $('textarea[name="txtEmail"]').val();
-                this.SMS = $('textarea[name="txtSMS"]').val();
-                this.ActiveList = $('input[name="cbxActiveList"]').is(':checked');
-            };
-            var updObj = new tmpObj();
-            Pace.restart();
+        function initialData() {
             $.ajax({
                 "type": "POST",
                 "dataType": 'json',
                 "contentType": "application/json; charset=utf-8",
-                "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/ActionProfile/UpdateActionProfile/",
+                "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/MessageAction/InitDataForMeesageEdit/",
+                "success": function (data) {
+                    $('#ddlMessageGroupID').append(unescape(data.messageGroup));
+                    $('#ddlSeverityLevelID').append(unescape(data.severityLevel));
+                },
+
+            });
+        }
+
+        function update() {
+
+            event.preventDefault();
+
+            tmpObj = function () {
+
+                this.id = $('#id1').val();
+                this.m = $('#m').val();
+                this.messageGroupID = $('#ddlMessageGroupID').val();
+                this.message = $('#txtMessage').val();
+                this.severityLevelID = $('#ddlSeverityLevelID').val();
+                this.ReadOnly = false;
+                this.activeList = $('#cbxActiveList').is(':checked');
+                this.activeStatus = $('#cbxActiveStatus').is(':checked');
+            };
+            var updObj = new tmpObj();
+            Pace.restart();
+
+            $.ajax({
+                "type": "POST",
+                "dataType": 'json',
+                "contentType": "application/json; charset=utf-8",
+                "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/MessageAction/UpdateMessage/",
                 "data": JSON.stringify(updObj),
                 "success": function (ret) {
 
@@ -319,7 +350,7 @@
                         });
 
                         setTimeout(function () {
-                            window.location.href = 'ActionList.aspx';
+                            window.location.href = 'MessageAction.aspx';
                         }, 1000);
 
                     } else if (ret.status == "-1") {
@@ -348,7 +379,8 @@
             });
         }
 
-
     </script>
+
+
 
 </asp:Content>

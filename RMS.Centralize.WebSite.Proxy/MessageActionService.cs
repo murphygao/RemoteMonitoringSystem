@@ -47,8 +47,9 @@ namespace RMS.Centralize.WebSite.Proxy
                 _messsageActionService = new MessageActionServiceClient();
                 Initialize(urlWebService);
             }
-            catch
+            catch (Exception ex)
             {
+                string m  = ex.Message;
                 _messsageActionService = null;
             }
         }
