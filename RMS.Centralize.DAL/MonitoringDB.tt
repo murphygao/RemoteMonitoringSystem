@@ -59,8 +59,8 @@
     //  Example:    TableFilterExclude = new Regex(".*auto.*");
     //              TableFilterInclude = new Regex("(.*_FR_.*)|(data_.*)");
     //              TableFilterInclude = new Regex("^table_name1$|^table_name2$|etc");
-    TableFilterExclude = null;
-    TableFilterInclude = null;
+    TableFilterExclude =  null;
+    TableFilterInclude =  new Regex(".*RMS.*");
 
 
     // WCF ********************************************************************************************************************************

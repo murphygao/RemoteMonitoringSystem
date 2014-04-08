@@ -7,7 +7,7 @@
 // 
 //     Configuration file:     "RMS.Centralize.DAL\App.config"
 //     Connection String Name: "MyDbContext"
-//     Connection String:      "Data Source=(local);Initial Catalog=DEV_Monitoring;Integrated Security=True;Application Name=MyApp"
+//     Connection String:      "Data Source=(local);Initial Catalog=DEV_Monitoring;User ID=sa;PWD=password;;Application Name=MyApp"
 
 // ReSharper disable RedundantUsingDirective
 // ReSharper disable DoNotCallOverridableMethodsInConstructor
@@ -45,7 +45,6 @@ namespace RMS.Centralize.DAL
         IDbSet<RmsReportMonitoringRaw> RmsReportMonitoringRaws { get; set; } // RMS_Report_MonitoringRaw
         IDbSet<RmsReportSummaryMonitoring> RmsReportSummaryMonitorings { get; set; } // RMS_Report_SummaryMonitoring
         IDbSet<RmsSeverityLevel> RmsSeverityLevels { get; set; } // RMS_SeverityLevel
-        IDbSet<Sysdiagram> Sysdiagrams { get; set; } // sysdiagrams
 
         int SaveChanges();
     }
@@ -69,7 +68,6 @@ namespace RMS.Centralize.DAL
         public IDbSet<RmsReportMonitoringRaw> RmsReportMonitoringRaws { get; set; } // RMS_Report_MonitoringRaw
         public IDbSet<RmsReportSummaryMonitoring> RmsReportSummaryMonitorings { get; set; } // RMS_Report_SummaryMonitoring
         public IDbSet<RmsSeverityLevel> RmsSeverityLevels { get; set; } // RMS_SeverityLevel
-        public IDbSet<Sysdiagram> Sysdiagrams { get; set; } // sysdiagrams
 
         static ReverseDbContext()
         {
@@ -111,7 +109,6 @@ namespace RMS.Centralize.DAL
             modelBuilder.Configurations.Add(new RmsReportMonitoringRawConfiguration());
             modelBuilder.Configurations.Add(new RmsReportSummaryMonitoringConfiguration());
             modelBuilder.Configurations.Add(new RmsSeverityLevelConfiguration());
-            modelBuilder.Configurations.Add(new SysdiagramConfiguration());
         OnModelCreatingPartial(modelBuilder);
         }
 
@@ -132,7 +129,6 @@ namespace RMS.Centralize.DAL
             modelBuilder.Configurations.Add(new RmsReportMonitoringRawConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsReportSummaryMonitoringConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsSeverityLevelConfiguration(schema));
-            modelBuilder.Configurations.Add(new SysdiagramConfiguration(schema));
             return modelBuilder;
         }
 
@@ -650,6 +646,9 @@ namespace RMS.Centralize.DAL
         public string MessageRemark { get; set; } // MessageRemark
 
         [DataMember(Order = 9, IsRequired = false)]
+        public int? MonitoringProfileDeviceId { get; set; } // MonitoringProfileDeviceID
+
+        [DataMember(Order = 10, IsRequired = false)]
         public DateTime? CreatedDate { get; set; } // CreatedDate
 
     }
@@ -707,18 +706,21 @@ namespace RMS.Centralize.DAL
         public string MessageRemark { get; set; } // MessageRemark
 
         [DataMember(Order = 17, IsRequired = false)]
-        public DateTime? EventDateTime { get; set; } // EventDateTime
+        public int? MonitoringProfileDeviceId { get; set; } // MonitoringProfileDeviceID
 
         [DataMember(Order = 18, IsRequired = false)]
-        public DateTime? CreatedDate { get; set; } // CreatedDate
+        public DateTime? EventDateTime { get; set; } // EventDateTime
 
         [DataMember(Order = 19, IsRequired = false)]
-        public string CreatedBy { get; set; } // CreatedBy
+        public DateTime? CreatedDate { get; set; } // CreatedDate
 
         [DataMember(Order = 20, IsRequired = false)]
-        public DateTime? UpdatedDate { get; set; } // UpdatedDate
+        public string CreatedBy { get; set; } // CreatedBy
 
         [DataMember(Order = 21, IsRequired = false)]
+        public DateTime? UpdatedDate { get; set; } // UpdatedDate
+
+        [DataMember(Order = 22, IsRequired = false)]
         public string UpdatedBy { get; set; } // UpdatedBy
 
     }
@@ -777,27 +779,6 @@ namespace RMS.Centralize.DAL
             InitializePartial();
         }
         partial void InitializePartial();
-    }
-
-    // sysdiagrams
-    [DataContract]
-    public partial class Sysdiagram
-    {
-        [DataMember(Order = 1, IsRequired = true)]
-        public string Name { get; set; } // name
-
-        [DataMember(Order = 2, IsRequired = true)]
-        public int PrincipalId { get; set; } // principal_id
-
-        [DataMember(Order = 3, IsRequired = true)]
-        public int DiagramId { get; set; } // diagram_id (Primary key)
-
-        [DataMember(Order = 4, IsRequired = false)]
-        public int? Version { get; set; } // version
-
-        [DataMember(Order = 5, IsRequired = false)]
-        public byte[] Definition { get; set; } // definition
-
     }
 
 
@@ -1091,7 +1072,7 @@ namespace RMS.Centralize.DAL
             ToTable(schema + ".RMS_Report_MonitoringRaw");
             HasKey(x => x.Id);
 
-            Property(x => x.Id).HasColumnName("ID").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            Property(x => x.Id).HasColumnName("ID").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(x => x.ClientCode).HasColumnName("ClientCode").IsOptional().HasMaxLength(50);
             Property(x => x.ClientIpAddress).HasColumnName("ClientIPAddress").IsOptional().HasMaxLength(50);
             Property(x => x.DeviceCode).HasColumnName("DeviceCode").IsOptional().HasMaxLength(20);
@@ -1099,6 +1080,7 @@ namespace RMS.Centralize.DAL
             Property(x => x.Message).HasColumnName("Message").IsOptional().HasMaxLength(50);
             Property(x => x.MessageDateTime).HasColumnName("MessageDateTime").IsOptional();
             Property(x => x.MessageRemark).HasColumnName("MessageRemark").IsOptional().HasMaxLength(500);
+            Property(x => x.MonitoringProfileDeviceId).HasColumnName("MonitoringProfileDeviceID").IsOptional();
             Property(x => x.CreatedDate).HasColumnName("CreatedDate").IsOptional();
             InitializePartial();
         }
@@ -1129,6 +1111,7 @@ namespace RMS.Centralize.DAL
             Property(x => x.Status).HasColumnName("Status").IsOptional();
             Property(x => x.MessageDateTime).HasColumnName("MessageDateTime").IsOptional();
             Property(x => x.MessageRemark).HasColumnName("MessageRemark").IsOptional().HasMaxLength(500);
+            Property(x => x.MonitoringProfileDeviceId).HasColumnName("MonitoringProfileDeviceID").IsOptional();
             Property(x => x.EventDateTime).HasColumnName("EventDateTime").IsOptional();
             Property(x => x.CreatedDate).HasColumnName("CreatedDate").IsOptional();
             Property(x => x.CreatedBy).HasColumnName("CreatedBy").IsOptional().HasMaxLength(50);
@@ -1162,24 +1145,6 @@ namespace RMS.Centralize.DAL
             // Foreign keys
             HasOptional(a => a.RmsActionProfile).WithMany(b => b.RmsSeverityLevels).HasForeignKey(c => c.DefaultActionProfileId); // FK_RMS_SeverityLevel_RMS_ActionProfile
             HasOptional(a => a.RmsColorLabel).WithMany(b => b.RmsSeverityLevels).HasForeignKey(c => c.ColorCode); // FK_RMS_SeverityLevel_RMS_ColorLabel
-            InitializePartial();
-        }
-        partial void InitializePartial();
-    }
-
-    // sysdiagrams
-    internal partial class SysdiagramConfiguration : EntityTypeConfiguration<Sysdiagram>
-    {
-        public SysdiagramConfiguration(string schema = "dbo")
-        {
-            ToTable(schema + ".sysdiagrams");
-            HasKey(x => x.DiagramId);
-
-            Property(x => x.Name).HasColumnName("name").IsRequired().HasMaxLength(128);
-            Property(x => x.PrincipalId).HasColumnName("principal_id").IsRequired();
-            Property(x => x.DiagramId).HasColumnName("diagram_id").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            Property(x => x.Version).HasColumnName("version").IsOptional();
-            Property(x => x.Definition).HasColumnName("definition").IsOptional();
             InitializePartial();
         }
         partial void InitializePartial();

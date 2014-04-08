@@ -98,21 +98,32 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ActionProfileService.svc" />
+    <Content Include="ClientService.svc" />
     <Content Include="MessageActionService.svc" />
+    <Content Include="MonitoringService.svc" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionProfileService.svc.cs">
       <DependentUpon>ActionProfileService.svc</DependentUpon>
     </Compile>
+    <Compile Include="ClientService.svc.cs">
+      <DependentUpon>ClientService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Interface\IMonitoringService.cs" />
+    <Compile Include="Interface\IClientService.cs" />
     <Compile Include="Interface\IMessageActionService.cs" />
     <Compile Include="Interface\IActionProfileService.cs" />
     <Compile Include="MessageActionService.svc.cs">
       <DependentUpon>MessageActionService.svc</DependentUpon>
     </Compile>
     <Compile Include="Model\JQueryDataTableParamModel.cs" />
+    <Compile Include="Model\MainAppClient.cs" />
     <Compile Include="Model\Result.cs" />
     <Compile Include="Model\RmsMessageAction.cs" />
+    <Compile Include="MonitoringService.svc.cs">
+      <DependentUpon>MonitoringService.svc</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

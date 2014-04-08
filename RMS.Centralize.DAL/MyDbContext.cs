@@ -22,13 +22,15 @@ namespace RMS.Centralize.DAL
                     {
                         var _now = DateTime.Now;
 
-                        ts.UpdatedDate = _now;
+
                         if (item.State == EntityState.Added)
                         {
                             ts.CreatedDate = _now;
+                            ts.UpdatedDate = _now;
                         }
                         else if (item.State == EntityState.Modified)
                         {
+                            ts.UpdatedDate = _now;
                         }
                     }
                 }

@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="RMS.Centralize.WebService.MonitoringService" CodeBehind="MonitoringService.svc.cs" %>

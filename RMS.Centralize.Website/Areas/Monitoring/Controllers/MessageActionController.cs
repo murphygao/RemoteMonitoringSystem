@@ -205,7 +205,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                 var ret = new
                 {
                     status = (result.IsSuccess) ? 1 : 0,
-                    data = JsonConvert.SerializeObject(result.Message, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })
+                    data = JsonConvert.SerializeObject(result.Message)
                 };
                 return Json(ret);
 

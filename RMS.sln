@@ -13,7 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Agent.WCF", "RMS.Agent.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Agent.WPF", "RMS.Agent.WPF\RMS.Agent.WPF.csproj", "{3EA9B913-982F-487B-ABCC-E7FF95C26AB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.ConsoleApplicatoin", "Test.ConsoleApplicatoin\Test.ConsoleApplicatoin.csproj", "{5FAE681A-374F-4889-9B18-0CEFE3890C0E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.ConsoleApplication", "Test.ConsoleApplicatoin\Test.ConsoleApplication.csproj", "{5FAE681A-374F-4889-9B18-0CEFE3890C0E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{55DE9DC6-2ABA-4F31-A456-E0DE6873763C} = {55DE9DC6-2ABA-4F31-A456-E0DE6873763C}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.WindowsApplication", "Test.WindowsApplication\Test.WindowsApplication.csproj", "{C094AFA4-6FB1-46DE-B94B-BF631E9FDD34}"
 EndProject
