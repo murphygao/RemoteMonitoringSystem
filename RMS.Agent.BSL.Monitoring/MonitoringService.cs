@@ -4,29 +4,69 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RMS.Agent.Entity;
+using RMS.Agent.Proxy;
+using RMS.Agent.Proxy.ClientProxy;
+using RMS.Agent.Proxy.MonitoringProxy;
+using RMS.Monitoring.Device.PerformanceCounter;
 
 namespace RMS.Agent.BSL.Monitoring
 {
     public class MonitoringService
     {
-        public void Command(RemoteCommand remoteCommand)
+        private delegate void ExecuteCommandAsync(string clientCode);
+
+        public void Command(string clientCode)
         {
-            ExecuteCommand(remoteCommand);
+            var caller = new ExecuteCommandAsync(ExecuteCommand);
+            caller.BeginInvoke(clientCode, null, null);
         }
 
-        private string ExecuteCommand(Entity.RemoteCommand remoteCommand)
+
+        private void ExecuteCommand(string clientCode)
         {
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-            //startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-            startInfo.RedirectStandardOutput = true;
-            startInfo.UseShellExecute = false;
-            startInfo.CreateNoWindow = true;
-            startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/C " + remoteCommand.CommandLine;
-            process.StartInfo = startInfo;
-            process.Start();
-            return process.StandardOutput.ReadToEnd();
+            /*
+             * 
+             * 1. Call Centralize to Get Client & Device Info for Monitoring 
+             * 2. Send Alive Message
+             * 3. Check Device Monitoring
+             * 
+             */
+
+            // 1. Call Centralize to Get Client & Device Info for Monitoring 
+            RMS.Agent.Proxy.ClientProxy.ClientServiceClient cs = new ClientServiceClient();
+            var clientResult = cs.GetClient(GetClientBy.ClientCode, null, clientCode, null, true);
+
+            int? deviceId = null;
+            int? monitoringProfileDeviceId = null;
+
+            var rmsMonitoringProfileDevices = RMS.Monitoring.Helper.Common.GetRmsMonitoringProfileDevicebyDeviceCode(clientResult, "CLIENT");
+            // for CLIENT code, there are only one rmsMonitoringProfileDevices
+            if (rmsMonitoringProfileDevices.Count > 0)
+                monitoringProfileDeviceId = rmsMonitoringProfileDevices[0].MonitoringProfileDeviceId;
+
+            // 2. Send Alive Message
+            RMS.Agent.Proxy.MonitoringProxy.MonitoringServiceClient mp = new MonitoringServiceClient();
+
+            var rawMessage = new RmsReportMonitoringRaw();
+            rawMessage.ClientCode = clientResult.Client.ClientCode;
+            rawMessage.DeviceCode = "CLIENT";
+
+            rawMessage.Message = "OK";
+            rawMessage.MessageDateTime = DateTime.Now;
+            rawMessage.MonitoringProfileDeviceId = monitoringProfileDeviceId;
+
+            mp.AddMessage(rawMessage);
+
+
+            // 3. Check Device Monitoring
+            mp.AddMessages(CheckPerformance(clientResult));
+        }
+
+
+        private List<RmsReportMonitoringRaw> CheckPerformance(ClientResult clientResult)
+        {
+            var ps = new PerformanceService();
+            return ps.Monitoring(clientResult);
         }
     }
 }

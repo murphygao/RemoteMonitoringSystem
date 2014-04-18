@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using RMS.Agent.Entity;
+using RMS.Agent.WCF.Model;
 
 namespace RMS.Agent.WCF
 {
@@ -19,7 +20,7 @@ namespace RMS.Agent.WCF
         void RemoteCommand(RemoteCommand remoteCommand);
 
         [OperationContract]
-        void Monitoring();
+        Result Monitoring(string clientCode);
     }
 
 }

@@ -47,6 +47,7 @@ namespace RMS.Centralize.WebService
                             throw new Exception("Active Client not found by ClientCode:" + clientCode + ". Please check Monitoring Database");
 
                         client = lClients[0];
+                        clientID = client.ClientId;
 
                     }
                     else if (getClientBy == GetClientBy.IPAddress)
@@ -76,6 +77,7 @@ namespace RMS.Centralize.WebService
                             throw new Exception("Active Client not found by ReferenceClientId:" + clientCode + ". Please check Monitoring Database");
 
                         client = lClients[0];
+                        clientID = client.ClientId;
 
                     }
 

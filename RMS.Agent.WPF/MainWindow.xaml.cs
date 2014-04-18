@@ -21,14 +21,14 @@ namespace RMS.Agent.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        ServiceHost host = null; 
+        ServiceHost host = null;
 
 
         public MainWindow()
         {
             InitializeComponent();
         }
-        
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             btnStart_Click(null, null);
@@ -52,21 +52,18 @@ namespace RMS.Agent.WPF
         {
             try
             {
-                using (host =
-                        new ServiceHost(typeof(RMS.Agent.WCF.AgentService)))
-                {
-                    host.AddServiceEndpoint(typeof(RMS.Agent.WCF.IAgentService),
-                        new BasicHttpBinding(), "http://localhost:8080/agent/basic");
+                host = new ServiceHost(typeof(RMS.Agent.WCF.AgentService));
+                host.AddServiceEndpoint(typeof(RMS.Agent.WCF.IAgentService),
+                    new BasicHttpBinding(), "http://localhost:8080/agent/basic");
 
-                    host.AddServiceEndpoint(typeof(RMS.Agent.WCF.IAgentService),
-                        new WSHttpBinding(), "http://localhost:8080/agent/wsAddress");
+                host.AddServiceEndpoint(typeof(RMS.Agent.WCF.IAgentService),
+                    new WSHttpBinding(), "http://localhost:8080/agent/wsAddress");
 
-                    host.AddServiceEndpoint(typeof(RMS.Agent.WCF.IAgentService),
-                        new NetTcpBinding(), "net.tcp://localhost:8081/AgentNetTcp");
+                host.AddServiceEndpoint(typeof(RMS.Agent.WCF.IAgentService),
+                    new NetTcpBinding(), "net.tcp://localhost:8081/AgentNetTcp");
 
-                    host.Open();
-                    lblStatus.Content = "Start";
-                }
+                host.Open();
+                lblStatus.Content = "Start";
             }
             catch (Exception ex)
             {
@@ -75,7 +72,7 @@ namespace RMS.Agent.WPF
                 MessageBox.Show("Error = " + ex.Message);
                 btnStart.IsEnabled = true;
                 btnStop.IsEnabled = false;
-            } 
+            }
         }
 
         private void StopService()
@@ -83,6 +80,12 @@ namespace RMS.Agent.WPF
             if (host.State == CommunicationState.Opened)
                 host.Close();
             lblStatus.Content = "Stop";
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (host.State == CommunicationState.Opened)
+                host.Close();
         }
     }
 }

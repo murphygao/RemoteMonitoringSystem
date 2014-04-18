@@ -4,7 +4,9 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using RMS.Agent.BSL.Monitoring;
 using RMS.Agent.Entity;
+using RMS.Agent.WCF.Model;
 
 namespace RMS.Agent.WCF
 {
@@ -13,6 +15,7 @@ namespace RMS.Agent.WCF
     {
         private BSL.AutoUpate.AutoUpdateService autoUpdateService;
         private BSL.RemoteCommand.RemoteCommandService commandService;
+        private BSL.Monitoring.MonitoringService monitoringService;
 
 
         public void AutoUpdate(string type)
@@ -28,9 +31,12 @@ namespace RMS.Agent.WCF
             commandService.Command(remoteCommand);
         }
 
-        public void Monitoring()
+        public Result Monitoring(string clientCode)
         {
-            throw new NotImplementedException();
+            monitoringService = new MonitoringService();
+            monitoringService.Command(clientCode);
+
+            return new Result {IsSuccess = true};
         }
     }
 }

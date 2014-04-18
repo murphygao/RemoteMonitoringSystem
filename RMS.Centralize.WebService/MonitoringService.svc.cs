@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using RMS.Centralize.DAL;
+using RMS.Centralize.WebService.BSL;
 
 namespace RMS.Centralize.WebService
 {
@@ -16,15 +17,11 @@ namespace RMS.Centralize.WebService
         {
             try
             {
-                using (var db = new MyDbContext())
-                {
-                    db.RmsReportMonitoringRaws.Add(rawMessage);
-
-                    db.SaveChanges();
-                }
+                var lRawMessages = new List<RmsReportMonitoringRaw>();
+                lRawMessages.Add(rawMessage);
+                AddMessages(lRawMessages);
             }
             catch {}
-
         }
 
         public void AddMessages(List<RmsReportMonitoringRaw> lRawMessages)
@@ -42,8 +39,17 @@ namespace RMS.Centralize.WebService
 
                     db.SaveChanges();
                 }
+
+                var sv = new SummaryService();
+                var caller = new SummaryService.DoSummaryMonitoringAsync(sv.DoSummaryMonitoring);
+                caller.BeginInvoke(lRawMessages, null, null);
             }
             catch { }
+        }
+
+        public void StartMonitoringEngine()
+        {
+            
         }
     }
 }

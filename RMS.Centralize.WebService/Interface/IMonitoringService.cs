@@ -17,5 +17,9 @@ namespace RMS.Centralize.WebService
 
         [OperationContract]
         void AddMessages(List<RmsReportMonitoringRaw> lRawMessages);
+
+        [OperationContract]
+        void StartMonitoringEngine();
+
     }
 }

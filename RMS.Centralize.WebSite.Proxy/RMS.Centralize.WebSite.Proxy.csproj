@@ -42,7 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientService.cs" />
     <Compile Include="MessageActionService.cs" />
+    <Compile Include="MonitoringService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\ActionProfileProxy\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -50,7 +52,17 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="ActionProfileService.cs" />
+    <Compile Include="Service References\ClientProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\MessageActionProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\MonitoringProxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -60,7 +72,9 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\ActionProfileProxy\ActionProfileService.wsdl" />
     <None Include="Service References\ActionProfileProxy\ActionProfileService.xsd">
       <SubType>Designer</SubType>
@@ -81,6 +95,25 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ActionProfileProxy\RMS.Centralize.WebSite.Proxy.ActionProfileProxy.Result.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ClientProxy\ClientService.wsdl" />
+    <None Include="Service References\ClientProxy\ClientService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ClientProxy\ClientService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ClientProxy\ClientService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ClientProxy\ClientService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ClientProxy\ClientService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ClientProxy\RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\MessageActionProxy\MessageActionService.wsdl" />
@@ -108,10 +141,22 @@
     <None Include="Service References\MessageActionProxy\RMS.Centralize.WebSite.Proxy.MessageActionProxy.Result.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\MonitoringProxy\MonitoringService.wsdl" />
+    <None Include="Service References\MonitoringProxy\MonitoringService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MonitoringProxy\MonitoringService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MonitoringProxy\MonitoringService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ActionProfileProxy\" />
+    <WCFMetadataStorage Include="Service References\ClientProxy\" />
     <WCFMetadataStorage Include="Service References\MessageActionProxy\" />
+    <WCFMetadataStorage Include="Service References\MonitoringProxy\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\ActionProfileProxy\ActionProfileService.disco" />
@@ -139,6 +184,36 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\MessageActionProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ClientProxy\ClientService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ClientProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ClientProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ClientProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MonitoringProxy\MonitoringService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MonitoringProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MonitoringProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MonitoringProxy\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

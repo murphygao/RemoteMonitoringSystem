@@ -258,7 +258,7 @@ namespace RMS.Centralize.WebSite.Proxy.ActionProfileProxy {
         private RMS.Centralize.WebSite.Proxy.ActionProfileProxy.RmsActionProfile ActionProfileField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private RMS.Centralize.WebSite.Proxy.ActionProfileProxy.RmsActionProfile[] ListActionProfilesField;
+        private System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.ActionProfileProxy.RmsActionProfile> ListActionProfilesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int TotalRecordsField;
@@ -277,7 +277,7 @@ namespace RMS.Centralize.WebSite.Proxy.ActionProfileProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public RMS.Centralize.WebSite.Proxy.ActionProfileProxy.RmsActionProfile[] ListActionProfiles {
+        public System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.ActionProfileProxy.RmsActionProfile> ListActionProfiles {
             get {
                 return this.ListActionProfilesField;
             }

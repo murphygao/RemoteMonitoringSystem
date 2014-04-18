@@ -32,6 +32,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,6 +48,18 @@
     <ProjectReference Include="..\RMS.Agent.Entity\RMS.Agent.Entity.csproj">
       <Project>{f63949c0-3f8d-4508-92c9-980c2db5c15c}</Project>
       <Name>RMS.Agent.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Agent.Proxy\RMS.Agent.Proxy.csproj">
+      <Project>{34cc6b3a-d552-480a-b3d1-f94a389c1c86}</Project>
+      <Name>RMS.Agent.Proxy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.Device.PerformanceCounter\RMS.Monitoring.Device.PerformanceCounter.csproj">
+      <Project>{12ce7dc2-4306-4299-af08-be3394bdbed8}</Project>
+      <Name>RMS.Monitoring.Device.PerformanceCounter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.Helper\RMS.Monitoring.Helper.csproj">
+      <Project>{6fe058e7-f0da-4450-9d4a-e45c8585f579}</Project>
+      <Name>RMS.Monitoring.Helper</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

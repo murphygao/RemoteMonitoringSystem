@@ -209,7 +209,10 @@ namespace Test.ConsoleApplication.MonitoringProxy {
         void AddMessage(Test.ConsoleApplication.MonitoringProxy.RmsReportMonitoringRaw rawMessage);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/AddMessages", ReplyAction="http://tempuri.org/IMonitoringService/AddMessagesResponse")]
-        void AddMessages(Test.ConsoleApplication.MonitoringProxy.RmsReportMonitoringRaw[] lRawMessages);
+        void AddMessages(System.Collections.Generic.List<Test.ConsoleApplication.MonitoringProxy.RmsReportMonitoringRaw> lRawMessages);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/StartMonitoringEngine", ReplyAction="http://tempuri.org/IMonitoringService/StartMonitoringEngineResponse")]
+        void StartMonitoringEngine();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -243,8 +246,12 @@ namespace Test.ConsoleApplication.MonitoringProxy {
             base.Channel.AddMessage(rawMessage);
         }
         
-        public void AddMessages(Test.ConsoleApplication.MonitoringProxy.RmsReportMonitoringRaw[] lRawMessages) {
+        public void AddMessages(System.Collections.Generic.List<Test.ConsoleApplication.MonitoringProxy.RmsReportMonitoringRaw> lRawMessages) {
             base.Channel.AddMessages(lRawMessages);
+        }
+        
+        public void StartMonitoringEngine() {
+            base.Channel.StartMonitoringEngine();
         }
     }
 }

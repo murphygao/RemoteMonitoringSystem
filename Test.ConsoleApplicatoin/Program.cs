@@ -8,6 +8,7 @@ using System.Management;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
+using RMS.Centralize.BSL.MonitoringEngine;
 using Test.ConsoleApplication.ClientProxy;
 using Test.ConsoleApplication.MonitoringProxy;
 
@@ -38,7 +39,8 @@ namespace Test.ConsoleApplication
                 //PowerSupplyState();
                 //CheckUSBDevice3();
 
-                TestClientProxy();
+                //TestClientProxy();
+                CallMonitoringAgent();
             } while (Console.ReadKey().KeyChar == 'a');
 
 
@@ -247,14 +249,18 @@ namespace Test.ConsoleApplication
                 var rawMessage = new RmsReportMonitoringRaw();
                 rawMessage.ClientCode = clientResult.Client.ClientCode;
                 rawMessage.DeviceCode = clientResult.ListDevices.First(d => d.DeviceId == mpd.DeviceId).DeviceCode;
-                rawMessage.Message = "OK";
+
+                if (mpd.MonitoringProfileDeviceId != 16)
+                    rawMessage.Message = "OK";
+                else
+                    rawMessage.Message = "DEVICE_NOT_READY";
                 rawMessage.MessageDateTime = DateTime.Now;
                 rawMessage.MonitoringProfileDeviceId = mpd.MonitoringProfileDeviceId;
 
                 lRawMessage.Add(rawMessage);
             }
 
-            mp.AddMessages(lRawMessage.ToArray());
+            mp.AddMessages(lRawMessage);
 
         }
 
@@ -298,6 +304,12 @@ namespace Test.ConsoleApplication
             {
                 Console.WriteLine("Monitor is on.");
             }
+        }
+
+        private static void CallMonitoringAgent()
+        {
+            RMS.Centralize.BSL.MonitoringEngine.MonitoringService ms = new MonitoringService();
+            ms.Start();
         }
 
     }

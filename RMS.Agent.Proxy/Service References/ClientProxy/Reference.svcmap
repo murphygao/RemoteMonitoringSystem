@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="33d5a3c0-b873-4367-92b3-04d86921ebfe" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost/RMS.Centralize.WebService/ClientService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ClientService.xsd" MetadataType="Schema" ID="799c2b7c-01aa-44d2-a5a6-4b4e86021bf3" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/ClientService.svc?xsd=xsd1" />
+    <MetadataFile FileName="ClientService1.xsd" MetadataType="Schema" ID="dad19432-45e6-4e81-abe7-fc361e3c1264" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/ClientService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ClientService2.xsd" MetadataType="Schema" ID="d1abfd21-a339-4b80-b912-d809a06bb349" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/ClientService.svc?xsd=xsd3" />
+    <MetadataFile FileName="ClientService3.xsd" MetadataType="Schema" ID="a8a9362a-8900-4d7a-b3b2-2f4c93985621" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/ClientService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ClientService4.xsd" MetadataType="Schema" ID="f979ef9f-09f4-482f-b271-9f41c5456841" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/ClientService.svc?xsd=xsd4" />
+    <MetadataFile FileName="ClientService.disco" MetadataType="Disco" ID="748205fe-0c26-49cb-ab65-cb020aa22c91" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/ClientService.svc?disco" />
+    <MetadataFile FileName="ClientService.wsdl" MetadataType="Wsdl" ID="46ae3d33-9102-486e-b259-5afa4529447d" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/ClientService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

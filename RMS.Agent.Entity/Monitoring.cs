@@ -6,6 +6,9 @@ namespace RMS.Agent.Entity
     public class Monitoring
     {
 
+        [DataMember]
+        public string ClientCode { get; set; }
+
 
     }
 }

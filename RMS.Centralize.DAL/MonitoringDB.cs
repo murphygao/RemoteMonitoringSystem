@@ -511,24 +511,27 @@ namespace RMS.Centralize.DAL
         public int MessageGroupId { get; set; } // MessageGroupID (Primary key)
 
         [DataMember(Order = 2, IsRequired = false)]
-        public string MessageGroupName { get; set; } // MessageGroupName
+        public string MessageGroupCode { get; set; } // MessageGroupCode
 
         [DataMember(Order = 3, IsRequired = false)]
-        public string MessageType { get; set; } // MessageType
+        public string MessageGroupName { get; set; } // MessageGroupName
 
         [DataMember(Order = 4, IsRequired = false)]
-        public bool? ActiveList { get; set; } // ActiveList
+        public string MessageType { get; set; } // MessageType
 
         [DataMember(Order = 5, IsRequired = false)]
-        public DateTime? CreatedDate { get; set; } // CreatedDate
+        public bool? ActiveList { get; set; } // ActiveList
 
         [DataMember(Order = 6, IsRequired = false)]
-        public string CreatedBy { get; set; } // CreatedBy
+        public DateTime? CreatedDate { get; set; } // CreatedDate
 
         [DataMember(Order = 7, IsRequired = false)]
-        public DateTime? UpdatedDate { get; set; } // UpdatedDate
+        public string CreatedBy { get; set; } // CreatedBy
 
         [DataMember(Order = 8, IsRequired = false)]
+        public DateTime? UpdatedDate { get; set; } // UpdatedDate
+
+        [DataMember(Order = 9, IsRequired = false)]
         public string UpdatedBy { get; set; } // UpdatedBy
 
 
@@ -661,7 +664,7 @@ namespace RMS.Centralize.DAL
         public long Id { get; set; } // ID (Primary key)
 
         [DataMember(Order = 2, IsRequired = false)]
-        public int? RawId { get; set; } // RawID
+        public long? RawId { get; set; } // RawID
 
         [DataMember(Order = 3, IsRequired = false)]
         public int? ClientId { get; set; } // ClientID
@@ -1007,6 +1010,7 @@ namespace RMS.Centralize.DAL
             HasKey(x => x.MessageGroupId);
 
             Property(x => x.MessageGroupId).HasColumnName("MessageGroupID").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            Property(x => x.MessageGroupCode).HasColumnName("MessageGroupCode").IsOptional().HasMaxLength(10);
             Property(x => x.MessageGroupName).HasColumnName("MessageGroupName").IsOptional().HasMaxLength(100);
             Property(x => x.MessageType).HasColumnName("MessageType").IsOptional().HasMaxLength(20);
             Property(x => x.ActiveList).HasColumnName("ActiveList").IsOptional();
@@ -1095,7 +1099,7 @@ namespace RMS.Centralize.DAL
             ToTable(schema + ".RMS_Report_SummaryMonitoring");
             HasKey(x => x.Id);
 
-            Property(x => x.Id).HasColumnName("ID").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            Property(x => x.Id).HasColumnName("ID").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(x => x.RawId).HasColumnName("RawID").IsOptional();
             Property(x => x.ClientId).HasColumnName("ClientID").IsOptional();
             Property(x => x.ClientCode).HasColumnName("ClientCode").IsOptional().HasMaxLength(50);

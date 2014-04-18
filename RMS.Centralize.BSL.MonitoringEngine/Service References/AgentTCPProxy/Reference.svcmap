@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="0c09ce77-b8f0-47b1-bc93-886b552a7e43" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="net.tcp://localhost:8081/MyEndpointMex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="ed34ee42-6088-4282-b8ed-b9f9c71a0333" SourceId="1" SourceUrl="net.tcp://localhost:8081/MyEndpointMex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="23da3d1b-90cd-4563-9588-f87695e0232a" SourceId="1" SourceUrl="net.tcp://localhost:8081/MyEndpointMex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="7b767468-6a7a-4423-a392-ac39dd13f1f4" SourceId="1" SourceUrl="net.tcp://localhost:8081/MyEndpointMex" />
+    <MetadataFile FileName="RMS.Agent.Entity.xsd" MetadataType="Schema" ID="117cc2a2-db4e-478c-8343-29e4d7bc5171" SourceId="1" SourceUrl="net.tcp://localhost:8081/MyEndpointMex" />
+    <MetadataFile FileName="RMS.Agent.WCF.Model.xsd" MetadataType="Schema" ID="408274a5-2e54-40ba-90fe-2ff9dfd2d6e1" SourceId="1" SourceUrl="net.tcp://localhost:8081/MyEndpointMex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

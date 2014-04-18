@@ -99,7 +99,7 @@ namespace RMS.Centralize.WebSite.Proxy.MessageActionProxy {
     public partial class MessageActionResult : RMS.Centralize.WebSite.Proxy.MessageActionProxy.Result {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private RMS.Centralize.WebSite.Proxy.MessageActionProxy.RmsMessageAction[] ListMessageActionsField;
+        private System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.MessageActionProxy.RmsMessageAction> ListMessageActionsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private RMS.Centralize.WebSite.Proxy.MessageActionProxy.RmsMessage MessageField;
@@ -108,7 +108,7 @@ namespace RMS.Centralize.WebSite.Proxy.MessageActionProxy {
         private int TotalRecordsField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public RMS.Centralize.WebSite.Proxy.MessageActionProxy.RmsMessageAction[] ListMessageActions {
+        public System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.MessageActionProxy.RmsMessageAction> ListMessageActions {
             get {
                 return this.ListMessageActionsField;
             }
