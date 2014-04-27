@@ -120,6 +120,8 @@ namespace RMS.Centralize.WebService
                                 sr.ListDevices = new List<RmsDevice>(devices);
                             }
                         }
+
+                        sr.ListDeviceType = db.RmsDeviceTypes.ToList();
                     }
 
 

@@ -51,7 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\RmsClientWithIPAddress.cs" />
+    <Compile Include="Model\RmsClientWithIPAddress.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="MonitoringService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\AgentTCPProxy\Reference.cs">
@@ -84,12 +86,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RMS.Centralize.DAL\RMS.Centralize.DAL.csproj">
-      <Project>{9423b0b0-cb3a-4c5a-ab94-ecba517a303f}</Project>
-      <Name>RMS.Centralize.DAL</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <WCFMetadataStorage Include="Service References\AgentTCPProxy\" />
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +99,13 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\RMS.Centralize.DAL\RMS.Centralize.DAL.csproj">
+      <Project>{9423b0b0-cb3a-4c5a-ab94-ecba517a303f}</Project>
+      <Name>RMS.Centralize.DAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

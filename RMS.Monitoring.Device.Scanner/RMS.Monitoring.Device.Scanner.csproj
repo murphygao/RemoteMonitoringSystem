@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -39,7 +40,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Brother.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scanner.cs" />
+    <Compile Include="ScannerService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RMS.Agent.Proxy\RMS.Agent.Proxy.csproj">
+      <Project>{34CC6B3A-D552-480A-B3D1-F94A389C1C86}</Project>
+      <Name>RMS.Agent.Proxy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.Device\RMS.Monitoring.Device.csproj">
+      <Project>{ba999f8e-4f2b-443a-b59a-f8f82c4d9103}</Project>
+      <Name>RMS.Monitoring.Device</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -53,14 +53,17 @@
       <Project>{34cc6b3a-d552-480a-b3d1-f94a389c1c86}</Project>
       <Name>RMS.Agent.Proxy</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RMS.Monitoring.Device.PerformanceCounter\RMS.Monitoring.Device.PerformanceCounter.csproj">
-      <Project>{12ce7dc2-4306-4299-af08-be3394bdbed8}</Project>
-      <Name>RMS.Monitoring.Device.PerformanceCounter</Name>
+    <ProjectReference Include="..\RMS.Monitoring.Core\RMS.Monitoring.Core.csproj">
+      <Project>{1dc3d83b-efb1-4349-a024-3d6e1e07dd58}</Project>
+      <Name>RMS.Monitoring.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\RMS.Monitoring.Helper\RMS.Monitoring.Helper.csproj">
       <Project>{6fe058e7-f0da-4450-9d4a-e45c8585f579}</Project>
       <Name>RMS.Monitoring.Helper</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

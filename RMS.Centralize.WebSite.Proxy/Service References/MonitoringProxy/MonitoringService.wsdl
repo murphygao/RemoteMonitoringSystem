@@ -19,6 +19,12 @@
   <wsdl:message name="IMonitoringService_AddMessages_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddMessagesResponse" />
   </wsdl:message>
+  <wsdl:message name="IMonitoringService_StartMonitoringEngine_InputMessage">
+    <wsdl:part name="parameters" element="tns:StartMonitoringEngine" />
+  </wsdl:message>
+  <wsdl:message name="IMonitoringService_StartMonitoringEngine_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StartMonitoringEngineResponse" />
+  </wsdl:message>
   <wsdl:portType name="IMonitoringService">
     <wsdl:operation name="AddMessage">
       <wsdl:input wsaw:Action="http://tempuri.org/IMonitoringService/AddMessage" message="tns:IMonitoringService_AddMessage_InputMessage" />
@@ -27,6 +33,10 @@
     <wsdl:operation name="AddMessages">
       <wsdl:input wsaw:Action="http://tempuri.org/IMonitoringService/AddMessages" message="tns:IMonitoringService_AddMessages_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMonitoringService/AddMessagesResponse" message="tns:IMonitoringService_AddMessages_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StartMonitoringEngine">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMonitoringService/StartMonitoringEngine" message="tns:IMonitoringService_StartMonitoringEngine_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMonitoringService/StartMonitoringEngineResponse" message="tns:IMonitoringService_StartMonitoringEngine_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IMonitoringService" type="tns:IMonitoringService">
@@ -42,6 +52,15 @@
     </wsdl:operation>
     <wsdl:operation name="AddMessages">
       <soap:operation soapAction="http://tempuri.org/IMonitoringService/AddMessages" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartMonitoringEngine">
+      <soap:operation soapAction="http://tempuri.org/IMonitoringService/StartMonitoringEngine" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

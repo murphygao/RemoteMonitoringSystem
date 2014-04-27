@@ -31,15 +31,42 @@ namespace RMS.Monitoring.Device
         {
             try
             {
-                ManagementObject device = DeviceManagerService.GetPnPDeviceByName(deviceManagerName);
-                if (device != null) return 1;
+                if (string.IsNullOrEmpty(deviceManagerName) && string.IsNullOrEmpty(deviceManagerID)) return -1;
 
-                if (string.IsNullOrEmpty(deviceManagerID)) return 0;
+                if (!string.IsNullOrEmpty(deviceManagerName))
+                {
 
-                device = DeviceManagerService.GetPnPDeviceByID(deviceManagerID);
-                if (device != null) return 1;
+                    ManagementObject device = DeviceManagerService.GetPnPDeviceByName(deviceManagerName);
+                    if (device != null)
+                    {
+                        foreach (PropertyData propertyData in device.Properties)
+                        {
+                            if (propertyData.Name != "ConfigManagerErrorCode") continue;
 
-                return 0;
+                            return Convert.ToInt32(propertyData.Value);
+                        }
+
+                        return 0;
+                    }
+                }
+                if (!string.IsNullOrEmpty(deviceManagerID))
+                {
+
+                    ManagementObject device = DeviceManagerService.GetPnPDeviceByID(deviceManagerID);
+                    if (device != null)
+                    {
+                        foreach (PropertyData propertyData in device.Properties)
+                        {
+                            if (propertyData.Name != "ConfigManagerErrorCode") continue;
+
+                            return Convert.ToInt32(propertyData.Value);
+                        }
+
+                        return 0;
+                    }
+                }
+
+                return -1;
             }
             catch (Exception ex)
             {

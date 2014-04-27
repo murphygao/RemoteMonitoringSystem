@@ -33,6 +33,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,9 +41,47 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MonitoringService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\RMS.Agent.Proxy\RMS.Agent.Proxy.csproj">
+      <Project>{34CC6B3A-D552-480A-B3D1-F94A389C1C86}</Project>
+      <Name>RMS.Agent.Proxy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.Device.PerformanceCounter\RMS.Monitoring.Device.PerformanceCounter.csproj">
+      <Project>{12CE7DC2-4306-4299-AF08-BE3394BDBED8}</Project>
+      <Name>RMS.Monitoring.Device.PerformanceCounter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.Device.Printer\RMS.Monitoring.Device.Printer.csproj">
+      <Project>{173696d8-409d-4348-9270-c1ebfa2d7efe}</Project>
+      <Name>RMS.Monitoring.Device.Printer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.Device.Scanner\RMS.Monitoring.Device.Scanner.csproj">
+      <Project>{dd5f2039-2c76-4089-b843-af59699d262f}</Project>
+      <Name>RMS.Monitoring.Device.Scanner</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.Device.SignaturePad\RMS.Monitoring.Device.SignaturePad.csproj">
+      <Project>{34d65d72-c1a0-4825-93d4-f1a9c568dbfc}</Project>
+      <Name>RMS.Monitoring.Device.SignaturePad</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.Device.SmartCardReader\RMS.Monitoring.Device.SmartCardReader.csproj">
+      <Project>{61fecbba-1f7a-4ff7-972c-8487ca208b0e}</Project>
+      <Name>RMS.Monitoring.Device.SmartCardReader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.Device.WebCamera\RMS.Monitoring.Device.WebCamera.csproj">
+      <Project>{d77923d6-3238-4a20-9993-0c3113acbdd2}</Project>
+      <Name>RMS.Monitoring.Device.WebCamera</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.Device\RMS.Monitoring.Device.csproj">
+      <Project>{BA999F8E-4F2B-443A-B59A-F8F82C4D9103}</Project>
+      <Name>RMS.Monitoring.Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.Helper\RMS.Monitoring.Helper.csproj">
+      <Project>{6fe058e7-f0da-4450-9d4a-e45c8585f579}</Project>
+      <Name>RMS.Monitoring.Helper</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

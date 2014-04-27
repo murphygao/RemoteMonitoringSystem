@@ -121,6 +121,7 @@
     </Compile>
     <Compile Include="Model\JQueryDataTableParamModel.cs" />
     <Compile Include="Model\MainAppClient.cs" />
+    <Compile Include="Model\MessageDetail.cs" />
     <Compile Include="Model\Result.cs" />
     <Compile Include="Model\RmsMessageAction.cs" />
     <Compile Include="MonitoringService.svc.cs">
@@ -141,6 +142,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RMS.Centralize.BSL.MonitoringEngine\RMS.Centralize.BSL.MonitoringEngine.csproj">
+      <Project>{a19cdbe1-0153-4050-9327-ca142fc67b34}</Project>
+      <Name>RMS.Centralize.BSL.MonitoringEngine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RMS.Centralize.DAL\RMS.Centralize.DAL.csproj">
       <Project>{9423b0b0-cb3a-4c5a-ab94-ecba517a303f}</Project>
       <Name>RMS.Centralize.DAL</Name>

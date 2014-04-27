@@ -53,11 +53,12 @@ namespace RMS.Agent.WPF
             try
             {
                 host = new ServiceHost(typeof(RMS.Agent.WCF.AgentService));
-                host.AddServiceEndpoint(typeof(RMS.Agent.WCF.IAgentService),
-                    new BasicHttpBinding(), "http://localhost:8080/agent/basic");
 
-                host.AddServiceEndpoint(typeof(RMS.Agent.WCF.IAgentService),
-                    new WSHttpBinding(), "http://localhost:8080/agent/wsAddress");
+                //host.AddServiceEndpoint(typeof(RMS.Agent.WCF.IAgentService),
+                //    new BasicHttpBinding(), "http://localhost:8080/agent/basic");
+
+                //host.AddServiceEndpoint(typeof(RMS.Agent.WCF.IAgentService),
+                //    new WSHttpBinding(), "http://localhost:8080/agent/wsAddress");
 
                 host.AddServiceEndpoint(typeof(RMS.Agent.WCF.IAgentService),
                     new NetTcpBinding(), "net.tcp://localhost:8081/AgentNetTcp");

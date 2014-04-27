@@ -23,7 +23,7 @@ namespace RMS.Monitoring.Device.PerformanceCounter
 
             #region 1. Check CPU
 
-            var list = Common.GetRmsMonitoringProfileDevicebyDeviceCode(clientResult, "CPU");
+            var list = Common.GetRmsMonitoringProfileDevicebyDeviceCode(clientResult, "CPU", Models.DeviceCode.Performance);
 
             if (list.Count > 0)
             {
@@ -52,7 +52,7 @@ namespace RMS.Monitoring.Device.PerformanceCounter
 
             #region 2. Check RAM
 
-            list = Common.GetRmsMonitoringProfileDevicebyDeviceCode(clientResult, "MEMORY");
+            list = Common.GetRmsMonitoringProfileDevicebyDeviceCode(clientResult, "MEMORY", Models.DeviceCode.Performance);
 
             if (list.Count > 0)
             {
@@ -81,7 +81,7 @@ namespace RMS.Monitoring.Device.PerformanceCounter
 
             #region 3. Check Disk
 
-            list = Common.GetRmsMonitoringProfileDevicebyDeviceCode(clientResult, "DISK");
+            list = Common.GetRmsMonitoringProfileDevicebyDeviceCode(clientResult, "DISK", Models.DeviceCode.Performance);
             foreach (var rmsMonitoringProfileDevice in list)
             {
                 decimal? lowThreshold = rmsMonitoringProfileDevice.LowThreshold;

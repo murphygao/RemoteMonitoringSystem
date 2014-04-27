@@ -25,7 +25,7 @@ namespace RMS.Monitoring.Device.DeviceManager
 
                     // To make the example more simple,
                     string name = device.GetPropertyValue("Name").ToString();
-                    string status = device.GetPropertyValue("Status").ToString();
+                    //string status = device.GetPropertyValue("Status").ToString();
 
                     if (name.ToLower().IndexOf(deviceName.ToLower()) >= 0) return device;
 
@@ -73,8 +73,11 @@ namespace RMS.Monitoring.Device.DeviceManager
 
                     // To make the example more simple,
                     string name = device.GetPropertyValue("Name").ToString();
-                    string status = device.GetPropertyValue("Status").ToString();
+                    //string status = device.GetPropertyValue("Status").ToString();
 
+                    if (name.ToLower().IndexOf(deviceID.ToLower()) >= 0) return device;
+
+                    name = device.GetPropertyValue("DeviceID").ToString();
                     if (name.ToLower().IndexOf(deviceID.ToLower()) >= 0) return device;
 
                     //// Uncomment these lines and use the "select * query" if you 

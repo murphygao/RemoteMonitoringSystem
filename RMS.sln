@@ -57,9 +57,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Centralize.WebSite.Prox
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Centralize.BSL.MonitoringEngine", "RMS.Centralize.BSL.MonitoringEngine\RMS.Centralize.BSL.MonitoringEngine.csproj", "{A19CDBE1-0153-4050-9327-CA142FC67B34}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CA0D0326-631D-4E23-9D00-6B00AB535A8F} = {CA0D0326-631D-4E23-9D00-6B00AB535A8F}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Agent.Proxy", "RMS.Agent.Proxy\RMS.Agent.Proxy.csproj", "{34CC6B3A-D552-480A-B3D1-F94A389C1C86}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -67,6 +64,20 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Agent.Proxy", "RMS.Agen
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Monitoring.Helper", "RMS.Monitoring.Helper\RMS.Monitoring.Helper.csproj", "{6FE058E7-F0DA-4450-9D4A-E45C8585F579}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Monitoring.Device.CardDespenser", "RMS.Monitoring.Device.CardDespenser\RMS.Monitoring.Device.CardDespenser.csproj", "{407DE06D-39AC-4B2A-8486-E84068A2A3F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Monitoring.Device.MonitorDisplay", "RMS.Monitoring.Device.MonitorDisplay\RMS.Monitoring.Device.MonitorDisplay.csproj", "{D1474861-2F1D-4511-98DA-A7FDD03CBA3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Monitoring.Device.ATMCardReader", "RMS.Monitoring.Device.ATMCardReader\RMS.Monitoring.Device.ATMCardReader.csproj", "{330CD943-974E-4190-99F8-B17CA700E082}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Monitoring.Device.UPS", "RMS.Monitoring.Device.UPS\RMS.Monitoring.Device.UPS.csproj", "{05DCBBDB-BB9D-4902-927B-9410D2CD2CB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Monitoring.Device.BarcodeReader", "RMS.Monitoring.Device.BarcodeReader\RMS.Monitoring.Device.BarcodeReader.csproj", "{7361BADC-616D-470F-838E-86C0EB4BD01B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Monitoring.Device.IDCardScanner", "RMS.Monitoring.Device.IDCardScanner\RMS.Monitoring.Device.IDCardScanner.csproj", "{4922E1AD-E255-4537-A2FE-1F55FF172819}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Monitoring.Device.ThermalPrinter", "RMS.Monitoring.Device.ThermalPrinter\RMS.Monitoring.Device.ThermalPrinter.csproj", "{8EA25F3B-8501-4107-A663-60757B6A9503}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -166,6 +177,34 @@ Global
 		{6FE058E7-F0DA-4450-9D4A-E45C8585F579}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FE058E7-F0DA-4450-9D4A-E45C8585F579}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FE058E7-F0DA-4450-9D4A-E45C8585F579}.Release|Any CPU.Build.0 = Release|Any CPU
+		{407DE06D-39AC-4B2A-8486-E84068A2A3F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{407DE06D-39AC-4B2A-8486-E84068A2A3F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{407DE06D-39AC-4B2A-8486-E84068A2A3F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{407DE06D-39AC-4B2A-8486-E84068A2A3F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1474861-2F1D-4511-98DA-A7FDD03CBA3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1474861-2F1D-4511-98DA-A7FDD03CBA3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1474861-2F1D-4511-98DA-A7FDD03CBA3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1474861-2F1D-4511-98DA-A7FDD03CBA3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{330CD943-974E-4190-99F8-B17CA700E082}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{330CD943-974E-4190-99F8-B17CA700E082}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{330CD943-974E-4190-99F8-B17CA700E082}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{330CD943-974E-4190-99F8-B17CA700E082}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05DCBBDB-BB9D-4902-927B-9410D2CD2CB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05DCBBDB-BB9D-4902-927B-9410D2CD2CB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05DCBBDB-BB9D-4902-927B-9410D2CD2CB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05DCBBDB-BB9D-4902-927B-9410D2CD2CB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7361BADC-616D-470F-838E-86C0EB4BD01B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7361BADC-616D-470F-838E-86C0EB4BD01B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7361BADC-616D-470F-838E-86C0EB4BD01B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7361BADC-616D-470F-838E-86C0EB4BD01B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4922E1AD-E255-4537-A2FE-1F55FF172819}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4922E1AD-E255-4537-A2FE-1F55FF172819}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4922E1AD-E255-4537-A2FE-1F55FF172819}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4922E1AD-E255-4537-A2FE-1F55FF172819}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EA25F3B-8501-4107-A663-60757B6A9503}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EA25F3B-8501-4107-A663-60757B6A9503}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EA25F3B-8501-4107-A663-60757B6A9503}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EA25F3B-8501-4107-A663-60757B6A9503}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -187,5 +226,12 @@ Global
 		{34D65D72-C1A0-4825-93D4-F1A9C568DBFC} = {72EA0387-081E-4E8F-A76E-1F2B0C827250}
 		{61FECBBA-1F7A-4FF7-972C-8487CA208B0E} = {72EA0387-081E-4E8F-A76E-1F2B0C827250}
 		{6FE058E7-F0DA-4450-9D4A-E45C8585F579} = {72EA0387-081E-4E8F-A76E-1F2B0C827250}
+		{407DE06D-39AC-4B2A-8486-E84068A2A3F9} = {72EA0387-081E-4E8F-A76E-1F2B0C827250}
+		{D1474861-2F1D-4511-98DA-A7FDD03CBA3E} = {72EA0387-081E-4E8F-A76E-1F2B0C827250}
+		{330CD943-974E-4190-99F8-B17CA700E082} = {72EA0387-081E-4E8F-A76E-1F2B0C827250}
+		{05DCBBDB-BB9D-4902-927B-9410D2CD2CB7} = {72EA0387-081E-4E8F-A76E-1F2B0C827250}
+		{7361BADC-616D-470F-838E-86C0EB4BD01B} = {72EA0387-081E-4E8F-A76E-1F2B0C827250}
+		{4922E1AD-E255-4537-A2FE-1F55FF172819} = {72EA0387-081E-4E8F-A76E-1F2B0C827250}
+		{8EA25F3B-8501-4107-A663-60757B6A9503} = {72EA0387-081E-4E8F-A76E-1F2B0C827250}
 	EndGlobalSection
 EndGlobal

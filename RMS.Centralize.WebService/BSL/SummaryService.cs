@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.ServiceModel.Channels;
 using System.Threading;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using System.Web;
 using RMS.Centralize.DAL;
+using RMS.Centralize.WebService.Model;
 
 namespace RMS.Centralize.WebService.BSL
 {
@@ -64,9 +66,11 @@ namespace RMS.Centralize.WebService.BSL
             int? clientID = null;
             int? locationID = null;
             int? deviceID = null;
+            string deviceDescription = string.Empty;
             int? messageGroupID = null;
             string messageGroupName = string.Empty;
             int? messageID = null;
+            string messageGroupCode = string.Empty;
 
             
             try
@@ -93,29 +97,74 @@ namespace RMS.Centralize.WebService.BSL
                         locationID = lClients[0].LocationId;
                     }
 
-                    var device = db.RmsDevices.FirstOrDefault(d => d.DeviceCode.ToLower() == oDeviceCode.ToLower());
-                    if (device != null)
-                    {
-                        deviceID = device.DeviceId;
-                    }
+                    //var device = db.RmsDevices.FirstOrDefault(d => d.DeviceCode.ToLower() == oDeviceCode.ToLower());
+                    //if (device != null)
+                    //{
+                    //    deviceID = device.DeviceId;
+                    //}
 
-                    var messageGroup = db.RmsMessageGroups.FirstOrDefault(m => m.MessageGroupCode.ToLower() == oMessageGroupCode);
-                    if (messageGroup != null)
-                    {
-                        messageGroupID = messageGroup.MessageGroupId;
-                        messageGroupName = messageGroup.MessageGroupName;
-                    }
+                    //var messageGroup = db.RmsMessageGroups.FirstOrDefault(m => m.MessageGroupCode.ToLower() == oMessageGroupCode);
+                    //if (messageGroup != null)
+                    //{
+                    //    messageGroupID = messageGroup.MessageGroupId;
+                    //    messageGroupName = messageGroup.MessageGroupName;
+                    //}
 
-                    var message = db.RmsMessages.FirstOrDefault(m => m.Message.ToLower() == oMessage);
-                    if (message != null)
-                    {
-                        messageID = message.MessageId;
-                    }
+                    //var message = db.RmsMessages.FirstOrDefault(m => m.Message.ToLower() == oMessage);
+                    //if (message != null)
+                    //{
+                    //    messageID = message.MessageId;
+                    //}
 
                     #endregion
 
-                    foreach (RmsReportMonitoringRaw reportMonitoringRaw in lRaw)
+                    int? lastMonitoringProfileDeviceId = null;
+                    int counterResetToZero = 1;
+
+                    foreach (RmsReportMonitoringRaw reportMonitoringRaw in lRaw.OrderBy(o => o.MonitoringProfileDeviceId))
                     {
+
+                        if (lastMonitoringProfileDeviceId != reportMonitoringRaw.MonitoringProfileDeviceId)
+                        {
+                            counterResetToZero = 1;
+                            lastMonitoringProfileDeviceId = reportMonitoringRaw.MonitoringProfileDeviceId;
+                        }
+
+
+                        SqlParameter[] parameters = new SqlParameter[1];
+                        SqlParameter p1 = new SqlParameter("MonitoringProfileDeviceID", reportMonitoringRaw.MonitoringProfileDeviceId);
+                        parameters[0] = p1;
+
+                        var details = db.Database.SqlQuery<MessageDetail>("RMS_ListMessageGroupByMonitoringProfileDeviceID " +
+                                                                                "@MonitoringProfileDeviceID", parameters);
+                        List<MessageDetail> lMessageDetails = new List<MessageDetail>(details.ToList());
+
+
+                        if (reportMonitoringRaw.Message.ToLower() == "ok")
+                        {
+                            if (lMessageDetails.Count > 0)
+                            {
+                                deviceID = lMessageDetails[0].DeviceID;
+                                deviceDescription = lMessageDetails[0].DeviceDescription;
+                                messageGroupID = lMessageDetails[0].MessageGroupID;
+                                messageGroupName = lMessageDetails[0].MessageGroupName;
+                                messageGroupCode = lMessageDetails[0].MessageGroupCode;
+                            }
+                        }
+                        else
+                        {
+                            var messageDetail = lMessageDetails.FirstOrDefault(md => md.Message == reportMonitoringRaw.Message);
+                            if (messageDetail != null)
+                            {
+                                deviceID = messageDetail.DeviceID;
+                                deviceDescription = messageDetail.DeviceDescription;
+                                messageGroupID = messageDetail.MessageGroupID;
+                                messageGroupName = messageDetail.MessageGroupName;
+                                messageID = messageDetail.MessageID;
+                                messageGroupCode = messageDetail.MessageGroupCode;
+                            }
+                        }
+
                         #region ถ้า Message เป็น OK
 
                         if (reportMonitoringRaw.Message.ToLower() == "ok")
@@ -155,10 +204,11 @@ namespace RMS.Centralize.WebService.BSL
                                     monitoring.LocationId = locationID;
                                     monitoring.DeviceId = deviceID;
                                     monitoring.DeviceCode = reportMonitoringRaw.DeviceCode;
+                                    monitoring.DeviceDescription = deviceDescription;
                                     monitoring.MessageGroupId = messageGroupID;
-                                    monitoring.MessageGroupCode = reportMonitoringRaw.MessageGroupCode;
+                                    monitoring.MessageGroupCode = messageGroupCode;
                                     monitoring.MessageGroupName = messageGroupName;
-                                    monitoring.MessageId = messageID;
+                                    monitoring.MessageId = null;
                                     monitoring.Message = reportMonitoringRaw.Message;
                                     monitoring.Status = 1;
                                     monitoring.MessageDateTime = reportMonitoringRaw.MessageDateTime;
@@ -196,7 +246,22 @@ namespace RMS.Centralize.WebService.BSL
                                                                                                      && sm.MonitoringProfileDeviceId ==
                                                                                                      raw.MonitoringProfileDeviceId
                                                                                                      && sm.Status == 1);
+                           
+                            //ค้นหาดูว่ามี OK Message ที่ active หรือไม่
 
+                            if (reportSummaryMonitoring.Any() && counterResetToZero > 0)
+                            {
+                                counterResetToZero--;
+
+                                foreach (var report in reportSummaryMonitoring)
+                                {
+                                    if (report.Message.ToLower() == "ok")
+                                        report.Status = 0;
+
+                                    if (!lRaw.Any(r => r.MonitoringProfileDeviceId == raw.MonitoringProfileDeviceId && (r.Message == report.Message || r.Message == "DEVICE_NOT_FOUND")))
+                                        report.Status = 0;
+                                }
+                            }
 
                             // เท่ากับ null หมายถึง สามารถเพิ่มลง table ได้
                             if (!reportSummaryMonitoring.Any(sm => sm.Message == reportMonitoringRaw.Message))
@@ -234,8 +299,9 @@ namespace RMS.Centralize.WebService.BSL
                                 monitoring.LocationId = locationID;
                                 monitoring.DeviceId = deviceID;
                                 monitoring.DeviceCode = reportMonitoringRaw.DeviceCode;
+                                monitoring.DeviceDescription = deviceDescription;
                                 monitoring.MessageGroupId = messageGroupID;
-                                monitoring.MessageGroupCode = reportMonitoringRaw.MessageGroupCode;
+                                monitoring.MessageGroupCode = messageGroupCode;
                                 monitoring.MessageGroupName = messageGroupName;
                                 monitoring.MessageId = messageID;
                                 monitoring.Message = reportMonitoringRaw.Message;
@@ -251,16 +317,6 @@ namespace RMS.Centralize.WebService.BSL
                             }
                             else // ไม่เท่ากับ null หมายถึง พบ message ค้างอยู่ใน table ไม่จำเป็นต้องใส่ข้อมูลเพิ่มแต่อย่างใด
                             {
-                                //ค้นหาดูว่ามี OK Message ที่ active หรือไม่
-
-                                var okMessages = reportSummaryMonitoring.Where(sm => sm.Message == "OK");
-                                if (okMessages.Any())
-                                {
-                                    foreach (var okMessage in okMessages)
-                                    {
-                                        okMessage.Status = 0;
-                                    }
-                                }
 
                                 foreach (var summaryMonitoring in reportSummaryMonitoring.Where(sm => sm.Message != "OK"))
                                 {

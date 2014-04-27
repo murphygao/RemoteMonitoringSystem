@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing.Printing;
 using System.IO;
@@ -41,6 +42,7 @@ namespace Test.ConsoleApplication
 
                 //TestClientProxy();
                 CallMonitoringAgent();
+
             } while (Console.ReadKey().KeyChar == 'a');
 
 
@@ -129,8 +131,11 @@ namespace Test.ConsoleApplication
                 //if (obj["DeviceID"] != null) Console.WriteLine("DeviceID:\t" + obj["DeviceID"].ToString());
                 //if (obj["PNPDeviceID"] != null) Console.WriteLine("PNPDeviceID:\t" + obj["PNPDeviceID"].ToString());
 
-                if (obj["ClassGuid"] == null) continue;
-                if (obj["ClassGuid"].ToString() != "{50dd5230-ba8a-11d1-bf5d-0000f805f530}") continue;
+                //if (obj["ClassGuid"] == null) continue;
+                //if (obj["ClassGuid"].ToString() != "{6bdd1fc6-810f-11d0-bec7-08002be2092f}") continue;
+                //if (obj["ClassGuid"].ToString() != "{50dd5230-ba8a-11d1-bf5d-0000f805f530}") continue;
+                if (obj["Description"].ToString() != "HID-compliant device") continue;
+
 
                 foreach (PropertyData property in obj.Properties)
                 {
@@ -308,9 +313,12 @@ namespace Test.ConsoleApplication
 
         private static void CallMonitoringAgent()
         {
-            RMS.Centralize.BSL.MonitoringEngine.MonitoringService ms = new MonitoringService();
-            ms.Start();
+            MonitoringProxy.MonitoringServiceClient msc = new MonitoringServiceClient();
+            msc.StartMonitoringEngine();
+            //RMS.Centralize.BSL.MonitoringEngine.MonitoringService ms = new MonitoringService();
+            //ms.Start();
         }
+
 
     }
 

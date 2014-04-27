@@ -7,7 +7,7 @@ using RMS.Agent.Entity;
 using RMS.Agent.Proxy;
 using RMS.Agent.Proxy.ClientProxy;
 using RMS.Agent.Proxy.MonitoringProxy;
-using RMS.Monitoring.Device.PerformanceCounter;
+using RMS.Monitoring.Helper;
 
 namespace RMS.Agent.BSL.Monitoring
 {
@@ -32,19 +32,25 @@ namespace RMS.Agent.BSL.Monitoring
              * 
              */
 
-            // 1. Call Centralize to Get Client & Device Info for Monitoring 
-            RMS.Agent.Proxy.ClientProxy.ClientServiceClient cs = new ClientServiceClient();
+
+            #region 1. Call Centralize to Get Client & Device Info for Monitoring
+
+            ClientServiceClient cs = new ClientServiceClient();
             var clientResult = cs.GetClient(GetClientBy.ClientCode, null, clientCode, null, true);
 
             int? deviceId = null;
             int? monitoringProfileDeviceId = null;
 
-            var rmsMonitoringProfileDevices = RMS.Monitoring.Helper.Common.GetRmsMonitoringProfileDevicebyDeviceCode(clientResult, "CLIENT");
+            var rmsMonitoringProfileDevices = Common.GetRmsMonitoringProfileDevicebyDeviceCode(clientResult, "CLIENT", Models.DeviceCode.Client);
             // for CLIENT code, there are only one rmsMonitoringProfileDevices
             if (rmsMonitoringProfileDevices.Count > 0)
                 monitoringProfileDeviceId = rmsMonitoringProfileDevices[0].MonitoringProfileDeviceId;
 
-            // 2. Send Alive Message
+            #endregion
+
+
+            #region 2. Send Alive Message
+
             RMS.Agent.Proxy.MonitoringProxy.MonitoringServiceClient mp = new MonitoringServiceClient();
 
             var rawMessage = new RmsReportMonitoringRaw();
@@ -55,18 +61,29 @@ namespace RMS.Agent.BSL.Monitoring
             rawMessage.MessageDateTime = DateTime.Now;
             rawMessage.MonitoringProfileDeviceId = monitoringProfileDeviceId;
 
-            mp.AddMessage(rawMessage);
+            mp.AddMessage(rawMessage); 
+
+            #endregion
 
 
-            // 3. Check Device Monitoring
-            mp.AddMessages(CheckPerformance(clientResult));
+            #region 3. Check Device Monitoring
+
+            var monitoringService = new RMS.Monitoring.Core.MonitoringService();
+
+            // Performance
+            var monitoringRaws = monitoringService.Monitoring("performance", clientResult);
+            if (monitoringRaws.Count > 0)
+                mp.AddMessages(monitoringRaws);
+
+            // Device
+            monitoringRaws = monitoringService.Monitoring("device", clientResult);
+            if (monitoringRaws.Count > 0)
+                mp.AddMessages(monitoringRaws);
+
+
+            #endregion
+
         }
 
-
-        private List<RmsReportMonitoringRaw> CheckPerformance(ClientResult clientResult)
-        {
-            var ps = new PerformanceService();
-            return ps.Monitoring(clientResult);
-        }
     }
 }

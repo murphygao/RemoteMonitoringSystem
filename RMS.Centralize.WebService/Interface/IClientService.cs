@@ -59,6 +59,9 @@ namespace RMS.Centralize.WebService
         [DataMember]
         public List<RmsDevice> ListDevices { get; set; }
 
+        [DataMember]
+        public List<RmsDeviceType> ListDeviceType { get; set; }
+
         #endregion
 
 

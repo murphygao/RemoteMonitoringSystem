@@ -16,9 +16,10 @@
         <xs:sequence>
           <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="Client" nillable="true" type="q2:RmsClient" />
           <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="ListClients" nillable="true" type="q3:ArrayOfRmsClient" />
-          <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="ListDevices" nillable="true" type="q4:ArrayOfRmsDevice" />
-          <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="ListMonitoringProfileDevices" nillable="true" type="q5:ArrayOfRmsMonitoringProfileDevice" />
-          <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="MonitoringProfile" nillable="true" type="q6:RmsMonitoringProfile" />
+          <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="ListDeviceType" nillable="true" type="q4:ArrayOfRmsDeviceType" />
+          <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="ListDevices" nillable="true" type="q5:ArrayOfRmsDevice" />
+          <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="ListMonitoringProfileDevices" nillable="true" type="q6:ArrayOfRmsMonitoringProfileDevice" />
+          <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="MonitoringProfile" nillable="true" type="q7:RmsMonitoringProfile" />
           <xs:element minOccurs="0" name="TotalRecords" type="xs:int" />
         </xs:sequence>
       </xs:extension>

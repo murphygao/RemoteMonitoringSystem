@@ -387,27 +387,21 @@ namespace RMS.Centralize.DAL
         public string Model { get; set; } // Model
 
         [DataMember(Order = 6, IsRequired = false)]
-        public string DeviceManagerName { get; set; } // DeviceManagerName
-
-        [DataMember(Order = 7, IsRequired = false)]
-        public string DeviceManagerId { get; set; } // DeviceManagerID
-
-        [DataMember(Order = 8, IsRequired = false)]
         public string StringValue { get; set; } // StringValue
 
-        [DataMember(Order = 9, IsRequired = false)]
+        [DataMember(Order = 7, IsRequired = false)]
         public bool? ActiveList { get; set; } // ActiveList
 
-        [DataMember(Order = 10, IsRequired = false)]
+        [DataMember(Order = 8, IsRequired = false)]
         public DateTime? CreatedDate { get; set; } // CreatedDate
 
-        [DataMember(Order = 11, IsRequired = false)]
+        [DataMember(Order = 9, IsRequired = false)]
         public string CreatedBy { get; set; } // CreatedBy
 
-        [DataMember(Order = 12, IsRequired = false)]
+        [DataMember(Order = 10, IsRequired = false)]
         public DateTime? UpdatedDate { get; set; } // UpdatedDate
 
-        [DataMember(Order = 13, IsRequired = false)]
+        [DataMember(Order = 11, IsRequired = false)]
         public string UpdatedBy { get; set; } // UpdatedBy
 
 
@@ -436,6 +430,9 @@ namespace RMS.Centralize.DAL
 
         [DataMember(Order = 2, IsRequired = false)]
         public string DeviceType { get; set; } // DeviceType
+
+        [DataMember(Order = 3, IsRequired = false)]
+        public string DeviceTypeCode { get; set; } // DeviceTypeCode
 
 
         // Reverse navigation
@@ -614,6 +611,15 @@ namespace RMS.Centralize.DAL
         [DataMember(Order = 8, IsRequired = false)]
         public string StringValue { get; set; } // StringValue
 
+        [DataMember(Order = 9, IsRequired = false)]
+        public string DeviceManagerName { get; set; } // DeviceManagerName
+
+        [DataMember(Order = 10, IsRequired = false)]
+        public string DeviceManagerId { get; set; } // DeviceManagerID
+
+        [DataMember(Order = 11, IsRequired = false)]
+        public string DeviceDescription { get; set; } // DeviceDescription
+
 
         // Foreign keys
         public virtual RmsDevice RmsDevice { get; set; } // FK_RMS_MonitoringProfileDevice_RMS_Device
@@ -685,45 +691,48 @@ namespace RMS.Centralize.DAL
         public string DeviceCode { get; set; } // DeviceCode
 
         [DataMember(Order = 9, IsRequired = false)]
-        public int? MessageGroupId { get; set; } // MessageGroupID
+        public string DeviceDescription { get; set; } // DeviceDescription
 
         [DataMember(Order = 10, IsRequired = false)]
-        public string MessageGroupCode { get; set; } // MessageGroupCode
+        public int? MessageGroupId { get; set; } // MessageGroupID
 
         [DataMember(Order = 11, IsRequired = false)]
-        public string MessageGroupName { get; set; } // MessageGroupName
+        public string MessageGroupCode { get; set; } // MessageGroupCode
 
         [DataMember(Order = 12, IsRequired = false)]
-        public int? MessageId { get; set; } // MessageID
+        public string MessageGroupName { get; set; } // MessageGroupName
 
         [DataMember(Order = 13, IsRequired = false)]
-        public string Message { get; set; } // Message
+        public int? MessageId { get; set; } // MessageID
 
         [DataMember(Order = 14, IsRequired = false)]
-        public int? Status { get; set; } // Status
+        public string Message { get; set; } // Message
 
         [DataMember(Order = 15, IsRequired = false)]
-        public DateTime? MessageDateTime { get; set; } // MessageDateTime
+        public int? Status { get; set; } // Status
 
         [DataMember(Order = 16, IsRequired = false)]
-        public string MessageRemark { get; set; } // MessageRemark
+        public DateTime? MessageDateTime { get; set; } // MessageDateTime
 
         [DataMember(Order = 17, IsRequired = false)]
-        public int? MonitoringProfileDeviceId { get; set; } // MonitoringProfileDeviceID
+        public string MessageRemark { get; set; } // MessageRemark
 
         [DataMember(Order = 18, IsRequired = false)]
-        public DateTime? EventDateTime { get; set; } // EventDateTime
+        public int? MonitoringProfileDeviceId { get; set; } // MonitoringProfileDeviceID
 
         [DataMember(Order = 19, IsRequired = false)]
-        public DateTime? CreatedDate { get; set; } // CreatedDate
+        public DateTime? EventDateTime { get; set; } // EventDateTime
 
         [DataMember(Order = 20, IsRequired = false)]
-        public string CreatedBy { get; set; } // CreatedBy
+        public DateTime? CreatedDate { get; set; } // CreatedDate
 
         [DataMember(Order = 21, IsRequired = false)]
-        public DateTime? UpdatedDate { get; set; } // UpdatedDate
+        public string CreatedBy { get; set; } // CreatedBy
 
         [DataMember(Order = 22, IsRequired = false)]
+        public DateTime? UpdatedDate { get; set; } // UpdatedDate
+
+        [DataMember(Order = 23, IsRequired = false)]
         public string UpdatedBy { get; set; } // UpdatedBy
 
     }
@@ -933,11 +942,9 @@ namespace RMS.Centralize.DAL
 
             Property(x => x.DeviceId).HasColumnName("DeviceID").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             Property(x => x.DeviceTypeId).HasColumnName("DeviceTypeID").IsOptional();
-            Property(x => x.DeviceCode).HasColumnName("DeviceCode").IsOptional().HasMaxLength(20);
+            Property(x => x.DeviceCode).HasColumnName("DeviceCode").IsOptional().HasMaxLength(50);
             Property(x => x.Brand).HasColumnName("Brand").IsOptional().HasMaxLength(50);
             Property(x => x.Model).HasColumnName("Model").IsOptional().HasMaxLength(50);
-            Property(x => x.DeviceManagerName).HasColumnName("DeviceManagerName").IsOptional().HasMaxLength(100);
-            Property(x => x.DeviceManagerId).HasColumnName("DeviceManagerID").IsOptional().HasMaxLength(100);
             Property(x => x.StringValue).HasColumnName("StringValue").IsOptional().HasMaxLength(100);
             Property(x => x.ActiveList).HasColumnName("ActiveList").IsOptional();
             Property(x => x.CreatedDate).HasColumnName("CreatedDate").IsOptional();
@@ -968,6 +975,7 @@ namespace RMS.Centralize.DAL
 
             Property(x => x.DeviceTypeId).HasColumnName("DeviceTypeID").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             Property(x => x.DeviceType).HasColumnName("DeviceType").IsOptional().HasMaxLength(50);
+            Property(x => x.DeviceTypeCode).HasColumnName("DeviceTypeCode").IsOptional().HasMaxLength(8);
             InitializePartial();
         }
         partial void InitializePartial();
@@ -1059,6 +1067,9 @@ namespace RMS.Centralize.DAL
             Property(x => x.ComPort).HasColumnName("COMPort").IsOptional().HasMaxLength(5);
             Property(x => x.BooleanValue).HasColumnName("BooleanValue").IsOptional();
             Property(x => x.StringValue).HasColumnName("StringValue").IsOptional().HasMaxLength(100);
+            Property(x => x.DeviceManagerName).HasColumnName("DeviceManagerName").IsOptional().HasMaxLength(100);
+            Property(x => x.DeviceManagerId).HasColumnName("DeviceManagerID").IsOptional().HasMaxLength(100);
+            Property(x => x.DeviceDescription).HasColumnName("DeviceDescription").IsOptional().HasMaxLength(250);
 
             // Foreign keys
             HasOptional(a => a.RmsMonitoringProfile).WithMany(b => b.RmsMonitoringProfileDevices).HasForeignKey(c => c.MonitoringProfileId); // FK_RMS_MonitoringProfileDevice_RMS_MonitoringProfile
@@ -1107,6 +1118,7 @@ namespace RMS.Centralize.DAL
             Property(x => x.LocationId).HasColumnName("LocationID").IsOptional();
             Property(x => x.DeviceId).HasColumnName("DeviceID").IsOptional();
             Property(x => x.DeviceCode).HasColumnName("DeviceCode").IsOptional().HasMaxLength(20);
+            Property(x => x.DeviceDescription).HasColumnName("DeviceDescription").IsOptional().HasMaxLength(250);
             Property(x => x.MessageGroupId).HasColumnName("MessageGroupID").IsOptional();
             Property(x => x.MessageGroupCode).HasColumnName("MessageGroupCode").IsOptional().HasMaxLength(10);
             Property(x => x.MessageGroupName).HasColumnName("MessageGroupName").IsOptional().HasMaxLength(100);

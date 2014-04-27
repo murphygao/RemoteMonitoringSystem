@@ -33,7 +33,7 @@ namespace RMS.Agent.WCF
 
         public Result Monitoring(string clientCode)
         {
-            monitoringService = new MonitoringService();
+          monitoringService = new MonitoringService();
             monitoringService.Command(clientCode);
 
             return new Result {IsSuccess = true};
