@@ -17,7 +17,7 @@ namespace RMS.Monitoring.Device.ThermalPrinter
         {
             this.clientResult = clientResult;
 
-            if (brand.ToLower() == "customs") _device = new Customs(model, deviceManagerName, deviceManagerID);
+            if (brand.ToLower() == "custom") _device = new CUSTOM(model, deviceManagerName, deviceManagerID);
 
         }
 
@@ -25,28 +25,75 @@ namespace RMS.Monitoring.Device.ThermalPrinter
         {
             List<RmsReportMonitoringRaw> lRmsReportMonitoringRaws = new List<RmsReportMonitoringRaw>();
 
-            RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
-            raw.ClientCode = clientResult.Client.ClientCode;
-            raw.DeviceCode = clientResult.ListDevices[0].DeviceCode;
-
             int ret = _device.CheckDeviceManager();
 
-            if (ret == 0)
+            if (ret != 0)
             {
-                raw.Message = "OK";
-            }
-            else if (ret == -1)
-            {
-                raw.Message = "DEVICE_NOT_FOUND";
+                RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
+                raw.ClientCode = clientResult.Client.ClientCode;
+                raw.DeviceCode = clientResult.ListDevices[0].DeviceCode;
+
+                if (ret == -1)
+                {
+                    raw.Message = "DEVICE_NOT_FOUND";
+                }
+                else
+                {
+                    raw.Message = "DEVICE_NOT_READY";
+                }
+                raw.MessageDateTime = DateTime.Now;
+                raw.MonitoringProfileDeviceId = clientResult.ListMonitoringProfileDevices[0].MonitoringProfileDeviceId;
+
+                lRmsReportMonitoringRaws.Add(raw);
             }
             else
             {
-                raw.Message = "DEVICE_NOT_READY";
-            }
-            raw.MessageDateTime = DateTime.Now;
-            raw.MonitoringProfileDeviceId = clientResult.ListMonitoringProfileDevices[0].MonitoringProfileDeviceId;
+                int[] arrRet = _device.CheckPaperStatus();
+                if (arrRet != null)
+                {
+                    if (arrRet[0] != 0)
+                    {
+                        RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
+                        raw.ClientCode = clientResult.Client.ClientCode;
+                        raw.DeviceCode = clientResult.ListDevices[0].DeviceCode;
 
-            lRmsReportMonitoringRaws.Add(raw);
+                        raw.Message = "LOW_PAPER";
+
+                        raw.MessageDateTime = DateTime.Now;
+                        raw.MonitoringProfileDeviceId = clientResult.ListMonitoringProfileDevices[0].MonitoringProfileDeviceId;
+
+                        lRmsReportMonitoringRaws.Add(raw);
+                    }
+
+                    if (arrRet[1] != 0)
+                    {
+                        RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
+                        raw.ClientCode = clientResult.Client.ClientCode;
+                        raw.DeviceCode = clientResult.ListDevices[0].DeviceCode;
+
+                        raw.Message = "END_PAPER";
+
+                        raw.MessageDateTime = DateTime.Now;
+                        raw.MonitoringProfileDeviceId = clientResult.ListMonitoringProfileDevices[0].MonitoringProfileDeviceId;
+
+                        lRmsReportMonitoringRaws.Add(raw);
+                    }
+                }
+            }
+
+            if (lRmsReportMonitoringRaws.Count == 0)
+            {
+                RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
+                raw.ClientCode = clientResult.Client.ClientCode;
+                raw.DeviceCode = clientResult.ListDevices[0].DeviceCode;
+
+                raw.Message = "OK";
+
+                raw.MessageDateTime = DateTime.Now;
+                raw.MonitoringProfileDeviceId = clientResult.ListMonitoringProfileDevices[0].MonitoringProfileDeviceId;
+
+                lRmsReportMonitoringRaws.Add(raw);
+            }
 
             return lRmsReportMonitoringRaws;
         }

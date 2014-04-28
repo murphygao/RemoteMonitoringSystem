@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -8,7 +9,12 @@ using System.Linq;
 using System.Management;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
+using LibUsbDotNet;
+using LibUsbDotNet.Info;
+using LibUsbDotNet.Main;
 using RMS.Centralize.BSL.MonitoringEngine;
 using Test.ConsoleApplication.ClientProxy;
 using Test.ConsoleApplication.MonitoringProxy;
@@ -43,6 +49,19 @@ namespace Test.ConsoleApplication
                 //TestClientProxy();
                 CallMonitoringAgent();
 
+                //TestPrinter("CUSTOM TG2480-H");
+                //TestCustomThermalPrinter();
+
+                //string x = @"USB\VID_0DD4&PID_01A8\TG2480-H_Num.:_0";
+
+                //string sVid = x.ToUpper().Substring(x.IndexOf("VID_") + 4, 4);
+                //int iVid = Int32.Parse(sVid, System.Globalization.NumberStyles.HexNumber);
+                //string sPid = x.ToUpper().Substring(x.IndexOf("PID_") + 4, 4);
+                //int iPid = Int32.Parse(sPid, System.Globalization.NumberStyles.HexNumber);
+
+
+                //TestUSBLib();
+                //TestReadWriteUSBLib();
             } while (Console.ReadKey().KeyChar == 'a');
 
 
@@ -269,7 +288,27 @@ namespace Test.ConsoleApplication
 
         }
 
+        private static void TestCustomThermalPrinter()
+        {
+            //byte[] byteArray = new byte[6];
+            //byteArray[0] = 0x10;
+            //byteArray[1] = 0x04;
+            //byteArray[2] = 20;
+            byte[] byteArray = new byte[1];
+            byteArray[0] = 0x0A;
 
+            GCHandle pinnedArray = GCHandle.Alloc(byteArray, GCHandleType.Pinned);
+            IntPtr pointer = pinnedArray.AddrOfPinnedObject();
+            //do your stuff
+
+            bool ret = RawPrinterHelper.SendBytesToPrinter("CUSTOM TG2480-H", pointer, 1);
+
+            byte[] managedArray = new byte[1];
+            Marshal.Copy(pointer, managedArray, 0, 1);
+
+            pinnedArray.Free();
+
+        }
 
         [DllImport("Kernel32.DLL", CharSet = CharSet.Auto, SetLastError = true)]
         private extern static bool GetDevicePowerState(IntPtr hDevice,out bool fOn);
@@ -320,6 +359,174 @@ namespace Test.ConsoleApplication
         }
 
 
+
+        public static UsbDevice MyUsbDevice;
+
+        public static void TestUSBLib()
+        {
+            // Dump all devices and descriptor information to console output.
+            UsbRegDeviceList allDevices = UsbDevice.AllDevices;
+            foreach (UsbRegistry usbRegistry in allDevices)
+            {
+                if (usbRegistry.Open(out MyUsbDevice))
+                {
+                    Console.WriteLine(MyUsbDevice.Info.ToString());
+                    for (int iConfig = 0; iConfig < MyUsbDevice.Configs.Count; iConfig++)
+                    {
+                        UsbConfigInfo configInfo = MyUsbDevice.Configs[iConfig];
+                        Console.WriteLine(configInfo.ToString());
+
+                        ReadOnlyCollection<UsbInterfaceInfo> interfaceList = configInfo.InterfaceInfoList;
+                        for (int iInterface = 0; iInterface < interfaceList.Count; iInterface++)
+                        {
+                            UsbInterfaceInfo interfaceInfo = interfaceList[iInterface];
+                            Console.WriteLine(interfaceInfo.ToString());
+
+                            ReadOnlyCollection<UsbEndpointInfo> endpointList = interfaceInfo.EndpointInfoList;
+                            for (int iEndpoint = 0; iEndpoint < endpointList.Count; iEndpoint++)
+                            {
+                                Console.WriteLine(endpointList[iEndpoint].ToString());
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            // Free usb resources.
+            // This is necessary for libusb-1.0 and Linux compatibility.
+            UsbDevice.Exit();
+
+        }
+
+        #region SET YOUR USB Vendor and Product ID!
+
+        public static UsbDeviceFinder MyUsbFinder = new UsbDeviceFinder(0x0DD4, 0x01A8);
+
+        #endregion
+
+        public static void TestReadWriteUSBLib()
+        {
+            ErrorCode ec = ErrorCode.None;
+
+            try
+            {
+                // Find and open the usb device.
+                MyUsbDevice = UsbDevice.OpenUsbDevice(MyUsbFinder);
+
+                // If the device is open and ready
+                if (MyUsbDevice == null) throw new Exception("Device Not Found.");
+
+                // If this is a "whole" usb device (libusb-win32, linux libusb)
+                // it will have an IUsbDevice interface. If not (WinUSB) the 
+                // variable will be null indicating this is an interface of a 
+                // device.
+                IUsbDevice wholeUsbDevice = MyUsbDevice as IUsbDevice;
+                if (!ReferenceEquals(wholeUsbDevice, null))
+                {
+                    // This is a "whole" USB device. Before it can be used, 
+                    // the desired configuration and interface must be selected.
+
+                    // Select config #1
+                    wholeUsbDevice.SetConfiguration(1);
+
+                    // Claim interface #0.
+                    wholeUsbDevice.ClaimInterface(0);
+                }
+
+                // open read endpoint 1.
+                UsbEndpointReader reader = MyUsbDevice.OpenEndpointReader(ReadEndpointID.Ep01);
+
+                // open write endpoint 1.
+                UsbEndpointWriter writer = MyUsbDevice.OpenEndpointWriter(WriteEndpointID.Ep02);
+
+                // Remove the exepath/startup filename text from the begining of the CommandLine.
+                string cmdLine = Regex.Replace(
+                    Environment.CommandLine, "^\".+?\"^.*? |^.*? ", "", RegexOptions.Singleline);
+
+                if (!String.IsNullOrEmpty(cmdLine))
+                {
+                    int bytesWritten;
+
+
+                    byte[] byteArray = new byte[1];
+                    byteArray[0] = 0x0A;
+
+                    byteArray = new byte[6];
+                    byteArray[0] = 0x10;
+                    byteArray[1] = 0x04;
+                    byteArray[2] = 4;
+
+
+
+                    ec = writer.Write(byteArray, 2000, out bytesWritten);
+                    if (ec != ErrorCode.None) throw new Exception(UsbDevice.LastErrorString);
+
+                    byte[] readBuffer = new byte[8];
+                    while (ec == ErrorCode.None)
+                    {
+                        int bytesRead;
+
+                        // If the device hasn't sent data in the last 100 milliseconds,
+                        // a timeout error (ec = IoTimedOut) will occur. 
+                        ec = reader.Read(readBuffer, 100, out bytesRead);
+                        if (ec != ErrorCode.None) throw new Exception(UsbDevice.LastErrorString);
+
+                        if (bytesRead == 0) throw new Exception("No more bytes!");
+
+
+                        var bit2 = (readBuffer[0] & (1 << 2)) != 0;
+                        var bit3 = (readBuffer[0] & (1 << 3)) != 0;
+                        var bit5 = (readBuffer[0] & (1 << 5)) != 0;
+                        var bit6 = (readBuffer[0] & (1 << 6)) != 0;
+
+                        BitArray bits = new BitArray(readBuffer[0]);
+
+                        // Write that output to the console.
+                        Console.Write(Encoding.Default.GetString(readBuffer, 0, bytesRead));
+                    }
+
+                    Console.WriteLine("\r\nDone!\r\n");
+                }
+                else
+                    throw new Exception("Nothing to do.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine();
+                Console.WriteLine((ec != ErrorCode.None ? ec + ":" : String.Empty) + ex.Message);
+            }
+            finally
+            {
+                if (MyUsbDevice != null)
+                {
+                    if (MyUsbDevice.IsOpen)
+                    {
+                        // If this is a "whole" usb device (libusb-win32, linux libusb-1.0)
+                        // it exposes an IUsbDevice interface. If not (WinUSB) the 
+                        // 'wholeUsbDevice' variable will be null indicating this is 
+                        // an interface of a device; it does not require or support 
+                        // configuration and interface selection.
+                        IUsbDevice wholeUsbDevice = MyUsbDevice as IUsbDevice;
+                        if (!ReferenceEquals(wholeUsbDevice, null))
+                        {
+                            // Release interface #0.
+                            wholeUsbDevice.ReleaseInterface(0);
+                        }
+
+                        MyUsbDevice.Close();
+                    }
+                    MyUsbDevice = null;
+
+                    // Free usb resources
+                    UsbDevice.Exit();
+
+                }
+
+                // Wait for user input..
+                Console.ReadKey();
+            }
+        }
     }
 
     public enum PowerMgmt

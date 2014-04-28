@@ -8,6 +8,7 @@ using RMS.Agent.Proxy.MonitoringProxy;
 using RMS.Monitoring.Device.PerformanceCounter;
 using RMS.Monitoring.Device.SignaturePad;
 using RMS.Monitoring.Device.SmartCardReader;
+using RMS.Monitoring.Device.ThermalPrinter;
 using RMS.Monitoring.Device.WebCamera;
 using RMS.Monitoring.Helper;
 
@@ -90,6 +91,13 @@ namespace RMS.Monitoring.Core
                         else if (deviceTypeCode == Models.DeviceCode.SmartcardReader)
                         {
                             var ds = new SmartCardReaderService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
+                            var rmsReportMonitoringRaws = ds.Monitoring();
+                            lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
+
+                        }
+                        else if (deviceTypeCode == Models.DeviceCode.ThermalPrinter)
+                        {
+                            var ds = new ThermalPrinterService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
                             var rmsReportMonitoringRaws = ds.Monitoring();
                             lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
 

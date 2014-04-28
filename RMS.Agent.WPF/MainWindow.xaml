@@ -7,6 +7,13 @@
         <Button x:Name="btnStop" Content="Stop" HorizontalAlignment="Left" Margin="149,53,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.03,-0.09" Click="btnStop_Click"/>
         <Label Content="Status :" HorizontalAlignment="Left" Margin="54,91,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblStatus" Content="" HorizontalAlignment="Left" Margin="96,91,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.284,0.021" Width="128"/>
+        <Menu HorizontalAlignment="Left" Height="21" VerticalAlignment="Top" Width="517">
+            <MenuItem Header="_FILE">
+                <MenuItem Header="Restart"/>
+                <Separator/>
+                <MenuItem Header="Exit"/>
+            </MenuItem>
+        </Menu>
 
     </Grid>
 </Window>

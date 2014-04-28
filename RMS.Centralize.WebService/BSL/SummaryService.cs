@@ -255,10 +255,20 @@ namespace RMS.Centralize.WebService.BSL
 
                                 foreach (var report in reportSummaryMonitoring)
                                 {
-                                    if (report.Message.ToLower() == "ok")
-                                        report.Status = 0;
 
-                                    if (!lRaw.Any(r => r.MonitoringProfileDeviceId == raw.MonitoringProfileDeviceId && (r.Message == report.Message || r.Message == "DEVICE_NOT_FOUND")))
+                                    // ปรับ message OK ใน Summary Report ให้เป็น 0
+                                    if (report.Message.ToUpper() == "OK")
+                                    {
+                                        report.Status = 0;
+                                    }
+                                    // ปรับ Message DEVICE_NOT_FOUND ใน Summary Report ให้เป็น 0
+                                    else if (report.Message.ToUpper() == "DEVICE_NOT_FOUND")
+                                    {
+                                        if (!lRaw.Any(r => r.MonitoringProfileDeviceId == raw.MonitoringProfileDeviceId && r.Message == "DEVICE_NOT_FOUND"))
+                                            report.Status = 0;
+                                    }
+
+                                    if (!lRaw.Any(r => r.MonitoringProfileDeviceId == raw.MonitoringProfileDeviceId && (r.Message == report.Message || r.Message == "DEVICE_NOT_FOUND" || r.Message == "DEVICE_NOT_READY")))
                                         report.Status = 0;
                                 }
                             }

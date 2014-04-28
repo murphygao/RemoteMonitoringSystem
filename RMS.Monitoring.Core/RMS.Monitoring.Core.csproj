@@ -69,6 +69,10 @@
       <Project>{61fecbba-1f7a-4ff7-972c-8487ca208b0e}</Project>
       <Name>RMS.Monitoring.Device.SmartCardReader</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.Device.ThermalPrinter\RMS.Monitoring.Device.ThermalPrinter.csproj">
+      <Project>{8EA25F3B-8501-4107-A663-60757B6A9503}</Project>
+      <Name>RMS.Monitoring.Device.ThermalPrinter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RMS.Monitoring.Device.WebCamera\RMS.Monitoring.Device.WebCamera.csproj">
       <Project>{d77923d6-3238-4a20-9993-0c3113acbdd2}</Project>
       <Name>RMS.Monitoring.Device.WebCamera</Name>

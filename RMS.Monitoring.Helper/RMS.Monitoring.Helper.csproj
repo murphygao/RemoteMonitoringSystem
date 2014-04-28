@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LibUsbDotNet">
+      <HintPath>..\packages\LibUsbDotNet.2.2.8\lib\LibUsbDotNet.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -42,12 +45,16 @@
   <ItemGroup>
     <Compile Include="Common.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="USB.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RMS.Agent.Proxy\RMS.Agent.Proxy.csproj">
       <Project>{34CC6B3A-D552-480A-B3D1-F94A389C1C86}</Project>
       <Name>RMS.Agent.Proxy</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
