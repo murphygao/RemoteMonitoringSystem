@@ -108,6 +108,7 @@
     <Compile Include="ActionProfileService.svc.cs">
       <DependentUpon>ActionProfileService.svc</DependentUpon>
     </Compile>
+    <Compile Include="BSL\ActionService.cs" />
     <Compile Include="BSL\SummaryService.cs" />
     <Compile Include="ClientService.svc.cs">
       <DependentUpon>ClientService.svc</DependentUpon>
@@ -119,6 +120,8 @@
     <Compile Include="MessageActionService.svc.cs">
       <DependentUpon>MessageActionService.svc</DependentUpon>
     </Compile>
+    <Compile Include="Model\ActionInfo.cs" />
+    <Compile Include="Model\ClientMessageAction.cs" />
     <Compile Include="Model\JQueryDataTableParamModel.cs" />
     <Compile Include="Model\MainAppClient.cs" />
     <Compile Include="Model\MessageDetail.cs" />

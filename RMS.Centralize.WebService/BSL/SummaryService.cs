@@ -80,7 +80,8 @@ namespace RMS.Centralize.WebService.BSL
                 var oMessageGroupCode = lRaw[0].MessageGroupCode;
                 var oMessage = lRaw[0].Message;
 
-                
+                List<RmsReportSummaryMonitoring> lPrepareForActions = new List<RmsReportSummaryMonitoring>();
+
                 using (var db = new MyDbContext())
                 {
                     #region Prepare Parameters
@@ -324,6 +325,8 @@ namespace RMS.Centralize.WebService.BSL
                                 db.RmsReportSummaryMonitorings.Add(monitoring);
                                 db.SaveChanges();
 
+                                lPrepareForActions.Add(monitoring);
+
                             }
                             else // ไม่เท่ากับ null หมายถึง พบ message ค้างอยู่ใน table ไม่จำเป็นต้องใส่ข้อมูลเพิ่มแต่อย่างใด
                             {
@@ -340,6 +343,14 @@ namespace RMS.Centralize.WebService.BSL
                     }
 
                 }
+
+                if (lPrepareForActions.Count > 0)
+                {
+                    var action = new ActionService();
+                    action.ActionSend(lPrepareForActions);
+                }
+
+
             }
             catch (Exception ex)
             {
