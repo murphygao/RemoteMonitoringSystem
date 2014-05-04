@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing.Printing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Management;
+using System.Printing;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -49,9 +51,9 @@ namespace Test.ConsoleApplication
                 //TestClientProxy();
                 CallMonitoringAgent();
 
-                //TestPrinter("CUSTOM TG2480-H");
+                //TestPrinter("Brother MFC-7450 Printer");
                 //TestCustomThermalPrinter();
-
+                //TestPrintingStatus();
                 //string x = @"USB\VID_0DD4&PID_01A8\TG2480-H_Num.:_0";
 
                 //string sVid = x.ToUpper().Substring(x.IndexOf("VID_") + 4, 4);
@@ -208,6 +210,24 @@ namespace Test.ConsoleApplication
             Win32.ClosePrinter(handle);
         }
 
+        static void TestPrintingStatus()
+        {
+            PrintServer server = new PrintServer();
+
+            foreach (PrintQueue pq in server.GetPrintQueues())
+            {
+                if (pq.FullName != "Brother MFC-7450 Printer") continue;
+
+                pq.Refresh();
+                PrintJobInfoCollection jobs = pq.GetPrintJobInfoCollection();
+                foreach (PrintSystemJobInfo job in jobs)
+                {
+                    // Since the user may not be able to articulate which job is problematic, 
+                    // present information about each job the user has submitted. 
+                    Console.WriteLine((DateTime.UtcNow - job.TimeJobSubmitted).TotalSeconds);
+                }// end for each p
+            }
+        }
 
         private static void TestPerformance()
         {

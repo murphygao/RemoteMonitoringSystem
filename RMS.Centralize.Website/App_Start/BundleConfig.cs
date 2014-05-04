@@ -41,7 +41,9 @@ namespace RMS.Centralize.Website
             bundles.Add(str);
 
             str = new ScriptBundle("~/bundles/myJs").Include(
-                "~/js/purl.js");
+                "~/js/purl.js",
+                "~/js/date.format.js"
+                );
             str.Orderer = new NonOrderingBundleOrderer();
             bundles.Add(str);
 

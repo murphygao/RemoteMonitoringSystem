@@ -19,9 +19,9 @@ namespace RMS.Monitoring.Device.Printer
         /// 
         /// </summary>
         /// <returns>-1 Cannot Check, 0 OK, 3 Near Paper End </returns>
-        public override int CheckPaperStatus()
+        public override int[] CheckPaperStatus()
         {
-            if (!useCOMPort || string.IsNullOrEmpty(comPort)) return -1;
+            if (!useCOMPort || string.IsNullOrEmpty(comPort)) return null;
 
             int counter = 3;
 
@@ -38,11 +38,29 @@ namespace RMS.Monitoring.Device.Printer
                     serialPort.Write(esc, 0, 2);
                     //label1.Text = serialPort.ReadExisting();
                     serialPort.ReadTimeout = 1500;
-                    return serialPort.ReadByte();
+                    int status = serialPort.ReadByte();
+                    int[] ret = new int[2];
+                    if (status == 0)
+                    {
+                        ret[1] = 0;
+                        ret[2] = 0;
+
+                    }
+                    if (status == 3)
+                    {
+                        ret[1] = 1;
+                        ret[2] = 0;
+                    }
+                    else
+                    {
+                        ret[1] = 1;
+                        ret[2] = 1;
+                    }
+                    return ret;
                 }
                 catch (Exception ex)
                 {
-                    if (ex.Message.IndexOf("timeout") < 0) return -1;
+                    if (ex.Message.IndexOf("timeout") < 0) return null;
                     System.Threading.Thread.Sleep(1500);
                     counter--;
                 }
@@ -53,7 +71,7 @@ namespace RMS.Monitoring.Device.Printer
                 }
             } while (counter > 0);
 
-            return -1;
+            return null;
         }
     }
 }

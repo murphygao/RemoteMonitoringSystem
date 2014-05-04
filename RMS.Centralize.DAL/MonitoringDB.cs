@@ -837,18 +837,21 @@ namespace RMS.Centralize.DAL
         public int? MonitoringProfileDeviceId { get; set; } // MonitoringProfileDeviceID
 
         [DataMember(Order = 19, IsRequired = false)]
-        public DateTime? EventDateTime { get; set; } // EventDateTime
+        public int? SeverityLevelId { get; set; } // SeverityLevelID
 
         [DataMember(Order = 20, IsRequired = false)]
-        public DateTime? CreatedDate { get; set; } // CreatedDate
+        public DateTime? EventDateTime { get; set; } // EventDateTime
 
         [DataMember(Order = 21, IsRequired = false)]
-        public string CreatedBy { get; set; } // CreatedBy
+        public DateTime? CreatedDate { get; set; } // CreatedDate
 
         [DataMember(Order = 22, IsRequired = false)]
-        public DateTime? UpdatedDate { get; set; } // UpdatedDate
+        public string CreatedBy { get; set; } // CreatedBy
 
         [DataMember(Order = 23, IsRequired = false)]
+        public DateTime? UpdatedDate { get; set; } // UpdatedDate
+
+        [DataMember(Order = 24, IsRequired = false)]
         public string UpdatedBy { get; set; } // UpdatedBy
 
     }
@@ -1295,6 +1298,7 @@ namespace RMS.Centralize.DAL
             Property(x => x.MessageDateTime).HasColumnName("MessageDateTime").IsOptional();
             Property(x => x.MessageRemark).HasColumnName("MessageRemark").IsOptional().HasMaxLength(500);
             Property(x => x.MonitoringProfileDeviceId).HasColumnName("MonitoringProfileDeviceID").IsOptional();
+            Property(x => x.SeverityLevelId).HasColumnName("SeverityLevelID").IsOptional();
             Property(x => x.EventDateTime).HasColumnName("EventDateTime").IsOptional();
             Property(x => x.CreatedDate).HasColumnName("CreatedDate").IsOptional();
             Property(x => x.CreatedBy).HasColumnName("CreatedBy").IsOptional().HasMaxLength(50);

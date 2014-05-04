@@ -1,4 +1,5 @@
-﻿namespace RMS.Monitoring.Device.Printer
+﻿
+namespace RMS.Monitoring.Device.Printer
 {
     public class Brother : Printer
     {
@@ -12,9 +13,5 @@
         {
         }
 
-        public override int CheckPaperStatus()
-        {
-            return -1;
-        }
     }
 }

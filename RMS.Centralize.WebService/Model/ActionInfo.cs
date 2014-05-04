@@ -25,14 +25,14 @@ namespace RMS.Centralize.WebService.Model
         {
             string ret = string.Empty;
 
-            ret += ClientCode + "   ";
-            ret += DeviceCode + "   ";
-            ret += DeviceDescription + "   ";
-            ret += Message + "   ";
-            ret += MessageGroupName + "   ";
-            ret += LocationCode + "   ";
-            ret += LocationName + "   ";
-            if (MessageDateTime != null) ret += MessageDateTime.Value.ToString("dd/MM/yyyy HH:mm:ss") + "   ";
+            ret += ClientCode + "|";
+            ret += DeviceCode + "|";
+            ret += DeviceDescription + "|";
+            ret += Message + "|";
+            ret += MessageGroupName + "|";
+            ret += LocationCode + "|";
+            ret += LocationName + "|";
+            if (MessageDateTime != null) ret += MessageDateTime.Value.ToString("dd/MM/yyyy HH:mm:ss");
             else ret += "N/A";
 
             return ret;

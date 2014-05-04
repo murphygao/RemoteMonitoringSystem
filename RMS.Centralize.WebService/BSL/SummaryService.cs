@@ -196,6 +196,7 @@ namespace RMS.Centralize.WebService.BSL
                                         summaryMonitoring.Status = 0;
                                     }
 
+
                                     // เพิ่ม OK Message
                                     var monitoring = db.RmsReportSummaryMonitorings.Create();
                                     monitoring.RawId = reportMonitoringRaw.Id;
@@ -215,6 +216,7 @@ namespace RMS.Centralize.WebService.BSL
                                     monitoring.MessageDateTime = reportMonitoringRaw.MessageDateTime;
                                     monitoring.MessageRemark = reportMonitoringRaw.MessageRemark;
                                     monitoring.MonitoringProfileDeviceId = reportMonitoringRaw.MonitoringProfileDeviceId;
+                                    monitoring.SeverityLevelId = null;
                                     monitoring.EventDateTime = DateTime.Now;
 
                                     db.RmsReportSummaryMonitorings.Add(monitoring);
@@ -296,12 +298,15 @@ namespace RMS.Centralize.WebService.BSL
                                 MessageDateTime	datetime	Checked
                                 MessageRemark	nvarchar(500)	Checked
                                 MonitoringProfileDeviceID	int	Checked
+                                SeverityLevelID 	int	Checked
                                 EventDateTime	datetime	Checked
                                 CreatedDate	datetime	Checked
                                 CreatedBy	nvarchar(50)	Checked
                                 UpdatedDate	datetime	Checked
                                 UpdatedBy	nvarchar(50)	Checked         
                              */
+                                var rmsMessage = db.RmsMessages.FirstOrDefault(m => m.MessageId == messageID);
+
                                 var monitoring = db.RmsReportSummaryMonitorings.Create();
                                 monitoring.RawId = reportMonitoringRaw.Id;
                                 monitoring.ClientId = clientID;
@@ -320,6 +325,7 @@ namespace RMS.Centralize.WebService.BSL
                                 monitoring.MessageDateTime = reportMonitoringRaw.MessageDateTime;
                                 monitoring.MessageRemark = reportMonitoringRaw.MessageRemark;
                                 monitoring.MonitoringProfileDeviceId = reportMonitoringRaw.MonitoringProfileDeviceId;
+                                if (rmsMessage != null) monitoring.SeverityLevelId = rmsMessage.SeverityLevelId;
                                 monitoring.EventDateTime = DateTime.Now;
 
                                 db.RmsReportSummaryMonitorings.Add(monitoring);
@@ -347,7 +353,7 @@ namespace RMS.Centralize.WebService.BSL
                 if (lPrepareForActions.Count > 0)
                 {
                     var action = new ActionService();
-                    action.ActionSend(lPrepareForActions);
+                    action.ActionSend(ActionService.ActionSendType.ManualSending, lPrepareForActions);
                 }
 
 

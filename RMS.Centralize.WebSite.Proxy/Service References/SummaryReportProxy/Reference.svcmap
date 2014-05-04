@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="4d2400c3-8925-46fd-9d78-538d059383bb" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="SummaryReportService3.xsd" MetadataType="Schema" ID="e29f1e78-6b27-456f-bb9b-fe8c24b3d5fe" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd4" />
+    <MetadataFile FileName="SummaryReportService1.xsd" MetadataType="Schema" ID="8ba0dfc1-9eb8-4f4a-9e35-cb540782cd83" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd0" />
+    <MetadataFile FileName="SummaryReportService.disco" MetadataType="Disco" ID="f1f65fff-2329-4666-aa71-1c9205c43914" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc?disco" />
+    <MetadataFile FileName="SummaryReportService2.xsd" MetadataType="Schema" ID="709d130e-0a6c-486c-ad64-2afe6d12d854" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd2" />
+    <MetadataFile FileName="SummaryReportService.wsdl" MetadataType="Wsdl" ID="13542c40-b36b-41b1-a76f-176ce9b1127e" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc?wsdl" />
+    <MetadataFile FileName="SummaryReportService.xsd" MetadataType="Schema" ID="c99ae590-b85e-431c-83d0-452d1dd78211" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd3" />
+    <MetadataFile FileName="SummaryReportService4.xsd" MetadataType="Schema" ID="f223fc2a-130d-4030-b0f7-76e89001cc23" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

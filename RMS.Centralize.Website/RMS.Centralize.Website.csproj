@@ -123,6 +123,7 @@
     <Content Include="img\jqueryui\index.php" />
     <Content Include="img\pattern\index.php" />
     <Content Include="img\superbox\index.php" />
+    <Content Include="js\date.format.js" />
     <Content Include="js\libs\jquery.min.map" />
     <Content Include="js\plugin\bootstrap-tags\bootstrap-tagsinput.min.js.map" />
     <Content Include="js\plugin\ckeditor\CHANGES.md" />
@@ -148,6 +149,7 @@
     <Content Include="Monitoring\ActionEdit.aspx" />
     <Content Include="Monitoring\MessageAction.aspx" />
     <Content Include="Monitoring\MessageEdit.aspx" />
+    <Content Include="Monitoring\MonitoringReport.aspx" />
     <Content Include="Scripts\jquery-2.1.0.min.map" />
     <Content Include="sound\bigbox.ogg" />
     <Content Include="sound\messagebox.ogg" />
@@ -925,6 +927,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Monitoring\Controllers\ActionProfileController.cs" />
     <Compile Include="Areas\Monitoring\Controllers\MessageActionController.cs" />
+    <Compile Include="Areas\Monitoring\Controllers\SummaryReportController.cs" />
     <Compile Include="Areas\Monitoring\MonitoringAreaRegistration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -957,6 +960,13 @@
     <Compile Include="Monitoring\MessageEdit.aspx.designer.cs">
       <DependentUpon>MessageEdit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Monitoring\MonitoringReport.aspx.cs">
+      <DependentUpon>MonitoringReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\MonitoringReport.aspx.designer.cs">
+      <DependentUpon>MonitoringReport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SmartAdmin.Master.cs">
       <DependentUpon>SmartAdmin.Master</DependentUpon>
@@ -971,6 +981,7 @@
     <Folder Include="Areas\Monitoring\Views\ActionProfile\" />
     <Folder Include="Areas\Monitoring\Views\MessageAction\" />
     <Folder Include="Areas\Monitoring\Views\Shared\" />
+    <Folder Include="Areas\Monitoring\Views\SummaryReport\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

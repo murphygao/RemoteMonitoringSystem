@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Globalization;
+using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using RMS.Centralize.DAL;
 using RMS.Centralize.WebService.Model;
 
@@ -11,20 +14,53 @@ namespace RMS.Centralize.WebService.BSL
 {
     public class ActionService
     {
+        internal string destinationPath = @"c:\monitoring\email\";
+
         public void ActionRequest(List<RmsReportSummaryMonitoring> lRmsReportSummaryMonitorings)
         {
 
         
         }
 
-        public void ActionSend(List<RmsReportSummaryMonitoring> lRmsReportSummaryMonitorings)
+        public enum ActionSendType
         {
+            ManualSending,
+            SummaryTechnicalSending,
+            SummaryHighLevelSending
+        }
+
+        public void ActionSend(ActionSendType actionSendType, List<RmsReportSummaryMonitoring> lRmsReportSummaryMonitorings)
+        {
+            try
+            {
+                switch (actionSendType)
+                {
+                        case ActionSendType.ManualSending:
+                        ManualSending(lRmsReportSummaryMonitorings);
+                        break;
+
+                        case ActionSendType.SummaryTechnicalSending:
+                        TechnicalSending();
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        private void ManualSending(List<RmsReportSummaryMonitoring> lRmsReportSummaryMonitorings)
+        {
+            if (lRmsReportSummaryMonitorings == null || lRmsReportSummaryMonitorings.Count == 0) return;
+
             try
             {
                 List<ActionInfo> lEmails = new List<ActionInfo>();
                 List<ActionInfo> lSMSs = new List<ActionInfo>();
                 Dictionary<string, string> distinctEmail = new Dictionary<string, string>();
-                Dictionary<string, string> distinctSMS = new Dictionary<string, string>(); 
+                Dictionary<string, string> distinctSMS = new Dictionary<string, string>();
 
                 using (var db = new MyDbContext())
                 {
@@ -54,7 +90,7 @@ namespace RMS.Centralize.WebService.BSL
                             mEmails = clientMessageAction.Email + ";" + clientMessageAction.Email2;
                         }
 
-                        var splitEmail = mEmails.Split(new string[]{";"}, StringSplitOptions.RemoveEmptyEntries);
+                        var splitEmail = mEmails.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
 
                         foreach (string email in splitEmail)
                         {
@@ -131,6 +167,15 @@ namespace RMS.Centralize.WebService.BSL
                          * 
                          */
 
+                        string fileName = DateTime.Now.ToString("yyyyMMddTHHmmss", new CultureInfo("en-AU")) + "." + to + ".txt";
+                        // Testing
+                        if (!File.Exists(destinationPath + fileName))
+                            File.Create(destinationPath + fileName).Close();
+
+                        using (StreamWriter sw = File.AppendText(destinationPath + fileName))
+                        {
+                            sw.WriteLine(body);
+                        }
 
                     }
 
@@ -157,13 +202,36 @@ namespace RMS.Centralize.WebService.BSL
 
 
                     }
-                    
+
                 }
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+        }
+
+        private void TechnicalSending()
+        {
+            try
+            {
+                using (var db = new MyDbContext())
+                {
+                    var dbRmsReportSummaryMonitorings = db.RmsReportSummaryMonitorings.Where(rsm => rsm.Status == 1);
+
+                    List<RmsReportSummaryMonitoring> lRmsReportSummaryMonitorings =
+                        new List<RmsReportSummaryMonitoring>(dbRmsReportSummaryMonitorings.ToList());
+
+                    if (lRmsReportSummaryMonitorings.Count > 0) ManualSending(lRmsReportSummaryMonitorings);
+
+                }
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+            
         }
     }
 }

@@ -18,6 +18,14 @@ namespace RMS.Monitoring.Device.ThermalPrinter
             return base.CheckDeviceManager();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Return Paper Status -> int[0] = Near End, int [1] = Out of Paper
+        /// -1 ตรวจสอบไม่ได้
+        /// 0 ปกติ
+        /// >0  ไม่ปกติ
+        /// </returns>
         public override int[] CheckPaperStatus()
         {
             string sVid = deviceManagerID.Substring(deviceManagerID.ToUpper().IndexOf("VID_") + 4, 4);

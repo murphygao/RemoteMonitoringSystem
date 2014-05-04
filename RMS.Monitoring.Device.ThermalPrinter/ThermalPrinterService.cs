@@ -51,7 +51,7 @@ namespace RMS.Monitoring.Device.ThermalPrinter
                 int[] arrRet = _device.CheckPaperStatus();
                 if (arrRet != null)
                 {
-                    if (arrRet[0] != 0)
+                    if (arrRet[0] > 0)
                     {
                         RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
                         raw.ClientCode = clientResult.Client.ClientCode;
@@ -65,7 +65,7 @@ namespace RMS.Monitoring.Device.ThermalPrinter
                         lRmsReportMonitoringRaws.Add(raw);
                     }
 
-                    if (arrRet[1] != 0)
+                    if (arrRet[1] > 0)
                     {
                         RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
                         raw.ClientCode = clientResult.Client.ClientCode;
@@ -79,6 +79,23 @@ namespace RMS.Monitoring.Device.ThermalPrinter
                         lRmsReportMonitoringRaws.Add(raw);
                     }
                 }
+
+
+                var NumOfQueues = _device.CheckPrintQueueStatus(7);
+                if (NumOfQueues > 0)
+                {
+                    RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
+                    raw.ClientCode = clientResult.Client.ClientCode;
+                    raw.DeviceCode = clientResult.ListDevices[0].DeviceCode;
+
+                    raw.Message = "CANNOT_PRINT";
+
+                    raw.MessageDateTime = DateTime.Now;
+                    raw.MonitoringProfileDeviceId = clientResult.ListMonitoringProfileDevices[0].MonitoringProfileDeviceId;
+
+                    lRmsReportMonitoringRaws.Add(raw);
+                }
+
             }
 
             if (lRmsReportMonitoringRaws.Count == 0)
