@@ -15,16 +15,35 @@
   <wsdl:message name="ISummaryReportService_SearchSummaryMonitoring_OutputMessage">
     <wsdl:part name="parameters" element="tns:SearchSummaryMonitoringResponse" />
   </wsdl:message>
+  <wsdl:message name="ISummaryReportService_GetClientInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetClientInfo" />
+  </wsdl:message>
+  <wsdl:message name="ISummaryReportService_GetClientInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetClientInfoResponse" />
+  </wsdl:message>
   <wsdl:portType name="ISummaryReportService">
     <wsdl:operation name="SearchSummaryMonitoring">
       <wsdl:input wsaw:Action="http://tempuri.org/ISummaryReportService/SearchSummaryMonitoring" message="tns:ISummaryReportService_SearchSummaryMonitoring_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISummaryReportService/SearchSummaryMonitoringResponse" message="tns:ISummaryReportService_SearchSummaryMonitoring_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetClientInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISummaryReportService/GetClientInfo" message="tns:ISummaryReportService_GetClientInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISummaryReportService/GetClientInfoResponse" message="tns:ISummaryReportService_GetClientInfo_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ISummaryReportService" type="tns:ISummaryReportService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="SearchSummaryMonitoring">
       <soap:operation soapAction="http://tempuri.org/ISummaryReportService/SearchSummaryMonitoring" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClientInfo">
+      <soap:operation soapAction="http://tempuri.org/ISummaryReportService/GetClientInfo" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

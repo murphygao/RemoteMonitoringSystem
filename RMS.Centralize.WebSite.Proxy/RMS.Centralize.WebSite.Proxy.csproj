@@ -157,6 +157,9 @@
     <None Include="Service References\MonitoringProxy\MonitoringService2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\SummaryReportProxy\RMS.Centralize.WebSite.Proxy.SummaryReportProxy.ClientInfoResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\SummaryReportProxy\RMS.Centralize.WebSite.Proxy.SummaryReportProxy.SummaryMonitoringResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

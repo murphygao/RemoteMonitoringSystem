@@ -436,7 +436,7 @@
                             "sWidth": "80",
                             "sClass": "center",
                             "fnRender": function (oObj) {
-                                return '<a id="edit_item_' + oObj.aData["ActionProfileId"] + '" class="btn btn-primary btn-xs" href="clientreport.aspx?id=1"><i class="glyphicon glyphicon-search"></i></a>';
+                                return '<a id="edit_item_' + oObj.aData["ActionProfileId"] + '" class="btn btn-primary btn-xs" href="clientreport.aspx?id=' + oObj.aData["ClientId"] + '"><i class="glyphicon glyphicon-search"></i></a>';
                             }
                         }
                     ],
@@ -493,7 +493,7 @@
                     }
 
                 });
-            //$("#txtMessageDate").datepicker().datepicker("setDate", new Date());
+
 
                 /* END TABLE TOOLS */
 

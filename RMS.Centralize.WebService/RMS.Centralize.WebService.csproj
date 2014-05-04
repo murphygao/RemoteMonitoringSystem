@@ -123,6 +123,7 @@
       <DependentUpon>MessageActionService.svc</DependentUpon>
     </Compile>
     <Compile Include="Model\ActionInfo.cs" />
+    <Compile Include="Model\ClientInfo.cs" />
     <Compile Include="Model\ClientMessageAction.cs" />
     <Compile Include="Model\JQueryDataTableParamModel.cs" />
     <Compile Include="Model\MainAppClient.cs" />

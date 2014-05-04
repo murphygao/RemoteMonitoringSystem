@@ -183,5 +183,50 @@ namespace RMS.Centralize.WebService
             }
 
         }
+
+        public ClientInfoResult GetClientInfo(int clientID)
+        {
+            try
+            {
+                using (var db = new MyDbContext())
+                {
+
+                    SqlParameter p1 = new SqlParameter("ClientID", clientID);
+
+                    var listOfType = db.Database.SqlQuery<ClientInfo>("RMS_GetClientInfoforReport " +
+                                                                                   "@ClientID", p1);
+
+                    List<ClientInfo> lClientIfnInfos = new List<ClientInfo>(listOfType.ToList());
+
+                    if (lClientIfnInfos.Count > 0)
+                    {
+                        ClientInfoResult cr = new ClientInfoResult
+                        {
+                            IsSuccess = true,
+                            Client = lClientIfnInfos[0]
+                        };
+                        return cr;
+                    }
+                    else
+                    {
+                        ClientInfoResult cr = new ClientInfoResult
+                        {
+                            IsSuccess = false,
+                            ErrorMessage = "Client Not Found."
+                        };
+                        return cr;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return new ClientInfoResult
+                {
+                    IsSuccess = false,
+                    ErrorMessage = ex.Message
+                };
+            }
+        }
     }
 }

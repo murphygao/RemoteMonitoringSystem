@@ -17,6 +17,12 @@ namespace RMS.Centralize.WebService
         SummaryMonitoringResult SearchSummaryMonitoring(JQueryDataTableParamModel param, DateTime? txtStartMessageDate, DateTime? txtEndMessageDate
             , string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, bool? ddlMessageStatus);
 
+
+        [OperationContract]
+        ClientInfoResult GetClientInfo(int clientID);
+
+
+
     }
     
     [DataContract]
@@ -30,6 +36,16 @@ namespace RMS.Centralize.WebService
 
         [DataMember]
         public int TotalRecords { get; set; }
+    }
+
+
+    [DataContract]
+    public class ClientInfoResult : Result
+    {
+
+        [DataMember]
+        public ClientInfo Client { get; set; }
+
     }
 
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using RMS.Centralize.WebSite.Proxy.SummaryReportProxy;
 
 namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
@@ -63,5 +64,38 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             }
 
         }
+
+        // GET: /Monitoring/SummaryReport/GetClientInfo/
+        public ActionResult GetClientInfo(int? id)
+        {
+            if (id == null) throw new ArgumentNullException("ClientID");
+
+            try
+            {
+                var service = new RMS.Centralize.WebSite.Proxy.SummaryReportService().summaryReportService;
+
+                var result = service.GetClientInfo(id.Value);
+
+                var ret = new
+                {
+                    status = (result.IsSuccess) ? 1 : 0,
+                    ClientID = result.Client.ClientID,
+                    data = JsonConvert.SerializeObject(result.Client, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })
+                };
+                return Json(ret);
+
+            }
+            catch (Exception ex)
+            {
+                var ret = new
+                {
+                    status = -1,
+                    error = ex.Message
+                };
+                return Json(ret);
+            }
+
+        }
+
     }
 }

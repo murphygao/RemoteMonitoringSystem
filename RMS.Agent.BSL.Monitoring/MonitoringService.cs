@@ -72,11 +72,10 @@ namespace RMS.Agent.BSL.Monitoring
 
             // Performance
             var monitoringRaws = monitoringService.Monitoring("performance", clientResult);
-            if (monitoringRaws.Count > 0)
-                mp.AddMessages(monitoringRaws);
 
             // Device
-            monitoringRaws = monitoringService.Monitoring("device", clientResult);
+            monitoringRaws.AddRange(monitoringService.Monitoring("device", clientResult));
+            
             if (monitoringRaws.Count > 0)
                 mp.AddMessages(monitoringRaws);
 

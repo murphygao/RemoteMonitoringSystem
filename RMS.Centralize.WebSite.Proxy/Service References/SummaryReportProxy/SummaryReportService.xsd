@@ -13,4 +13,14 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="SummaryMonitoringResult" nillable="true" type="tns:SummaryMonitoringResult" />
+  <xs:complexType name="ClientInfoResult">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" base="q2:Result">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Client" nillable="true" type="q2:ClientInfo" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ClientInfoResult" nillable="true" type="tns:ClientInfoResult" />
 </xs:schema>
