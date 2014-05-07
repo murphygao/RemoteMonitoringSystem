@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using RMS.Centralize.DAL;
+using RMS.Centralize.WebService.BSL;
 using RMS.Centralize.WebService.Model;
 
 namespace RMS.Centralize.WebService
@@ -15,12 +16,14 @@ namespace RMS.Centralize.WebService
     {
         [OperationContract]
         SummaryMonitoringResult SearchSummaryMonitoring(JQueryDataTableParamModel param, DateTime? txtStartMessageDate, DateTime? txtEndMessageDate
-            , string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, bool? ddlMessageStatus);
+            , string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, bool? ddlMessageStatus, int? clientID);
 
 
         [OperationContract]
         ClientInfoResult GetClientInfo(int clientID);
 
+        [OperationContract]
+        Result ActionRequest(ActionService.ActionSendType actionSendType, long reportID);
 
 
     }

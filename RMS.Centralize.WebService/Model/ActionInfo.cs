@@ -20,6 +20,7 @@ namespace RMS.Centralize.WebService.Model
         public DateTime? MessageDateTime { get; set; }
         public string DeviceCode { get; set; }
         public string DeviceDescription { get; set; }
+        public long SummaryMonitoringReportID { get; set; }
 
         public string ToPlainText()
         {

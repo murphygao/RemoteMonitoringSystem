@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.BSL" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.BSL" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="ActionService.ActionSendType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ManualSending" />
+      <xs:enumeration value="SummaryTechnicalSending" />
+      <xs:enumeration value="SummaryHighLevelSending" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ActionService.ActionSendType" nillable="true" type="tns:ActionService.ActionSendType" />
+</xs:schema>

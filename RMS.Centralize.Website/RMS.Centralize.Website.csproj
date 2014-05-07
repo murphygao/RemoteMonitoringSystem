@@ -929,6 +929,7 @@
     <Compile Include="Areas\Monitoring\Controllers\ActionProfileController.cs" />
     <Compile Include="Areas\Monitoring\Controllers\MessageActionController.cs" />
     <Compile Include="Areas\Monitoring\Controllers\SummaryReportController.cs" />
+    <Compile Include="Areas\Monitoring\Models\DeviceStatus.cs" />
     <Compile Include="Areas\Monitoring\MonitoringAreaRegistration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -985,7 +986,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Monitoring\Models\" />
     <Folder Include="Areas\Monitoring\Views\ActionProfile\" />
     <Folder Include="Areas\Monitoring\Views\MessageAction\" />
     <Folder Include="Areas\Monitoring\Views\Shared\" />

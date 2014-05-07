@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using RMS.Centralize.DAL;
+using RMS.Centralize.WebService.BSL;
 using RMS.Centralize.WebService.Model;
 
 namespace RMS.Centralize.WebService
@@ -16,21 +17,33 @@ namespace RMS.Centralize.WebService
     public class SummaryReportService : ISummaryReportService
     {
         public SummaryMonitoringResult SearchSummaryMonitoring(JQueryDataTableParamModel param, DateTime? txtStartMessageDate, DateTime? txtEndMessageDate
-            , string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, bool? ddlMessageStatus)
+            , string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, bool? ddlMessageStatus, int? clientID)
         {
 
             List<ReportSummaryMonitoring> lReportSummaryMonitorings = new List<ReportSummaryMonitoring>();
-            SqlParameter[] parameters = new SqlParameter[18];
+            SqlParameter[] parameters = new SqlParameter[19];
 
             try
             {
                 using (var db = new MyDbContext())
                 {
-                    SqlParameter p1;
-                    SqlParameter p2;
-                    SqlParameter p3;
+                    SqlParameter p1 = new SqlParameter("PageNbr", DBNull.Value);
+                    SqlParameter p2 = new SqlParameter("PageSize", param.iDisplayLength);
+                    SqlParameter p3 = new SqlParameter("FirstRec", param.iDisplayStart);
+                    
                     SqlParameter p4;
-                    SqlParameter p5;
+                    if (String.IsNullOrEmpty(param.iSortColumn))
+                    {
+                        p4 = new SqlParameter("SortCol", DBNull.Value);
+                    }
+                    else
+                    {
+                        p4 = new SqlParameter("SortCol", param.iSortColumn);
+                    }
+
+                    SqlParameter p5 = new SqlParameter("TotalRecords", SqlDbType.Int);
+                    p5.Direction = ParameterDirection.Output;
+
                     SqlParameter p6;
                     SqlParameter p7;
                     SqlParameter p8;
@@ -39,96 +52,107 @@ namespace RMS.Centralize.WebService
                     SqlParameter p11;
                     SqlParameter p12;
                     SqlParameter p13;
+                    SqlParameter p14;
+                    SqlParameter p15;
+                    SqlParameter p16;
+                    SqlParameter p17;
+                    SqlParameter p18;
+                    SqlParameter p19;
+
 
                     if (String.IsNullOrEmpty(txtClientCode))
                     {
-                        p1 = new SqlParameter("ClientCode", DBNull.Value);
+                        p6 = new SqlParameter("ClientCode", DBNull.Value);
                     }
                     else
                     {
-                        p1 = new SqlParameter("ClientCode", txtClientCode);
+                        p6 = new SqlParameter("ClientCode", txtClientCode);
                     }
 
-                    p2 = new SqlParameter("ClientIPAddress", DBNull.Value);
+                    p7 = new SqlParameter("ClientIPAddress", DBNull.Value);
 
                     if (String.IsNullOrEmpty(txtLocation))
                     {
-                        p3 = new SqlParameter("Location", DBNull.Value);
+                        p8 = new SqlParameter("Location", DBNull.Value);
                     }
                     else
                     {
-                        p3 = new SqlParameter("Location", txtLocation);
+                        p8 = new SqlParameter("Location", txtLocation);
                     }
 
-                    p4 = new SqlParameter("DeviceID", DBNull.Value);
-                    p4.SqlDbType = SqlDbType.Int;
+                    p9 = new SqlParameter("DeviceID", DBNull.Value);
+                    p9.SqlDbType = SqlDbType.Int;
 
 
                     if (String.IsNullOrEmpty(ddlMessageGroup))
                     {
-                        p5 = new SqlParameter("MessageGroupID", DBNull.Value);
+                        p10 = new SqlParameter("MessageGroupID", DBNull.Value);
                     }
                     else
                     {
-                        p5 = new SqlParameter("MessageGroupID", ddlMessageGroup);
+                        p10 = new SqlParameter("MessageGroupID", ddlMessageGroup);
                     }
 
                     if (String.IsNullOrEmpty(txtMessage))
                     {
-                        p6 = new SqlParameter("Message", DBNull.Value);
+                        p11 = new SqlParameter("Message", DBNull.Value);
                     }
                     else
                     {
-                        p6 = new SqlParameter("Message", txtMessage);
+                        p11 = new SqlParameter("Message", txtMessage);
                     }
 
                     if (ddlMessageStatus == null)
                     {
-                        p7 = new SqlParameter("Status", DBNull.Value);
-                        p7.DbType = DbType.Int32;
+                        p12 = new SqlParameter("Status", DBNull.Value);
+                        p12.DbType = DbType.Int32;
                     }
                     else
                     {
-                        p7 = new SqlParameter("Status", ddlMessageStatus);
+                        p12 = new SqlParameter("Status", ddlMessageStatus);
                     }
 
                     if (txtStartMessageDate == null)
                     {
-                        p8 = new SqlParameter("MessageDateTimeStart", DBNull.Value);
-                        p8.DbType = DbType.DateTime;
+                        p13 = new SqlParameter("MessageDateTimeStart", DBNull.Value);
+                        p13.DbType = DbType.DateTime;
                     }
                     else
                     {
-                        p8 = new SqlParameter("MessageDateTimeStart", txtStartMessageDate);
+                        p13 = new SqlParameter("MessageDateTimeStart", txtStartMessageDate);
                     }
 
                     if (txtEndMessageDate == null)
                     {
-                        p9 = new SqlParameter("MessageDateTimeEnd", DBNull.Value);
-                        p9.DbType = DbType.DateTime;
+                        p14 = new SqlParameter("MessageDateTimeEnd", DBNull.Value);
+                        p14.DbType = DbType.DateTime;
                     }
                     else
                     {
-                        p9 = new SqlParameter("MessageDateTimeEnd", txtEndMessageDate);
+                        p14 = new SqlParameter("MessageDateTimeEnd", txtEndMessageDate);
                     }
 
-                    p10 = new SqlParameter("EventDateTime", DBNull.Value);
-                    p10.SqlDbType = SqlDbType.DateTime;
+                    p15 = new SqlParameter("EventDateTime", DBNull.Value);
+                    p15.SqlDbType = SqlDbType.DateTime;
 
-                    p11 = new SqlParameter("CreatedDate", DBNull.Value);
-                    p11.SqlDbType = SqlDbType.DateTime;
+                    p16 = new SqlParameter("CreatedDate", DBNull.Value);
+                    p16.SqlDbType = SqlDbType.DateTime;
 
-                    p12 = new SqlParameter("UpdatedDate", DBNull.Value);
-                    p12.SqlDbType = SqlDbType.DateTime;
+                    p17 = new SqlParameter("UpdatedDate", DBNull.Value);
+                    p17.SqlDbType = SqlDbType.DateTime;
 
-                    p13 = new SqlParameter("IncludeOK", false);
+                    p18 = new SqlParameter("IncludeOK", false);
 
-                    SqlParameter p14 = new SqlParameter("PageNbr", DBNull.Value);
-                    SqlParameter p15 = new SqlParameter("PageSize", param.iDisplayLength);
-                    SqlParameter p16 = new SqlParameter("FirstRec", param.iDisplayStart);
-                    SqlParameter p17 = new SqlParameter("SortCol", param.iSortColumn);
-                    SqlParameter p18 = new SqlParameter("TotalRecords", SqlDbType.Int);
-                    p18.Direction = ParameterDirection.Output;
+                    if (clientID == null)
+                    {
+                        p19 = new SqlParameter("ClientID", DBNull.Value);
+                        p19.DbType = DbType.Int32;
+                    }
+                    else
+                    {
+                        p19 = new SqlParameter("ClientID", clientID);
+                    }
+
 
                     parameters[0] = p1;
                     parameters[1] = p2;
@@ -148,6 +172,7 @@ namespace RMS.Centralize.WebService
                     parameters[15] = p16;
                     parameters[16] = p17;
                     parameters[17] = p18;
+                    parameters[18] = p19;
 
                     db.Configuration.ProxyCreationEnabled = false;
                     //db.Configuration.LazyLoadingEnabled = false;
@@ -156,7 +181,7 @@ namespace RMS.Centralize.WebService
                                                                             "@ClientCode, @ClientIPAddress, @Location, @DeviceID" +
                                                                             ", @MessageGroupID, @Message, @Status" +
                                                                             ", @MessageDateTimeStart, @MessageDateTimeEnd" +
-                                                                            ", @EventDateTime, @CreatedDate, @UpdatedDate, @IncludeOK" +
+                                                                            ", @EventDateTime, @CreatedDate, @UpdatedDate, @IncludeOK, @ClientID" +
                                                                             ", @PageNbr, @PageSize, @FirstRec, @SortCol, @TotalRecords OUTPUT"
                         , parameters);
 
@@ -166,7 +191,7 @@ namespace RMS.Centralize.WebService
                     {
                         IsSuccess = true,
                         ListSummaryMonitorings = lReportSummaryMonitorings,
-                        TotalRecords = (int)parameters[17].Value
+                        TotalRecords = (int)parameters[4].Value
                     };
                     return sr;
                 }
@@ -227,6 +252,42 @@ namespace RMS.Centralize.WebService
                     ErrorMessage = ex.Message
                 };
             }
+        }
+
+        public Result ActionRequest(ActionService.ActionSendType actionSendType, long reportID)
+        {
+            try
+            {
+                using (var db = new MyDbContext())
+                {
+                    var report = db.RmsReportSummaryMonitorings.First(smg => smg.Id == reportID && smg.Status == 1);
+                    if (report != null)
+                    {
+                        List<RmsReportSummaryMonitoring> lReports = new List<RmsReportSummaryMonitoring>();
+                        lReports.Add(report);
+                        var action = new ActionService();
+                        action.ActionSend(ActionService.ActionSendType.ManualSending, lReports);
+                        return new Result
+                        {
+                            IsSuccess = true
+                        };
+                    }
+                    return new Result
+                    {
+                        IsSuccess = false,
+                        ErrorMessage = "Message Not Found."
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Result
+                {
+                    IsSuccess = false,
+                    ErrorMessage = ex.Message
+                };
+            }
+
         }
     }
 }

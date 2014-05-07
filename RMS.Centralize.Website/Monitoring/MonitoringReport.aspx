@@ -311,6 +311,7 @@
                     "bInfo": true,
                     "bScrollCollapse": true,
                     "bServerSide": true,
+                    "aaSorting": [[ 1, "desc" ]],
                     "sAjaxSource": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/SummaryReport/SearchMonitoringReport/",
                     "fnServerData": function (sSource, aoData, fnCallback) {
                         aoData.push({ "name": "txtStartMessageDate", "value": $('#txtStartMessageDate').val() });
@@ -331,7 +332,8 @@
                                 fnCallback(data);
                             }
                         });
-                }, "aoColumns": [
+                    },
+                    "aoColumns": [
                         {
                             // #
                             "mDataProp": "RowNum",
@@ -344,12 +346,12 @@
                             // Date
                             "mDataProp": "MessageDateTime",
                             "bSearchable": false,
-                            "bSortable": false,
+                            "bSortable": true,
                             "sWidth": "180",
                             "sClass": "center",
                             "fnRender": function (oObj) {
                                 var date = new Date(parseInt(oObj.aData["MessageDateTime"].substr(6)));
-                                return dateFormat(date, "dd/mm/yyyy HH:mm:ss");
+                                return dateFormat(date, "dd/mm/yyyy HH:MM:ss");
                             }
 
                         },
@@ -357,14 +359,14 @@
                             // Client Code
                             "mDataProp": "ClientCode",
                             "bSearchable": false,
-                            "bSortable": false,
+                            "bSortable": true,
                             "sWidth": "120"
                         },
                         {
                             // Location
                             "mDataProp": "Location",
                             "bSearchable": false,
-                            "bSortable": false,
+                            "bSortable": true,
                             "sWidth": "220"
                         },
                         {
@@ -436,7 +438,7 @@
                             "sWidth": "80",
                             "sClass": "center",
                             "fnRender": function (oObj) {
-                                return '<a id="edit_item_' + oObj.aData["ActionProfileId"] + '" class="btn btn-primary btn-xs" href="clientreport.aspx?id=' + oObj.aData["ClientId"] + '"><i class="glyphicon glyphicon-search"></i></a>';
+                                return '<a id="edit_item_' + oObj.aData["ActionProfileId"] + '" class="btn btn-primary btn-xs" href="javascript:ViewClientReport(' + oObj.aData["ClientId"] + ')"><i class="glyphicon glyphicon-search"></i></a>';
                             }
                         }
                     ],
@@ -585,6 +587,14 @@
 
                 });
         });
+
+        function ViewClientReport(id) {
+            var params = new Array();
+            params["id"] = id;
+
+            post_to_url("ClientReport.aspx", params, null);
+        }
+
     </script>
 
 </asp:Content>

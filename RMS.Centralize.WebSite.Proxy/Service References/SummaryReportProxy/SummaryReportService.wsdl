@@ -7,6 +7,7 @@
       <xsd:import schemaLocation="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" />
       <xsd:import schemaLocation="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" />
       <xsd:import schemaLocation="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" />
+      <xsd:import schemaLocation="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.BSL" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="ISummaryReportService_SearchSummaryMonitoring_InputMessage">
@@ -21,6 +22,12 @@
   <wsdl:message name="ISummaryReportService_GetClientInfo_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetClientInfoResponse" />
   </wsdl:message>
+  <wsdl:message name="ISummaryReportService_ActionRequest_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActionRequest" />
+  </wsdl:message>
+  <wsdl:message name="ISummaryReportService_ActionRequest_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActionRequestResponse" />
+  </wsdl:message>
   <wsdl:portType name="ISummaryReportService">
     <wsdl:operation name="SearchSummaryMonitoring">
       <wsdl:input wsaw:Action="http://tempuri.org/ISummaryReportService/SearchSummaryMonitoring" message="tns:ISummaryReportService_SearchSummaryMonitoring_InputMessage" />
@@ -29,6 +36,10 @@
     <wsdl:operation name="GetClientInfo">
       <wsdl:input wsaw:Action="http://tempuri.org/ISummaryReportService/GetClientInfo" message="tns:ISummaryReportService_GetClientInfo_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISummaryReportService/GetClientInfoResponse" message="tns:ISummaryReportService_GetClientInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActionRequest">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISummaryReportService/ActionRequest" message="tns:ISummaryReportService_ActionRequest_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISummaryReportService/ActionRequestResponse" message="tns:ISummaryReportService_ActionRequest_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ISummaryReportService" type="tns:ISummaryReportService">
@@ -44,6 +55,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetClientInfo">
       <soap:operation soapAction="http://tempuri.org/ISummaryReportService/GetClientInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActionRequest">
+      <soap:operation soapAction="http://tempuri.org/ISummaryReportService/ActionRequest" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

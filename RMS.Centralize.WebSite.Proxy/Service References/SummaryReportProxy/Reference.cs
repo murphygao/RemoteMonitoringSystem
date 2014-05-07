@@ -782,6 +782,12 @@ namespace RMS.Centralize.WebSite.Proxy.SummaryReportProxy {
         private System.Nullable<int> SeverityLevelIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> LastActionDateTimeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LastActionTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> EventDateTimeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -1054,6 +1060,32 @@ namespace RMS.Centralize.WebSite.Proxy.SummaryReportProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=19)]
+        public System.Nullable<System.DateTime> LastActionDateTime {
+            get {
+                return this.LastActionDateTimeField;
+            }
+            set {
+                if ((this.LastActionDateTimeField.Equals(value) != true)) {
+                    this.LastActionDateTimeField = value;
+                    this.RaisePropertyChanged("LastActionDateTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=20)]
+        public string LastActionType {
+            get {
+                return this.LastActionTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastActionTypeField, value) != true)) {
+                    this.LastActionTypeField = value;
+                    this.RaisePropertyChanged("LastActionType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=21)]
         public System.Nullable<System.DateTime> EventDateTime {
             get {
                 return this.EventDateTimeField;
@@ -1066,7 +1098,7 @@ namespace RMS.Centralize.WebSite.Proxy.SummaryReportProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=20)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=22)]
         public System.Nullable<System.DateTime> CreatedDate {
             get {
                 return this.CreatedDateField;
@@ -1079,7 +1111,7 @@ namespace RMS.Centralize.WebSite.Proxy.SummaryReportProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=21)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=23)]
         public string CreatedBy {
             get {
                 return this.CreatedByField;
@@ -1092,7 +1124,7 @@ namespace RMS.Centralize.WebSite.Proxy.SummaryReportProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=22)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=24)]
         public System.Nullable<System.DateTime> UpdatedDate {
             get {
                 return this.UpdatedDateField;
@@ -1105,7 +1137,7 @@ namespace RMS.Centralize.WebSite.Proxy.SummaryReportProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=23)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=25)]
         public string UpdatedBy {
             get {
                 return this.UpdatedByField;
@@ -1128,21 +1160,41 @@ namespace RMS.Centralize.WebSite.Proxy.SummaryReportProxy {
         }
     }
     
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ActionService.ActionSendType", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.BSL")]
+    public enum ActionServiceActionSendType : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ManualSending = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SummaryTechnicalSending = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SummaryHighLevelSending = 2,
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="SummaryReportProxy.ISummaryReportService")]
     public interface ISummaryReportService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISummaryReportService/SearchSummaryMonitoring", ReplyAction="http://tempuri.org/ISummaryReportService/SearchSummaryMonitoringResponse")]
-        RMS.Centralize.WebSite.Proxy.SummaryReportProxy.SummaryMonitoringResult SearchSummaryMonitoring(RMS.Centralize.WebSite.Proxy.SummaryReportProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> txtStartMessageDate, System.Nullable<System.DateTime> txtEndMessageDate, string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, System.Nullable<bool> ddlMessageStatus);
+        RMS.Centralize.WebSite.Proxy.SummaryReportProxy.SummaryMonitoringResult SearchSummaryMonitoring(RMS.Centralize.WebSite.Proxy.SummaryReportProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> txtStartMessageDate, System.Nullable<System.DateTime> txtEndMessageDate, string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, System.Nullable<bool> ddlMessageStatus, System.Nullable<int> clientID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISummaryReportService/SearchSummaryMonitoring", ReplyAction="http://tempuri.org/ISummaryReportService/SearchSummaryMonitoringResponse")]
-        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.SummaryReportProxy.SummaryMonitoringResult> SearchSummaryMonitoringAsync(RMS.Centralize.WebSite.Proxy.SummaryReportProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> txtStartMessageDate, System.Nullable<System.DateTime> txtEndMessageDate, string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, System.Nullable<bool> ddlMessageStatus);
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.SummaryReportProxy.SummaryMonitoringResult> SearchSummaryMonitoringAsync(RMS.Centralize.WebSite.Proxy.SummaryReportProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> txtStartMessageDate, System.Nullable<System.DateTime> txtEndMessageDate, string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, System.Nullable<bool> ddlMessageStatus, System.Nullable<int> clientID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISummaryReportService/GetClientInfo", ReplyAction="http://tempuri.org/ISummaryReportService/GetClientInfoResponse")]
         RMS.Centralize.WebSite.Proxy.SummaryReportProxy.ClientInfoResult GetClientInfo(int clientID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISummaryReportService/GetClientInfo", ReplyAction="http://tempuri.org/ISummaryReportService/GetClientInfoResponse")]
         System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.SummaryReportProxy.ClientInfoResult> GetClientInfoAsync(int clientID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISummaryReportService/ActionRequest", ReplyAction="http://tempuri.org/ISummaryReportService/ActionRequestResponse")]
+        RMS.Centralize.WebSite.Proxy.SummaryReportProxy.Result ActionRequest(RMS.Centralize.WebSite.Proxy.SummaryReportProxy.ActionServiceActionSendType actionSendType, long reportID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISummaryReportService/ActionRequest", ReplyAction="http://tempuri.org/ISummaryReportService/ActionRequestResponse")]
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.SummaryReportProxy.Result> ActionRequestAsync(RMS.Centralize.WebSite.Proxy.SummaryReportProxy.ActionServiceActionSendType actionSendType, long reportID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1172,12 +1224,12 @@ namespace RMS.Centralize.WebSite.Proxy.SummaryReportProxy {
                 base(binding, remoteAddress) {
         }
         
-        public RMS.Centralize.WebSite.Proxy.SummaryReportProxy.SummaryMonitoringResult SearchSummaryMonitoring(RMS.Centralize.WebSite.Proxy.SummaryReportProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> txtStartMessageDate, System.Nullable<System.DateTime> txtEndMessageDate, string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, System.Nullable<bool> ddlMessageStatus) {
-            return base.Channel.SearchSummaryMonitoring(param, txtStartMessageDate, txtEndMessageDate, txtClientCode, txtLocation, ddlMessageGroup, txtMessage, ddlMessageStatus);
+        public RMS.Centralize.WebSite.Proxy.SummaryReportProxy.SummaryMonitoringResult SearchSummaryMonitoring(RMS.Centralize.WebSite.Proxy.SummaryReportProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> txtStartMessageDate, System.Nullable<System.DateTime> txtEndMessageDate, string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, System.Nullable<bool> ddlMessageStatus, System.Nullable<int> clientID) {
+            return base.Channel.SearchSummaryMonitoring(param, txtStartMessageDate, txtEndMessageDate, txtClientCode, txtLocation, ddlMessageGroup, txtMessage, ddlMessageStatus, clientID);
         }
         
-        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.SummaryReportProxy.SummaryMonitoringResult> SearchSummaryMonitoringAsync(RMS.Centralize.WebSite.Proxy.SummaryReportProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> txtStartMessageDate, System.Nullable<System.DateTime> txtEndMessageDate, string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, System.Nullable<bool> ddlMessageStatus) {
-            return base.Channel.SearchSummaryMonitoringAsync(param, txtStartMessageDate, txtEndMessageDate, txtClientCode, txtLocation, ddlMessageGroup, txtMessage, ddlMessageStatus);
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.SummaryReportProxy.SummaryMonitoringResult> SearchSummaryMonitoringAsync(RMS.Centralize.WebSite.Proxy.SummaryReportProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> txtStartMessageDate, System.Nullable<System.DateTime> txtEndMessageDate, string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, System.Nullable<bool> ddlMessageStatus, System.Nullable<int> clientID) {
+            return base.Channel.SearchSummaryMonitoringAsync(param, txtStartMessageDate, txtEndMessageDate, txtClientCode, txtLocation, ddlMessageGroup, txtMessage, ddlMessageStatus, clientID);
         }
         
         public RMS.Centralize.WebSite.Proxy.SummaryReportProxy.ClientInfoResult GetClientInfo(int clientID) {
@@ -1186,6 +1238,14 @@ namespace RMS.Centralize.WebSite.Proxy.SummaryReportProxy {
         
         public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.SummaryReportProxy.ClientInfoResult> GetClientInfoAsync(int clientID) {
             return base.Channel.GetClientInfoAsync(clientID);
+        }
+        
+        public RMS.Centralize.WebSite.Proxy.SummaryReportProxy.Result ActionRequest(RMS.Centralize.WebSite.Proxy.SummaryReportProxy.ActionServiceActionSendType actionSendType, long reportID) {
+            return base.Channel.ActionRequest(actionSendType, reportID);
+        }
+        
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.SummaryReportProxy.Result> ActionRequestAsync(RMS.Centralize.WebSite.Proxy.SummaryReportProxy.ActionServiceActionSendType actionSendType, long reportID) {
+            return base.Channel.ActionRequestAsync(actionSendType, reportID);
         }
     }
 }

@@ -146,142 +146,6 @@
 
                                 <table id="dt_device_status" class="table table-hover">
                                     <tbody>
-                                        <tr>
-                                            <td class="td-device-status-name">Alive</td>
-                                            <td class="td-device-status"><span class="label label-success device-severity-status">Good</span></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td-device-status-name">CPU</td>
-                                            <td class="td-device-status"><span class="label label-success device-severity-status">Good</span></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td-device-status-name">Memory</td>
-                                            <td class="td-device-status"><span class="label label-success device-severity-status">Good</span></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td-device-status-name">Disk</td>
-                                            <td class="td-device-status"><span class="label bg-color-blueLight device-severity-status">Warning Lv1</span></td>
-                                            <td class="td-device-status">LOW_DISK_SPACE</td>
-                                            <td class="td-device-status">Email</td>
-                                            <td class="td-device-status">04/03/2014 16:52:07</td>
-                                            <td class="td-device-status"><a id="btnResend" class="btn btn-xs btn-primary" href="javascript:void(0);" style="line-height: inherit!important;"><i class="fa fa-mail-forward"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td-device-status-name">ATM Card Reader</td>
-                                            <td class="td-device-status"><span class="label label-success device-severity-status">Good</span></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td-device-status-name">Barcode Reader</td>
-                                            <td class="td-device-status"><span class="label label-success device-severity-status">Good</span></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td-device-status-name">Card Dispenser</td>
-                                            <td class="td-device-status"><span class="label label-success device-severity-status">Good</span></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td-device-status-name">Electronic Signature Pad</td>
-                                            <td class="td-device-status"><span class="label label-success device-severity-status">Good</span></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td-device-status-name">Encrypted pin Pad</td>
-                                            <td class="td-device-status"><span class="label label-success device-severity-status">Good</span></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td-device-status-name">ID Card Scanner</td>
-                                            <td class="td-device-status"><span class="label label-success device-severity-status">Good</span></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td-device-status-name">Keyboard</td>
-                                            <td class="td-device-status"><span class="label label-success device-severity-status">Good</span></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td-device-status-name">Printer</td>
-                                            <td class="td-device-status"><span class="label label-success device-severity-status">Good</span></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td-device-status-name">Scanner</td>
-                                            <td class="td-device-status"><span class="label label-success device-severity-status">Good</span></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td-device-status-name">Smarcard Reader</td>
-                                            <td class="td-device-status"><span class="label label-success device-severity-status">Good</span></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td-device-status-name">Thermal Printer</td>
-                                            <td class="td-device-status"><span class="label label-success device-severity-status">Good</span></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td-device-status-name">Web Camera</td>
-                                            <td class="td-device-status"><span class="label label-success device-severity-status">Good</span></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                            <td class="td-device-status"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="td-hidden-row" style="width: 200px"></td>
-                                            <td class="td-hidden-row" style="width: 90px"></td>
-                                            <td class="td-hidden-row" style="width: 150px"></td>
-                                            <td class="td-hidden-row" style="width: 100px"></td>
-                                            <td class="td-hidden-row" style="width: 130px"></td>
-                                            <td class="td-hidden-row" style="width: 50px"></td>
-                                        </tr>
                                     </tbody>
                                 </table>
 
@@ -346,134 +210,15 @@
                                             <th style="text-align: center">#</th>
                                             <th style="text-align: center">Date</th>
                                             <th>Message Group</th>
-                                            <th>Status</th>
                                             <th>Message</th>
                                             <th>Message Detail</th>
+                                            <th>Status</th>
+                                            <th>Solved Date</th>
                                             <th>Action Type</th>
                                             <th>Last Action Date</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td style="text-align: center">1</td>
-                                            <td style="text-align: center">04/03/2014  16:52:07</td>
-                                            <td>Disk</td>
-                                            <td><span class="label bg-color-blueLight">Warning Lv1</span></td>
-                                            <td>LOW_DISK_SPACE</td>
-                                            <td>C:</td>
-                                            <td>Email</td>
-                                            <td>04/03/2014 16:52:07</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: center">2</td>
-                                            <td style="text-align: center">04/03/2014 20:29:44</td>
-                                            <td>Printer</td>
-                                            <td><span class="label label-success">Good</span></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: center">3</td>
-                                            <td style="text-align: center">03/03/2014 20:26:20</td>
-                                            <td>Printer</td>
-                                            <td><span class="label bg-color-blueLight">Warning Lv1</span></td>
-                                            <td>LOW_PAPER</td>
-                                            <td>Paper Near End</td>
-                                            <td>Email</td>
-                                            <td>03/03/2014 20:26:20</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: center">4</td>
-                                            <td style="text-align: center">03/03/2014 15:20:00</td>
-                                            <td>Thermal Printer</td>
-                                            <td><span class="label label-success">Good</span></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: center">5</td>
-                                            <td style="text-align: center">03/03/2014 15:18:52</td>
-                                            <td>Thermal Printer</td>
-                                            <td><span class="label bg-color-red">Critical</span></td>
-                                            <td>END_PAPER</td>
-                                            <td>Out of Paper</td>
-                                            <td>Email, SMS</td>
-                                            <td>03/03/2014 15:18:52</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: center">6</td>
-                                            <td style="text-align: center">03/03/2014 14:16:10</td>
-                                            <td>Thermal Printer</td>
-                                            <td><span class="label bg-color-blueLight">Warning Lv1</span></td>
-                                            <td>LOW_PAPER</td>
-                                            <td>Paper Near End</td>
-                                            <td>Email</td>
-                                            <td>03/03/2014 14:16:10</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: center">7</td>
-                                            <td style="text-align: center">01/03/2014 12:22:10</td>
-                                            <td>ATM Card Reader</td>
-                                            <td><span class="label label-success">Good</span></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: center">8</td>
-                                            <td style="text-align: center">01/03/2014 12:11:50</td>
-                                            <td>ATM Card Reader</td>
-                                            <td><span class="label bg-color-orange">Warning Lv2</span></td>
-                                            <td>LOW_CARD</td>
-                                            <td>ATM Card Near End</td>
-                                            <td>Email</td>
-                                            <td>01/03/2014 12:11:50</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: center">9</td>
-                                            <td style="text-align: center">28/02/2014  16.26:06</td>
-                                            <td>CPU</td>
-                                            <td><span class="label label-success">Good</span></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: center">10</td>
-                                            <td style="text-align: center">28/02/2014  16.25:20</td>
-                                            <td>CPU</td>
-                                            <td><span class="label bg-color-red">Critical</span></td>
-                                            <td>OVER_CPU_USAGE</td>
-                                            <td>> 90% CPU Usage</td>
-                                            <td>Email, SMS</td>
-                                            <td>28/02/2014  16.25:20</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: center">11</td>
-                                            <td style="text-align: center">28/02/2014 10:29:44</td>
-                                            <td>Printer</td>
-                                            <td><span class="label label-success">Good</span></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: center">12</td>
-                                            <td style="text-align: center">28/02/2014 10:26:20</td>
-                                            <td>Printer</td>
-                                            <td><span class="label bg-color-blueLight">Warning Lv1</span></td>
-                                            <td>LOW_PAPER</td>
-                                            <td>Paper Near End</td>
-                                            <td>Email</td>
-                                            <td>03/03/2014 20:26:20</td>
-                                        </tr>
                                     </tbody>
                                 </table>
 
@@ -554,45 +299,102 @@
                 "sDom": 't',
                 "bInfo": false,
                 "bSort": false,
-                "aoColumns": [
+                "bScrollCollapse": true,
+                "bServerSide": true,
+                "aaSorting": [[ 1, "asc" ]],
+                "sAjaxSource": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/SummaryReport/GetCurrentDeviceStatus/",
+                "fnServerData": function (sSource, aoData, fnCallback) {
+                    aoData.push({ "name": "clientID", "value": <%=Request["id"]%> });
+                        Pace.restart();
+                        $.ajax({
+                            "type": "GET",
+                            "dataType": 'json',
+                            "contentType": "application/json; charset=utf-8",
+                            "url": sSource,
+                            "data": aoData,
+                            "success": function (data) {
+                                fnCallback(data);
+                            }
+                        });
+                    },
+                    "aoColumns": [
                 {
                     // device name
+                    "mDataProp": "DeviceDescription",
                     "bSearchable": false,
                     "bSortable": false,
                     "sWidth": "220",
+                    "sClass": "td-device-status-name",
                 },
                 {
                     // status
+                    "mDataProp": "LevelName",
                     "bSearchable": false,
                     "bSortable": false,
                     "sWidth": "120",
-                    "sClass": "center"
+                    "sClass": "center td-device-status",
+                    "fnRender": function(oObj) {
+                        if (oObj.aData["Message"] == "Good") {
+                            return oObj.aData["ColorTagStart"].replace('class=\"','class=\"device-severity-status ') + "Good" + oObj.aData["ColorTagEnd"];
+                        } else {
+                            return oObj.aData["ColorTagStart"].replace('class=\"','class=\"device-severity-status ') + oObj.aData["LevelName"] + oObj.aData["ColorTagEnd"];
+                        }
+                    }
 
                 },
                 {
                     // message
+                    "mDataProp": "Message",
                     "bSearchable": false,
                     "bSortable": false,
                     "sWidth": "250",
+                    "sClass": "td-device-status",
+                    "fnRender": function(oObj) {
+                        if (oObj.aData["Message"] == "Good") {
+                            return "";
+                        } else {
+                            return oObj.aData["Message"];
+                        }
+                    }
+
                 },
                 {
                     // action
+                    "mDataProp": "LastActionType",
                     "bSearchable": false,
                     "bSortable": false,
+                    "sClass": "td-device-status",
                     "sWidth": "150"
                 },
                 {
                     // action date
+                    "mDataProp": "LastActionDateTime",
                     "bSearchable": false,
                     "bSortable": false,
-                    "sWidth": "150"
+                    "sClass": "td-device-status",
+                    "sWidth": "150",
+                    "fnRender": function(oObj) {
+                        if (oObj.aData["LastActionDateTime"] != null) {
+                            var date = new Date(parseInt(oObj.aData["LastActionDateTime"].substr(6)));
+                            return dateFormat(date, "dd/mm/yyyy HH:mm:ss");
+                        }
+                        return "";
+                    }
+
                 },
                 {
                     // resend
+                    "mData": null,
                     "bSearchable": false,
                     "bSortable": false,
                     "sWidth": "50",
-                    "sClass": "center"
+                    "sClass": "td-device-status",
+                    "fnRender": function(oObj) {
+                        if (oObj.aData["Message"] != "") {
+                            return '<a id="btnResend" class="btn btn-xs btn-primary" href="javascript:Resend('+ oObj.aData["ReportID"] +');" style="line-height: inherit!important;"><i class="fa fa-mail-forward"></i></a>';
+                        }
+                        return "";
+                    }
                 }   
 
                 ],
@@ -612,11 +414,28 @@
                 "bAutoWidth": false,
                 "bPaginate": true,
                 "bInfo": true,
-                "sScrollX": "100%",
-                "sScrollXInner": "150%",
-                "aoColumns": [
+                "bScrollCollapse": true,
+                "bServerSide": true,
+                "aaSorting": [[ 1, "desc" ]],
+                "sAjaxSource": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/SummaryReport/SearchClientMonitoring/",
+                    "fnServerData": function (sSource, aoData, fnCallback) {
+                        aoData.push({ "name": "clientID", "value": <%=Request["id"]%> });
+                        Pace.restart();
+                        $.ajax({
+                            "type": "GET",
+                            "dataType": 'json',
+                            "contentType": "application/json; charset=utf-8",
+                            "url": sSource,
+                            "data": aoData,
+                            "success": function (data) {
+                                fnCallback(data);
+                            }
+                        });
+                    },
+                    "aoColumns": [
                     {
                         // #
+                        "mDataProp": "RowNum",
                         "bSearchable": false,
                         "bSortable": false,
                         "sWidth": "50",
@@ -624,49 +443,99 @@
                     },
                     {
                         // Date
+                        "mDataProp": "MessageDateTime",
                         "bSearchable": false,
                         "bSortable": true,
                         "sWidth": "150",
-                        "sClass": "center"
+                        "sClass": "center",
+                        "fnRender": function(oObj) {
+                            var date = new Date(parseInt(oObj.aData["MessageDateTime"].substr(6)));
+                            return dateFormat(date, "dd/mm/yyyy HH:MM:ss");
+                        }
                     },
                     {
                         //group
+                        "mDataProp": "MessageGroupName",
                         "bSearchable": false,
                         "bSortable": false,
                         "sWidth": "180",
                     },
                     {
-                        //status
-                        "bSearchable": false,
-                        "bSortable": false,
-                        "sWidth": "120",
-                    },
-                    {
                         //message
+                        "mDataProp": "Message",
                         "bSearchable": false,
                         "bSortable": false,
                         "sWidth": "170",
                     },
                     {
                         //message detail
+                        "mDataProp": "DeviceDescription",
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "sWidth": "250",
+                        "fnRender": function (oObj) {
+                            var content = '';
+                            if (oObj.aData["DeviceDescription"] != null)
+                                content = oObj.aData["DeviceDescription"];
+                            if (oObj.aData["MessageRemark"] != null)
+                                content = content + ' - ' + oObj.aData["MessageRemark"];
+                            return content;
+                        }
+
+                    },
+                    {
+                        //status
+                        "mDataProp": "Status",
+                        "bSearchable": false,
+                        "bSortable": true,
+                        "sClass": "center",
+                        "sWidth": "50",
+                        "fnRender": function (oObj) {
+                            if (oObj.aData["Status"]) {
+                                return '<span class="label bg-color-redLight">Issue</span>';
+                            } else {
+                                return '<span class="label label-success">Solved</span>';
+                            }
+                        }
+                    },
+                    {
+                        // last action date
+                        "mDataProp": "UpdatedDate",
                         "bSearchable": false,
                         "bSortable": false,
                         "sWidth": "200",
+                        "sClass": "center",
+                        "fnRender": function(oObj) {
+                            if (oObj.aData["Status"] == '<span class="label label-success">Solved</span>' && oObj.aData["UpdatedDate"] != null) {
+                                var date = new Date(parseInt(oObj.aData["UpdatedDate"].substr(6)));
+                                return dateFormat(date, "dd/mm/yyyy HH:MM:ss");
+                            }
+                            return "";
+                        }
                     },
                     {
                         //action
+                        "mDataProp": "LastActionType",
                         "bSearchable": false,
                         "bSortable": false,
                         "sWidth": "100"
                     },
                     {
                         // last action date
+                        "mDataProp": "LastActionDateTime",
                         "bSearchable": false,
                         "bSortable": false,
                         "sWidth": "220",
-                        "sClass": "center"
-                    },
-                ],
+                        "sClass": "center",
+                        "fnRender": function(oObj) {
+                            if (oObj.aData["LastActionDateTime"] != null) {
+                                var date = new Date(parseInt(oObj.aData["LastActionDateTime"].substr(6)));
+                                return dateFormat(date, "dd/mm/yyyy HH:mm:ss");
+                            }
+                            return "";
+                        }
+                    }
+                    ],
 
 
 
@@ -699,7 +568,6 @@
             //$("#txtMessageDate").datepicker().datepicker("setDate", new Date());
 
             /* END TABLE TOOLS */
-
             $.fn.dataTableExt.oApi.fnReloadAjax = function (oSettings, sNewSource, fnCallback, bStandingRedraw) {
                 // DataTables 1.10 compatibility - if 1.10 then versionCheck exists.
                 // 1.10s API has ajax reloading built in, so we use those abilities
@@ -779,25 +647,69 @@
                 oSettings.oApi._fnDraw(oSettings);
             };
 
-            var oTable = $('#dt_basic').dataTable();
-            $('#aSearch').click(function () { oTable.fnDraw(); });
-
-            $('#btnResend').click(function(e) {
-                $.smallBox({
-                    title: "Resend in Queue Complete",
-                    content: "<i class='fa fa-clock-o'></i> <i>This operation is complete.</i>",
-                    color: "#659265",
-                    iconSmall: "fa fa-check fa-2x fadeInRight animated",
-                    timeout: 4000
-                });
-            });
         });
 
+        function Resend(id) {
+            Row = function(id) {
+                this.id = id;
+                this.sentType = "ManualSending";
+            };
+            var resendAction = new Row(id);
+            var oTableDS = $('#dt_device_status').dataTable();
+            var oTable = $('#dt_basic').dataTable();
 
+            $.ajax({
+                "type": "POST",
+                "dataType": 'json',
+                "contentType": "application/json; charset=utf-8",
+                "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/SummaryReport/ResendAction",
+                "data": JSON.stringify(resendAction),
+                "success": function(data) {
+                    oTableDS.fnStandingRedraw(0);
+
+                    if (oTable.fnGetData().length == 1)
+                        oTable.fnStandingRedraw(1);
+                    else
+                        oTable.fnStandingRedraw(0);
+
+                    if (data.isSuccess) {
+                        $.smallBox({
+                            title: "Resend Complete",
+                            content: "<i class='fa fa-clock-o'></i> <i>This operation is complete.</i>",
+                            color: "#659265",
+                            iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                            timeout: 4000
+                        });
+
+                    } else {
+                        $.smallBox({
+                            title: "Resend Failed",
+                            content: "<i class='fa fa-clock-o'></i> <i>Failed to complete this operation. " + data.errorMessage + "</i>",
+                            color: "#C46A69",
+                            iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                            timeout: 4000
+                        });
+                    }
+
+                },
+                "error": function(xhr, textStatus, errorThrown) {
+                    if (errorThrown == 'Not Found') errorThrown = '404 Service Not Found.';
+                    $.smallBox({
+                        title: "Resend Failed",
+                        content: "<i class='fa fa-clock-o'></i> <i>" + errorThrown +"</i>",
+                        color: "#C46A69",
+                        iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                        timeout: 4000
+                    });
+
+                },
+
+        });
+        }
         function PrepareClientInfo() {
             {
                 var clientID = '<%=Request["id"]%>';
-
+                Pace.restart();
                 $.ajax({
                     "type": "POST",
                     "dataType": 'json',

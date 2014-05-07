@@ -115,7 +115,8 @@ namespace RMS.Centralize.WebService
 
                                 foreach (var mpd in monitoringProfileDevices)
                                 {
-                                    devices.Add(mpd.RmsDevice);
+                                    if (devices.All(d => d.DeviceId != mpd.RmsDevice.DeviceId))
+                                        devices.Add(mpd.RmsDevice);
                                 }
                                 sr.ListDevices = new List<RmsDevice>(devices);
                             }

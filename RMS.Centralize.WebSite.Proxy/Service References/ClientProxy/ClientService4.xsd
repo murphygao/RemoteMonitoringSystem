@@ -35,6 +35,7 @@
       <xs:element name="DeviceTypeId" type="xs:int" />
       <xs:element minOccurs="0" name="DeviceType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DeviceTypeCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DisplayOrder" nillable="true" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="RmsDeviceType" nillable="true" type="tns:RmsDeviceType" />
@@ -51,8 +52,6 @@
       <xs:element minOccurs="0" name="DeviceCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Brand" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Model" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="DeviceManagerName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="DeviceManagerId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StringValue" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ActiveList" nillable="true" type="xs:boolean" />
       <xs:element minOccurs="0" name="CreatedDate" nillable="true" type="xs:dateTime" />
@@ -78,6 +77,8 @@
       <xs:element minOccurs="0" name="ComPort" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BooleanValue" nillable="true" type="xs:boolean" />
       <xs:element minOccurs="0" name="StringValue" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DeviceManagerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DeviceManagerId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DeviceDescription" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>

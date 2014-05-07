@@ -21,6 +21,8 @@
       <xs:element minOccurs="0" name="MessageRemark" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MonitoringProfileDeviceId" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="SeverityLevelId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="LastActionDateTime" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastActionType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="EventDateTime" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="CreatedDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />

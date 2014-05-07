@@ -30,7 +30,6 @@ namespace RMS.Centralize.DAL
     // Unit of work
     public interface IReverseDbContext : IDisposable
     {
-        IDbSet<RmsActionHistory> RmsActionHistories { get; set; } // RMS_ActionHistory
         IDbSet<RmsActionProfile> RmsActionProfiles { get; set; } // RMS_ActionProfile
         IDbSet<RmsActionRequest> RmsActionRequests { get; set; } // RMS_ActionRequest
         IDbSet<RmsClient> RmsClients { get; set; } // RMS_Client
@@ -55,7 +54,6 @@ namespace RMS.Centralize.DAL
     // Database context
     public partial class ReverseDbContext : DbContext, IReverseDbContext
     {
-        public IDbSet<RmsActionHistory> RmsActionHistories { get; set; } // RMS_ActionHistory
         public IDbSet<RmsActionProfile> RmsActionProfiles { get; set; } // RMS_ActionProfile
         public IDbSet<RmsActionRequest> RmsActionRequests { get; set; } // RMS_ActionRequest
         public IDbSet<RmsClient> RmsClients { get; set; } // RMS_Client
@@ -98,7 +96,6 @@ namespace RMS.Centralize.DAL
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Configurations.Add(new RmsActionHistoryConfiguration());
             modelBuilder.Configurations.Add(new RmsActionProfileConfiguration());
             modelBuilder.Configurations.Add(new RmsActionRequestConfiguration());
             modelBuilder.Configurations.Add(new RmsClientConfiguration());
@@ -120,7 +117,6 @@ namespace RMS.Centralize.DAL
 
         public static DbModelBuilder CreateModel(DbModelBuilder modelBuilder, string schema)
         {
-            modelBuilder.Configurations.Add(new RmsActionHistoryConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsActionProfileConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsActionRequestConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsClientConfiguration(schema));
@@ -146,58 +142,6 @@ namespace RMS.Centralize.DAL
 
     // ************************************************************************
     // POCO classes
-
-    // RMS_ActionHistory
-    [DataContract]
-    public partial class RmsActionHistory
-    {
-        [DataMember(Order = 1, IsRequired = true)]
-        public int ActionHistoryId { get; set; } // ActionHistoryID (Primary key)
-
-        [DataMember(Order = 2, IsRequired = false)]
-        public int? ActionProfileId { get; set; } // ActionProfileID
-
-        [DataMember(Order = 3, IsRequired = false)]
-        public long? RequestActionId { get; set; } // RequestActionID
-
-        [DataMember(Order = 4, IsRequired = false)]
-        public int? RequestActionType { get; set; } // RequestActionType
-
-        [DataMember(Order = 5, IsRequired = false)]
-        public long? SummaryMonitoringId { get; set; } // SummaryMonitoringID
-
-        [DataMember(Order = 6, IsRequired = false)]
-        public int? ClientId { get; set; } // ClientID
-
-        [DataMember(Order = 7, IsRequired = false)]
-        public int? DeviceId { get; set; } // DeviceID
-
-        [DataMember(Order = 8, IsRequired = false)]
-        public int? MessageId { get; set; } // MessageID
-
-        [DataMember(Order = 9, IsRequired = false)]
-        public int? MonitoringProfileDeviceId { get; set; } // MonitoringProfileDeviceID
-
-        [DataMember(Order = 10, IsRequired = false)]
-        public DateTime? CreatedDate { get; set; } // CreatedDate
-
-        [DataMember(Order = 11, IsRequired = false)]
-        public string CreatedBy { get; set; } // CreatedBy
-
-        [DataMember(Order = 12, IsRequired = false)]
-        public DateTime? UpdatedDate { get; set; } // UpdatedDate
-
-        [DataMember(Order = 13, IsRequired = false)]
-        public string UpdatedBy { get; set; } // UpdatedBy
-
-
-        public RmsActionHistory()
-        {
-            CreatedDate = System.DateTime.Now;
-            InitializePartial();
-        }
-        partial void InitializePartial();
-    }
 
     // RMS_ActionProfile
     [DataContract]
@@ -441,7 +385,7 @@ namespace RMS.Centralize.DAL
         public int ClientTypeId { get; set; } // ClientTypeID (Primary key)
 
         [DataMember(Order = 2, IsRequired = false)]
-        public string Clienttype { get; set; } // Clienttype
+        public string ClientType { get; set; } // ClientType
 
 
         // Reverse navigation
@@ -549,6 +493,9 @@ namespace RMS.Centralize.DAL
 
         [DataMember(Order = 3, IsRequired = false)]
         public string DeviceTypeCode { get; set; } // DeviceTypeCode
+
+        [DataMember(Order = 4, IsRequired = false)]
+        public int? DisplayOrder { get; set; } // DisplayOrder
 
 
         // Reverse navigation
@@ -840,18 +787,24 @@ namespace RMS.Centralize.DAL
         public int? SeverityLevelId { get; set; } // SeverityLevelID
 
         [DataMember(Order = 20, IsRequired = false)]
-        public DateTime? EventDateTime { get; set; } // EventDateTime
+        public DateTime? LastActionDateTime { get; set; } // LastActionDateTime
 
         [DataMember(Order = 21, IsRequired = false)]
-        public DateTime? CreatedDate { get; set; } // CreatedDate
+        public string LastActionType { get; set; } // LastActionType
 
         [DataMember(Order = 22, IsRequired = false)]
-        public string CreatedBy { get; set; } // CreatedBy
+        public DateTime? EventDateTime { get; set; } // EventDateTime
 
         [DataMember(Order = 23, IsRequired = false)]
-        public DateTime? UpdatedDate { get; set; } // UpdatedDate
+        public DateTime? CreatedDate { get; set; } // CreatedDate
 
         [DataMember(Order = 24, IsRequired = false)]
+        public string CreatedBy { get; set; } // CreatedBy
+
+        [DataMember(Order = 25, IsRequired = false)]
+        public DateTime? UpdatedDate { get; set; } // UpdatedDate
+
+        [DataMember(Order = 26, IsRequired = false)]
         public string UpdatedBy { get; set; } // UpdatedBy
 
     }
@@ -915,32 +868,6 @@ namespace RMS.Centralize.DAL
 
     // ************************************************************************
     // POCO Configuration
-
-    // RMS_ActionHistory
-    internal partial class RmsActionHistoryConfiguration : EntityTypeConfiguration<RmsActionHistory>
-    {
-        public RmsActionHistoryConfiguration(string schema = "dbo")
-        {
-            ToTable(schema + ".RMS_ActionHistory");
-            HasKey(x => x.ActionHistoryId);
-
-            Property(x => x.ActionHistoryId).HasColumnName("ActionHistoryID").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-            Property(x => x.ActionProfileId).HasColumnName("ActionProfileID").IsOptional();
-            Property(x => x.RequestActionId).HasColumnName("RequestActionID").IsOptional();
-            Property(x => x.RequestActionType).HasColumnName("RequestActionType").IsOptional();
-            Property(x => x.SummaryMonitoringId).HasColumnName("SummaryMonitoringID").IsOptional();
-            Property(x => x.ClientId).HasColumnName("ClientID").IsOptional();
-            Property(x => x.DeviceId).HasColumnName("DeviceID").IsOptional();
-            Property(x => x.MessageId).HasColumnName("MessageID").IsOptional();
-            Property(x => x.MonitoringProfileDeviceId).HasColumnName("MonitoringProfileDeviceID").IsOptional();
-            Property(x => x.CreatedDate).HasColumnName("CreatedDate").IsOptional();
-            Property(x => x.CreatedBy).HasColumnName("CreatedBy").IsOptional().HasMaxLength(100);
-            Property(x => x.UpdatedDate).HasColumnName("UpdatedDate").IsOptional();
-            Property(x => x.UpdatedBy).HasColumnName("UpdatedBy").IsOptional().HasMaxLength(100);
-            InitializePartial();
-        }
-        partial void InitializePartial();
-    }
 
     // RMS_ActionProfile
     internal partial class RmsActionProfileConfiguration : EntityTypeConfiguration<RmsActionProfile>
@@ -1079,7 +1006,7 @@ namespace RMS.Centralize.DAL
             HasKey(x => x.ClientTypeId);
 
             Property(x => x.ClientTypeId).HasColumnName("ClientTypeID").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-            Property(x => x.Clienttype).HasColumnName("Clienttype").IsOptional().HasMaxLength(50);
+            Property(x => x.ClientType).HasColumnName("ClientType").IsOptional().HasMaxLength(50);
             InitializePartial();
         }
         partial void InitializePartial();
@@ -1146,6 +1073,7 @@ namespace RMS.Centralize.DAL
             Property(x => x.DeviceTypeId).HasColumnName("DeviceTypeID").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             Property(x => x.DeviceType).HasColumnName("DeviceType").IsOptional().HasMaxLength(50);
             Property(x => x.DeviceTypeCode).HasColumnName("DeviceTypeCode").IsOptional().HasMaxLength(8);
+            Property(x => x.DisplayOrder).HasColumnName("DisplayOrder").IsOptional();
             InitializePartial();
         }
         partial void InitializePartial();
@@ -1299,6 +1227,8 @@ namespace RMS.Centralize.DAL
             Property(x => x.MessageRemark).HasColumnName("MessageRemark").IsOptional().HasMaxLength(500);
             Property(x => x.MonitoringProfileDeviceId).HasColumnName("MonitoringProfileDeviceID").IsOptional();
             Property(x => x.SeverityLevelId).HasColumnName("SeverityLevelID").IsOptional();
+            Property(x => x.LastActionDateTime).HasColumnName("LastActionDateTime").IsOptional();
+            Property(x => x.LastActionType).HasColumnName("LastActionType").IsOptional().HasMaxLength(50);
             Property(x => x.EventDateTime).HasColumnName("EventDateTime").IsOptional();
             Property(x => x.CreatedDate).HasColumnName("CreatedDate").IsOptional();
             Property(x => x.CreatedBy).HasColumnName("CreatedBy").IsOptional().HasMaxLength(50);

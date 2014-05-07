@@ -617,6 +617,9 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DeviceTypeCodeField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> DisplayOrderField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -666,6 +669,19 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
+        [System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+        public System.Nullable<int> DisplayOrder {
+            get {
+                return this.DisplayOrderField;
+            }
+            set {
+                if ((this.DisplayOrderField.Equals(value) != true)) {
+                    this.DisplayOrderField = value;
+                    this.RaisePropertyChanged("DisplayOrder");
+                }
+            }
+        }
+        
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
@@ -698,12 +714,6 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ModelField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DeviceManagerNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DeviceManagerIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string StringValueField;
@@ -799,32 +809,6 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=5)]
-        public string DeviceManagerName {
-            get {
-                return this.DeviceManagerNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DeviceManagerNameField, value) != true)) {
-                    this.DeviceManagerNameField = value;
-                    this.RaisePropertyChanged("DeviceManagerName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=6)]
-        public string DeviceManagerId {
-            get {
-                return this.DeviceManagerIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DeviceManagerIdField, value) != true)) {
-                    this.DeviceManagerIdField = value;
-                    this.RaisePropertyChanged("DeviceManagerId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=7)]
         public string StringValue {
             get {
                 return this.StringValueField;
@@ -837,7 +821,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=6)]
         public System.Nullable<bool> ActiveList {
             get {
                 return this.ActiveListField;
@@ -850,7 +834,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=7)]
         public System.Nullable<System.DateTime> CreatedDate {
             get {
                 return this.CreatedDateField;
@@ -863,7 +847,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=8)]
         public string CreatedBy {
             get {
                 return this.CreatedByField;
@@ -876,7 +860,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=11)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=9)]
         public System.Nullable<System.DateTime> UpdatedDate {
             get {
                 return this.UpdatedDateField;
@@ -889,7 +873,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=12)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=10)]
         public string UpdatedBy {
             get {
                 return this.UpdatedByField;
@@ -943,6 +927,12 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string StringValueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DeviceManagerNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DeviceManagerIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DeviceDescriptionField;
@@ -1062,6 +1052,32 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+        public string DeviceManagerName {
+            get {
+                return this.DeviceManagerNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DeviceManagerNameField, value) != true)) {
+                    this.DeviceManagerNameField = value;
+                    this.RaisePropertyChanged("DeviceManagerName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+        public string DeviceManagerId {
+            get {
+                return this.DeviceManagerIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DeviceManagerIdField, value) != true)) {
+                    this.DeviceManagerIdField = value;
+                    this.RaisePropertyChanged("DeviceManagerId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=10)]
         public string DeviceDescription {
             get {
                 return this.DeviceDescriptionField;
