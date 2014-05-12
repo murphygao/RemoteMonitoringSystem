@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using RMS.Agent.Proxy.ClientProxy;
 using RMS.Agent.Proxy.MonitoringProxy;
+using RMS.Monitoring.Device.CardDespenser;
+using RMS.Monitoring.Device.MonitorDisplay;
 using RMS.Monitoring.Device.PerformanceCounter;
 using RMS.Monitoring.Device.SignaturePad;
 using RMS.Monitoring.Device.SmartCardReader;
@@ -82,9 +84,21 @@ namespace RMS.Monitoring.Core
 
 
                         }
+                        else if (deviceTypeCode == Models.DeviceCode.CardDispenser)
+                        {
+                            var ds = new CardDispenserService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
+                            var rmsReportMonitoringRaws = ds.Monitoring();
+                            lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
+                        }
                         else if (deviceTypeCode == Models.DeviceCode.ElectronicSignaturePad)
                         {
                             var ds = new SignaturePadService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
+                            var rmsReportMonitoringRaws = ds.Monitoring();
+                            lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
+                        }
+                        else if (deviceTypeCode == Models.DeviceCode.MonitorDisplay)
+                        {
+                            var ds = new MonitorDisplayService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
                             var rmsReportMonitoringRaws = ds.Monitoring();
                             lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
                         }

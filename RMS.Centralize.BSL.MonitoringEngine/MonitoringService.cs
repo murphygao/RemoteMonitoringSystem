@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.Serialization.Configuration;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy;
 using RMS.Centralize.BSL.MonitoringEngine.Model;
 using RMS.Centralize.DAL;
+using RMS.Centralize.WebService.Proxy.MonitoringProxy;
+
 
 namespace RMS.Centralize.BSL.MonitoringEngine
 {
@@ -53,6 +57,42 @@ namespace RMS.Centralize.BSL.MonitoringEngine
             }
             catch (Exception e)
             {
+                try
+                {
+                    using (var db = new MyDbContext())
+                    {
+                        SqlParameter[] parameters = new SqlParameter[1];
+                        SqlParameter p1 = new SqlParameter("ClientID", client.ClientId);
+                        parameters[0] = p1;
+
+                        var lists = db.Database.SqlQuery<RmsMonitoringProfileDevice>("RMS_GetMonitoringProfileDeviceByClientID " 
+                                                                            + "@ClientID", parameters);
+                        var device = lists.First(f => f.DeviceId == 1 || f.DeviceDescription == "Alive");
+                        if (device != null)
+                        {
+                            RMS.Centralize.WebService.Proxy.MonitoringProxy.MonitoringServiceClient mp = new MonitoringServiceClient();
+
+                            RMS.Centralize.WebService.Proxy.MonitoringProxy.RmsReportMonitoringRaw rawMessage = new WebService.Proxy.MonitoringProxy.RmsReportMonitoringRaw
+                            {
+                                ClientCode = client.ClientCode,
+                                DeviceCode = "CLIENT",
+                                Message = "AGENT_NOT_ALIVE",
+                                MessageDateTime = DateTime.Now,
+                                MonitoringProfileDeviceId = device.MonitoringProfileDeviceId
+                            };
+
+                            mp.AddMessage(rawMessage); 
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
+
+
+
                 Console.WriteLine(e);
             }
         }

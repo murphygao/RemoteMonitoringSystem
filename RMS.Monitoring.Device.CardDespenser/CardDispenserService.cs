@@ -8,7 +8,7 @@ using RMS.Agent.Proxy.MonitoringProxy;
 
 namespace RMS.Monitoring.Device.CardDespenser
 {
-    class CardDispenserService
+    public class CardDispenserService
     {
         private CardDispenser _device;
         private ClientResult clientResult;

@@ -140,6 +140,7 @@ namespace RMS.Centralize.WebService.BSL
                                                                                 "@MonitoringProfileDeviceID", parameters);
                         List<MessageDetail> lMessageDetails = new List<MessageDetail>(details.ToList());
 
+                        if (lMessageDetails.Count == 0) continue;
 
                         if (reportMonitoringRaw.Message.ToLower() == "ok")
                         {
