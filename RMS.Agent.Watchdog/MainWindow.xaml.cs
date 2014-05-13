@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -23,6 +24,7 @@ namespace RMS.Agent.Watchdog
     /// </summary>
     public partial class MainWindow : Window
     {
+        private System.Windows.Forms.NotifyIcon ni;
         private System.Windows.Threading.DispatcherTimer dispatcherTimer;
         private WatchdogService ws;
         public MainWindow()
@@ -31,7 +33,7 @@ namespace RMS.Agent.Watchdog
             {
                 InitializeComponent();
 
-                System.Windows.Forms.NotifyIcon ni = new System.Windows.Forms.NotifyIcon();
+                ni = new System.Windows.Forms.NotifyIcon();
 
                 ni.Icon = RMS.Agent.Watchdog.Properties.Resources.icon_16;
 
@@ -93,6 +95,11 @@ namespace RMS.Agent.Watchdog
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             ws.Start();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            ni.Visible = false;
         }
     }
 
