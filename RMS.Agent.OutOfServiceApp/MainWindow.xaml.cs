@@ -27,6 +27,7 @@ namespace RMS.Agent.OutOfServiceApp
         {
             InitializeComponent();
             //lblCount.Content = countDown;
+            this.Activate();
         }
 
         private void btnMenu_Click(object sender, RoutedEventArgs e)
