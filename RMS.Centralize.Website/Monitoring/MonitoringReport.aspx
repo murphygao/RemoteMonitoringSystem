@@ -85,14 +85,14 @@
                                         <section class="col col-md-3 col-xs-6">
                                             <label class="input">
                                                 <i class="icon-append fa fa-calendar"></i>
-                                                <input type="text" class="input-sm" name="txtStartMessageDate" id="txtStartMessageDate" placeholder="Start Message Date"/>
+                                                <input type="text" class="input-sm" name="txtStartEventDate" id="txtStartEventDate" placeholder="Start Event Date"/>
                                             </label>
                                         </section>
 
                                         <section class="col col-md-3 col-xs-6">
                                             <label class="input">
                                                 <i class="icon-append fa fa-calendar"></i>
-                                                <input type="text" class="input-sm" name="txtEndMessageDate" id="txtEndMessageDate" placeholder="End Message Date"/>
+                                                <input type="text" class="input-sm" name="txtEndEventDate" id="txtEndEventDate" placeholder="End Event Date"/>
                                             </label>
                                         </section>
 
@@ -314,8 +314,8 @@
                     "aaSorting": [[ 1, "desc" ]],
                     "sAjaxSource": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/SummaryReport/SearchMonitoringReport/",
                     "fnServerData": function (sSource, aoData, fnCallback) {
-                        aoData.push({ "name": "txtStartMessageDate", "value": $('#txtStartMessageDate').val() });
-                        aoData.push({ "name": "txtEndMessageDate", "value": $('#txtEndMessageDate').val() });
+                        aoData.push({ "name": "txtStartEventDate", "value": $('#txtStartEventDate').val() });
+                        aoData.push({ "name": "txtEndEventDate", "value": $('#txtEndEventDate').val() });
                         aoData.push({ "name": "ddlMessageGroup", "value": $('#ddlMessageGroup').val() });
                         aoData.push({ "name": "txtClientCode", "value": $('#txtClientCode').val() });
                         aoData.push({ "name": "txtMessage", "value": $('#txtMessage').val() });
@@ -344,13 +344,13 @@
                         },
                         {
                             // Date
-                            "mDataProp": "MessageDateTime",
+                            "mDataProp": "EventDateTime",
                             "bSearchable": false,
                             "bSortable": true,
                             "sWidth": "180",
                             "sClass": "center",
                             "fnRender": function (oObj) {
-                                var date = new Date(parseInt(oObj.aData["MessageDateTime"].substr(6)));
+                                var date = new Date(parseInt(oObj.aData["EventDateTime"].substr(6)));
                                 return dateFormat(date, "dd/mm/yyyy HH:MM:ss");
                             }
 
@@ -464,7 +464,7 @@
 
                 //$('#txtMessageDate').attr("placeholder", today);
 
-                $('#txtStartMessageDate').datepicker({
+                $('#txtStartEventDate').datepicker({
                     dateFormat: 'yy.mm.dd',
                     prevText: '<i class="fa fa-chevron-left"></i>',
                     nextText: '<i class="fa fa-chevron-right"></i>',
@@ -472,14 +472,14 @@
                     changeMonth: true,
                     changeYear: true,
                     onSelect: function (selectedDate) {
-                        $('#txtEndMessageDate').datepicker('option', 'minDate', selectedDate);
+                        $('#txtEndEventDate').datepicker('option', 'minDate', selectedDate);
                     },
                     onClose: function (selectedDate) {
-                        $('#txtEndMessageDate').datepicker('option', 'minDate', selectedDate);
+                        $('#txtEndEventDate').datepicker('option', 'minDate', selectedDate);
                     }
                 });
 
-                $('#txtEndMessageDate').datepicker({
+                $('#txtEndEventDate').datepicker({
                     dateFormat: 'yy.mm.dd',
                     prevText: '<i class="fa fa-chevron-left"></i>',
                     nextText: '<i class="fa fa-chevron-right"></i>',
@@ -487,11 +487,11 @@
                     changeMonth: true,
                     changeYear: true,
                     onSelect: function (selectedDate) {
-                        $('#txtStartMessageDate').datepicker('option', 'maxDate', selectedDate);
+                        $('#txtStartEventDate').datepicker('option', 'maxDate', selectedDate);
                     },
                     onClose: function (selectedDate) {
                         if (selectedDate == '') selectedDate = '0';
-                        $('#txtStartMessageDate').datepicker('option', 'maxDate', selectedDate);
+                        $('#txtStartEventDate').datepicker('option', 'maxDate', selectedDate);
                     }
 
                 });

@@ -141,5 +141,34 @@ namespace RMS.Centralize.WebService
             }
             return null;
         }
+
+        public Result SetClientState(int clientID, ClientState state)
+        {
+            try
+            {
+                using (var db = new MyDbContext())
+                {
+                    var client = db.RmsClients.Find(clientID);
+                    client.State = (int) state;
+
+                    db.SaveChanges();
+                }
+
+                var sr = new Result
+                {
+                    IsSuccess = true
+                };
+                return sr;
+            }
+            catch (Exception ex)
+            {
+                var sr = new Result
+                {
+                    IsSuccess = false,
+                    ErrorMessage = ex.Message
+                };
+                return sr;
+            }
+        }
     }
 }

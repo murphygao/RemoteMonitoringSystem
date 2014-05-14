@@ -74,6 +74,14 @@
       <Project>{f63949c0-3f8d-4508-92c9-980c2db5c15c}</Project>
       <Name>RMS.Agent.Entity</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RMS.Agent.Helper\RMS.Agent.Helper.csproj">
+      <Project>{2F770264-9C79-446B-9D93-5CE71DB1F4D7}</Project>
+      <Name>RMS.Agent.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Agent.Model\RMS.Agent.Model.csproj">
+      <Project>{5d7e5abc-ed70-4986-a93b-ea637cc35445}</Project>
+      <Name>RMS.Agent.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

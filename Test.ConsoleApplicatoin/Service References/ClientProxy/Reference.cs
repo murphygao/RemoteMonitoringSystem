@@ -260,6 +260,9 @@ namespace Test.ConsoleApplication.ClientProxy {
         private System.Nullable<System.DateTime> ExpiredDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> StateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> CreatedDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -399,6 +402,19 @@ namespace Test.ConsoleApplication.ClientProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+        public System.Nullable<int> State {
+            get {
+                return this.StateField;
+            }
+            set {
+                if ((this.StateField.Equals(value) != true)) {
+                    this.StateField = value;
+                    this.RaisePropertyChanged("State");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=10)]
         public System.Nullable<System.DateTime> CreatedDate {
             get {
                 return this.CreatedDateField;
@@ -411,7 +427,7 @@ namespace Test.ConsoleApplication.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=11)]
         public string CreatedBy {
             get {
                 return this.CreatedByField;
@@ -424,7 +440,7 @@ namespace Test.ConsoleApplication.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=11)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=12)]
         public System.Nullable<System.DateTime> UpdatedDate {
             get {
                 return this.UpdatedDateField;
@@ -437,7 +453,7 @@ namespace Test.ConsoleApplication.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=12)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=13)]
         public string UpdatedBy {
             get {
                 return this.UpdatedByField;
@@ -617,6 +633,9 @@ namespace Test.ConsoleApplication.ClientProxy {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DeviceTypeCodeField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> DisplayOrderField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -662,6 +681,19 @@ namespace Test.ConsoleApplication.ClientProxy {
                 if ((object.ReferenceEquals(this.DeviceTypeCodeField, value) != true)) {
                     this.DeviceTypeCodeField = value;
                     this.RaisePropertyChanged("DeviceTypeCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+        public System.Nullable<int> DisplayOrder {
+            get {
+                return this.DisplayOrderField;
+            }
+            set {
+                if ((this.DisplayOrderField.Equals(value) != true)) {
+                    this.DisplayOrderField = value;
+                    this.RaisePropertyChanged("DisplayOrder");
                 }
             }
         }
@@ -1084,12 +1116,26 @@ namespace Test.ConsoleApplication.ClientProxy {
         }
     }
     
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ClientState", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService")]
+    public enum ClientState : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Normal = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Maintenance = 2,
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ClientProxy.IClientService")]
     public interface IClientService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/GetClient", ReplyAction="http://tempuri.org/IClientService/GetClientResponse")]
         Test.ConsoleApplication.ClientProxy.ClientResult GetClient(Test.ConsoleApplication.ClientProxy.GetClientBy searchBy, System.Nullable<int> clientID, string clientCode, string ipAddress, bool withDetail);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/SetClientState", ReplyAction="http://tempuri.org/IClientService/SetClientStateResponse")]
+        Test.ConsoleApplication.ClientProxy.Result SetClientState(int clientID, Test.ConsoleApplication.ClientProxy.ClientState state);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1121,6 +1167,10 @@ namespace Test.ConsoleApplication.ClientProxy {
         
         public Test.ConsoleApplication.ClientProxy.ClientResult GetClient(Test.ConsoleApplication.ClientProxy.GetClientBy searchBy, System.Nullable<int> clientID, string clientCode, string ipAddress, bool withDetail) {
             return base.Channel.GetClient(searchBy, clientID, clientCode, ipAddress, withDetail);
+        }
+        
+        public Test.ConsoleApplication.ClientProxy.Result SetClientState(int clientID, Test.ConsoleApplication.ClientProxy.ClientState state) {
+            return base.Channel.SetClientState(clientID, state);
         }
     }
 }

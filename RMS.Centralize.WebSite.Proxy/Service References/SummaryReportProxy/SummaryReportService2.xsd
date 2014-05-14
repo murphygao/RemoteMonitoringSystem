@@ -59,6 +59,7 @@
       <xs:element minOccurs="0" name="LocationName2" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Mobile" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ProfileName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="State" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="Telephone" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UpdatedDate" nillable="true" type="xs:dateTime" />
     </xs:sequence>

@@ -7,8 +7,8 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" minOccurs="0" name="param" nillable="true" type="q1:JQueryDataTableParamModel" />
-        <xs:element minOccurs="0" name="txtStartMessageDate" nillable="true" type="xs:dateTime" />
-        <xs:element minOccurs="0" name="txtEndMessageDate" nillable="true" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="txtStartEventDate" nillable="true" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="txtEndEventDate" nillable="true" type="xs:dateTime" />
         <xs:element minOccurs="0" name="txtClientCode" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="txtLocation" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="ddlMessageGroup" nillable="true" type="xs:string" />

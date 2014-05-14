@@ -11,6 +11,7 @@
       <xs:element minOccurs="0" name="Enable" nillable="true" type="xs:boolean" />
       <xs:element minOccurs="0" name="EffectiveDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="ExpiredDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="State" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="CreatedDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UpdatedDate" nillable="true" type="xs:dateTime" />

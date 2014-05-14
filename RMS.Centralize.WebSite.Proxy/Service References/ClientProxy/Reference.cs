@@ -260,6 +260,9 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         private System.Nullable<System.DateTime> ExpiredDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> StateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> CreatedDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -399,6 +402,19 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+        public System.Nullable<int> State {
+            get {
+                return this.StateField;
+            }
+            set {
+                if ((this.StateField.Equals(value) != true)) {
+                    this.StateField = value;
+                    this.RaisePropertyChanged("State");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=10)]
         public System.Nullable<System.DateTime> CreatedDate {
             get {
                 return this.CreatedDateField;
@@ -411,7 +427,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=11)]
         public string CreatedBy {
             get {
                 return this.CreatedByField;
@@ -424,7 +440,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=11)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=12)]
         public System.Nullable<System.DateTime> UpdatedDate {
             get {
                 return this.UpdatedDateField;
@@ -437,7 +453,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=12)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=13)]
         public string UpdatedBy {
             get {
                 return this.UpdatedByField;
@@ -1100,6 +1116,17 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         }
     }
     
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ClientState", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService")]
+    public enum ClientState : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Normal = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Maintenance = 2,
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ClientProxy.IClientService")]
     public interface IClientService {
@@ -1109,6 +1136,12 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/GetClient", ReplyAction="http://tempuri.org/IClientService/GetClientResponse")]
         System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult> GetClientAsync(RMS.Centralize.WebSite.Proxy.ClientProxy.GetClientBy searchBy, System.Nullable<int> clientID, string clientCode, string ipAddress, bool withDetail);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/SetClientState", ReplyAction="http://tempuri.org/IClientService/SetClientStateResponse")]
+        RMS.Centralize.WebSite.Proxy.ClientProxy.Result SetClientState(int clientID, RMS.Centralize.WebSite.Proxy.ClientProxy.ClientState state);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/SetClientState", ReplyAction="http://tempuri.org/IClientService/SetClientStateResponse")]
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.Result> SetClientStateAsync(int clientID, RMS.Centralize.WebSite.Proxy.ClientProxy.ClientState state);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1144,6 +1177,14 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         
         public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult> GetClientAsync(RMS.Centralize.WebSite.Proxy.ClientProxy.GetClientBy searchBy, System.Nullable<int> clientID, string clientCode, string ipAddress, bool withDetail) {
             return base.Channel.GetClientAsync(searchBy, clientID, clientCode, ipAddress, withDetail);
+        }
+        
+        public RMS.Centralize.WebSite.Proxy.ClientProxy.Result SetClientState(int clientID, RMS.Centralize.WebSite.Proxy.ClientProxy.ClientState state) {
+            return base.Channel.SetClientState(clientID, state);
+        }
+        
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.Result> SetClientStateAsync(int clientID, RMS.Centralize.WebSite.Proxy.ClientProxy.ClientState state) {
+            return base.Channel.SetClientStateAsync(clientID, state);
         }
     }
 }

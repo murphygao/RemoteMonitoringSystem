@@ -122,6 +122,9 @@
     <None Include="Service References\ClientProxy\RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ClientProxy\RMS.Centralize.WebSite.Proxy.ClientProxy.Result.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\MessageActionProxy\MessageActionService.wsdl" />
     <None Include="Service References\MessageActionProxy\MessageActionService.xsd">
       <SubType>Designer</SubType>

@@ -271,15 +271,18 @@ namespace RMS.Centralize.DAL
         public DateTime? ExpiredDate { get; set; } // ExpiredDate
 
         [DataMember(Order = 10, IsRequired = false)]
-        public DateTime? CreatedDate { get; set; } // CreatedDate
+        public int? State { get; set; } // State
 
         [DataMember(Order = 11, IsRequired = false)]
-        public string CreatedBy { get; set; } // CreatedBy
+        public DateTime? CreatedDate { get; set; } // CreatedDate
 
         [DataMember(Order = 12, IsRequired = false)]
-        public DateTime? UpdatedDate { get; set; } // UpdatedDate
+        public string CreatedBy { get; set; } // CreatedBy
 
         [DataMember(Order = 13, IsRequired = false)]
+        public DateTime? UpdatedDate { get; set; } // UpdatedDate
+
+        [DataMember(Order = 14, IsRequired = false)]
         public string UpdatedBy { get; set; } // UpdatedBy
 
 
@@ -292,6 +295,7 @@ namespace RMS.Centralize.DAL
 
         public RmsClient()
         {
+            State = 1;
             RmsClientMonitorings = new List<RmsClientMonitoring>();
             RmsClientSeverityActions = new List<RmsClientSeverityAction>();
             InitializePartial();
@@ -934,6 +938,7 @@ namespace RMS.Centralize.DAL
             Property(x => x.Enable).HasColumnName("Enable").IsOptional();
             Property(x => x.EffectiveDate).HasColumnName("EffectiveDate").IsOptional();
             Property(x => x.ExpiredDate).HasColumnName("ExpiredDate").IsOptional();
+            Property(x => x.State).HasColumnName("State").IsOptional();
             Property(x => x.CreatedDate).HasColumnName("CreatedDate").IsOptional();
             Property(x => x.CreatedBy).HasColumnName("CreatedBy").IsOptional().HasMaxLength(100);
             Property(x => x.UpdatedDate).HasColumnName("UpdatedDate").IsOptional();

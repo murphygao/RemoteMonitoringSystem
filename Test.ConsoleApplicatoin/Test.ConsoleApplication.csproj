@@ -96,6 +96,9 @@
     <None Include="Service References\ClientProxy\Test.ConsoleApplication.ClientProxy.ClientResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ClientProxy\Test.ConsoleApplication.ClientProxy.Result.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\MonitoringProxy\MonitoringService.wsdl" />
     <None Include="Service References\MonitoringProxy\MonitoringService.xsd">
       <SubType>Designer</SubType>
@@ -130,6 +133,20 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RMS.Centralize.BSL.MonitoringEngine\RMS.Centralize.BSL.MonitoringEngine.csproj">
+      <Project>{a19cdbe1-0153-4050-9327-ca142fc67b34}</Project>
+      <Name>RMS.Centralize.BSL.MonitoringEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.Device.WebCamera\RMS.Monitoring.Device.WebCamera.csproj">
+      <Project>{d77923d6-3238-4a20-9993-0c3113acbdd2}</Project>
+      <Name>RMS.Monitoring.Device.WebCamera</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.Device\RMS.Monitoring.Device.csproj">
+      <Project>{ba999f8e-4f2b-443a-b59a-f8f82c4d9103}</Project>
+      <Name>RMS.Monitoring.Device</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Service References\MonitoringProxy\MonitoringService.disco" />
   </ItemGroup>
   <ItemGroup>
@@ -143,20 +160,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RMS.Centralize.BSL.MonitoringEngine\RMS.Centralize.BSL.MonitoringEngine.csproj">
-      <Project>{a19cdbe1-0153-4050-9327-ca142fc67b34}</Project>
-      <Name>RMS.Centralize.BSL.MonitoringEngine</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RMS.Monitoring.Device.WebCamera\RMS.Monitoring.Device.WebCamera.csproj">
-      <Project>{d77923d6-3238-4a20-9993-0c3113acbdd2}</Project>
-      <Name>RMS.Monitoring.Device.WebCamera</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RMS.Monitoring.Device\RMS.Monitoring.Device.csproj">
-      <Project>{ba999f8e-4f2b-443a-b59a-f8f82c4d9103}</Project>
-      <Name>RMS.Monitoring.Device</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

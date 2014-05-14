@@ -15,7 +15,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
     {
         //
         // GET: /Monitoring/SummaryReport/SearchMonitoringReport
-        public ActionResult SearchMonitoringReport(JQueryDataTableParamModel param, DateTime? txtStartMessageDate, DateTime? txtEndMessageDate
+        public ActionResult SearchMonitoringReport(JQueryDataTableParamModel param, DateTime? txtStartEventDate, DateTime? txtEndEventDate
             , string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, bool? ddlMessageStatus, int? clientID)
         {
             //JQueryDataTableParamModel param = new JQueryDataTableParamModel();
@@ -32,7 +32,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             {
 
                 var serviceClient = new RMS.Centralize.WebSite.Proxy.SummaryReportService().summaryReportService;
-                var result = serviceClient.SearchSummaryMonitoring(param, txtStartMessageDate, txtEndMessageDate, txtClientCode, txtLocation
+                var result = serviceClient.SearchSummaryMonitoring(param, txtStartEventDate, txtEndEventDate, txtClientCode, txtLocation
                     , ddlMessageGroup, txtMessage, ddlMessageStatus, clientID);
 
 
@@ -101,7 +101,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
         }
 
         // GET: /Monitoring/SummaryReport/SearchMonitoringReport
-        public ActionResult SearchClientMonitoring(JQueryDataTableParamModel param, DateTime? txtStartMessageDate, DateTime? txtEndMessageDate
+        public ActionResult SearchClientMonitoring(JQueryDataTableParamModel param, DateTime? txtStartEventDate, DateTime? txtEndEventDate
             , string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, bool? ddlMessageStatus, int? clientID)
         {
             //JQueryDataTableParamModel param = new JQueryDataTableParamModel();
@@ -118,7 +118,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             {
 
                 var service = new RMS.Centralize.WebSite.Proxy.SummaryReportService().summaryReportService;
-                var result = service.SearchSummaryMonitoring(param, txtStartMessageDate, txtEndMessageDate, txtClientCode, txtLocation
+                var result = service.SearchSummaryMonitoring(param, txtStartEventDate, txtEndEventDate, txtClientCode, txtLocation
                     , ddlMessageGroup, txtMessage, ddlMessageStatus, clientID);
 
 

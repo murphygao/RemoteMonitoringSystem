@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,7 +30,8 @@ namespace RMS.Agent.BSL.Monitoring
              * 
              * 1. Call Centralize to Get Client & Device Info for Monitoring 
              * 2. Send Alive Message
-             * 3. Check Device Monitoring
+             * 3. Check Maintenance State
+             * 4. Check Device Monitoring
              * 
              */
 
@@ -66,7 +69,33 @@ namespace RMS.Agent.BSL.Monitoring
             #endregion
 
 
-            #region 3. Check Device Monitoring
+            #region 3. Check Maintenance State
+
+            string maFilePath = ConfigurationManager.AppSettings["MA_FILE_PATH"];
+
+            // MA State?
+            if (File.Exists(maFilePath))
+            {
+                if (clientResult.Client.State == (int) ClientState.Normal)
+                {
+                    var client = new ClientServiceClient();
+                    client.SetClientState(clientResult.Client.ClientId, ClientState.Maintenance);
+                }
+                return;
+            }
+            // Normal State
+            else
+            {
+                if (clientResult.Client.State == (int)ClientState.Maintenance)
+                {
+                    var client = new ClientServiceClient();
+                    client.SetClientState(clientResult.Client.ClientId, ClientState.Normal);
+                }
+            }
+
+            #endregion
+
+            #region 4. Check Device Monitoring
 
             var monitoringService = new RMS.Monitoring.Core.MonitoringService();
 

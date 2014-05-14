@@ -16,7 +16,8 @@ namespace RMS.Centralize.WebService
         [OperationContract]
         ClientResult GetClient(GetClientBy searchBy, int? clientID, string clientCode, string ipAddress, bool withDetail);
 
-
+        [OperationContract]
+        Result SetClientState(int clientID, ClientState state);
     }
 
 
@@ -31,6 +32,17 @@ namespace RMS.Centralize.WebService
 
         [EnumMember]
         IPAddress
+
+    }
+
+    [DataContract]
+    public enum ClientState
+    {
+        [EnumMember]
+        Normal = 1,
+
+        [EnumMember]
+        Maintenance = 2
 
     }
 

@@ -81,22 +81,24 @@
                             <div class="widget-body">
 
                                 <dl class="dl-horizontal">
-                                    <dt class="padding-15 margin-bottom-5">Client Code</dt>
-                                    <dd class="padding-15 margin-bottom-5 bg-color-grayLight"><label id="lblClientCode"></label></dd>
-                                    <dt class="padding-15 margin-bottom-5">Client Type</dt>
-                                    <dd class="padding-15 margin-bottom-5 bg-color-grayLight"><label id="lblClientType"></label></dd>
-                                    <dt class="padding-15 margin-bottom-5">Location</dt>
-                                    <dd class="padding-15 margin-bottom-5 bg-color-grayLight"><label id="lblLocation"></label></dd>
-                                    <dt class="padding-15 margin-bottom-5">IP Address</dt>
-                                    <dd class="padding-15 margin-bottom-5 bg-color-grayLight"><label id="lblIPAddress"></label></dd>
-                                    <dt class="padding-15 margin-bottom-5">Installation Date</dt>
-                                    <dd class="padding-15 margin-bottom-5 bg-color-grayLight"><label id="lblCreatedDate"></label></dd>
-                                    <dt class="padding-15 margin-bottom-5">Last Update</dt>
-                                    <dd class="padding-15 margin-bottom-5 bg-color-grayLight"><label id="lblUpdatedDate"></label></dd>
-                                    <dt class="padding-15 margin-bottom-5">Device Profile</dt>
-                                    <dd class="padding-15 margin-bottom-5 bg-color-grayLight"><label id="lblProfileName"></label></dd>
-                                    <dt class="padding-15 margin-bottom-5">Contact Detail</dt>
-                                    <dd class="padding-15 margin-bottom-5 bg-color-grayLight">Tel.: <label id="lblTelephone"></label><br />
+                                    <dt class="padding-10 margin-bottom-5">Client Code</dt>
+                                    <dd class="padding-10 margin-bottom-5 bg-color-grayLight"><label id="lblClientCode"></label></dd>
+                                    <dt class="padding-10 margin-bottom-5">Client Type</dt>
+                                    <dd class="padding-10 margin-bottom-5 bg-color-grayLight"><label id="lblClientType"></label></dd>
+                                    <dt class="padding-10 margin-bottom-5">Location</dt>
+                                    <dd class="padding-10 margin-bottom-5 bg-color-grayLight"><label id="lblLocation"></label></dd>
+                                    <dt class="padding-10 margin-bottom-5">IP Address</dt>
+                                    <dd class="padding-10 margin-bottom-5 bg-color-grayLight"><label id="lblIPAddress"></label></dd>
+                                    <dt class="padding-10 margin-bottom-5">Monitoring State</dt>
+                                    <dd class="padding-10 margin-bottom-5 bg-color-grayLight"><label id="lblState"></label></dd>
+                                    <dt class="padding-10 margin-bottom-5">Installation Date</dt>
+                                    <dd class="padding-10 margin-bottom-5 bg-color-grayLight"><label id="lblCreatedDate"></label></dd>
+                                    <dt class="padding-10 margin-bottom-5">Last Update</dt>
+                                    <dd class="padding-10 margin-bottom-5 bg-color-grayLight"><label id="lblUpdatedDate"></label></dd>
+                                    <dt class="padding-10 margin-bottom-5">Device Profile</dt>
+                                    <dd class="padding-10 margin-bottom-5 bg-color-grayLight"><label id="lblProfileName"></label></dd>
+                                    <dt class="padding-10 margin-bottom-5">Contact Detail</dt>
+                                    <dd class="padding-10 margin-bottom-5 bg-color-grayLight">Tel.: <label id="lblTelephone"></label><br />
                                         Mobile: <label id="lblMobile"></label><br />
                                         Email: <label id="lblEmail"></label></dd>
                                 </dl>
@@ -443,13 +445,13 @@
                     },
                     {
                         // Date
-                        "mDataProp": "MessageDateTime",
+                        "mDataProp": "EventDateTime",
                         "bSearchable": false,
                         "bSortable": true,
                         "sWidth": "150",
                         "sClass": "center",
                         "fnRender": function(oObj) {
-                            var date = new Date(parseInt(oObj.aData["MessageDateTime"].substr(6)));
+                            var date = new Date(parseInt(oObj.aData["EventDateTime"].substr(6)));
                             return dateFormat(date, "dd/mm/yyyy HH:MM:ss");
                         }
                     },
@@ -735,6 +737,11 @@
                             $('#lblLocation').text(loc);
 
                             $('#lblIPAddress').text(myData.IPAddress);
+
+                            if (myData.State == 1)
+                                $('#lblState').text('Normal');
+                            else if (myData.State == 2)
+                                $('#lblState').text('Maintenance');
 
                             var createdDate = new Date(myData.CreatedDate);
                             $('#lblCreatedDate').text(dateFormat(createdDate, "dd/mm/yyyy HH:mm:ss", true));

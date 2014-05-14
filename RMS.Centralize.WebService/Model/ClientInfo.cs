@@ -24,6 +24,6 @@ namespace RMS.Centralize.WebService.Model
         public string Email { get; set; }
         public string IPAddress { get; set; }
         public string ProfileName { get; set; }
-
+        public int? State { get; set; }
     }
 }

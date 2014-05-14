@@ -15,16 +15,35 @@
   <wsdl:message name="IClientService_GetClient_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetClientResponse" />
   </wsdl:message>
+  <wsdl:message name="IClientService_SetClientState_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetClientState" />
+  </wsdl:message>
+  <wsdl:message name="IClientService_SetClientState_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetClientStateResponse" />
+  </wsdl:message>
   <wsdl:portType name="IClientService">
     <wsdl:operation name="GetClient">
       <wsdl:input wsaw:Action="http://tempuri.org/IClientService/GetClient" message="tns:IClientService_GetClient_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IClientService/GetClientResponse" message="tns:IClientService_GetClient_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetClientState">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientService/SetClientState" message="tns:IClientService_SetClientState_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientService/SetClientStateResponse" message="tns:IClientService_SetClientState_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IClientService" type="tns:IClientService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="GetClient">
       <soap:operation soapAction="http://tempuri.org/IClientService/GetClient" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetClientState">
+      <soap:operation soapAction="http://tempuri.org/IClientService/SetClientState" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

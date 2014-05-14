@@ -16,7 +16,7 @@ namespace RMS.Centralize.WebService
     // NOTE: In order to launch WCF Test Client for testing this service, please select SummaryReportService.svc or SummaryReportService.svc.cs at the Solution Explorer and start debugging.
     public class SummaryReportService : ISummaryReportService
     {
-        public SummaryMonitoringResult SearchSummaryMonitoring(JQueryDataTableParamModel param, DateTime? txtStartMessageDate, DateTime? txtEndMessageDate
+        public SummaryMonitoringResult SearchSummaryMonitoring(JQueryDataTableParamModel param, DateTime? txtStartEventDate, DateTime? txtEndEventDate
             , string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, bool? ddlMessageStatus, int? clientID)
         {
 
@@ -112,24 +112,24 @@ namespace RMS.Centralize.WebService
                         p12 = new SqlParameter("Status", ddlMessageStatus);
                     }
 
-                    if (txtStartMessageDate == null)
+                    if (txtStartEventDate == null)
                     {
-                        p13 = new SqlParameter("MessageDateTimeStart", DBNull.Value);
+                        p13 = new SqlParameter("EventDateTimeStart", DBNull.Value);
                         p13.DbType = DbType.DateTime;
                     }
                     else
                     {
-                        p13 = new SqlParameter("MessageDateTimeStart", txtStartMessageDate);
+                        p13 = new SqlParameter("EventDateTimeStart", txtStartEventDate);
                     }
 
-                    if (txtEndMessageDate == null)
+                    if (txtEndEventDate == null)
                     {
-                        p14 = new SqlParameter("MessageDateTimeEnd", DBNull.Value);
+                        p14 = new SqlParameter("EventDateTimeEnd", DBNull.Value);
                         p14.DbType = DbType.DateTime;
                     }
                     else
                     {
-                        p14 = new SqlParameter("MessageDateTimeEnd", txtEndMessageDate);
+                        p14 = new SqlParameter("EventDateTimeEnd", txtEndEventDate);
                     }
 
                     p15 = new SqlParameter("EventDateTime", DBNull.Value);
@@ -180,7 +180,7 @@ namespace RMS.Centralize.WebService
                     var listOfType = db.Database.SqlQuery<ReportSummaryMonitoring>("RMS_Report_ListSummaryMonitoring " +
                                                                             "@ClientCode, @ClientIPAddress, @Location, @DeviceID" +
                                                                             ", @MessageGroupID, @Message, @Status" +
-                                                                            ", @MessageDateTimeStart, @MessageDateTimeEnd" +
+                                                                            ", @EventDateTimeStart, @EventDateTimeEnd" +
                                                                             ", @EventDateTime, @CreatedDate, @UpdatedDate, @IncludeOK, @ClientID" +
                                                                             ", @PageNbr, @PageSize, @FirstRec, @SortCol, @TotalRecords OUTPUT"
                         , parameters);

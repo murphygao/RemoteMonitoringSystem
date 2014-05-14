@@ -208,11 +208,20 @@ namespace Test.ConsoleApplication.MonitoringProxy {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/AddMessage", ReplyAction="http://tempuri.org/IMonitoringService/AddMessageResponse")]
         void AddMessage(Test.ConsoleApplication.MonitoringProxy.RmsReportMonitoringRaw rawMessage);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/AddMessage", ReplyAction="http://tempuri.org/IMonitoringService/AddMessageResponse")]
+        System.Threading.Tasks.Task AddMessageAsync(Test.ConsoleApplication.MonitoringProxy.RmsReportMonitoringRaw rawMessage);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/AddMessages", ReplyAction="http://tempuri.org/IMonitoringService/AddMessagesResponse")]
         void AddMessages(System.Collections.Generic.List<Test.ConsoleApplication.MonitoringProxy.RmsReportMonitoringRaw> lRawMessages);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/AddMessages", ReplyAction="http://tempuri.org/IMonitoringService/AddMessagesResponse")]
+        System.Threading.Tasks.Task AddMessagesAsync(System.Collections.Generic.List<Test.ConsoleApplication.MonitoringProxy.RmsReportMonitoringRaw> lRawMessages);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/StartMonitoringEngine", ReplyAction="http://tempuri.org/IMonitoringService/StartMonitoringEngineResponse")]
         void StartMonitoringEngine();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/StartMonitoringEngine", ReplyAction="http://tempuri.org/IMonitoringService/StartMonitoringEngineResponse")]
+        System.Threading.Tasks.Task StartMonitoringEngineAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -246,12 +255,24 @@ namespace Test.ConsoleApplication.MonitoringProxy {
             base.Channel.AddMessage(rawMessage);
         }
         
+        public System.Threading.Tasks.Task AddMessageAsync(Test.ConsoleApplication.MonitoringProxy.RmsReportMonitoringRaw rawMessage) {
+            return base.Channel.AddMessageAsync(rawMessage);
+        }
+        
         public void AddMessages(System.Collections.Generic.List<Test.ConsoleApplication.MonitoringProxy.RmsReportMonitoringRaw> lRawMessages) {
             base.Channel.AddMessages(lRawMessages);
         }
         
+        public System.Threading.Tasks.Task AddMessagesAsync(System.Collections.Generic.List<Test.ConsoleApplication.MonitoringProxy.RmsReportMonitoringRaw> lRawMessages) {
+            return base.Channel.AddMessagesAsync(lRawMessages);
+        }
+        
         public void StartMonitoringEngine() {
             base.Channel.StartMonitoringEngine();
+        }
+        
+        public System.Threading.Tasks.Task StartMonitoringEngineAsync() {
+            return base.Channel.StartMonitoringEngineAsync();
         }
     }
 }
