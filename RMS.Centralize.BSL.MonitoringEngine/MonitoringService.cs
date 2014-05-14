@@ -59,29 +59,34 @@ namespace RMS.Centralize.BSL.MonitoringEngine
             {
                 try
                 {
-                    using (var db = new MyDbContext())
+                    // ถ้า Cleint State เป็น 1 (Normal) แสดงว่า Agent ผิดปกติ
+                    if (client.State == 1)
                     {
-                        SqlParameter[] parameters = new SqlParameter[1];
-                        SqlParameter p1 = new SqlParameter("ClientID", client.ClientId);
-                        parameters[0] = p1;
-
-                        var lists = db.Database.SqlQuery<RmsMonitoringProfileDevice>("RMS_GetMonitoringProfileDeviceByClientID " 
-                                                                            + "@ClientID", parameters);
-                        var device = lists.First(f => f.DeviceId == 1 || f.DeviceDescription == "Alive");
-                        if (device != null)
+                        using (var db = new MyDbContext())
                         {
-                            RMS.Centralize.WebService.Proxy.MonitoringProxy.MonitoringServiceClient mp = new MonitoringServiceClient();
+                            SqlParameter[] parameters = new SqlParameter[1];
+                            SqlParameter p1 = new SqlParameter("ClientID", client.ClientId);
+                            parameters[0] = p1;
 
-                            RMS.Centralize.WebService.Proxy.MonitoringProxy.RmsReportMonitoringRaw rawMessage = new WebService.Proxy.MonitoringProxy.RmsReportMonitoringRaw
+                            var lists = db.Database.SqlQuery<RmsMonitoringProfileDevice>("RMS_GetMonitoringProfileDeviceByClientID "
+                                                                                         + "@ClientID", parameters);
+                            var device = lists.First(f => f.DeviceId == 1 || f.DeviceDescription == "Alive");
+                            if (device != null)
                             {
-                                ClientCode = client.ClientCode,
-                                DeviceCode = "CLIENT",
-                                Message = "AGENT_NOT_ALIVE",
-                                MessageDateTime = DateTime.Now,
-                                MonitoringProfileDeviceId = device.MonitoringProfileDeviceId
-                            };
+                                RMS.Centralize.WebService.Proxy.MonitoringProxy.MonitoringServiceClient mp = new MonitoringServiceClient();
 
-                            mp.AddMessage(rawMessage); 
+                                RMS.Centralize.WebService.Proxy.MonitoringProxy.RmsReportMonitoringRaw rawMessage = new WebService.Proxy.
+                                    MonitoringProxy.RmsReportMonitoringRaw
+                                {
+                                    ClientCode = client.ClientCode,
+                                    DeviceCode = "CLIENT",
+                                    Message = "AGENT_NOT_ALIVE",
+                                    MessageDateTime = DateTime.Now,
+                                    MonitoringProfileDeviceId = device.MonitoringProfileDeviceId
+                                };
+
+                                mp.AddMessage(rawMessage);
+                            }
                         }
                     }
                 }
