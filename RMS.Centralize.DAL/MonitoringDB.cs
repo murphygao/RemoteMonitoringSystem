@@ -46,6 +46,7 @@ namespace RMS.Centralize.DAL
         IDbSet<RmsReportMonitoringRaw> RmsReportMonitoringRaws { get; set; } // RMS_Report_MonitoringRaw
         IDbSet<RmsReportSummaryMonitoring> RmsReportSummaryMonitorings { get; set; } // RMS_Report_SummaryMonitoring
         IDbSet<RmsSeverityLevel> RmsSeverityLevels { get; set; } // RMS_SeverityLevel
+        IDbSet<RmsSystemConfig> RmsSystemConfigs { get; set; } // RMS_SystemConfig
 
         int SaveChanges();
     }
@@ -70,6 +71,7 @@ namespace RMS.Centralize.DAL
         public IDbSet<RmsReportMonitoringRaw> RmsReportMonitoringRaws { get; set; } // RMS_Report_MonitoringRaw
         public IDbSet<RmsReportSummaryMonitoring> RmsReportSummaryMonitorings { get; set; } // RMS_Report_SummaryMonitoring
         public IDbSet<RmsSeverityLevel> RmsSeverityLevels { get; set; } // RMS_SeverityLevel
+        public IDbSet<RmsSystemConfig> RmsSystemConfigs { get; set; } // RMS_SystemConfig
 
         static ReverseDbContext()
         {
@@ -112,6 +114,7 @@ namespace RMS.Centralize.DAL
             modelBuilder.Configurations.Add(new RmsReportMonitoringRawConfiguration());
             modelBuilder.Configurations.Add(new RmsReportSummaryMonitoringConfiguration());
             modelBuilder.Configurations.Add(new RmsSeverityLevelConfiguration());
+            modelBuilder.Configurations.Add(new RmsSystemConfigConfiguration());
         OnModelCreatingPartial(modelBuilder);
         }
 
@@ -133,6 +136,7 @@ namespace RMS.Centralize.DAL
             modelBuilder.Configurations.Add(new RmsReportMonitoringRawConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsReportSummaryMonitoringConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsSeverityLevelConfiguration(schema));
+            modelBuilder.Configurations.Add(new RmsSystemConfigConfiguration(schema));
             return modelBuilder;
         }
 
@@ -869,6 +873,24 @@ namespace RMS.Centralize.DAL
         partial void InitializePartial();
     }
 
+    // RMS_SystemConfig
+    [DataContract]
+    public partial class RmsSystemConfig
+    {
+        [DataMember(Order = 1, IsRequired = true)]
+        public string Name { get; set; } // Name (Primary key)
+
+        [DataMember(Order = 2, IsRequired = false)]
+        public string Value { get; set; } // Value
+
+        [DataMember(Order = 3, IsRequired = false)]
+        public string DefaultValue { get; set; } // DefaultValue
+
+        [DataMember(Order = 4, IsRequired = false)]
+        public string Description { get; set; } // Description
+
+    }
+
 
     // ************************************************************************
     // POCO Configuration
@@ -1267,6 +1289,23 @@ namespace RMS.Centralize.DAL
             // Foreign keys
             HasOptional(a => a.RmsActionProfile).WithMany(b => b.RmsSeverityLevels).HasForeignKey(c => c.DefaultActionProfileId); // FK_RMS_SeverityLevel_RMS_ActionProfile
             HasOptional(a => a.RmsColorLabel).WithMany(b => b.RmsSeverityLevels).HasForeignKey(c => c.ColorCode); // FK_RMS_SeverityLevel_RMS_ColorLabel
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // RMS_SystemConfig
+    internal partial class RmsSystemConfigConfiguration : EntityTypeConfiguration<RmsSystemConfig>
+    {
+        public RmsSystemConfigConfiguration(string schema = "dbo")
+        {
+            ToTable(schema + ".RMS_SystemConfig");
+            HasKey(x => x.Name);
+
+            Property(x => x.Name).HasColumnName("Name").IsRequired().HasMaxLength(50).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            Property(x => x.Value).HasColumnName("Value").IsOptional().HasMaxLength(1000);
+            Property(x => x.DefaultValue).HasColumnName("DefaultValue").IsOptional().HasMaxLength(1000);
+            Property(x => x.Description).HasColumnName("Description").IsOptional().HasMaxLength(500);
             InitializePartial();
         }
         partial void InitializePartial();

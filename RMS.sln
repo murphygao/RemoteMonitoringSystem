@@ -91,6 +91,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Agent.Helper", "RMS.Age
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Agent.Model", "RMS.Agent.Model\RMS.Agent.Model.csproj", "{5D7E5ABC-ED70-4986-A93B-EA637CC35445}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Centralize.Engine.MonitoringEngine", "RMS.Centralize.Engine.MonitoringEngine\RMS.Centralize.Engine.MonitoringEngine.csproj", "{F62ECF90-E10D-4E67-905E-F6C7DCCB248F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -237,6 +239,10 @@ Global
 		{5D7E5ABC-ED70-4986-A93B-EA637CC35445}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D7E5ABC-ED70-4986-A93B-EA637CC35445}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D7E5ABC-ED70-4986-A93B-EA637CC35445}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F62ECF90-E10D-4E67-905E-F6C7DCCB248F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F62ECF90-E10D-4E67-905E-F6C7DCCB248F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F62ECF90-E10D-4E67-905E-F6C7DCCB248F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F62ECF90-E10D-4E67-905E-F6C7DCCB248F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -275,5 +281,6 @@ Global
 		{A19CDBE1-0153-4050-9327-CA142FC67B34} = {9ADC7BA3-CCDD-4E3E-88D4-54DD057292DA}
 		{0AA45EDA-6895-4475-B702-FA3605F8B704} = {9ADC7BA3-CCDD-4E3E-88D4-54DD057292DA}
 		{55DE9DC6-2ABA-4F31-A456-E0DE6873763C} = {9ADC7BA3-CCDD-4E3E-88D4-54DD057292DA}
+		{F62ECF90-E10D-4E67-905E-F6C7DCCB248F} = {9ADC7BA3-CCDD-4E3E-88D4-54DD057292DA}
 	EndGlobalSection
 EndGlobal

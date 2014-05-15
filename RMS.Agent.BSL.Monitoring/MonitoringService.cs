@@ -16,6 +16,13 @@ namespace RMS.Agent.BSL.Monitoring
     public class MonitoringService
     {
         private delegate void ExecuteCommandAsync(string clientCode);
+        private delegate void SetMonitoringStateAsync(string clientCode, ClientState clientState);
+
+        private SetMonitoringStateAsync stateAsync;
+        public MonitoringService()
+        {
+            stateAsync = new SetMonitoringStateAsync(SetMonitoringState);
+        }
 
         public void Command(string clientCode)
         {
@@ -110,6 +117,32 @@ namespace RMS.Agent.BSL.Monitoring
 
 
             #endregion
+
+        }
+
+
+        public void SetMonitoringState(string clientCode, ClientState clientState)
+        {
+            try
+            {
+                ClientServiceClient cs = new ClientServiceClient();
+                var clientResult = cs.GetClient(GetClientBy.ClientCode, null, clientCode, null, false);
+
+                if (clientResult.Client.State == (int) ClientState.Normal && clientState == ClientState.Maintenance)
+                {
+                    cs.SetClientState(clientResult.Client.ClientId, ClientState.Maintenance);
+                }
+                // Normal State
+                else if (clientResult.Client.State == (int) ClientState.Maintenance && clientState == ClientState.Normal)
+                {
+                    cs.SetClientState(clientResult.Client.ClientId, ClientState.Normal);
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                
+            }
 
         }
 

@@ -15,8 +15,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RMS.Agent.BSL.Monitoring;
 using RMS.Agent.Helper;
 using RMS.Agent.Model;
+using RMS.Agent.Proxy.ClientProxy;
 using RMS.Agent.WCF;
 
 namespace RMS.Agent.WPF
@@ -34,8 +36,10 @@ namespace RMS.Agent.WPF
         private string historyFile = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\logs\history.txt";
         private string tempEventFile = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\logs\TempEvent.txt";
         private bool processingTempEvent = false;
+        private string currentState = string.Empty;
 
         private string maFilePath = ConfigurationManager.AppSettings["MA_FILE_PATH"];
+        private string clientCode = ConfigurationManager.AppSettings["CLIENT_CODE"];
 
 
         public MainWindow()
@@ -63,6 +67,7 @@ namespace RMS.Agent.WPF
 
             // MA State?
             lblState.Content = File.Exists(maFilePath) ? "Maintenance" : "Normal";
+            currentState = lblState.Content.ToString();
 
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
@@ -179,7 +184,25 @@ namespace RMS.Agent.WPF
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            lblState.Content = File.Exists(maFilePath) ? "Maintenance" : "Normal";
+            if (File.Exists(maFilePath))
+            {
+                if (currentState == lblState.Content.ToString())
+                {
+                    MonitoringService ms = new MonitoringService();
+                    ms.SetMonitoringState(clientCode, ClientState.Maintenance);
+                }
+
+                lblState.Content = "Maintenance";
+            }
+            else
+            {
+                if (currentState == lblState.Content.ToString())
+                {
+                    MonitoringService ms = new MonitoringService();
+                    ms.SetMonitoringState(clientCode, ClientState.Normal);
+                }
+                lblState.Content = "Normal";
+            }
 
             if (processingTempEvent) return;
 

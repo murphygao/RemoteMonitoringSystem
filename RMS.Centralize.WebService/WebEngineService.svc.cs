@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using System.Web.Caching;
 
 namespace RMS.Centralize.WebService
 {
@@ -11,10 +12,18 @@ namespace RMS.Centralize.WebService
     // NOTE: In order to launch WCF Test Client for testing this service, please select WebEngineService.svc or WebEngineService.svc.cs at the Solution Explorer and start debugging.
     public class WebEngineService : IWebEngineService
     {
-        public void StartMonitoringEngine()
+        public string StartMonitoringEngine()
         {
-            RMS.Centralize.BSL.MonitoringEngine.MonitoringService ms = new Centralize.BSL.MonitoringEngine.MonitoringService();
-            ms.Start();
+            try
+            {
+                RMS.Centralize.BSL.MonitoringEngine.MonitoringService ms = new Centralize.BSL.MonitoringEngine.MonitoringService();
+                ms.Start();
+                return "OK";
+            }
+            catch (Exception ex)
+            {
+                return "Fail: " + ex.Message;
+            }
         }
     }
 }

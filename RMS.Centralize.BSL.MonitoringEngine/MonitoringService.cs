@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.Serialization.Configuration;
@@ -24,23 +25,30 @@ namespace RMS.Centralize.BSL.MonitoringEngine
              * 2. generate multi-thread for boardcasting message
              */
 
-            using (var db = new MyDbContext())
+            try
             {
-                #region Prepare Parameters
-
-                db.Configuration.ProxyCreationEnabled = false;
-                db.Configuration.LazyLoadingEnabled = false;
-
-                var listOfType = db.Database.SqlQuery<RmsClientWithIPAddress>("RMS_ListClientWithIPAddress");
-
-                var listClients = new List<RmsClientWithIPAddress>(listOfType.ToList());
-
-                foreach (var client in listClients)
+                using (var db = new MyDbContext())
                 {
-                    BroadcastAliveMessage(client);
-                }
+                    #region Prepare Parameters
 
-                #endregion
+                    db.Configuration.ProxyCreationEnabled = false;
+                    db.Configuration.LazyLoadingEnabled = false;
+
+                    var listOfType = db.Database.SqlQuery<RmsClientWithIPAddress>("RMS_ListClientWithIPAddress");
+
+                    var listClients = new List<RmsClientWithIPAddress>(listOfType.ToList());
+
+                    foreach (var client in listClients)
+                    {
+                        BroadcastAliveMessage(client);
+                    }
+
+                    #endregion
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Start failed. " + ex.Message, ex);
             }
         }
 
@@ -49,8 +57,8 @@ namespace RMS.Centralize.BSL.MonitoringEngine
             try
             {
                 var asc = new AgentServiceClient();
-                string clientEndpiont = "net.tcp://localhost:8081/AgentNetTcp";
-                clientEndpiont = clientEndpiont.Replace("localhost", client.IPAddress);
+                string clientEndpiont = ConfigurationManager.AppSettings["NetTcpBinding_AgentService"];
+                clientEndpiont = clientEndpiont.Replace("client_ip_address", client.IPAddress);
                 //asc.Endpoint.Address = new EndpointAddress(clientEndpiont);
                 var result = asc.Monitoring(client.ClientCode);
 
@@ -90,13 +98,10 @@ namespace RMS.Centralize.BSL.MonitoringEngine
                         }
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    
-                    throw;
+                    throw new Exception("BroadcastAliveMessage failed. " + ex.Message, ex);
                 }
-
-
 
                 Console.WriteLine(e);
             }
