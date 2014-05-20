@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="MonitoringService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost/RMS.Centralize.WebService/MonitoringService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost/RMS.Centralize.WebService/MonitoringService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost/RMS.Centralize.WebService/MonitoringService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IMonitoringService_AddMessage_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddMessage" />
+  </wsdl:message>
+  <wsdl:message name="IMonitoringService_AddMessage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMonitoringService_AddMessages_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddMessages" />
+  </wsdl:message>
+  <wsdl:message name="IMonitoringService_AddMessages_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddMessagesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMonitoringService_AddBusinessMessage_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddBusinessMessage" />
+  </wsdl:message>
+  <wsdl:message name="IMonitoringService_AddBusinessMessage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddBusinessMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMonitoringService_StartMonitoringEngine_InputMessage">
+    <wsdl:part name="parameters" element="tns:StartMonitoringEngine" />
+  </wsdl:message>
+  <wsdl:message name="IMonitoringService_StartMonitoringEngine_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StartMonitoringEngineResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IMonitoringService">
+    <wsdl:operation name="AddMessage">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMonitoringService/AddMessage" message="tns:IMonitoringService_AddMessage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMonitoringService/AddMessageResponse" message="tns:IMonitoringService_AddMessage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddMessages">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMonitoringService/AddMessages" message="tns:IMonitoringService_AddMessages_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMonitoringService/AddMessagesResponse" message="tns:IMonitoringService_AddMessages_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddBusinessMessage">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMonitoringService/AddBusinessMessage" message="tns:IMonitoringService_AddBusinessMessage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMonitoringService/AddBusinessMessageResponse" message="tns:IMonitoringService_AddBusinessMessage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StartMonitoringEngine">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMonitoringService/StartMonitoringEngine" message="tns:IMonitoringService_StartMonitoringEngine_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMonitoringService/StartMonitoringEngineResponse" message="tns:IMonitoringService_StartMonitoringEngine_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IMonitoringService" type="tns:IMonitoringService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AddMessage">
+      <soap:operation soapAction="http://tempuri.org/IMonitoringService/AddMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddMessages">
+      <soap:operation soapAction="http://tempuri.org/IMonitoringService/AddMessages" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddBusinessMessage">
+      <soap:operation soapAction="http://tempuri.org/IMonitoringService/AddBusinessMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartMonitoringEngine">
+      <soap:operation soapAction="http://tempuri.org/IMonitoringService/StartMonitoringEngine" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MonitoringService">
+    <wsdl:port name="BasicHttpBinding_IMonitoringService" binding="tns:BasicHttpBinding_IMonitoringService">
+      <soap:address location="http://localhost/RMS.Centralize.WebService/MonitoringService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

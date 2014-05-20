@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.AccessControl;
 using System.ServiceModel.Channels;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +16,8 @@ namespace RMS.Centralize.WebService.BSL
     public class SummaryService
     {
         public delegate void DoSummaryMonitoringAsync(List<RmsReportMonitoringRaw> lRaw);
+
+        public delegate void DoSummaryMonitoringForBusinessAsync(RmsReportMonitoringRaw raw);
 
         public void DoSummaryMonitoring(List<RmsReportMonitoringRaw> lRaw)
         {
@@ -364,6 +367,125 @@ namespace RMS.Centralize.WebService.BSL
                 throw ex;
             }
 
+
+        }
+
+        public void DoSummaryMonitoringForBusiness(RmsReportMonitoringRaw raw)
+        {
+
+            /*
+      ,[RawID]
+      ,[ClientID]
+      ,[ClientCode]
+      ,[ClientIPAddress]
+      ,[LocationID]
+      ,[DeviceID]
+      ,[DeviceCode]
+      ,[DeviceDescription]
+      ,[MessageGroupID]
+      ,[MessageGroupCode]
+      ,[MessageGroupName]
+      ,[MessageID]
+      ,[Message]
+      ,[Status]
+      ,[MessageDateTime]
+      ,[MessageRemark]
+      ,[MonitoringProfileDeviceID]
+      ,[SeverityLevelID]
+      ,[LastActionDateTime]
+      ,[LastActionType]
+      ,[EventDateTime]
+      ,[CreatedDate]
+      ,[CreatedBy]
+      ,[UpdatedDate]
+      ,[UpdatedBy]
+
+             */
+
+            var oClientCode = raw.ClientCode;
+            var oMessageGroupCode = raw.MessageGroupCode;
+            var oMessage = raw.Message;
+
+
+            using (var db = new MyDbContext())
+            {
+                #region Prepare Parameters
+
+                db.Configuration.ProxyCreationEnabled = false;
+                db.Configuration.LazyLoadingEnabled = false;
+
+
+                /*
+                 * 	
+                    @Message			nvarchar(50) = NULL,
+	                @ClientCode			nvarchar(50) = NULL,
+	                @ClientIPAddress	nvarchar(50) = NULL,
+	                @MessageGroupCode	nvarchar(50) = NULL
+                 * 
+                 */
+
+                SqlParameter[] parameters = new SqlParameter[4];
+                SqlParameter p1 = new SqlParameter("Message", oMessage);
+                SqlParameter p2 = new SqlParameter("ClientCode", oClientCode);
+
+                SqlParameter p3;
+
+                if (string.IsNullOrEmpty(raw.ClientIpAddress))
+                {
+                    p3 = new SqlParameter("ClientIPAddress", DBNull.Value);
+                }
+                else
+                {
+                    p3 = new SqlParameter("ClientIPAddress", raw.ClientIpAddress);
+                }
+
+                SqlParameter p4 = new SqlParameter("MessageGroupCode", oMessageGroupCode);
+
+                parameters[0] = p1;
+                parameters[1] = p2;
+                parameters[2] = p3;
+                parameters[3] = p4;
+
+                var listOfType = db.Database.SqlQuery<ClientMessageInfo>("RMS_GetClientMessageInfoByMessageClientCodeMessageGroupCode " +
+                                                                        "@Message, @ClientCode, @ClientIPAddress, @MessageGroupCode", parameters);
+
+                List<ClientMessageInfo> lClientMessageInfos = new List<ClientMessageInfo>(listOfType.ToList());
+
+                // ถ้าไม่เจอ ให้จบการทำงาน
+                if (lClientMessageInfos.Count == 0) return;
+
+
+
+                #endregion
+
+                var monitoring = db.RmsReportSummaryMonitorings.Create();
+                monitoring.RawId = raw.Id;
+                monitoring.ClientId = lClientMessageInfos[0].ClientID;
+                monitoring.ClientCode = raw.ClientCode;
+                monitoring.ClientIpAddress = raw.ClientIpAddress;
+                monitoring.LocationId = lClientMessageInfos[0].LocationID;
+                //monitoring.DeviceId = deviceID;
+                //monitoring.DeviceCode = raw.DeviceCode;
+                //monitoring.DeviceDescription = deviceDescription;
+                monitoring.MessageGroupId = lClientMessageInfos[0].MessageGroupID;
+                monitoring.MessageGroupCode = raw.MessageGroupCode;
+                monitoring.MessageGroupName = lClientMessageInfos[0].MessageGroupName;
+                monitoring.MessageId = lClientMessageInfos[0].MessageID;
+                monitoring.Message = raw.Message;
+                monitoring.Status = 2;
+                monitoring.MessageDateTime = raw.MessageDateTime;
+
+                if (!string.IsNullOrEmpty(raw.MessageRemark))
+                    monitoring.MessageRemark = raw.MessageRemark;
+
+                //monitoring.MonitoringProfileDeviceId = raw.MonitoringProfileDeviceId;
+                monitoring.SeverityLevelId = lClientMessageInfos[0].SeverityLevelID;
+                monitoring.EventDateTime = DateTime.Now;
+
+                db.RmsReportSummaryMonitorings.Add(monitoring);
+                db.SaveChanges();
+
+            }
 
         }
     }

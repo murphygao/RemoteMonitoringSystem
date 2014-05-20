@@ -17,7 +17,7 @@ namespace RMS.Centralize.WebService
     public class SummaryReportService : ISummaryReportService
     {
         public SummaryMonitoringResult SearchSummaryMonitoring(JQueryDataTableParamModel param, DateTime? txtStartEventDate, DateTime? txtEndEventDate
-            , string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, bool? ddlMessageStatus, int? clientID)
+            , string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, string ddlMessageStatus, int? clientID)
         {
 
             List<ReportSummaryMonitoring> lReportSummaryMonitorings = new List<ReportSummaryMonitoring>();
@@ -102,10 +102,9 @@ namespace RMS.Centralize.WebService
                         p11 = new SqlParameter("Message", txtMessage);
                     }
 
-                    if (ddlMessageStatus == null)
+                    if (String.IsNullOrEmpty(ddlMessageStatus))
                     {
                         p12 = new SqlParameter("Status", DBNull.Value);
-                        p12.DbType = DbType.Int32;
                     }
                     else
                     {

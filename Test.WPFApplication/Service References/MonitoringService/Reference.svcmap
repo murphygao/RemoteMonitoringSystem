@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="e8e6b5e0-3f7d-49de-8edf-af39f801261e" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost/RMS.Centralize.WebService/MonitoringService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="MonitoringService.wsdl" MetadataType="Wsdl" ID="7599c6b9-05d2-4a5f-b8e7-e8c7f6d7310f" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/MonitoringService.svc?wsdl" />
+    <MetadataFile FileName="MonitoringService.xsd" MetadataType="Schema" ID="ecb4088d-96f9-490c-ae7f-7b8c474c9934" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/MonitoringService.svc?xsd=xsd2" />
+    <MetadataFile FileName="MonitoringService1.xsd" MetadataType="Schema" ID="9283fa1c-62a5-4e37-a049-b45fdde85319" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/MonitoringService.svc?xsd=xsd1" />
+    <MetadataFile FileName="MonitoringService.disco" MetadataType="Disco" ID="ddbb00b3-1dda-4923-a7d7-be8e980dc9b5" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/MonitoringService.svc?disco" />
+    <MetadataFile FileName="MonitoringService2.xsd" MetadataType="Schema" ID="5a13d7fb-a6c7-4fec-88bb-5339f93281d6" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/MonitoringService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

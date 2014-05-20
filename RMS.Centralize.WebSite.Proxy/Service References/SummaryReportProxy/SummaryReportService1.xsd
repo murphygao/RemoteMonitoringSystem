@@ -13,7 +13,7 @@
         <xs:element minOccurs="0" name="txtLocation" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="ddlMessageGroup" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="txtMessage" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="ddlMessageStatus" nillable="true" type="xs:boolean" />
+        <xs:element minOccurs="0" name="ddlMessageStatus" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="clientID" nillable="true" type="xs:int" />
       </xs:sequence>
     </xs:complexType>

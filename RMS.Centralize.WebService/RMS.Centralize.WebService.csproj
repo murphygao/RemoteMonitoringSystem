@@ -103,7 +103,9 @@
     <Content Include="MessageActionService.svc" />
     <Content Include="MonitoringService.svc" />
     <Content Include="SummaryReportService.svc" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="WebEngineService.svc" />
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +129,7 @@
     <Compile Include="Model\ActionInfo.cs" />
     <Compile Include="Model\ClientInfo.cs" />
     <Compile Include="Model\ClientMessageAction.cs" />
+    <Compile Include="Model\ClientMessageInfo.cs" />
     <Compile Include="Model\JQueryDataTableParamModel.cs" />
     <Compile Include="Model\MainAppClient.cs" />
     <Compile Include="Model\MessageDetail.cs" />

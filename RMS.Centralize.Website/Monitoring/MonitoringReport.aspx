@@ -142,10 +142,11 @@
 
                                         <section class="col col-md-6 col-xs-12">
                                             <label class="select">
-                                                <select id="ddlMessageStatus" name="ddlMessageStatus" class="input-sm">
-                                                    <option value="">Status</option>
-                                                    <option value="true">Issue</option>
-                                                    <option value="false">Solved</option>
+                                                <select id="ddlMessageStatus" name="ddlMessageStatus" multiple style="width: 100%" class="select2 input-sm">
+                                                    <option value="">Select All Status</option>
+                                                    <option value="2" selected="selected">Business Warning</option>
+                                                    <option value="1" selected="selected">Device Issue</option>
+                                                    <option value="0">Device Solved</option>
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -384,10 +385,12 @@
                             "sWidth": "120",
                             "sClass": "center",
                             "fnRender": function (oObj) {
-                                if (oObj.aData["Status"]) {
+                                if (oObj.aData["Status"] == 1) {
                                     return '<span class="label bg-color-redLight">Issue</span>';
-                                } else {
+                                } else if (oObj.aData["Status"] == 0) {
                                     return '<span class="label label-success">Solved</span>';
+                                } else if (oObj.aData["Status"] == 2) {
+                                    return '<span class="label label-warning">Warning</span>';
                                 }
                             }
                         },
@@ -426,8 +429,11 @@
                                 var content = '';
                                 if (oObj.aData["DeviceDescription"] != null)
                                     content = oObj.aData["DeviceDescription"];
-                                if (oObj.aData["MessageRemark"] != null)
-                                    content = content + ' - ' + oObj.aData["MessageRemark"];
+                                if (oObj.aData["MessageRemark"] != null) {
+                                    if (oObj.aData["DeviceDescription"] != null)
+                                        content = content + ' - ';
+                                    content = content + oObj.aData["MessageRemark"];
+                                }
                                 return content;
                             }
                         },

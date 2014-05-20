@@ -18,8 +18,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.ConsoleApplication", "
 		{55DE9DC6-2ABA-4F31-A456-E0DE6873763C} = {55DE9DC6-2ABA-4F31-A456-E0DE6873763C}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.WindowsApplication", "Test.WindowsApplication\Test.WindowsApplication.csproj", "{C094AFA4-6FB1-46DE-B94B-BF631E9FDD34}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Agent.Entity", "RMS.Agent.Entity\RMS.Agent.Entity.csproj", "{F63949C0-3F8D-4508-92C9-980C2DB5C15C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Monitoring.Core", "RMS.Monitoring.Core\RMS.Monitoring.Core.csproj", "{1DC3D83B-EFB1-4349-A024-3D6E1E07DD58}"
@@ -93,6 +91,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Agent.Model", "RMS.Agen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Centralize.Engine.MonitoringEngine", "RMS.Centralize.Engine.MonitoringEngine\RMS.Centralize.Engine.MonitoringEngine.csproj", "{F62ECF90-E10D-4E67-905E-F6C7DCCB248F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.WPFApplication", "Test.WPFApplication\Test.WPFApplication.csproj", "{328F723E-7485-48F7-8A20-66B8BE4D26BC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{55DE9DC6-2ABA-4F31-A456-E0DE6873763C} = {55DE9DC6-2ABA-4F31-A456-E0DE6873763C}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,10 +126,6 @@ Global
 		{5FAE681A-374F-4889-9B18-0CEFE3890C0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FAE681A-374F-4889-9B18-0CEFE3890C0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FAE681A-374F-4889-9B18-0CEFE3890C0E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C094AFA4-6FB1-46DE-B94B-BF631E9FDD34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C094AFA4-6FB1-46DE-B94B-BF631E9FDD34}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C094AFA4-6FB1-46DE-B94B-BF631E9FDD34}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C094AFA4-6FB1-46DE-B94B-BF631E9FDD34}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F63949C0-3F8D-4508-92C9-980C2DB5C15C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F63949C0-3F8D-4508-92C9-980C2DB5C15C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F63949C0-3F8D-4508-92C9-980C2DB5C15C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -243,6 +242,10 @@ Global
 		{F62ECF90-E10D-4E67-905E-F6C7DCCB248F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F62ECF90-E10D-4E67-905E-F6C7DCCB248F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F62ECF90-E10D-4E67-905E-F6C7DCCB248F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{328F723E-7485-48F7-8A20-66B8BE4D26BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{328F723E-7485-48F7-8A20-66B8BE4D26BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{328F723E-7485-48F7-8A20-66B8BE4D26BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{328F723E-7485-48F7-8A20-66B8BE4D26BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

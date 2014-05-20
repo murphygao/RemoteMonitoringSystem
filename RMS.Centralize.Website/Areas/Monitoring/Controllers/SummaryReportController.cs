@@ -16,7 +16,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
         //
         // GET: /Monitoring/SummaryReport/SearchMonitoringReport
         public ActionResult SearchMonitoringReport(JQueryDataTableParamModel param, DateTime? txtStartEventDate, DateTime? txtEndEventDate
-            , string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, bool? ddlMessageStatus, int? clientID)
+            , string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, string ddlMessageStatus, int? clientID)
         {
             //JQueryDataTableParamModel param = new JQueryDataTableParamModel();
             //HttpContext Context = System.Web.HttpContext.Current;
@@ -28,6 +28,12 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             var sortColumnIndex = Convert.ToInt32(Request["iSortCol_0"]);
             var sortDirection = Request["sSortDir_0"]; // asc or desc
             param.iSortColumn = (Request["mDataProp_" + sortColumnIndex] + "_" + sortDirection).ToLower();
+
+            if (!string.IsNullOrEmpty(ddlMessageStatus) && ddlMessageStatus.Split(',').Any(m => m == ""))
+            {
+                ddlMessageStatus = "";
+            }
+
             try
             {
 
@@ -102,7 +108,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
         // GET: /Monitoring/SummaryReport/SearchMonitoringReport
         public ActionResult SearchClientMonitoring(JQueryDataTableParamModel param, DateTime? txtStartEventDate, DateTime? txtEndEventDate
-            , string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, bool? ddlMessageStatus, int? clientID)
+            , string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, string ddlMessageStatus, int? clientID)
         {
             //JQueryDataTableParamModel param = new JQueryDataTableParamModel();
             //HttpContext Context = System.Web.HttpContext.Current;
@@ -114,6 +120,12 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             var sortColumnIndex = Convert.ToInt32(Request["iSortCol_0"]);
             var sortDirection = Request["sSortDir_0"]; // asc or desc
             param.iSortColumn = (Request["mDataProp_" + sortColumnIndex] + "_" + sortDirection).ToLower();
+
+            if (!string.IsNullOrEmpty(ddlMessageStatus) && ddlMessageStatus.Split(',').Any(m => m == ""))
+            {
+                ddlMessageStatus = "";
+            }
+
             try
             {
 
@@ -168,7 +180,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                 {
                     var service = new RMS.Centralize.WebSite.Proxy.SummaryReportService().summaryReportService;
                     var result = service.SearchSummaryMonitoring(param, null, null, null, null
-                        , null, null, true, clientID);
+                        , null, null, "1", clientID);
 
                     List<DeviceStatus> lDeviceStatuses = new List<DeviceStatus>();
 

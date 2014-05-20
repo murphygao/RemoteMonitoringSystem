@@ -1195,10 +1195,10 @@ namespace RMS.Centralize.WebSite.Proxy.SummaryReportProxy {
     public interface ISummaryReportService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISummaryReportService/SearchSummaryMonitoring", ReplyAction="http://tempuri.org/ISummaryReportService/SearchSummaryMonitoringResponse")]
-        RMS.Centralize.WebSite.Proxy.SummaryReportProxy.SummaryMonitoringResult SearchSummaryMonitoring(RMS.Centralize.WebSite.Proxy.SummaryReportProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> txtStartEventDate, System.Nullable<System.DateTime> txtEndEventDate, string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, System.Nullable<bool> ddlMessageStatus, System.Nullable<int> clientID);
+        RMS.Centralize.WebSite.Proxy.SummaryReportProxy.SummaryMonitoringResult SearchSummaryMonitoring(RMS.Centralize.WebSite.Proxy.SummaryReportProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> txtStartEventDate, System.Nullable<System.DateTime> txtEndEventDate, string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, string ddlMessageStatus, System.Nullable<int> clientID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISummaryReportService/SearchSummaryMonitoring", ReplyAction="http://tempuri.org/ISummaryReportService/SearchSummaryMonitoringResponse")]
-        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.SummaryReportProxy.SummaryMonitoringResult> SearchSummaryMonitoringAsync(RMS.Centralize.WebSite.Proxy.SummaryReportProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> txtStartEventDate, System.Nullable<System.DateTime> txtEndEventDate, string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, System.Nullable<bool> ddlMessageStatus, System.Nullable<int> clientID);
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.SummaryReportProxy.SummaryMonitoringResult> SearchSummaryMonitoringAsync(RMS.Centralize.WebSite.Proxy.SummaryReportProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> txtStartEventDate, System.Nullable<System.DateTime> txtEndEventDate, string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, string ddlMessageStatus, System.Nullable<int> clientID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISummaryReportService/GetClientInfo", ReplyAction="http://tempuri.org/ISummaryReportService/GetClientInfoResponse")]
         RMS.Centralize.WebSite.Proxy.SummaryReportProxy.ClientInfoResult GetClientInfo(int clientID);
@@ -1240,11 +1240,11 @@ namespace RMS.Centralize.WebSite.Proxy.SummaryReportProxy {
                 base(binding, remoteAddress) {
         }
         
-        public RMS.Centralize.WebSite.Proxy.SummaryReportProxy.SummaryMonitoringResult SearchSummaryMonitoring(RMS.Centralize.WebSite.Proxy.SummaryReportProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> txtStartEventDate, System.Nullable<System.DateTime> txtEndEventDate, string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, System.Nullable<bool> ddlMessageStatus, System.Nullable<int> clientID) {
+        public RMS.Centralize.WebSite.Proxy.SummaryReportProxy.SummaryMonitoringResult SearchSummaryMonitoring(RMS.Centralize.WebSite.Proxy.SummaryReportProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> txtStartEventDate, System.Nullable<System.DateTime> txtEndEventDate, string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, string ddlMessageStatus, System.Nullable<int> clientID) {
             return base.Channel.SearchSummaryMonitoring(param, txtStartEventDate, txtEndEventDate, txtClientCode, txtLocation, ddlMessageGroup, txtMessage, ddlMessageStatus, clientID);
         }
         
-        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.SummaryReportProxy.SummaryMonitoringResult> SearchSummaryMonitoringAsync(RMS.Centralize.WebSite.Proxy.SummaryReportProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> txtStartEventDate, System.Nullable<System.DateTime> txtEndEventDate, string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, System.Nullable<bool> ddlMessageStatus, System.Nullable<int> clientID) {
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.SummaryReportProxy.SummaryMonitoringResult> SearchSummaryMonitoringAsync(RMS.Centralize.WebSite.Proxy.SummaryReportProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> txtStartEventDate, System.Nullable<System.DateTime> txtEndEventDate, string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, string ddlMessageStatus, System.Nullable<int> clientID) {
             return base.Channel.SearchSummaryMonitoringAsync(param, txtStartEventDate, txtEndEventDate, txtClientCode, txtLocation, ddlMessageGroup, txtMessage, ddlMessageStatus, clientID);
         }
         

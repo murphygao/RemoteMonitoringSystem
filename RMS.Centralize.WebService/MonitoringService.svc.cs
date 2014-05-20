@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.Text;
 using RMS.Centralize.DAL;
 using RMS.Centralize.WebService.BSL;
@@ -47,10 +48,53 @@ namespace RMS.Centralize.WebService
             catch { }
         }
 
+        public void AddBusinessMessage(RmsReportMonitoringRaw rawMessage)
+        {
+            try
+            {
+                var ip = GetIP();
+                rawMessage.ClientIpAddress = ip;
+
+                using (var db = new MyDbContext())
+                {
+                    db.Configuration.AutoDetectChangesEnabled = false;
+
+                    db.RmsReportMonitoringRaws.Add(rawMessage);
+
+                    db.SaveChanges();
+                }
+
+                if (string.IsNullOrEmpty(rawMessage.ClientCode)) return;
+                if (string.IsNullOrEmpty(rawMessage.MessageGroupCode)) return;
+                if (string.IsNullOrEmpty(rawMessage.Message)) return;
+
+                var sv = new SummaryService();
+                var caller = new SummaryService.DoSummaryMonitoringForBusinessAsync(sv.DoSummaryMonitoringForBusiness);
+                caller.BeginInvoke(rawMessage, null, null);
+            }
+            catch (Exception)
+            {
+                
+            }
+
+        }
+
         public void StartMonitoringEngine()
         {
             RMS.Centralize.BSL.MonitoringEngine.MonitoringService ms = new Centralize.BSL.MonitoringEngine.MonitoringService();
             ms.Start();
+        }
+
+        private string GetIP()
+        {
+            OperationContext context = OperationContext.Current;
+            MessageProperties prop = context.IncomingMessageProperties;
+            RemoteEndpointMessageProperty endpoint =
+               prop[RemoteEndpointMessageProperty.Name] as RemoteEndpointMessageProperty;
+            string ip = endpoint.Address;
+
+            return ip;
+
         }
     }
 }
