@@ -113,6 +113,12 @@
                 </article>
                 
                 <article class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                                    <span class="monitoring-liveupdate-1" style="right: 60px"> <span class="onoffswitch-title">Live switch</span> <span class="onoffswitch">
+										        <input type="checkbox" name="start_interval" class="onoffswitch-checkbox" id="start_interval">
+										        <label class="onoffswitch-label" for="start_interval"> 
+											        <span class="onoffswitch-inner" data-swchon-text="ON" data-swchoff-text="OFF"></span> 
+											        <span class="onoffswitch-switch"></span> </label> </span> </span>
+
                     <div class="jarviswidget" id="wid-client-device-status-1" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-widget-custombutton="false" data-widget-sortable="false">
                         <!-- widget options:
 								usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
@@ -653,6 +659,37 @@
                 // draw the 'current' page
                 oSettings.oApi._fnDraw(oSettings);
             };
+
+
+            /* live switch */
+            $('input[type="checkbox"]#start_interval').click(function () {
+                if ($(this).prop('checked')) {
+                    $on = true;
+                    updateInterval = 10000;
+                    update();
+                } else {
+                    clearInterval(updateInterval);
+                    $on = false;
+                }
+            });
+
+            function update() {
+                if ($on == true) {
+                    var oTable = $('#dt_device_status').dataTable();
+                    oTable.fnDraw();
+                    oTable = $('#dt_basic').dataTable();
+                    oTable.fnDraw();
+                    Pace.restart(); 
+                    setTimeout(update, updateInterval);
+
+                } else {
+                    clearInterval(updateInterval);
+                }
+
+            }
+
+            var $on = false;
+
 
         });
 

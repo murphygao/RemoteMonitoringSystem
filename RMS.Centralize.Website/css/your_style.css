@@ -66,3 +66,13 @@
     min-width: 80px;
     line-height: inherit!important;
 }
+
+.monitoring-liveupdate-1 {
+    font-size: 12px !important;
+    position: absolute !important;
+    right: 15px;
+    display: block;
+    z-index: 2;
+    font-weight: bold;
+    padding: 6px 15px 3px 7px;
+}

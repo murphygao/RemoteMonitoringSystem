@@ -175,6 +175,11 @@
             </div>
             <!-- row -->
             <div class="row">
+                <span class="monitoring-liveupdate-1"> <span class="onoffswitch-title txt-color-white">Live switch</span> <span class="onoffswitch">
+										        <input type="checkbox" name="start_interval" class="onoffswitch-checkbox" id="start_interval">
+										        <label class="onoffswitch-label" for="start_interval"> 
+											        <span class="onoffswitch-inner" data-swchon-text="ON" data-swchoff-text="OFF"></span> 
+											        <span class="onoffswitch-switch"></span> </label> </span> </span>
 
                 <!-- NEW WIDGET START -->
                 <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -312,7 +317,8 @@
                     "bInfo": true,
                     "bScrollCollapse": true,
                     "bServerSide": true,
-                    "aaSorting": [[ 1, "desc" ]],
+                    "aaSorting": [[1, "desc"]],
+                    "iDisplayLength": 50,
                     "sAjaxSource": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/SummaryReport/SearchMonitoringReport/",
                     "fnServerData": function (sSource, aoData, fnCallback) {
                         aoData.push({ "name": "txtStartEventDate", "value": $('#txtStartEventDate').val() });
@@ -592,6 +598,33 @@
                     Pace.restart(); oTable.fnDraw();
 
                 });
+
+                /* live switch */
+                $('input[type="checkbox"]#start_interval').click(function () {
+                    if ($(this).prop('checked')) {
+                        $on = true;
+                        updateInterval = 10000;
+                        update();
+                    } else {
+                        clearInterval(updateInterval);
+                        $on = false;
+                    }
+                });
+
+                function update() {
+                    if ($on == true) {
+
+                        var oTable = $('#dt_basic').dataTable();
+                        Pace.restart(); oTable.fnDraw();
+                        setTimeout(update, updateInterval);
+
+                    } else {
+                        clearInterval(updateInterval);
+                    }
+
+                }
+
+                var $on = false;
         });
 
         function ViewClientReport(id) {
