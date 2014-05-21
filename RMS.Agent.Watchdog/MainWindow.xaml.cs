@@ -51,7 +51,7 @@ namespace RMS.Agent.Watchdog
                 btnStart.IsEnabled = true;
                 btnStop.IsEnabled = false;
 
-                lblAgentFilePath.Content = ConfigurationManager.AppSettings["AGENT_FILE_PATH"];
+                lblAgentFilePath.Content = ConfigurationManager.AppSettings["RMS.AGENT_FILE_PATH"];
 
                 ws = new WatchdogService();
 

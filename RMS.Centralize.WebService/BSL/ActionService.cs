@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using RMS.Centralize.DAL;
+using RMS.Centralize.WebService.Gateway;
 using RMS.Centralize.WebService.Model;
 
 namespace RMS.Centralize.WebService.BSL
@@ -84,8 +88,11 @@ namespace RMS.Centralize.WebService.BSL
                         bool useSMS = false;
 
                         var clientMessageAction = lClientMessageActions.First(cma => cma.MessageID == monitoring1.MessageId);
+                        
+                        if (clientMessageAction == null) continue;
 
-                        //EMAIL SECTION
+
+                        #region //EMAIL SECTION
 
                         //เตรียมว่าจะต้องส่ง Email ไปหาใครบ้าง
                         string mEmails = string.Empty;
@@ -100,7 +107,9 @@ namespace RMS.Centralize.WebService.BSL
                             mEmails = clientMessageAction.Email + ";" + clientMessageAction.Email2;
                         }
 
-                        var splitEmail = mEmails.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+                        mEmails = mEmails.Replace(',', ';');
+
+                        var splitEmail = mEmails.Split(new string[] {";"}, StringSplitOptions.RemoveEmptyEntries);
 
                         //เตรียมข้อมูล
                         foreach (string email in splitEmail)
@@ -116,6 +125,14 @@ namespace RMS.Centralize.WebService.BSL
                             info.MessageDateTime = monitoring.MessageDateTime;
                             info.DeviceCode = monitoring.DeviceCode;
                             info.DeviceDescription = monitoring.DeviceDescription;
+                            if (!string.IsNullOrEmpty(monitoring.MessageRemark))
+                            {
+                                if (!string.IsNullOrEmpty(info.DeviceDescription))
+                                {
+                                    info.DeviceDescription += " - ";
+                                }
+                                info.DeviceDescription += monitoring.MessageRemark;
+                            }
                             info.SummaryMonitoringReportID = monitoring.Id;
 
                             lEmails.Add(info);
@@ -126,7 +143,10 @@ namespace RMS.Centralize.WebService.BSL
                                 distinctEmail.Add(info.To, info.To);
                         }
 
-                        //SMS SECTION
+                        #endregion
+
+                        #region //SMS SECTION
+
                         string mSMSs = string.Empty;
                         if (clientMessageAction.OverwritenAction == true)
                         {
@@ -137,7 +157,9 @@ namespace RMS.Centralize.WebService.BSL
                             mSMSs = clientMessageAction.SMS + ";" + clientMessageAction.SMS2;
                         }
 
-                        var splitSMS = mSMSs.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+                        mSMSs = mSMSs.Replace(',', ';');
+
+                        var splitSMS = mSMSs.Split(new string[] {";"}, StringSplitOptions.RemoveEmptyEntries);
 
                         foreach (string SMS in splitSMS)
                         {
@@ -152,6 +174,18 @@ namespace RMS.Centralize.WebService.BSL
                             info.MessageDateTime = monitoring.MessageDateTime;
                             info.DeviceCode = monitoring.DeviceCode;
                             info.DeviceDescription = monitoring.DeviceDescription;
+                            if (string.IsNullOrEmpty(info.DeviceDescription)) info.DeviceDescription = monitoring.MessageRemark;
+                            if (string.IsNullOrEmpty(info.DeviceDescription)) info.DeviceDescription = monitoring.Message;
+
+                            //if (!string.IsNullOrEmpty(monitoring.MessageRemark))
+                            //{
+                            //    if (!string.IsNullOrEmpty(info.DeviceDescription))
+                            //    {
+                            //        info.DeviceDescription += " - ";
+                            //    }
+                            //    info.DeviceDescription += monitoring.MessageRemark;
+                            //}
+
                             info.SummaryMonitoringReportID = monitoring.Id;
 
                             lSMSs.Add(info);
@@ -163,7 +197,11 @@ namespace RMS.Centralize.WebService.BSL
                         }
 
 
-                        //Update ค่า Last Action
+
+                        #endregion
+
+                        #region //Update ค่า Last Action
+
                         if (useEmail || useSMS)
                         {
                             string s = "";
@@ -178,65 +216,216 @@ namespace RMS.Centralize.WebService.BSL
                             reportSummaryMonitoring.LastActionDateTime = DateTime.Now;
                             db.SaveChanges();
                         }
+
+                        #endregion
                     }
 
-                    // Prepare Email Body
+                    #region Action Process
+
+                    var rmsSystemConfigs = db.RmsSystemConfigs;
+                    var config = rmsSystemConfigs.First(c => c.Name == "ActionGateway");
+                    string ActionGatewayName = "";
+                    if (config != null)
+                    {
+                        ActionGatewayName = config.Value ?? config.DefaultValue;
+                    }
+
+                    GatewayName gateway;
+                    Enum.TryParse(ActionGatewayName, true, out gateway);
+
+
+                    var rmsMessageMasters = db.RmsMessageMasters;
+
+
+                    #region // Prepare Email Body
+
+                    config = rmsSystemConfigs.First(c => c.Name == "EmailSubject");
+                    string emailSubject = "Monitoring : พบข้อผิดพลาด ::clientcode::";
+                    if (config != null)
+                    {
+                        emailSubject = config.Value ?? config.DefaultValue;
+                    }
+
+                    config = rmsSystemConfigs.First(c => c.Name == "EmailBody");
+                    string emailBody = "ถึงผู้ดูแล|มีข้อผิดพลาดดังนี้||::summaryerror::||ขอบคุณครับ";
+                    if (config != null)
+                    {
+                        emailBody = config.Value ?? config.DefaultValue;
+                    }
+
+                    config = rmsSystemConfigs.First(c => c.Name == "EmailFrom");
+                    string emailFrom = "";
+                    if (config != null)
+                    {
+                        emailFrom = config.Value ?? config.DefaultValue;
+                    }
+
+
                     foreach (KeyValuePair<string, string> keyValuePair in distinctEmail)
                     {
                         string to = keyValuePair.Key;
-                        string subject = "Monitoring : พบข้อผิดพลาด " + lRmsReportSummaryMonitorings[0].ClientCode;
+
+                        string tSubject = emailSubject.Replace("::clientcode::", lRmsReportSummaryMonitorings[0].ClientCode);
                         var actionInfos = lEmails.Where(l => l.To == to).ToList();
 
-                        string body = Environment.NewLine;
+                        string tableOfErrors = Environment.NewLine;
+                        bool writeHeader = false;
+
                         foreach (var actionInfo in actionInfos)
                         {
-                            body += actionInfo.ToPlainText() + Environment.NewLine;
+                            if (!writeHeader)
+                            {
+                                tableOfErrors += actionInfo.ToPlainTextHeader() + Environment.NewLine;
+                                writeHeader = true;
+                            }
+
+                            tableOfErrors += actionInfo.ToPlainText() + Environment.NewLine;
                         }
 
+                        string tBody =
+                            emailBody.Replace("|", Environment.NewLine)
+                                .Replace("::clientcode::", lRmsReportSummaryMonitorings[0].ClientCode)
+                                .Replace("::summaryerror::", tableOfErrors);
 
                         // Call Send Mail Here
-                        /*
-                         * 
-                         * 
-                         * 
-                         */
 
-                        string fileName = DateTime.Now.ToString("yyyyMMddTHHmmss", new CultureInfo("en-AU")) + "." + to + ".txt";
-                        // Testing
-                        if (!File.Exists(destinationPath + fileName))
-                            File.Create(destinationPath + fileName).Close();
-
-                        using (StreamWriter sw = File.AppendText(destinationPath + fileName))
+                        if (!Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.ActionModeTest"]))
                         {
-                            sw.WriteLine(body);
+
+                            var actionGatewayService = new ActionGateway();
+                            var actionResult = actionGatewayService.SendEmail(gateway, emailFrom, new List<string> {to}, tSubject, tBody);
+                        }
+                        else
+                        {
+                            // Testing
+                            string fileName = DateTime.Now.ToString("yyyyMMddTHHmmssff", new CultureInfo("en-AU")) + "." + to + ".txt";
+                            if (!File.Exists(destinationPath + fileName))
+                                File.Create(destinationPath + fileName).Close();
+
+                            using (StreamWriter sw = File.AppendText(destinationPath + fileName))
+                            {
+                                sw.WriteLine(tBody);
+                            }
+                            System.Threading.Thread.Sleep(100);
                         }
 
                     }
 
+                    #endregion
 
-                    // Prepare SMS Body
-                    foreach (KeyValuePair<string, string> keyValuePair in distinctSMS)
+                    #region // Prepare SMS Body
+
+                    config = rmsSystemConfigs.First(c => c.Name == "SMSSender");
+                    string smsSender = "SKS Monitoring";
+                    if (config != null)
                     {
-                        string to = keyValuePair.Key;
-                        string body = "พบข้อผิดพลาด " + lRmsReportSummaryMonitorings[0].ClientCode + " > ";
-                        var actionInfos = lEmails.Where(l => l.To == to).ToList();
-
-                        foreach (var actionInfo in actionInfos)
-                        {
-                            body += actionInfo.ToSMSText() + " ";
-                        }
-                        body = body.Trim();
-
-                        // Call Send SMS Here
-                        /*
-                         * 
-                         * 
-                         * 
-                         */
-
-
+                        smsSender = config.Value ?? config.DefaultValue;
                     }
 
+                    foreach (var actionInfo in lSMSs)
+                    {
+                        var masterMessage = rmsMessageMasters.FirstOrDefault(f => f.Message.ToLower() == actionInfo.Message.ToLower());
+                        if (masterMessage != null)
+                        {
+
+                            string tBody = masterMessage.SmsBody;
+                            if (string.IsNullOrEmpty(tBody))
+                            {
+                                tBody = "พบข้อผิดพลาดของ ::devicedescription:: ที่ตู้ ::clientcode:: กรุณาตรวจสอบ";
+                            }
+
+                            tBody = tBody.Replace("|", Environment.NewLine)
+                                .Replace("::clientcode::", lRmsReportSummaryMonitorings[0].ClientCode)
+                                .Replace("::devicedescription::", string.IsNullOrEmpty(actionInfo.DeviceDescription)? 
+                                    actionInfo.DeviceCode : actionInfo.DeviceDescription)
+                                .Replace("::locationname::", actionInfo.LocationName)
+                                .Replace("::locationcode::", actionInfo.LocationCode)
+                                .Replace("::devicecode::", actionInfo.DeviceCode)
+                                .Replace("::messagedatetime::", actionInfo.MessageDateTime == null ? 
+                                    DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("en-AU")) :
+                                    actionInfo.MessageDateTime.Value.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("en-AU")));
+
+                            if (!Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.ActionModeTest"]))
+                            {
+                                var actionGatewayService = new ActionGateway();
+                                var actionResult = actionGatewayService.SendSMS(gateway, actionInfo.To, smsSender, tBody);
+                            }
+                            else
+                            {
+                                // Testing
+                                string fileName = DateTime.Now.ToString("yyyyMMddTHHmmssff", new CultureInfo("en-AU")) + "." + actionInfo.To + ".txt";
+                                if (!File.Exists(destinationPath + fileName))
+                                    File.Create(destinationPath + fileName).Close();
+
+                                using (StreamWriter sw = File.AppendText(destinationPath + fileName))
+                                {
+                                    sw.WriteLine(tBody);
+                                }
+                                System.Threading.Thread.Sleep(100);
+                            }
+
+
+
+                        }
+                    }
+
+                    #region Mode : SMS Summary (1 SMS contains multi error records)
+
+                    //config = rmsSystemConfigs.First(c => c.Name == "SMSBody");
+                    //string smsBody = "RMS พบข้อผิดพลาด ::clientcode:: > ::summaryerror::";
+                    //if (config != null)
+                    //{
+                    //    smsBody = config.Value ?? config.DefaultValue;
+                    //}
+
+                    //// Prepare SMS Body
+                    //foreach (KeyValuePair<string, string> keyValuePair in distinctSMS)
+                    //{
+                    //    string to = keyValuePair.Key;
+                    //    var actionInfos = lSMSs.Where(l => l.To == to).ToList();
+
+                    //    string tableOfErrors = "";
+                    //    foreach (var actionInfo in actionInfos)
+                    //    {
+                    //        tableOfErrors += actionInfo.ToSMSText() + " ";
+                    //    }
+
+                    //    string tBody =
+                    //        smsBody.Replace("|", Environment.NewLine)
+                    //            .Replace("::clientcode::", lRmsReportSummaryMonitorings[0].ClientCode)
+                    //            .Replace("::summaryerror::", tableOfErrors);
+
+                    //    tBody = tBody.Trim();
+
+                    //    // Call Send SMS Here
+
+                    //    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.ActionModeTest"]))
+                    //    {
+                    //        var actionGatewayService = new ActionGateway();
+                    //        var actionResult = actionGatewayService.SendSMS(gateway, to, smsSender, tBody);
+                    //    }
+                    //    else
+                    //    {
+                    //        // Testing
+                    //        string fileName = DateTime.Now.ToString("yyyyMMddTHHmmss", new CultureInfo("en-AU")) + "." + to + ".txt";
+                    //        if (!File.Exists(destinationPath + fileName))
+                    //            File.Create(destinationPath + fileName).Close();
+
+                    //        using (StreamWriter sw = File.AppendText(destinationPath + fileName))
+                    //        {
+                    //            sw.WriteLine(tBody);
+                    //        }
+                    //    }
+
+                    //}
+
+                    #endregion
+
+
+                    #endregion
+
+
+                    #endregion
                 }
             }
             catch (Exception ex)

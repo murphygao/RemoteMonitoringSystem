@@ -41,6 +41,7 @@ namespace RMS.Centralize.DAL
         IDbSet<RmsDeviceType> RmsDeviceTypes { get; set; } // RMS_DeviceType
         IDbSet<RmsMessage> RmsMessages { get; set; } // RMS_Message
         IDbSet<RmsMessageGroup> RmsMessageGroups { get; set; } // RMS_MessageGroup
+        IDbSet<RmsMessageMaster> RmsMessageMasters { get; set; } // RMS_MessageMaster
         IDbSet<RmsMonitoringProfile> RmsMonitoringProfiles { get; set; } // RMS_MonitoringProfile
         IDbSet<RmsMonitoringProfileDevice> RmsMonitoringProfileDevices { get; set; } // RMS_MonitoringProfileDevice
         IDbSet<RmsReportMonitoringRaw> RmsReportMonitoringRaws { get; set; } // RMS_Report_MonitoringRaw
@@ -66,6 +67,7 @@ namespace RMS.Centralize.DAL
         public IDbSet<RmsDeviceType> RmsDeviceTypes { get; set; } // RMS_DeviceType
         public IDbSet<RmsMessage> RmsMessages { get; set; } // RMS_Message
         public IDbSet<RmsMessageGroup> RmsMessageGroups { get; set; } // RMS_MessageGroup
+        public IDbSet<RmsMessageMaster> RmsMessageMasters { get; set; } // RMS_MessageMaster
         public IDbSet<RmsMonitoringProfile> RmsMonitoringProfiles { get; set; } // RMS_MonitoringProfile
         public IDbSet<RmsMonitoringProfileDevice> RmsMonitoringProfileDevices { get; set; } // RMS_MonitoringProfileDevice
         public IDbSet<RmsReportMonitoringRaw> RmsReportMonitoringRaws { get; set; } // RMS_Report_MonitoringRaw
@@ -109,6 +111,7 @@ namespace RMS.Centralize.DAL
             modelBuilder.Configurations.Add(new RmsDeviceTypeConfiguration());
             modelBuilder.Configurations.Add(new RmsMessageConfiguration());
             modelBuilder.Configurations.Add(new RmsMessageGroupConfiguration());
+            modelBuilder.Configurations.Add(new RmsMessageMasterConfiguration());
             modelBuilder.Configurations.Add(new RmsMonitoringProfileConfiguration());
             modelBuilder.Configurations.Add(new RmsMonitoringProfileDeviceConfiguration());
             modelBuilder.Configurations.Add(new RmsReportMonitoringRawConfiguration());
@@ -131,6 +134,7 @@ namespace RMS.Centralize.DAL
             modelBuilder.Configurations.Add(new RmsDeviceTypeConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsMessageConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsMessageGroupConfiguration(schema));
+            modelBuilder.Configurations.Add(new RmsMessageMasterConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsMonitoringProfileConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsMonitoringProfileDeviceConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsReportMonitoringRawConfiguration(schema));
@@ -613,6 +617,24 @@ namespace RMS.Centralize.DAL
             InitializePartial();
         }
         partial void InitializePartial();
+    }
+
+    // RMS_MessageMaster
+    [DataContract]
+    public partial class RmsMessageMaster
+    {
+        [DataMember(Order = 1, IsRequired = true)]
+        public string Message { get; set; } // Message (Primary key)
+
+        [DataMember(Order = 2, IsRequired = false)]
+        public string Description { get; set; } // Description
+
+        [DataMember(Order = 3, IsRequired = false)]
+        public string EmailBody { get; set; } // EmailBody
+
+        [DataMember(Order = 4, IsRequired = false)]
+        public string SmsBody { get; set; } // SMSBody
+
     }
 
     // RMS_MonitoringProfile
@@ -1151,6 +1173,23 @@ namespace RMS.Centralize.DAL
             Property(x => x.CreatedBy).HasColumnName("CreatedBy").IsOptional().HasMaxLength(100);
             Property(x => x.UpdatedDate).HasColumnName("UpdatedDate").IsOptional();
             Property(x => x.UpdatedBy).HasColumnName("UpdatedBy").IsOptional().HasMaxLength(100);
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // RMS_MessageMaster
+    internal partial class RmsMessageMasterConfiguration : EntityTypeConfiguration<RmsMessageMaster>
+    {
+        public RmsMessageMasterConfiguration(string schema = "dbo")
+        {
+            ToTable(schema + ".RMS_MessageMaster");
+            HasKey(x => x.Message);
+
+            Property(x => x.Message).HasColumnName("Message").IsRequired().HasMaxLength(50).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            Property(x => x.Description).HasColumnName("Description").IsOptional().HasMaxLength(500);
+            Property(x => x.EmailBody).HasColumnName("EmailBody").IsOptional().HasMaxLength(500);
+            Property(x => x.SmsBody).HasColumnName("SMSBody").IsOptional().HasMaxLength(500);
             InitializePartial();
         }
         partial void InitializePartial();

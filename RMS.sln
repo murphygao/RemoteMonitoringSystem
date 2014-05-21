@@ -96,6 +96,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.WPFApplication", "Test
 		{55DE9DC6-2ABA-4F31-A456-E0DE6873763C} = {55DE9DC6-2ABA-4F31-A456-E0DE6873763C}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Centralize.WebService.Gateway", "RMS.Centralize.WebService.Gateway\RMS.Centralize.WebService.Gateway.csproj", "{22541DDD-75FD-403F-A67A-2843FCC2A670}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A8C20BC9-10F2-4D9D-865D-F93D3E0ED8D8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SKS", "SKS", "{543B46A0-0CC7-454B-82A7-2F242D2C3521}"
+	ProjectSection(SolutionItems) = preProject
+		Solution Items\SKS\SKAdapter.dll = Solution Items\SKS\SKAdapter.dll
+		Solution Items\SKS\SKAdapter.dll.config = Solution Items\SKS\SKAdapter.dll.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -246,6 +256,10 @@ Global
 		{328F723E-7485-48F7-8A20-66B8BE4D26BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{328F723E-7485-48F7-8A20-66B8BE4D26BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{328F723E-7485-48F7-8A20-66B8BE4D26BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22541DDD-75FD-403F-A67A-2843FCC2A670}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22541DDD-75FD-403F-A67A-2843FCC2A670}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22541DDD-75FD-403F-A67A-2843FCC2A670}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22541DDD-75FD-403F-A67A-2843FCC2A670}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -285,5 +299,7 @@ Global
 		{0AA45EDA-6895-4475-B702-FA3605F8B704} = {9ADC7BA3-CCDD-4E3E-88D4-54DD057292DA}
 		{55DE9DC6-2ABA-4F31-A456-E0DE6873763C} = {9ADC7BA3-CCDD-4E3E-88D4-54DD057292DA}
 		{F62ECF90-E10D-4E67-905E-F6C7DCCB248F} = {9ADC7BA3-CCDD-4E3E-88D4-54DD057292DA}
+		{22541DDD-75FD-403F-A67A-2843FCC2A670} = {9ADC7BA3-CCDD-4E3E-88D4-54DD057292DA}
+		{543B46A0-0CC7-454B-82A7-2F242D2C3521} = {A8C20BC9-10F2-4D9D-865D-F93D3E0ED8D8}
 	EndGlobalSection
 EndGlobal

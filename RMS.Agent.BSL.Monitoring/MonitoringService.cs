@@ -78,7 +78,7 @@ namespace RMS.Agent.BSL.Monitoring
 
             #region 3. Check Maintenance State
 
-            string maFilePath = ConfigurationManager.AppSettings["MA_FILE_PATH"];
+            string maFilePath = ConfigurationManager.AppSettings["RMS.MA_FILE_PATH"];
 
             // MA State?
             if (File.Exists(maFilePath))

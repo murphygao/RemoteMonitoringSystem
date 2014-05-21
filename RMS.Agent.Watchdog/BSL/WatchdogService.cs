@@ -14,10 +14,10 @@ namespace RMS.Agent.Watchdog.BSL
         public void Start()
         {
             if (CanStartAgentApp())
-                Process.Start(ConfigurationManager.AppSettings["AGENT_FILE_PATH"]);
+                Process.Start(ConfigurationManager.AppSettings["RMS.AGENT_FILE_PATH"]);
 
             if (CanStartOutOfServiceApp())
-                Process.Start(ConfigurationManager.AppSettings["OUT_OF_SERVICE_FILE_PATH"]);
+                Process.Start(ConfigurationManager.AppSettings["RMS.OUT_OF_SERVICE_FILE_PATH"]);
         }
 
         public void Stop()
@@ -27,7 +27,7 @@ namespace RMS.Agent.Watchdog.BSL
 
         private bool CanStartAgentApp()
         {
-            if (IsProcessRunning(ConfigurationManager.AppSettings["AGENT_PROCESS_NAME"])) return false;
+            if (IsProcessRunning(ConfigurationManager.AppSettings["RMS.AGENT_PROCESS_NAME"])) return false;
             return true;
         }
 
@@ -46,11 +46,11 @@ namespace RMS.Agent.Watchdog.BSL
 
         private bool CanStartOutOfServiceApp()
         {
-            if (IsProcessRunning(ConfigurationManager.AppSettings["BIZ_APP_PROCESS_NAME"])) return false;
+            if (IsProcessRunning(ConfigurationManager.AppSettings["RMS.BIZ_APP_PROCESS_NAME"])) return false;
 
-            if (IsProcessRunning(ConfigurationManager.AppSettings["OUT_OF_SERVICE_PROCESS_NAME"])) return false;
+            if (IsProcessRunning(ConfigurationManager.AppSettings["RMS.OUT_OF_SERVICE_PROCESS_NAME"])) return false;
 
-            string maFilePath = ConfigurationManager.AppSettings["MA_FILE_PATH"];
+            string maFilePath = ConfigurationManager.AppSettings["RMS.MA_FILE_PATH"];
             if (File.Exists(maFilePath))
             {
                 return false;

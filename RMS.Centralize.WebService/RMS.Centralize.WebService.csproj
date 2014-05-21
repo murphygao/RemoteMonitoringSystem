@@ -168,6 +168,10 @@
       <Project>{9423b0b0-cb3a-4c5a-ab94-ecba517a303f}</Project>
       <Name>RMS.Centralize.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RMS.Centralize.WebService.Gateway\RMS.Centralize.WebService.Gateway.csproj">
+      <Project>{22541ddd-75fd-403f-a67a-2843fcc2a670}</Project>
+      <Name>RMS.Centralize.WebService.Gateway</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

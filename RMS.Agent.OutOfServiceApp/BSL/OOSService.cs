@@ -19,7 +19,7 @@ namespace RMS.Agent.OutOfServiceApp.BSL
         {
             try
             {
-                string maFilePath = ConfigurationManager.AppSettings["MA_FILE_PATH"];
+                string maFilePath = ConfigurationManager.AppSettings["RMS.MAFilePath"];
                 if (File.Exists(maFilePath))
                 {
                     return true;

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,13 +24,26 @@ namespace RMS.Agent.OutOfServiceApp
     public partial class MainWindow : Window
     {
         private int countDown = 1;
+        private string keyInValue = "";
+        private string password = "7319";
 
         public MainWindow()
         {
             InitializeComponent();
-            //lblCount.Content = countDown;
+
+            string keyFilePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\key.txt";
+
+            if (File.Exists(keyFilePath))
+            {
+                password = File.ReadAllText(keyFilePath).Trim();
+            }
+
+            keyInValue = keyInValue.PadLeft(password.Length, '0');
+
             this.Activate();
         }
+
+
 
         private void btnMenu_Click(object sender, RoutedEventArgs e)
         {
@@ -41,11 +56,33 @@ namespace RMS.Agent.OutOfServiceApp
             }
         }
 
-        private void btnMenu_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            countDown = 1;
-            //lblCount.Content = countDown;
+            this.btnNumber1.Click += new System.Windows.RoutedEventHandler(this.btnNumber_Click);
+            this.btnNumber2.Click += new System.Windows.RoutedEventHandler(this.btnNumber_Click);
+            this.btnNumber3.Click += new System.Windows.RoutedEventHandler(this.btnNumber_Click);
+            this.btnNumber4.Click += new System.Windows.RoutedEventHandler(this.btnNumber_Click);
+            this.btnNumber5.Click += new System.Windows.RoutedEventHandler(this.btnNumber_Click);
+            this.btnNumber6.Click += new System.Windows.RoutedEventHandler(this.btnNumber_Click);
+            this.btnNumber7.Click += new System.Windows.RoutedEventHandler(this.btnNumber_Click);
+            this.btnNumber8.Click += new System.Windows.RoutedEventHandler(this.btnNumber_Click);
+            this.btnNumber9.Click += new System.Windows.RoutedEventHandler(this.btnNumber_Click);
+
         }
+
+        public void btnNumber_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            keyInValue += (sender as Button).Tag.ToString();
+            keyInValue = keyInValue.Substring(1);
+            if (keyInValue == password)
+            {
+                //OOSService service = new OOSService();
+                //if (service.PrepareForClosing())
+                    Application.Current.Shutdown();
+            }
+        }
+
+
 
     }
 

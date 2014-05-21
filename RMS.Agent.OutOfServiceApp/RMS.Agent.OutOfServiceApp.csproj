@@ -96,6 +96,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Key.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\oss_background.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

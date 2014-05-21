@@ -45,5 +45,6 @@ namespace Test.WPFApplication
             msc.AddBusinessMessage(rawMessage);
 
         }
+
     }
 }

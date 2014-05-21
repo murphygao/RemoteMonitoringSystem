@@ -217,6 +217,12 @@ namespace RMS.Agent.Proxy.MonitoringProxy {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/AddMessages", ReplyAction="http://tempuri.org/IMonitoringService/AddMessagesResponse")]
         System.Threading.Tasks.Task AddMessagesAsync(System.Collections.Generic.List<RMS.Agent.Proxy.MonitoringProxy.RmsReportMonitoringRaw> lRawMessages);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/AddBusinessMessage", ReplyAction="http://tempuri.org/IMonitoringService/AddBusinessMessageResponse")]
+        void AddBusinessMessage(RMS.Agent.Proxy.MonitoringProxy.RmsReportMonitoringRaw rawMessage);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/AddBusinessMessage", ReplyAction="http://tempuri.org/IMonitoringService/AddBusinessMessageResponse")]
+        System.Threading.Tasks.Task AddBusinessMessageAsync(RMS.Agent.Proxy.MonitoringProxy.RmsReportMonitoringRaw rawMessage);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/StartMonitoringEngine", ReplyAction="http://tempuri.org/IMonitoringService/StartMonitoringEngineResponse")]
         void StartMonitoringEngine();
         
@@ -265,6 +271,14 @@ namespace RMS.Agent.Proxy.MonitoringProxy {
         
         public System.Threading.Tasks.Task AddMessagesAsync(System.Collections.Generic.List<RMS.Agent.Proxy.MonitoringProxy.RmsReportMonitoringRaw> lRawMessages) {
             return base.Channel.AddMessagesAsync(lRawMessages);
+        }
+        
+        public void AddBusinessMessage(RMS.Agent.Proxy.MonitoringProxy.RmsReportMonitoringRaw rawMessage) {
+            base.Channel.AddBusinessMessage(rawMessage);
+        }
+        
+        public System.Threading.Tasks.Task AddBusinessMessageAsync(RMS.Agent.Proxy.MonitoringProxy.RmsReportMonitoringRaw rawMessage) {
+            return base.Channel.AddBusinessMessageAsync(rawMessage);
         }
         
         public void StartMonitoringEngine() {

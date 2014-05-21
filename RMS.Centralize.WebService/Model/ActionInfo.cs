@@ -22,17 +22,33 @@ namespace RMS.Centralize.WebService.Model
         public string DeviceDescription { get; set; }
         public long SummaryMonitoringReportID { get; set; }
 
+
+        public string ToPlainTextHeader()
+        {
+            string ret = string.Empty;
+
+            ret += "ClientCode | ";
+            ret += "DeviceCode | ";
+            ret += "DeviceDescription | ";
+            ret += "Message | ";
+            ret += "MessageGroupName | ";
+            ret += "LocationCode | ";
+            ret += "LocationName | ";
+            ret += "MessageDateTime";
+
+            return ret;
+        }
         public string ToPlainText()
         {
             string ret = string.Empty;
 
-            ret += ClientCode + "|";
-            ret += DeviceCode + "|";
-            ret += DeviceDescription + "|";
-            ret += Message + "|";
-            ret += MessageGroupName + "|";
-            ret += LocationCode + "|";
-            ret += LocationName + "|";
+            ret += ClientCode + " | ";
+            ret += DeviceCode + " | ";
+            ret += DeviceDescription + " | ";
+            ret += Message + " | ";
+            ret += MessageGroupName + " | ";
+            ret += LocationCode + " | ";
+            ret += LocationName + " | ";
             if (MessageDateTime != null) ret += MessageDateTime.Value.ToString("dd/MM/yyyy HH:mm:ss");
             else ret += "N/A";
 

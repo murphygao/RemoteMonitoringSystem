@@ -38,7 +38,7 @@ namespace RMS.Agent.WPF
         private bool processingTempEvent = false;
         private string currentState = string.Empty;
 
-        private string maFilePath = ConfigurationManager.AppSettings["MA_FILE_PATH"];
+        private string maFilePath = ConfigurationManager.AppSettings["RMS.MA_FILE_PATH"];
         private string clientCode = ConfigurationManager.AppSettings["CLIENT_CODE"];
 
 

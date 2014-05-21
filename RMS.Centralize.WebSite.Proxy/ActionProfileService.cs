@@ -71,7 +71,7 @@ namespace RMS.Centralize.WebSite.Proxy
                     if (urlWebService != null)
                         webServicURL = urlWebService;
                     else
-                        webServicURL = ConfigurationManager.AppSettings["WebServicURL_ActionProfileService"];
+                        webServicURL = ConfigurationManager.AppSettings["RMS.WebServicURL_ActionProfileService"];
 
 
                     webServiceUserName = ConfigurationManager.AppSettings["WebServiceUserName"];

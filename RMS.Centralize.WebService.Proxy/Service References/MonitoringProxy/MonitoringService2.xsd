@@ -25,6 +25,18 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="AddBusinessMessage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="rawMessage" nillable="true" type="q3:RmsReportMonitoringRaw" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddBusinessMessageResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="StartMonitoringEngine">
     <xs:complexType>
       <xs:sequence />
