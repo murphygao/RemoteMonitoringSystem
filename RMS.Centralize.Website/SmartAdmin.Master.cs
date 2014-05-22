@@ -9,6 +9,7 @@ namespace Bootstrap
 {
     public partial class SmartAdmin : System.Web.UI.MasterPage
     {
+
         protected void Page_Load(object sender, EventArgs e)
         {
            

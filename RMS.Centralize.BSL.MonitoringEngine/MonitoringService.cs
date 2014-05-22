@@ -59,7 +59,7 @@ namespace RMS.Centralize.BSL.MonitoringEngine
                 var asc = new AgentServiceClient();
                 string clientEndpiont = ConfigurationManager.AppSettings["RMS.NetTcpBinding_AgentService"];
                 clientEndpiont = clientEndpiont.Replace("client_ip_address", client.IPAddress);
-                //asc.Endpoint.Address = new EndpointAddress(clientEndpiont);
+                asc.Endpoint.Address = new EndpointAddress(clientEndpiont);
                 var result = asc.Monitoring(client.ClientCode);
 
             }

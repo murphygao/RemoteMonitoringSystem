@@ -756,6 +756,12 @@ namespace RMS.Centralize.WebSite.Proxy.MessageActionProxy {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="MessageActionProxy.IMessageActionService")]
     public interface IMessageActionService {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageActionService/TestConnection", ReplyAction="http://tempuri.org/IMessageActionService/TestConnectionResponse")]
+        void TestConnection();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageActionService/TestConnection", ReplyAction="http://tempuri.org/IMessageActionService/TestConnectionResponse")]
+        System.Threading.Tasks.Task TestConnectionAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMessageActionService/InitDataForMeesageAction", ReplyAction="http://tempuri.org/IMessageActionService/InitDataForMeesageActionResponse")]
         RMS.Centralize.WebSite.Proxy.MessageActionProxy.InitMessageActionResult InitDataForMeesageAction();
         
@@ -818,6 +824,14 @@ namespace RMS.Centralize.WebSite.Proxy.MessageActionProxy {
         
         public MessageActionServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public void TestConnection() {
+            base.Channel.TestConnection();
+        }
+        
+        public System.Threading.Tasks.Task TestConnectionAsync() {
+            return base.Channel.TestConnectionAsync();
         }
         
         public RMS.Centralize.WebSite.Proxy.MessageActionProxy.InitMessageActionResult InitDataForMeesageAction() {

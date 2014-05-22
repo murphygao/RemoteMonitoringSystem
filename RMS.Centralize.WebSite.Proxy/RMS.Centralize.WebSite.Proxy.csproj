@@ -46,6 +46,7 @@
     <Compile Include="MessageActionService.cs" />
     <Compile Include="MonitoringService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SelfTestingService.cs" />
     <Compile Include="Service References\ActionProfileProxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -63,6 +64,11 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Service References\MonitoringProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\SelfTestingProxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -160,6 +166,13 @@
     <None Include="Service References\MonitoringProxy\MonitoringService2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\SelfTestingProxy\SelfTestingService.wsdl" />
+    <None Include="Service References\SelfTestingProxy\SelfTestingService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SelfTestingProxy\SelfTestingService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\SummaryReportProxy\RMS.Centralize.WebSite.Proxy.SummaryReportProxy.ClientInfoResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -194,6 +207,7 @@
     <WCFMetadataStorage Include="Service References\ClientProxy\" />
     <WCFMetadataStorage Include="Service References\MessageActionProxy\" />
     <WCFMetadataStorage Include="Service References\MonitoringProxy\" />
+    <WCFMetadataStorage Include="Service References\SelfTestingProxy\" />
     <WCFMetadataStorage Include="Service References\SummaryReportProxy\" />
   </ItemGroup>
   <ItemGroup>
@@ -267,6 +281,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\SummaryReportProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SelfTestingProxy\SelfTestingService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SelfTestingProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SelfTestingProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SelfTestingProxy\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

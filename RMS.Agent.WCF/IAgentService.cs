@@ -14,6 +14,9 @@ namespace RMS.Agent.WCF
     {
 
         [OperationContract]
+        void TestConnection();
+
+        [OperationContract]
         void AutoUpdate(string type);
 
         [OperationContract]

@@ -24,6 +24,11 @@ namespace RMS.Agent.WCF
         private string tempEventFile = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\logs\TempEvent.txt";
         public static object _lock = new object();
 
+        public void TestConnection()
+        {
+            AddLog("Testing", "Testing Agent Service", "");
+        }
+
         public void AutoUpdate(string type)
         {
             AddLog("Auto Update", "Update Agent", "");

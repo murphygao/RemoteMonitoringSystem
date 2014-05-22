@@ -151,6 +151,7 @@
     <Content Include="Monitoring\MessageAction.aspx" />
     <Content Include="Monitoring\MessageEdit.aspx" />
     <Content Include="Monitoring\MonitoringReport.aspx" />
+    <Content Include="Monitoring\SelfTesting.aspx" />
     <Content Include="Scripts\jquery-2.1.0.min.map" />
     <Content Include="sound\bigbox.ogg" />
     <Content Include="sound\messagebox.ogg" />
@@ -926,6 +927,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\BasePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Areas\Monitoring\Controllers\ActionProfileController.cs" />
     <Compile Include="Areas\Monitoring\Controllers\MessageActionController.cs" />
     <Compile Include="Areas\Monitoring\Controllers\SummaryReportController.cs" />
@@ -975,6 +979,13 @@
     </Compile>
     <Compile Include="Monitoring\MonitoringReport.aspx.designer.cs">
       <DependentUpon>MonitoringReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\SelfTesting.aspx.cs">
+      <DependentUpon>SelfTesting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\SelfTesting.aspx.designer.cs">
+      <DependentUpon>SelfTesting.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SmartAdmin.Master.cs">

@@ -13,6 +13,9 @@ namespace RMS.Centralize.WebService
     public interface IMonitoringService
     {
         [OperationContract]
+        void TestConnection();
+
+        [OperationContract]
         void AddMessage(RmsReportMonitoringRaw rawMessage);
 
         [OperationContract]

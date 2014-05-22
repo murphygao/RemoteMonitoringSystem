@@ -511,6 +511,12 @@ namespace RMS.Centralize.WebSite.Proxy.ActionProfileProxy {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ActionProfileProxy.IActionProfileService")]
     public interface IActionProfileService {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActionProfileService/TestConnection", ReplyAction="http://tempuri.org/IActionProfileService/TestConnectionResponse")]
+        void TestConnection();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActionProfileService/TestConnection", ReplyAction="http://tempuri.org/IActionProfileService/TestConnectionResponse")]
+        System.Threading.Tasks.Task TestConnectionAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActionProfileService/Search", ReplyAction="http://tempuri.org/IActionProfileService/SearchResponse")]
         RMS.Centralize.WebSite.Proxy.ActionProfileProxy.ActionProfileResult Search(RMS.Centralize.WebSite.Proxy.ActionProfileProxy.JQueryDataTableParamModel param, string txtActionProfile, string txtEmail, string txtSms);
         
@@ -561,6 +567,14 @@ namespace RMS.Centralize.WebSite.Proxy.ActionProfileProxy {
         
         public ActionProfileServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public void TestConnection() {
+            base.Channel.TestConnection();
+        }
+        
+        public System.Threading.Tasks.Task TestConnectionAsync() {
+            return base.Channel.TestConnectionAsync();
         }
         
         public RMS.Centralize.WebSite.Proxy.ActionProfileProxy.ActionProfileResult Search(RMS.Centralize.WebSite.Proxy.ActionProfileProxy.JQueryDataTableParamModel param, string txtActionProfile, string txtEmail, string txtSms) {

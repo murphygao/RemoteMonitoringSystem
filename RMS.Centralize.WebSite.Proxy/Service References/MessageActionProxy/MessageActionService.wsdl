@@ -9,6 +9,12 @@
       <xsd:import schemaLocation="http://localhost/RMS.Centralize.WebService/MessageActionService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" />
     </xsd:schema>
   </wsdl:types>
+  <wsdl:message name="IMessageActionService_TestConnection_InputMessage">
+    <wsdl:part name="parameters" element="tns:TestConnection" />
+  </wsdl:message>
+  <wsdl:message name="IMessageActionService_TestConnection_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TestConnectionResponse" />
+  </wsdl:message>
   <wsdl:message name="IMessageActionService_InitDataForMeesageAction_InputMessage">
     <wsdl:part name="parameters" element="tns:InitDataForMeesageAction" />
   </wsdl:message>
@@ -46,6 +52,10 @@
     <wsdl:part name="parameters" element="tns:UpdateMessageResponse" />
   </wsdl:message>
   <wsdl:portType name="IMessageActionService">
+    <wsdl:operation name="TestConnection">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMessageActionService/TestConnection" message="tns:IMessageActionService_TestConnection_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMessageActionService/TestConnectionResponse" message="tns:IMessageActionService_TestConnection_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="InitDataForMeesageAction">
       <wsdl:input wsaw:Action="http://tempuri.org/IMessageActionService/InitDataForMeesageAction" message="tns:IMessageActionService_InitDataForMeesageAction_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMessageActionService/InitDataForMeesageActionResponse" message="tns:IMessageActionService_InitDataForMeesageAction_OutputMessage" />
@@ -73,6 +83,15 @@
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IMessageActionService" type="tns:IMessageActionService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="TestConnection">
+      <soap:operation soapAction="http://tempuri.org/IMessageActionService/TestConnection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="InitDataForMeesageAction">
       <soap:operation soapAction="http://tempuri.org/IMessageActionService/InitDataForMeesageAction" style="document" />
       <wsdl:input>

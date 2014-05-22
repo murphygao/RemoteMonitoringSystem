@@ -1131,6 +1131,12 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ClientProxy.IClientService")]
     public interface IClientService {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/TestConnection", ReplyAction="http://tempuri.org/IClientService/TestConnectionResponse")]
+        void TestConnection();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/TestConnection", ReplyAction="http://tempuri.org/IClientService/TestConnectionResponse")]
+        System.Threading.Tasks.Task TestConnectionAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/GetClient", ReplyAction="http://tempuri.org/IClientService/GetClientResponse")]
         RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult GetClient(RMS.Centralize.WebSite.Proxy.ClientProxy.GetClientBy searchBy, System.Nullable<int> clientID, string clientCode, string ipAddress, bool withDetail);
         
@@ -1169,6 +1175,14 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         
         public ClientServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public void TestConnection() {
+            base.Channel.TestConnection();
+        }
+        
+        public System.Threading.Tasks.Task TestConnectionAsync() {
+            return base.Channel.TestConnectionAsync();
         }
         
         public RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult GetClient(RMS.Centralize.WebSite.Proxy.ClientProxy.GetClientBy searchBy, System.Nullable<int> clientID, string clientCode, string ipAddress, bool withDetail) {

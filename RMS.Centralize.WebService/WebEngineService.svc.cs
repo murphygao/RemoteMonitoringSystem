@@ -12,6 +12,11 @@ namespace RMS.Centralize.WebService
     // NOTE: In order to launch WCF Test Client for testing this service, please select WebEngineService.svc or WebEngineService.svc.cs at the Solution Explorer and start debugging.
     public class WebEngineService : IWebEngineService
     {
+        public void TestConnection()
+        {
+
+        }
+
         public string StartMonitoringEngine()
         {
             try

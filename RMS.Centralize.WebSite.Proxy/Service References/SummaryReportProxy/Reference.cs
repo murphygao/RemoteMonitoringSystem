@@ -1194,6 +1194,12 @@ namespace RMS.Centralize.WebSite.Proxy.SummaryReportProxy {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="SummaryReportProxy.ISummaryReportService")]
     public interface ISummaryReportService {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISummaryReportService/TestConnection", ReplyAction="http://tempuri.org/ISummaryReportService/TestConnectionResponse")]
+        void TestConnection();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISummaryReportService/TestConnection", ReplyAction="http://tempuri.org/ISummaryReportService/TestConnectionResponse")]
+        System.Threading.Tasks.Task TestConnectionAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISummaryReportService/SearchSummaryMonitoring", ReplyAction="http://tempuri.org/ISummaryReportService/SearchSummaryMonitoringResponse")]
         RMS.Centralize.WebSite.Proxy.SummaryReportProxy.SummaryMonitoringResult SearchSummaryMonitoring(RMS.Centralize.WebSite.Proxy.SummaryReportProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> txtStartEventDate, System.Nullable<System.DateTime> txtEndEventDate, string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, string ddlMessageStatus, System.Nullable<int> clientID);
         
@@ -1238,6 +1244,14 @@ namespace RMS.Centralize.WebSite.Proxy.SummaryReportProxy {
         
         public SummaryReportServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public void TestConnection() {
+            base.Channel.TestConnection();
+        }
+        
+        public System.Threading.Tasks.Task TestConnectionAsync() {
+            return base.Channel.TestConnectionAsync();
         }
         
         public RMS.Centralize.WebSite.Proxy.SummaryReportProxy.SummaryMonitoringResult SearchSummaryMonitoring(RMS.Centralize.WebSite.Proxy.SummaryReportProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> txtStartEventDate, System.Nullable<System.DateTime> txtEndEventDate, string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, string ddlMessageStatus, System.Nullable<int> clientID) {

@@ -205,6 +205,12 @@ namespace RMS.Centralize.WebSite.Proxy.MonitoringProxy {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="MonitoringProxy.IMonitoringService")]
     public interface IMonitoringService {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/TestConnection", ReplyAction="http://tempuri.org/IMonitoringService/TestConnectionResponse")]
+        void TestConnection();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/TestConnection", ReplyAction="http://tempuri.org/IMonitoringService/TestConnectionResponse")]
+        System.Threading.Tasks.Task TestConnectionAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/AddMessage", ReplyAction="http://tempuri.org/IMonitoringService/AddMessageResponse")]
         void AddMessage(RMS.Centralize.WebSite.Proxy.MonitoringProxy.RmsReportMonitoringRaw rawMessage);
         
@@ -216,6 +222,12 @@ namespace RMS.Centralize.WebSite.Proxy.MonitoringProxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/AddMessages", ReplyAction="http://tempuri.org/IMonitoringService/AddMessagesResponse")]
         System.Threading.Tasks.Task AddMessagesAsync(System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.MonitoringProxy.RmsReportMonitoringRaw> lRawMessages);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/AddBusinessMessage", ReplyAction="http://tempuri.org/IMonitoringService/AddBusinessMessageResponse")]
+        void AddBusinessMessage(RMS.Centralize.WebSite.Proxy.MonitoringProxy.RmsReportMonitoringRaw rawMessage);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/AddBusinessMessage", ReplyAction="http://tempuri.org/IMonitoringService/AddBusinessMessageResponse")]
+        System.Threading.Tasks.Task AddBusinessMessageAsync(RMS.Centralize.WebSite.Proxy.MonitoringProxy.RmsReportMonitoringRaw rawMessage);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/StartMonitoringEngine", ReplyAction="http://tempuri.org/IMonitoringService/StartMonitoringEngineResponse")]
         void StartMonitoringEngine();
@@ -251,6 +263,14 @@ namespace RMS.Centralize.WebSite.Proxy.MonitoringProxy {
                 base(binding, remoteAddress) {
         }
         
+        public void TestConnection() {
+            base.Channel.TestConnection();
+        }
+        
+        public System.Threading.Tasks.Task TestConnectionAsync() {
+            return base.Channel.TestConnectionAsync();
+        }
+        
         public void AddMessage(RMS.Centralize.WebSite.Proxy.MonitoringProxy.RmsReportMonitoringRaw rawMessage) {
             base.Channel.AddMessage(rawMessage);
         }
@@ -265,6 +285,14 @@ namespace RMS.Centralize.WebSite.Proxy.MonitoringProxy {
         
         public System.Threading.Tasks.Task AddMessagesAsync(System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.MonitoringProxy.RmsReportMonitoringRaw> lRawMessages) {
             return base.Channel.AddMessagesAsync(lRawMessages);
+        }
+        
+        public void AddBusinessMessage(RMS.Centralize.WebSite.Proxy.MonitoringProxy.RmsReportMonitoringRaw rawMessage) {
+            base.Channel.AddBusinessMessage(rawMessage);
+        }
+        
+        public System.Threading.Tasks.Task AddBusinessMessageAsync(RMS.Centralize.WebSite.Proxy.MonitoringProxy.RmsReportMonitoringRaw rawMessage) {
+            return base.Channel.AddBusinessMessageAsync(rawMessage);
         }
         
         public void StartMonitoringEngine() {

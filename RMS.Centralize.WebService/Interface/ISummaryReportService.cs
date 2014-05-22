@@ -15,6 +15,9 @@ namespace RMS.Centralize.WebService
     public interface ISummaryReportService
     {
         [OperationContract]
+        void TestConnection();
+
+        [OperationContract]
         SummaryMonitoringResult SearchSummaryMonitoring(JQueryDataTableParamModel param, DateTime? txtStartEventDate, DateTime? txtEndEventDate
             , string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, string ddlMessageStatus, int? clientID);
 

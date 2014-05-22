@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SmartAdmin.Master" AutoEventWireup="true" CodeBehind="ActionList.aspx.cs" Inherits="RMS.Centralize.Website.Monitoring.ActionList" %>
+﻿<%@ Page Title="" Language="C#" AutoEventWireup="true" CodeBehind="ActionList.aspx.cs" Inherits="RMS.Centralize.Website.Monitoring.ActionList" %>
 <%@ Import Namespace="System.Web.Optimization" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">

@@ -14,6 +14,10 @@ namespace RMS.Centralize.WebService
     // NOTE: In order to launch WCF Test Client for testing this service, please select ClientService.svc or ClientService.svc.cs at the Solution Explorer and start debugging.
     public class ClientService : IClientService
     {
+        public void TestConnection()
+        {
+        }
+
         public ClientResult GetClient(GetClientBy getClientBy, int? clientID, string clientCode, string ipAddress, bool withDetail)
         {
             try

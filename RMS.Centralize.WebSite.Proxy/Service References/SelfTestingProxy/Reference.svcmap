@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="580b2c2d-3ff9-4527-a01f-b745477470fe" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="eb28dfba-f881-4fd1-bf5e-e8378c9449cc" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -21,14 +21,13 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="net.tcp://localhost:8081/MyEndpointMex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="http://localhost/RMS.Centralize.WebService/SelfTestingService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="f6f55835-f33f-471a-ae6c-ec323cabbdc2" SourceId="1" SourceUrl="net.tcp://localhost:8081/MyEndpointMex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="6d78ea19-e1cb-4098-ae09-3ea00b9f48f4" SourceId="1" SourceUrl="net.tcp://localhost:8081/MyEndpointMex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="289bdf84-75aa-421d-9653-2bd9c7e36574" SourceId="1" SourceUrl="net.tcp://localhost:8081/MyEndpointMex" />
-    <MetadataFile FileName="RMS.Agent.Entity.xsd" MetadataType="Schema" ID="4a8b242b-41fb-401c-a970-14de746b8d62" SourceId="1" SourceUrl="net.tcp://localhost:8081/MyEndpointMex" />
-    <MetadataFile FileName="RMS.Agent.WCF.Model.xsd" MetadataType="Schema" ID="97f3f88e-7edf-4336-9470-5ed76d74aa00" SourceId="1" SourceUrl="net.tcp://localhost:8081/MyEndpointMex" />
+    <MetadataFile FileName="SelfTestingService.xsd" MetadataType="Schema" ID="76cb74b4-6ab9-4f52-b2bb-206d6de9d5c4" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/SelfTestingService.svc?xsd=xsd0" />
+    <MetadataFile FileName="SelfTestingService.disco" MetadataType="Disco" ID="c12e3ec1-9c95-46ec-b1c5-ea76f0ae251d" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/SelfTestingService.svc?disco" />
+    <MetadataFile FileName="SelfTestingService1.xsd" MetadataType="Schema" ID="a6698cfc-c465-4866-8bb0-dea693af8cb3" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/SelfTestingService.svc?xsd=xsd1" />
+    <MetadataFile FileName="SelfTestingService.wsdl" MetadataType="Wsdl" ID="d511c807-79a6-4f06-a646-c14b976ecff0" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/SelfTestingService.svc?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

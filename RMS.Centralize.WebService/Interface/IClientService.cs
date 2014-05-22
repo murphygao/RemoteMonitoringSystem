@@ -14,6 +14,9 @@ namespace RMS.Centralize.WebService
     public interface IClientService
     {
         [OperationContract]
+        void TestConnection();
+
+        [OperationContract]
         ClientResult GetClient(GetClientBy searchBy, int? clientID, string clientCode, string ipAddress, bool withDetail);
 
         [OperationContract]

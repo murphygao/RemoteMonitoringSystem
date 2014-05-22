@@ -16,6 +16,11 @@ namespace RMS.Centralize.WebService
     // NOTE: In order to launch WCF Test Client for testing this service, please select SummaryReportService.svc or SummaryReportService.svc.cs at the Solution Explorer and start debugging.
     public class SummaryReportService : ISummaryReportService
     {
+        public void TestConnection()
+        {
+
+        }
+
         public SummaryMonitoringResult SearchSummaryMonitoring(JQueryDataTableParamModel param, DateTime? txtStartEventDate, DateTime? txtEndEventDate
             , string txtClientCode, string txtLocation, string ddlMessageGroup, string txtMessage, string ddlMessageStatus, int? clientID)
         {

@@ -15,6 +15,10 @@ namespace RMS.Centralize.WebService
     // NOTE: In order to launch WCF Test Client for testing this service, please select ActionProfileService.svc or ActionProfileService.svc.cs at the Solution Explorer and start debugging.
     public class ActionProfileService : IActionProfileService
     {
+        public void TestConnection()
+        {
+            
+        }
 
         public ActionProfileResult Search(JQueryDataTableParamModel param, string txtActionProfile, string txtEmail, string txtSms)
         {

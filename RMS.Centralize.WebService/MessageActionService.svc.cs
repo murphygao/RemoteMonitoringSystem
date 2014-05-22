@@ -16,6 +16,10 @@ namespace RMS.Centralize.WebService
     public class MessageActionService : IMessageActionService
     {
 
+        public void TestConnection()
+        {
+        }
+
         #region Page: MessageAction
 
         public InitMessageActionResult InitDataForMeesageAction()

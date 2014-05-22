@@ -90,6 +90,16 @@
     <WCFMetadataStorage Include="Service References\AgentTCPProxy\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RMS.Centralize.DAL\RMS.Centralize.DAL.csproj">
+      <Project>{9423b0b0-cb3a-4c5a-ab94-ecba517a303f}</Project>
+      <Name>RMS.Centralize.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Centralize.WebService.Proxy\RMS.Centralize.WebService.Proxy.csproj">
+      <Project>{0aa45eda-6895-4475-b702-fa3605f8b704}</Project>
+      <Name>RMS.Centralize.WebService.Proxy</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Service References\AgentTCPProxy\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
@@ -100,17 +110,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <ProjectReference Include="..\RMS.Centralize.DAL\RMS.Centralize.DAL.csproj">
-      <Project>{9423b0b0-cb3a-4c5a-ab94-ecba517a303f}</Project>
-      <Name>RMS.Centralize.DAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RMS.Centralize.WebService.Proxy\RMS.Centralize.WebService.Proxy.csproj">
-      <Project>{0aa45eda-6895-4475-b702-fa3605f8b704}</Project>
-      <Name>RMS.Centralize.WebService.Proxy</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

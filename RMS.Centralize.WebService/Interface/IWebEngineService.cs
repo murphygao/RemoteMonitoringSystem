@@ -13,6 +13,10 @@ namespace RMS.Centralize.WebService
     public interface IWebEngineService
     {
         [OperationContract]
+        [WebGet(UriTemplate = "/Test/")]
+        void TestConnection();
+
+        [OperationContract]
         [WebGet(UriTemplate = "/StartMonitoringEngine/")]
         string StartMonitoringEngine();
     }

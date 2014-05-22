@@ -3,6 +3,16 @@
   <xs:import schemaLocation="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" />
   <xs:import schemaLocation="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" />
   <xs:import schemaLocation="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.BSL" />
+  <xs:element name="TestConnection">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TestConnectionResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="SearchSummaryMonitoring">
     <xs:complexType>
       <xs:sequence>

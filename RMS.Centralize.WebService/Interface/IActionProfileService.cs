@@ -14,6 +14,9 @@ namespace RMS.Centralize.WebService
     public interface IActionProfileService
     {
         [OperationContract]
+        void TestConnection();
+
+        [OperationContract]
         ActionProfileResult Search(JQueryDataTableParamModel param, string txtActionProfile, string txtEmail, string txtSms);
 
         [OperationContract]

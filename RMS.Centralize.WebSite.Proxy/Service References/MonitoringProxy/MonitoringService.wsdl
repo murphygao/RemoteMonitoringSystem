@@ -7,6 +7,12 @@
       <xsd:import schemaLocation="http://localhost/RMS.Centralize.WebService/MonitoringService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" />
     </xsd:schema>
   </wsdl:types>
+  <wsdl:message name="IMonitoringService_TestConnection_InputMessage">
+    <wsdl:part name="parameters" element="tns:TestConnection" />
+  </wsdl:message>
+  <wsdl:message name="IMonitoringService_TestConnection_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TestConnectionResponse" />
+  </wsdl:message>
   <wsdl:message name="IMonitoringService_AddMessage_InputMessage">
     <wsdl:part name="parameters" element="tns:AddMessage" />
   </wsdl:message>
@@ -19,6 +25,12 @@
   <wsdl:message name="IMonitoringService_AddMessages_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddMessagesResponse" />
   </wsdl:message>
+  <wsdl:message name="IMonitoringService_AddBusinessMessage_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddBusinessMessage" />
+  </wsdl:message>
+  <wsdl:message name="IMonitoringService_AddBusinessMessage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddBusinessMessageResponse" />
+  </wsdl:message>
   <wsdl:message name="IMonitoringService_StartMonitoringEngine_InputMessage">
     <wsdl:part name="parameters" element="tns:StartMonitoringEngine" />
   </wsdl:message>
@@ -26,6 +38,10 @@
     <wsdl:part name="parameters" element="tns:StartMonitoringEngineResponse" />
   </wsdl:message>
   <wsdl:portType name="IMonitoringService">
+    <wsdl:operation name="TestConnection">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMonitoringService/TestConnection" message="tns:IMonitoringService_TestConnection_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMonitoringService/TestConnectionResponse" message="tns:IMonitoringService_TestConnection_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="AddMessage">
       <wsdl:input wsaw:Action="http://tempuri.org/IMonitoringService/AddMessage" message="tns:IMonitoringService_AddMessage_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMonitoringService/AddMessageResponse" message="tns:IMonitoringService_AddMessage_OutputMessage" />
@@ -34,6 +50,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IMonitoringService/AddMessages" message="tns:IMonitoringService_AddMessages_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMonitoringService/AddMessagesResponse" message="tns:IMonitoringService_AddMessages_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="AddBusinessMessage">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMonitoringService/AddBusinessMessage" message="tns:IMonitoringService_AddBusinessMessage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMonitoringService/AddBusinessMessageResponse" message="tns:IMonitoringService_AddBusinessMessage_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="StartMonitoringEngine">
       <wsdl:input wsaw:Action="http://tempuri.org/IMonitoringService/StartMonitoringEngine" message="tns:IMonitoringService_StartMonitoringEngine_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMonitoringService/StartMonitoringEngineResponse" message="tns:IMonitoringService_StartMonitoringEngine_OutputMessage" />
@@ -41,6 +61,15 @@
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IMonitoringService" type="tns:IMonitoringService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="TestConnection">
+      <soap:operation soapAction="http://tempuri.org/IMonitoringService/TestConnection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="AddMessage">
       <soap:operation soapAction="http://tempuri.org/IMonitoringService/AddMessage" style="document" />
       <wsdl:input>
@@ -52,6 +81,15 @@
     </wsdl:operation>
     <wsdl:operation name="AddMessages">
       <soap:operation soapAction="http://tempuri.org/IMonitoringService/AddMessages" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddBusinessMessage">
+      <soap:operation soapAction="http://tempuri.org/IMonitoringService/AddBusinessMessage" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

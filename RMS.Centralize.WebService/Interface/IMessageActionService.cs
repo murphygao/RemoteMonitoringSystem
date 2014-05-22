@@ -13,6 +13,9 @@ namespace RMS.Centralize.WebService
     [ServiceContract]
     public interface IMessageActionService
     {
+        [OperationContract]
+        void TestConnection();
+
         #region Page: MessageAction
 
         [OperationContract]

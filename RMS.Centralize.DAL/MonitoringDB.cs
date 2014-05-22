@@ -911,6 +911,25 @@ namespace RMS.Centralize.DAL
         [DataMember(Order = 4, IsRequired = false)]
         public string Description { get; set; } // Description
 
+        [DataMember(Order = 5, IsRequired = false)]
+        public DateTime? CreatedDate { get; set; } // CreatedDate
+
+        [DataMember(Order = 6, IsRequired = false)]
+        public string CreatedBy { get; set; } // CreatedBy
+
+        [DataMember(Order = 7, IsRequired = false)]
+        public DateTime? UpdatedDate { get; set; } // UpdatedDate
+
+        [DataMember(Order = 8, IsRequired = false)]
+        public string UpdatedBy { get; set; } // UpdatedBy
+
+
+        public RmsSystemConfig()
+        {
+            CreatedDate = System.DateTime.Now;
+            InitializePartial();
+        }
+        partial void InitializePartial();
     }
 
 
@@ -1345,6 +1364,10 @@ namespace RMS.Centralize.DAL
             Property(x => x.Value).HasColumnName("Value").IsOptional().HasMaxLength(1000);
             Property(x => x.DefaultValue).HasColumnName("DefaultValue").IsOptional().HasMaxLength(1000);
             Property(x => x.Description).HasColumnName("Description").IsOptional().HasMaxLength(500);
+            Property(x => x.CreatedDate).HasColumnName("CreatedDate").IsOptional();
+            Property(x => x.CreatedBy).HasColumnName("CreatedBy").IsOptional().HasMaxLength(100);
+            Property(x => x.UpdatedDate).HasColumnName("UpdatedDate").IsOptional();
+            Property(x => x.UpdatedBy).HasColumnName("UpdatedBy").IsOptional().HasMaxLength(100);
             InitializePartial();
         }
         partial void InitializePartial();

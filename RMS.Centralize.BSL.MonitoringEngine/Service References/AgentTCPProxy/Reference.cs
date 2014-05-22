@@ -139,6 +139,12 @@ namespace RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="AgentTCPProxy.IAgentService")]
     public interface IAgentService {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAgentService/TestConnection", ReplyAction="http://tempuri.org/IAgentService/TestConnectionResponse")]
+        void TestConnection();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAgentService/TestConnection", ReplyAction="http://tempuri.org/IAgentService/TestConnectionResponse")]
+        System.Threading.Tasks.Task TestConnectionAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAgentService/AutoUpdate", ReplyAction="http://tempuri.org/IAgentService/AutoUpdateResponse")]
         void AutoUpdate(string type);
         
@@ -183,6 +189,14 @@ namespace RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy {
         
         public AgentServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public void TestConnection() {
+            base.Channel.TestConnection();
+        }
+        
+        public System.Threading.Tasks.Task TestConnectionAsync() {
+            return base.Channel.TestConnectionAsync();
         }
         
         public void AutoUpdate(string type) {
