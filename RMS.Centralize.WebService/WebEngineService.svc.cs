@@ -4,7 +4,9 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using System.Threading;
 using System.Web.Caching;
+using RMS.Centralize.WebService.BSL;
 
 namespace RMS.Centralize.WebService
 {
@@ -21,13 +23,12 @@ namespace RMS.Centralize.WebService
         {
             try
             {
-                RMS.Centralize.BSL.MonitoringEngine.MonitoringService ms = new Centralize.BSL.MonitoringEngine.MonitoringService();
-                ms.Start();
-                return "OK";
+                BSL.MonitoringEngineService mes = new MonitoringEngineService();
+                return mes.Start();
             }
             catch (Exception ex)
             {
-                return "Fail: " + ex.Message;
+                return "Failed: " + ex.Message;
             }
         }
     }

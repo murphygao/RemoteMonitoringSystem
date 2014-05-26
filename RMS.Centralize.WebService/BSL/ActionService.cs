@@ -11,13 +11,14 @@ using System.Runtime.Serialization;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using RMS.Centralize.BSL.MonitoringEngine.Model;
 using RMS.Centralize.DAL;
 using RMS.Centralize.WebService.Gateway;
 using RMS.Centralize.WebService.Model;
 
 namespace RMS.Centralize.WebService.BSL
 {
-    public class ActionService
+    public class ActionService : BaseService
     {
         internal string destinationPath = @"c:\monitoring\email\";
 
@@ -55,7 +56,7 @@ namespace RMS.Centralize.WebService.BSL
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("ActionSend errors. " + ex.Message, ex);
             }
         }
 
@@ -72,6 +73,14 @@ namespace RMS.Centralize.WebService.BSL
 
                 using (var db = new MyDbContext())
                 {
+
+                    #region Check License Validity by Calling ListClientWithIPAddress
+
+                    var ms = new Centralize.BSL.MonitoringEngine.MonitoringService();
+                    ms.ListClientWithIPAddress(licenseInfo);
+
+                    #endregion
+
                     SqlParameter[] parameters = new SqlParameter[1];
                     SqlParameter p1 = new SqlParameter("ClientID", lRmsReportSummaryMonitorings[0].ClientId);
                     parameters[0] = p1;
@@ -430,7 +439,7 @@ namespace RMS.Centralize.WebService.BSL
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("ManualSending errors. " + ex.Message, ex);
             }
         }
 
@@ -440,6 +449,14 @@ namespace RMS.Centralize.WebService.BSL
             {
                 using (var db = new MyDbContext())
                 {
+                    #region Check License Validity by Calling ListClientWithIPAddress
+
+                    var ms = new Centralize.BSL.MonitoringEngine.MonitoringService();
+                    ms.ListClientWithIPAddress(licenseInfo);
+
+                    #endregion
+
+
                     var dbRmsReportSummaryMonitorings = db.RmsReportSummaryMonitorings.Where(rsm => rsm.Status == 1);
 
                     List<RmsReportSummaryMonitoring> lRmsReportSummaryMonitorings =
@@ -449,10 +466,9 @@ namespace RMS.Centralize.WebService.BSL
 
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                
-                throw;
+                throw new Exception("TechnicalSending errors. " + ex.Message, ex);
             }
             
         }

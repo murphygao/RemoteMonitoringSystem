@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Configuration;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using ESN.LicenseManager.Model;
 using RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy;
 using RMS.Centralize.BSL.MonitoringEngine.Model;
 using RMS.Centralize.DAL;
@@ -17,7 +18,7 @@ namespace RMS.Centralize.BSL.MonitoringEngine
 {
     public class MonitoringService
     {
-        public void Start()
+        public void Start(LicenseInfo licenseInfo)
         {
 
             /*
@@ -34,9 +35,7 @@ namespace RMS.Centralize.BSL.MonitoringEngine
                     db.Configuration.ProxyCreationEnabled = false;
                     db.Configuration.LazyLoadingEnabled = false;
 
-                    var listOfType = db.Database.SqlQuery<RmsClientWithIPAddress>("RMS_ListClientWithIPAddress");
-
-                    var listClients = new List<RmsClientWithIPAddress>(listOfType.ToList());
+                    var listClients = ListClientWithIPAddress(licenseInfo);
 
                     foreach (var client in listClients)
                     {
@@ -105,6 +104,32 @@ namespace RMS.Centralize.BSL.MonitoringEngine
 
                 Console.WriteLine(e);
             }
+        }
+
+        public List<RmsClientWithIPAddress> ListClientWithIPAddress(LicenseInfo licenseInfo)
+        {
+
+            using (var db = new MyDbContext())
+            {
+                #region Prepare Parameters
+
+                db.Configuration.ProxyCreationEnabled = false;
+                db.Configuration.LazyLoadingEnabled = false;
+
+                var listOfType = db.Database.SqlQuery<RmsClientWithIPAddress>("RMS_ListClientWithIPAddress");
+
+                var listClients = new List<RmsClientWithIPAddress>(listOfType.ToList());
+
+                if (!licenseInfo.ValidateLicense(listClients.Count, null, null, null, null, null))
+                {
+                    throw new Exception("License is invalid or exceed active client's quota or expired. Please contact product owner.");
+                }
+
+                return listClients;
+
+                #endregion
+            }
+
         }
     }
 }

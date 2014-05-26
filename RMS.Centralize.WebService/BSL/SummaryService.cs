@@ -13,7 +13,7 @@ using RMS.Centralize.WebService.Model;
 
 namespace RMS.Centralize.WebService.BSL
 {
-    public class SummaryService
+    public class SummaryService : BaseService
     {
         public delegate void DoSummaryMonitoringAsync(List<RmsReportMonitoringRaw> lRaw);
 
@@ -87,6 +87,7 @@ namespace RMS.Centralize.WebService.BSL
 
                 using (var db = new MyDbContext())
                 {
+
                     #region Prepare Parameters
 
                     db.Configuration.ProxyCreationEnabled = false;

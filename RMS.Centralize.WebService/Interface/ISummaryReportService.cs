@@ -46,7 +46,7 @@ namespace RMS.Centralize.WebService
 
 
     [DataContract]
-    public class ClientInfoResult : Result
+    public partial class ClientInfoResult : Result
     {
 
         [DataMember]

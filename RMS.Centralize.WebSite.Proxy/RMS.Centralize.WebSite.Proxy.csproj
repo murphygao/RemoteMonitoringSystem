@@ -125,6 +125,9 @@
     <None Include="Service References\ClientProxy\ClientService4.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\ClientProxy\RMS.Centralize.WebSite.Proxy.ClientProxy.ClientInfoResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ClientProxy\RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

@@ -450,7 +450,7 @@
                             "sWidth": "80",
                             "sClass": "center",
                             "fnRender": function (oObj) {
-                                return '<a id="edit_item_' + oObj.aData["ActionProfileId"] + '" class="btn btn-primary btn-xs" href="javascript:ViewClientReport(' + oObj.aData["ClientId"] + ')"><i class="glyphicon glyphicon-search"></i></a>';
+                                return '<a id="edit_item_' + oObj.aData["ClientId"] + '" class="btn btn-primary btn-xs" href="javascript:ViewClientReport(' + oObj.aData["ClientId"] + ')"><i class="glyphicon glyphicon-search"></i></a>';
                             }
                         }
                     ],

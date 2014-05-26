@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using RMS.Centralize.Website.Areas.Monitoring.Models;
 using RMS.Centralize.WebSite.Proxy.ClientProxy;
 using RMS.Centralize.WebSite.Proxy.SummaryReportProxy;
+using JQueryDataTableParamModel = RMS.Centralize.WebSite.Proxy.SummaryReportProxy.JQueryDataTableParamModel;
 
 namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 {

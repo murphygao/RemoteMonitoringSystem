@@ -147,6 +147,7 @@
     <Content Include="js\plugin\datatables\media\js\TableTools.min.js.gz" />
     <Content Include="js\plugin\slickgrid\slick.editors.js--" />
     <Content Include="Monitoring\ActionEdit.aspx" />
+    <Content Include="Monitoring\ClientList.aspx" />
     <Content Include="Monitoring\ClientReport.aspx" />
     <Content Include="Monitoring\MessageAction.aspx" />
     <Content Include="Monitoring\MessageEdit.aspx" />
@@ -156,6 +157,7 @@
     <Content Include="sound\bigbox.ogg" />
     <Content Include="sound\messagebox.ogg" />
     <Content Include="sound\smallbox.ogg" />
+    <Content Include="Areas\Test\Views\web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -931,10 +933,13 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Areas\Monitoring\Controllers\ActionProfileController.cs" />
+    <Compile Include="Areas\Monitoring\Controllers\ClientController.cs" />
     <Compile Include="Areas\Monitoring\Controllers\MessageActionController.cs" />
     <Compile Include="Areas\Monitoring\Controllers\SummaryReportController.cs" />
     <Compile Include="Areas\Monitoring\Models\DeviceStatus.cs" />
     <Compile Include="Areas\Monitoring\MonitoringAreaRegistration.cs" />
+    <Compile Include="Areas\Test\Controllers\TestController.cs" />
+    <Compile Include="Areas\Test\TestAreaRegistration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -951,6 +956,13 @@
     </Compile>
     <Compile Include="Monitoring\ActionList.aspx.designer.cs">
       <DependentUpon>ActionList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\ClientList.aspx.cs">
+      <DependentUpon>ClientList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\ClientList.aspx.designer.cs">
+      <DependentUpon>ClientList.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\ClientReport.aspx.cs">
       <DependentUpon>ClientReport.aspx</DependentUpon>
@@ -998,10 +1010,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Monitoring\Views\ActionProfile\" />
+    <Folder Include="Areas\Monitoring\Views\Client\" />
     <Folder Include="Areas\Monitoring\Views\MessageAction\" />
     <Folder Include="Areas\Monitoring\Views\Shared\" />
     <Folder Include="Areas\Monitoring\Views\SummaryReport\" />
-    <Folder Include="Models\" />
+    <Folder Include="Areas\Test\Models\" />
+    <Folder Include="Areas\Test\Views\Shared\" />
+    <Folder Include="Areas\Test\Views\Test\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

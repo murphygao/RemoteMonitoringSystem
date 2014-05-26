@@ -11,6 +11,7 @@ using System.Text;
 using System.Transactions;
 using RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy;
 using RMS.Centralize.DAL;
+using RMS.Centralize.WebService.BSL;
 using RMS.Centralize.WebService.Gateway;
 
 namespace RMS.Centralize.WebService
@@ -21,7 +22,6 @@ namespace RMS.Centralize.WebService
     {
         public void TestConnection()
         {
-            
         }
 
         public string TestWebConfig()

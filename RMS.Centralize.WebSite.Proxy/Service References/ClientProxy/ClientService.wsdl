@@ -27,6 +27,18 @@
   <wsdl:message name="IClientService_SetClientState_OutputMessage">
     <wsdl:part name="parameters" element="tns:SetClientStateResponse" />
   </wsdl:message>
+  <wsdl:message name="IClientService_Search_InputMessage">
+    <wsdl:part name="parameters" element="tns:Search" />
+  </wsdl:message>
+  <wsdl:message name="IClientService_Search_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SearchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IClientService_Update_InputMessage">
+    <wsdl:part name="parameters" element="tns:Update" />
+  </wsdl:message>
+  <wsdl:message name="IClientService_Update_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateResponse" />
+  </wsdl:message>
   <wsdl:portType name="IClientService">
     <wsdl:operation name="TestConnection">
       <wsdl:input wsaw:Action="http://tempuri.org/IClientService/TestConnection" message="tns:IClientService_TestConnection_InputMessage" />
@@ -39,6 +51,14 @@
     <wsdl:operation name="SetClientState">
       <wsdl:input wsaw:Action="http://tempuri.org/IClientService/SetClientState" message="tns:IClientService_SetClientState_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IClientService/SetClientStateResponse" message="tns:IClientService_SetClientState_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Search">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientService/Search" message="tns:IClientService_Search_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientService/SearchResponse" message="tns:IClientService_Search_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Update">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientService/Update" message="tns:IClientService_Update_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientService/UpdateResponse" message="tns:IClientService_Update_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IClientService" type="tns:IClientService">
@@ -63,6 +83,24 @@
     </wsdl:operation>
     <wsdl:operation name="SetClientState">
       <soap:operation soapAction="http://tempuri.org/IClientService/SetClientState" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Search">
+      <soap:operation soapAction="http://tempuri.org/IClientService/Search" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Update">
+      <soap:operation soapAction="http://tempuri.org/IClientService/Update" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

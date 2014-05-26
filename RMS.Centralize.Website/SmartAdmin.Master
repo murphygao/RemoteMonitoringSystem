@@ -176,7 +176,7 @@
                             <a href="<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/ActionList.aspx">Action Profile</a>
                         </li>
                         <li>
-                            <a href="#">Client Monitoring Setup</a>
+                            <a href="<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/ClientList.aspx">Client Monitoring Setup</a>
                         </li>
                     </ul>
                 </li>

@@ -174,5 +174,39 @@ namespace RMS.Centralize.WebService
                 return sr;
             }
         }
+
+        public ClientInfoResult Search(JQueryDataTableParamModel param, DateTime? asOfDate, int? clientTypeID, string clientCode, bool? clientStatus, string ipAddress)
+        {
+            try
+            {
+                int totalRecord;
+                BSL.ClientService cs = new BSL.ClientService();
+                List<ClientInfo> clientInfos = cs.SearchClient(param, asOfDate, clientTypeID, clientCode, clientStatus, ipAddress, out totalRecord);
+
+                var sr = new ClientInfoResult
+                {
+                    IsSuccess = true,
+                    ListClients = clientInfos,
+                    TotalRecords = totalRecord
+                };
+
+                return sr;
+
+            }
+            catch (Exception ex)
+            {
+                var sr = new ClientInfoResult
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "Search errors. " +  ex.Message
+                };
+                return sr;
+            }
+        }
+
+        public Result Update(int? id, string m, string clientCode, bool activeList, bool status, DateTime? effectiveDate, DateTime? expiredDate, int state)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

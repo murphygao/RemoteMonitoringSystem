@@ -21,6 +21,14 @@ namespace RMS.Centralize.WebService
 
         [OperationContract]
         Result SetClientState(int clientID, ClientState state);
+
+        [OperationContract]
+        ClientInfoResult Search(JQueryDataTableParamModel param, DateTime? asOfDate, int? clientTypeID, string clientCode, bool? clientStatus, string ipAddress);
+
+
+        [OperationContract]
+        Result Update(int? id, string m, string clientCode, bool activeList, bool status, DateTime? effectiveDate, DateTime? expiredDate, int state);
+
     }
 
 
@@ -81,4 +89,17 @@ namespace RMS.Centralize.WebService
 
 
     }
+
+    public partial class ClientInfoResult : Result
+    {
+
+        [DataMember]
+        public List<ClientInfo> ListClients { get; set; }
+
+        [DataMember]
+        public int TotalRecords { get; set; }
+
+
+    }
+
 }

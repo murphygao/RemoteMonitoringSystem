@@ -86,8 +86,14 @@ namespace RMS.Centralize.WebService
 
         public void StartMonitoringEngine()
         {
-            RMS.Centralize.BSL.MonitoringEngine.MonitoringService ms = new Centralize.BSL.MonitoringEngine.MonitoringService();
-            ms.Start();
+            try
+            {
+                BSL.MonitoringEngineService mes = new MonitoringEngineService();
+                mes.Start();
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private string GetIP()
