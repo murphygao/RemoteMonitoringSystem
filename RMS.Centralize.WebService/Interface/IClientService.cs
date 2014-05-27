@@ -29,6 +29,10 @@ namespace RMS.Centralize.WebService
         [OperationContract]
         Result Update(int? id, string m, string clientCode, bool activeList, bool status, DateTime? effectiveDate, DateTime? expiredDate, int state);
 
+        [OperationContract]
+        ClientResult ExistingClientCode(string clientCode);
+
+
     }
 
 

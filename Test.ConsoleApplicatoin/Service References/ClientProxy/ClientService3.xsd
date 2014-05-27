@@ -1,49 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost/RMS.Centralize.WebService/ClientService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" />
-  <xs:import schemaLocation="http://localhost/RMS.Centralize.WebService/ClientService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" />
-  <xs:import schemaLocation="http://localhost/RMS.Centralize.WebService/ClientService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:simpleType name="GetClientBy">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="ClientID" />
-      <xs:enumeration value="ClientCode" />
-      <xs:enumeration value="IPAddress" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="GetClientBy" nillable="true" type="tns:GetClientBy" />
-  <xs:complexType name="ClientResult">
-    <xs:complexContent mixed="false">
-      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" base="q1:Result">
-        <xs:sequence>
-          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="Client" nillable="true" type="q2:RmsClient" />
-          <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="ListClients" nillable="true" type="q3:ArrayOfRmsClient" />
-          <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="ListDeviceType" nillable="true" type="q4:ArrayOfRmsDeviceType" />
-          <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="ListDevices" nillable="true" type="q5:ArrayOfRmsDevice" />
-          <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="ListMonitoringProfileDevices" nillable="true" type="q6:ArrayOfRmsMonitoringProfileDevice" />
-          <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="MonitoringProfile" nillable="true" type="q7:RmsMonitoringProfile" />
-          <xs:element minOccurs="0" name="TotalRecords" type="xs:int" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="Result">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsSuccess" type="xs:boolean" />
+    </xs:sequence>
   </xs:complexType>
-  <xs:element name="ClientResult" nillable="true" type="tns:ClientResult" />
-  <xs:simpleType name="ClientState">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Normal">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Maintenance">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="ClientState" nillable="true" type="tns:ClientState" />
+  <xs:element name="Result" nillable="true" type="tns:Result" />
+  <xs:complexType name="JQueryDataTableParamModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="iColumns" type="xs:int" />
+      <xs:element minOccurs="0" name="iDisplayLength" type="xs:int" />
+      <xs:element minOccurs="0" name="iDisplayStart" type="xs:int" />
+      <xs:element minOccurs="0" name="iSortColumn" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="iSortingCols" type="xs:int" />
+      <xs:element minOccurs="0" name="sColumns" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="sEcho" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="sSearch" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="JQueryDataTableParamModel" nillable="true" type="tns:JQueryDataTableParamModel" />
+  <xs:complexType name="ClientInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ClientCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ClientID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="ClientType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreatedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EffectiveDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Enable" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ExpiredDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IPAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LocationCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LocationCode2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LocationName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LocationName2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Mobile" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProfileName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RowNum" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="State" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Telephone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpdatedDate" nillable="true" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ClientInfo" nillable="true" type="tns:ClientInfo" />
+  <xs:complexType name="ArrayOfClientInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ClientInfo" nillable="true" type="tns:ClientInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfClientInfo" nillable="true" type="tns:ArrayOfClientInfo" />
 </xs:schema>

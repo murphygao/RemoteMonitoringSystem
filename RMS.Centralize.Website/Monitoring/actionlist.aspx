@@ -435,7 +435,7 @@
             Row = function(id) {
                 this.actionprofileid = id;
             };
-            var deleteRow = new Row(id);
+            var delRow = new Row(id);
 
             $.SmartMessageBox({
                 title: "Delete Confirmation",
@@ -448,7 +448,7 @@
                         "dataType": 'json',
                         "contentType": "application/json; charset=utf-8",
                         "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/ActionProfile/DeleteActionProfile",
-                        "data": JSON.stringify(deleteRow),
+                        "data": JSON.stringify(delRow),
                         "success": function (data) {
                             if (data == "-1") {
                                 $.smallBox({

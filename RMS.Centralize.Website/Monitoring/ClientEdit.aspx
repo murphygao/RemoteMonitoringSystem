@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SmartAdmin.Master" AutoEventWireup="true" CodeBehind="MessageEdit.aspx.cs" Inherits="RMS.Centralize.Website.Monitoring.MessageEdit" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ClientEdit.aspx.cs" Inherits="RMS.Centralize.Website.Monitoring.ClientEdit" %>
 <%@ Import Namespace="System.Web.Optimization" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -13,7 +13,7 @@
                     <i class="fa fa-bar-chart-o fa-fw "></i>
                     Remote Monitoring
 							<span>> 
-								Message Action
+								Client Monitoring
                             </span>
                     <span>> 
 								Setup
@@ -68,7 +68,7 @@
 								-->
                         <header>
                             <span class="widget-icon"><i class="fa fa-edit"></i></span>
-                            <h2>Message Setup</h2>
+                            <h2>Client Monitoring Setup</h2>
 
                         </header>
 
@@ -92,23 +92,9 @@
 
                                         <div class="row">
                                             <section class="col col-8">
-                                                <label class="label">Message Group</label>
-                                                <label class="select">
-                                                    <select id="ddlMessageGroupID" class="input-sm">
-                                                    </select>
-                                                    <i></i>
-                                                </label>
-                                                <div class="note">
-                                                    <strong>Required Field</strong>
-                                                </div>
-                                            </section>
-                                        </div>
-
-                                        <div class="row">
-                                            <section class="col col-8">
-                                                <label class="label">Message</label>
+                                                <label class="label">Client Code</label>
                                                 <label class="input">
-                                                    <input type="text" id="txtMessage" name="txtMessage" class="input-sm">
+                                                    <input type="text" id="txtClientCode" name="txtClientCode" class="input-sm">
                                                 </label>
                                                 <div class="note">
                                                     <strong>Required Field</strong>
@@ -119,11 +105,25 @@
 
                                         <div class="row">
                                             <section class="col col-8">
-                                                <label class="label">Default Severity Level</label>
+                                                <label class="label">Client Type</label>
                                                 <label class="select">
-                                                    <select id="ddlSeverityLevelID" class="input-sm">
+                                                    <select id="ddlClientTypeID" class="input-sm">
+                                                        <option value="1">Kiosk</option>
+                                                        <option value="2">Agent</option>
                                                     </select>
                                                     <i></i>
+                                                </label>
+                                                <div class="note">
+                                                    <strong>Required Field</strong>
+                                                </div>
+                                            </section>
+                                        </div>
+
+                                        <div class="row">
+                                            <section class="col col-8">
+                                                <label class="label">Reference Client</label>
+                                                <label class="input">
+                                                    <input type="text" id="txtReferenceClient" name="txtReferenceClient" class="input-sm">
                                                 </label>
                                                 <div class="note">
                                                     <strong>Required Field</strong>
@@ -131,22 +131,40 @@
 
                                             </section>
                                         </div>
-
 
                                         <div class="row">
                                             <section class="col col-4">
                                                 <label class="toggle">
                                                     <input type="checkbox" id="cbxActiveList" checked="checked">
-                                                    <i data-swchon-text="ON" data-swchoff-text="OFF"></i>Active List</label>
+                                                    <i data-swchon-text="ON" data-swchoff-text="OFF"></i><span style="font-size: 13px!important; font-weight: 400!important;">Active List</span></label>
                                             </section>
-                                        </div>
 
-
-                                        <div class="row">
                                             <section class="col col-4">
                                                 <label class="toggle">
-                                                    <input type="checkbox" id="cbxActiveStatus" checked="checked">
-                                                    <i data-swchon-text="ON" data-swchoff-text="OFF"></i>Active Status</label>
+                                                    <input type="checkbox" id="cbxEnable" checked="checked">
+                                                    <i data-swchon-text="ON" data-swchoff-text="OFF"></i><span style="font-size: 13px!important; font-weight: 400!important;">Enable</span></label>
+                                            </section>
+                                        </div>
+                                        
+ 
+                                        <div class="row">
+                                            <section class="col col-4">
+                                                <label class="label">Effective Date</label>
+                                                <label class="input">
+                                                    <i class="icon-append fa fa-calendar"></i>
+                                                    <input type="text" class="input-sm" name="txtEffectiveDate" id="txtEffectiveDate" placeholder="Effective Date"/>
+                                                </label>
+                                                <div class="note">
+                                                    <strong>Required Field</strong>
+                                                </div>
+                                            </section>
+
+                                            <section class="col col-4">
+                                                <label class="label">Expired Date</label>
+                                                <label class="input">
+                                                    <i class="icon-append fa fa-calendar"></i>
+                                                    <input type="text" class="input-sm" name="txtExpiredDate" id="txtExpiredDate" placeholder="Expired Date"/>
+                                                </label>
                                             </section>
                                         </div>
 
@@ -198,7 +216,7 @@
 
         $(document).ready(function () {
 
-            var fullPath = "<%=HttpContext.Current.Request.Url.AbsolutePath.Substring(0, HttpContext.Current.Request.Url.AbsolutePath.LastIndexOf("/"))%>/MessageAction.aspx";
+            var fullPath = "<%=HttpContext.Current.Request.Url.AbsolutePath.Substring(0, HttpContext.Current.Request.Url.AbsolutePath.LastIndexOf("/"))%>/ClientList.aspx";
             if (!$('nav li:has(a[href="' + fullPath + '"])').hasClass("active")) {
 
                 $('nav').find('li.active:first').removeClass('active');
@@ -220,20 +238,67 @@
 
 
             pageSetUp();
+            drawBreadCrumb();
 
             // PAGE RELATED SCRIPTS
+
+            var response;
+            $.validator.addMethod(
+                "uniqueClientCode",
+                function (value, element) {
+                    $.ajax({
+                        "type": "POST",
+                        "dataType": 'json',
+                        "contentType": "application/json; charset=utf-8",
+                        "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/ExistingClientCode/",
+                        "data": "{'clientCode' : '" + value + "'}",
+                        success: function (ret) {
+                            if (ret.isSuccess) {
+
+                                response = (ret.aaData == '0') ? true : false;
+                            } else {
+                                response = false;
+                            }
+                        }
+                    });
+                    return response;
+                },
+                "Username is Already Taken"
+            );
 
             var $checkoutForm = $('#smartForm').validate({
                 // Rules for form validation
                 rules: {
-                    txtMessage: {
+                    txtClientCode: {
+                        required: true,
+                        uniqueClientCode: true
+                    },
+                    txtReferenceClient: {
                         required: true
-                    }
+                    },
+                    txtEffectiveDate: {
+                        required: true,
+                        dateISO: true
+                    },
+                    txtExpiredDate: {
+                        dateISO: true
+                    },
                 },
                 messages: {
-                    txtMessage: {
-                        required: 'Please enter message'
-                    }
+                    txtClientCode: {
+                        required: 'Please enter client code',
+                        uniqueClientCode: 'This client code is taken already'
+                     },
+                    txtReferenceClient: {
+                        required: 'Please enter reference client'
+                    },
+                    txtEffectiveDate: {
+                        required: 'Please enter effective date',
+                        dateISO: 'Please enter effective date in DATE format'
+                    },
+                    txtExpiredDate: {
+                        dateISO: 'Please enter expired date in DATE format'
+                    },
                 },
 
                 errorPlacement: function (error, element) {
@@ -242,6 +307,41 @@
 
             });
 
+            $('#txtEffectiveDate').datepicker({
+                dateFormat: 'yy-mm-dd',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                maxDate: new Date(2099, 12, 0),
+                changeMonth: true,
+                changeYear: true,
+                onSelect: function (selectedDate) {
+                    $('#txtExpiredDate').datepicker('option', 'minDate', selectedDate);
+                },
+                onClose: function (selectedDate) {
+                    $('#txtExpiredDate').datepicker('option', 'minDate', selectedDate);
+                }
+            });
+
+            $('#txtExpiredDate').datepicker({
+                dateFormat: 'yy-mm-dd',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                maxDate: new Date(2099, 12, 0),
+                changeMonth: true,
+                changeYear: true,
+                onSelect: function (selectedDate) {
+                    $('#txtEffectiveDate').datepicker('option', 'maxDate', selectedDate);
+                },
+                onClose: function (selectedDate) {
+                    if (selectedDate == '') selectedDate = new Date(2099, 12, 0);
+                    $('#txtEffectiveDate').datepicker('option', 'maxDate', selectedDate);
+                }
+
+            });
+
+            $("#txtEffectiveDate").datepicker('setDate', new Date());
+            $('#txtExpiredDate').datepicker('option', 'minDate', new Date());
+
             if ("<%=Request["m"]%>" == "e" && "<%=Request["id1"]%>" != "") {
 
                 Pace.restart();
@@ -249,7 +349,7 @@
                     "type": "POST",
                     "dataType": 'json',
                     "contentType": "application/json; charset=utf-8",
-                    "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/MessageAction/GetMessage/",
+                    "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/GetClient/",
                     "data": "{'id' : " + <%=Request["id1"]%> + "}",
                     "success": function (ret) {
 
@@ -257,16 +357,24 @@
 
                             var myData = JSON.parse(ret.data);
 
-                            $('#ddlMessageGroupID').val(myData.MessageGroupId);
-                            $('#txtMessage').val(myData.Message);
-                            $('#ddlSeverityLevelID').val(myData.SeverityLevelId);
-
-
-                            $('textarea[name="txtEmail"]').val(myData.Email);
-                            $('textarea[name="txtSMS"]').val(myData.Sms);
+                            $('#txtClientCode').val(myData.ClientCode);
+                            $('#ddlClientTypeID').val(myData.ClientTypeId);
+                            $('#txtReferenceClient').val(myData.ReferenceClientId);
 
                             $('#cbxActiveList').attr('checked', myData.ActiveList);
-                            $('#cbxActiveStatus').attr('checked', myData.ActiveStatus);
+                            $('#cbxEnable').attr('checked', myData.Enable);
+
+                            if (myData.EffectiveDate != '') {
+                                var eff = new Date(myData.EffectiveDate.substr(0, 10));
+                                $("#txtEffectiveDate").datepicker('setDate', eff);
+                                $('#txtExpiredDate').datepicker('option', 'minDate', eff);
+
+                            }
+                            if (myData.txtExpiredDate != '') {
+                                var exp = new Date(myData.ExpiredDate.substr(0, 10));
+                                $("#txtExpiredDate").datepicker('setDate', exp);
+                                $('#txtEffectiveDate').datepicker('option', 'maxDate', exp);
+                            }
 
                             $('#id1').val(myData.MessageId);
                             $('#m').val("e");
@@ -298,6 +406,10 @@
                 });
 
             }
+
+
+
+
         });
 
         function initialData() {
@@ -321,7 +433,6 @@
             if (!$('#smartForm').valid()) return;
 
             tmpObj = function () {
-
                 this.id = $('#id1').val();
                 this.m = $('#m').val();
                 this.messageGroupID = $('#ddlMessageGroupID').val();

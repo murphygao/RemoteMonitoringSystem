@@ -10,6 +10,6 @@
 namespace RMS.Centralize.Website.Monitoring {
     
     
-    public partial class MessageEdit {
+    public partial class ClientEdit {
     }
 }

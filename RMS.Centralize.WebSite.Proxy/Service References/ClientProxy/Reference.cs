@@ -1706,6 +1706,12 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/Update", ReplyAction="http://tempuri.org/IClientService/UpdateResponse")]
         System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.Result> UpdateAsync(System.Nullable<int> id, string m, string clientCode, bool activeList, bool status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, int state);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/ExistingClientCode", ReplyAction="http://tempuri.org/IClientService/ExistingClientCodeResponse")]
+        RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult ExistingClientCode(string clientCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/ExistingClientCode", ReplyAction="http://tempuri.org/IClientService/ExistingClientCodeResponse")]
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult> ExistingClientCodeAsync(string clientCode);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1773,6 +1779,14 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         
         public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.Result> UpdateAsync(System.Nullable<int> id, string m, string clientCode, bool activeList, bool status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, int state) {
             return base.Channel.UpdateAsync(id, m, clientCode, activeList, status, effectiveDate, expiredDate, state);
+        }
+        
+        public RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult ExistingClientCode(string clientCode) {
+            return base.Channel.ExistingClientCode(clientCode);
+        }
+        
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult> ExistingClientCodeAsync(string clientCode) {
+            return base.Channel.ExistingClientCodeAsync(clientCode);
         }
     }
 }

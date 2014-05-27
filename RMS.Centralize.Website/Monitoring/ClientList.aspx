@@ -14,7 +14,7 @@
                     <i class="fa fa-bar-chart-o fa-fw "></i>
                     Remote Monitoring
 							<span>> 
-								Client Monitoring Setup
+								Client Monitoring
                             </span>
                 </h1>
             </div>
@@ -414,10 +414,11 @@
                             "mData": null,
                             "bSearchable": false,
                             "bSortable": false,
-                            "sWidth": "80",
+                            "sWidth": "150",
                             "sClass": "center",
                             "fnRender": function (oObj) {
-                                return '<a id="edit_item_' + oObj.aData["ClientID"] + '" class="btn btn-primary btn-xs" href="javascript:retun;ViewClientReport(' + oObj.aData["ClientID"] + ')"><i class="glyphicon glyphicon-search"></i></a>';
+                                return '<a id="edit_item_' + oObj.aData["ClientID"] + '" class="btn btn-primary btn-xs" href="javascript:toEditRow(' + oObj.aData["ClientID"] + ')"><i class="glyphicon glyphicon-edit"></i></a>' +
+                                    '&nbsp;<a id="del_item_' + oObj.aData["ClientID"] + '" class="btn btn-danger btn-xs" href="javascript:deleteRow(' + oObj.aData["ClientID"] + ');"><i class="glyphicon glyphicon-trash"></i></a>';
                             }
                         }
                     ],
@@ -544,13 +545,75 @@
 
         });
 
-            function ViewClientReport(id) {
-                var params = new Array();
-                params["id"] = id;
+        function deleteRow(id) {
+            Row = function (id) {
+                this.actionprofileid = id;
+            };
+            var delRow = new Row(id);
 
-                post_to_url("ClientReport.aspx", params, null);
-            }
+            $.SmartMessageBox({
+                title: "Delete Confirmation",
+                content: "Are you sure you want to delete this item?",
+                buttons: '[No][Yes]'
+            }, function (ButtonPressed) {
+                if (ButtonPressed === "Yes") {
+                    $.ajax({
+                        "type": "POST",
+                        "dataType": 'json',
+                        "contentType": "application/json; charset=utf-8",
+                        "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/ActionProfile/DeleteActionProfile",
+                        "data": JSON.stringify(delRow),
+                        "success": function (data) {
+                            if (data == "-1") {
+                                $.smallBox({
+                                    title: "Access Denied!",
+                                    content: "<i class='fa fa-clock-o'></i> <i>No Access Rights to delete!</i>",
+                                    color: "#C46A69",
+                                    iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                    timeout: 4000
+                                });
 
+                            } else if (data == "1") {
+                                var oTable = $('#dt_basic').dataTable();
+                                if (oTable.fnGetData().length == 1)
+                                    oTable.fnStandingRedraw(1);
+                                else
+                                    oTable.fnStandingRedraw(0);
+
+                                $.smallBox({
+                                    title: "Delete Complete",
+                                    content: "<i class='fa fa-clock-o'></i> <i>This operation is complete.</i>",
+                                    color: "#659265",
+                                    iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                                    timeout: 4000
+                                });
+
+                            } else if (data == "0") {
+                                $.smallBox({
+                                    title: "Delete Failed",
+                                    content: "<i class='fa fa-clock-o'></i> <i>Failed to complete this operation.</i>",
+                                    color: "#C46A69",
+                                    iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                    timeout: 4000
+                                });
+
+                            }
+
+                        },
+
+                    });
+                }
+
+            });
+        }
+
+        function toEditRow(id) {
+            var params = new Array();
+            params["m"] = 'e';
+            params["id1"] = id;
+
+            post_to_url("ClientEdit.aspx", params, null);
+        }
     </script>
 
 </asp:Content>

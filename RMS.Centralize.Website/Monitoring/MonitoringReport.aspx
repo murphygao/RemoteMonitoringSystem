@@ -477,7 +477,7 @@
                 //$('#txtMessageDate').attr("placeholder", today);
 
                 $('#txtStartEventDate').datepicker({
-                    dateFormat: 'yy.mm.dd',
+                    dateFormat: 'yy-mm-dd',
                     prevText: '<i class="fa fa-chevron-left"></i>',
                     nextText: '<i class="fa fa-chevron-right"></i>',
                     maxDate: '0',
@@ -492,7 +492,7 @@
                 });
 
                 $('#txtEndEventDate').datepicker({
-                    dateFormat: 'yy.mm.dd',
+                    dateFormat: 'yy-mm-dd',
                     prevText: '<i class="fa fa-chevron-left"></i>',
                     nextText: '<i class="fa fa-chevron-right"></i>',
                     maxDate: '0',

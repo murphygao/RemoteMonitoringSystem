@@ -101,7 +101,7 @@ namespace RMS.Centralize.WebService
                         db.Configuration.ProxyCreationEnabled = false;
                         db.Configuration.LazyLoadingEnabled = false;
 
-                        var _client = db.RmsClients.Where(c => c.ClientId == clientID && c.EffectiveDate <= DateTime.Today)
+                        var _client = db.RmsClients.Where(c => c.ClientId == clientID && c.Enable == true && c.EffectiveDate <= DateTime.Today)
                             .Include(i => i.RmsClientMonitorings.Select(cm => cm.RmsMonitoringProfile).Select(mp => mp.RmsMonitoringProfileDevices.Select(mpd => mpd.RmsDevice))).FirstOrDefault();
 
                         if (_client != null)
@@ -207,6 +207,41 @@ namespace RMS.Centralize.WebService
         public Result Update(int? id, string m, string clientCode, bool activeList, bool status, DateTime? effectiveDate, DateTime? expiredDate, int state)
         {
             throw new NotImplementedException();
+        }
+
+        public ClientResult ExistingClientCode(string clientCode)
+        {
+            try
+            {
+                using (var db = new MyDbContext())
+                {
+                    db.Configuration.ProxyCreationEnabled = false;
+                    db.Configuration.LazyLoadingEnabled = false;
+
+                    var ret = db.RmsClients.Where(c => c.ClientCode == clientCode);
+                    var lClients = new List<RmsClient>(ret.ToList());
+
+                    var sr = new ClientResult
+                    {
+                        IsSuccess = true,
+                        ListClients = lClients,
+                        TotalRecords = lClients.Count
+                    };
+
+                    return sr;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                var sr = new ClientResult
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "Search errors. " + ex.Message
+                };
+                return sr;
+            }
+
         }
     }
 }

@@ -47,12 +47,12 @@
     <Compile Include="MonitoringService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SelfTestingService.cs" />
+    <Compile Include="ActionProfileService.cs" />
     <Compile Include="Service References\ActionProfileProxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="ActionProfileService.cs" />
     <Compile Include="Service References\ClientProxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -109,20 +109,20 @@
     <None Include="Service References\ActionProfileProxy\RMS.Centralize.WebSite.Proxy.ActionProfileProxy.Result.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\ClientProxy\ClientService.wsdl" />
-    <None Include="Service References\ClientProxy\ClientService.xsd">
+    <None Include="Service References\ClientProxy\ClientService1.wsdl" />
+    <None Include="Service References\ClientProxy\ClientService5.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ClientProxy\ClientService1.xsd">
+    <None Include="Service References\ClientProxy\ClientService51.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ClientProxy\ClientService2.xsd">
+    <None Include="Service References\ClientProxy\ClientService52.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ClientProxy\ClientService3.xsd">
+    <None Include="Service References\ClientProxy\ClientService53.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ClientProxy\ClientService4.xsd">
+    <None Include="Service References\ClientProxy\ClientService54.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ClientProxy\RMS.Centralize.WebSite.Proxy.ClientProxy.ClientInfoResult.datasource">
@@ -214,21 +214,6 @@
     <WCFMetadataStorage Include="Service References\SummaryReportProxy\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\ActionProfileProxy\ActionProfileService.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ActionProfileProxy\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ActionProfileProxy\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ActionProfileProxy\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Service References\MessageActionProxy\MessageActionService.disco" />
   </ItemGroup>
   <ItemGroup>
@@ -242,9 +227,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ClientProxy\ClientService.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\ClientProxy\configuration91.svcinfo" />
@@ -302,6 +284,24 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ActionProfileProxy\ActionProfileService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ActionProfileProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ActionProfileProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ActionProfileProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ClientProxy\ClientService1.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

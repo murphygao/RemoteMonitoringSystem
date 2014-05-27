@@ -31,6 +31,7 @@ namespace Test.ConsoleApplication.ClientProxy {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Result", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model")]
     [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Test.ConsoleApplication.ClientProxy.ClientInfoResult))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Test.ConsoleApplication.ClientProxy.ClientResult))]
     public partial class Result : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -107,6 +108,61 @@ namespace Test.ConsoleApplication.ClientProxy {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ClientInfoResult", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService")]
+    [System.SerializableAttribute()]
+    public partial class ClientInfoResult : Test.ConsoleApplication.ClientProxy.Result {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Test.ConsoleApplication.ClientProxy.ClientInfo ClientField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<Test.ConsoleApplication.ClientProxy.ClientInfo> ListClientsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TotalRecordsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Test.ConsoleApplication.ClientProxy.ClientInfo Client {
+            get {
+                return this.ClientField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ClientField, value) != true)) {
+                    this.ClientField = value;
+                    this.RaisePropertyChanged("Client");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<Test.ConsoleApplication.ClientProxy.ClientInfo> ListClients {
+            get {
+                return this.ListClientsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ListClientsField, value) != true)) {
+                    this.ListClientsField = value;
+                    this.RaisePropertyChanged("ListClients");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int TotalRecords {
+            get {
+                return this.TotalRecordsField;
+            }
+            set {
+                if ((this.TotalRecordsField.Equals(value) != true)) {
+                    this.TotalRecordsField = value;
+                    this.RaisePropertyChanged("TotalRecords");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ClientResult", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService")]
     [System.SerializableAttribute()]
     public partial class ClientResult : Test.ConsoleApplication.ClientProxy.Result {
@@ -115,16 +171,16 @@ namespace Test.ConsoleApplication.ClientProxy {
         private Test.ConsoleApplication.ClientProxy.RmsClient ClientField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Test.ConsoleApplication.ClientProxy.RmsClient[] ListClientsField;
+        private System.Collections.Generic.List<Test.ConsoleApplication.ClientProxy.RmsClient> ListClientsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Test.ConsoleApplication.ClientProxy.RmsDeviceType[] ListDeviceTypeField;
+        private System.Collections.Generic.List<Test.ConsoleApplication.ClientProxy.RmsDeviceType> ListDeviceTypeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Test.ConsoleApplication.ClientProxy.RmsDevice[] ListDevicesField;
+        private System.Collections.Generic.List<Test.ConsoleApplication.ClientProxy.RmsDevice> ListDevicesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Test.ConsoleApplication.ClientProxy.RmsMonitoringProfileDevice[] ListMonitoringProfileDevicesField;
+        private System.Collections.Generic.List<Test.ConsoleApplication.ClientProxy.RmsMonitoringProfileDevice> ListMonitoringProfileDevicesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Test.ConsoleApplication.ClientProxy.RmsMonitoringProfile MonitoringProfileField;
@@ -146,7 +202,7 @@ namespace Test.ConsoleApplication.ClientProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Test.ConsoleApplication.ClientProxy.RmsClient[] ListClients {
+        public System.Collections.Generic.List<Test.ConsoleApplication.ClientProxy.RmsClient> ListClients {
             get {
                 return this.ListClientsField;
             }
@@ -159,7 +215,7 @@ namespace Test.ConsoleApplication.ClientProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Test.ConsoleApplication.ClientProxy.RmsDeviceType[] ListDeviceType {
+        public System.Collections.Generic.List<Test.ConsoleApplication.ClientProxy.RmsDeviceType> ListDeviceType {
             get {
                 return this.ListDeviceTypeField;
             }
@@ -172,7 +228,7 @@ namespace Test.ConsoleApplication.ClientProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Test.ConsoleApplication.ClientProxy.RmsDevice[] ListDevices {
+        public System.Collections.Generic.List<Test.ConsoleApplication.ClientProxy.RmsDevice> ListDevices {
             get {
                 return this.ListDevicesField;
             }
@@ -185,7 +241,7 @@ namespace Test.ConsoleApplication.ClientProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Test.ConsoleApplication.ClientProxy.RmsMonitoringProfileDevice[] ListMonitoringProfileDevices {
+        public System.Collections.Generic.List<Test.ConsoleApplication.ClientProxy.RmsMonitoringProfileDevice> ListMonitoringProfileDevices {
             get {
                 return this.ListMonitoringProfileDevicesField;
             }
@@ -1116,6 +1172,339 @@ namespace Test.ConsoleApplication.ClientProxy {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ClientInfo", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model")]
+    [System.SerializableAttribute()]
+    public partial class ClientInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ClientCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> ClientIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ClientTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> CreatedDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> EffectiveDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool EnableField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> ExpiredDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IPAddressField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LocationCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LocationCode2Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LocationNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LocationName2Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MobileField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ProfileNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<long> RowNumField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> StateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TelephoneField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> UpdatedDateField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ClientCode {
+            get {
+                return this.ClientCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ClientCodeField, value) != true)) {
+                    this.ClientCodeField = value;
+                    this.RaisePropertyChanged("ClientCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> ClientID {
+            get {
+                return this.ClientIDField;
+            }
+            set {
+                if ((this.ClientIDField.Equals(value) != true)) {
+                    this.ClientIDField = value;
+                    this.RaisePropertyChanged("ClientID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ClientType {
+            get {
+                return this.ClientTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ClientTypeField, value) != true)) {
+                    this.ClientTypeField = value;
+                    this.RaisePropertyChanged("ClientType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> CreatedDate {
+            get {
+                return this.CreatedDateField;
+            }
+            set {
+                if ((this.CreatedDateField.Equals(value) != true)) {
+                    this.CreatedDateField = value;
+                    this.RaisePropertyChanged("CreatedDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> EffectiveDate {
+            get {
+                return this.EffectiveDateField;
+            }
+            set {
+                if ((this.EffectiveDateField.Equals(value) != true)) {
+                    this.EffectiveDateField = value;
+                    this.RaisePropertyChanged("EffectiveDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Email {
+            get {
+                return this.EmailField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
+                    this.EmailField = value;
+                    this.RaisePropertyChanged("Email");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Enable {
+            get {
+                return this.EnableField;
+            }
+            set {
+                if ((this.EnableField.Equals(value) != true)) {
+                    this.EnableField = value;
+                    this.RaisePropertyChanged("Enable");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> ExpiredDate {
+            get {
+                return this.ExpiredDateField;
+            }
+            set {
+                if ((this.ExpiredDateField.Equals(value) != true)) {
+                    this.ExpiredDateField = value;
+                    this.RaisePropertyChanged("ExpiredDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IPAddress {
+            get {
+                return this.IPAddressField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IPAddressField, value) != true)) {
+                    this.IPAddressField = value;
+                    this.RaisePropertyChanged("IPAddress");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LocationCode {
+            get {
+                return this.LocationCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LocationCodeField, value) != true)) {
+                    this.LocationCodeField = value;
+                    this.RaisePropertyChanged("LocationCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LocationCode2 {
+            get {
+                return this.LocationCode2Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LocationCode2Field, value) != true)) {
+                    this.LocationCode2Field = value;
+                    this.RaisePropertyChanged("LocationCode2");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LocationName {
+            get {
+                return this.LocationNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LocationNameField, value) != true)) {
+                    this.LocationNameField = value;
+                    this.RaisePropertyChanged("LocationName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LocationName2 {
+            get {
+                return this.LocationName2Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LocationName2Field, value) != true)) {
+                    this.LocationName2Field = value;
+                    this.RaisePropertyChanged("LocationName2");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Mobile {
+            get {
+                return this.MobileField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MobileField, value) != true)) {
+                    this.MobileField = value;
+                    this.RaisePropertyChanged("Mobile");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProfileName {
+            get {
+                return this.ProfileNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProfileNameField, value) != true)) {
+                    this.ProfileNameField = value;
+                    this.RaisePropertyChanged("ProfileName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<long> RowNum {
+            get {
+                return this.RowNumField;
+            }
+            set {
+                if ((this.RowNumField.Equals(value) != true)) {
+                    this.RowNumField = value;
+                    this.RaisePropertyChanged("RowNum");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> State {
+            get {
+                return this.StateField;
+            }
+            set {
+                if ((this.StateField.Equals(value) != true)) {
+                    this.StateField = value;
+                    this.RaisePropertyChanged("State");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Telephone {
+            get {
+                return this.TelephoneField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TelephoneField, value) != true)) {
+                    this.TelephoneField = value;
+                    this.RaisePropertyChanged("Telephone");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> UpdatedDate {
+            get {
+                return this.UpdatedDateField;
+            }
+            set {
+                if ((this.UpdatedDateField.Equals(value) != true)) {
+                    this.UpdatedDateField = value;
+                    this.RaisePropertyChanged("UpdatedDate");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ClientState", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService")]
     public enum ClientState : int {
@@ -1127,15 +1516,196 @@ namespace Test.ConsoleApplication.ClientProxy {
         Maintenance = 2,
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="JQueryDataTableParamModel", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model")]
+    [System.SerializableAttribute()]
+    public partial class JQueryDataTableParamModel : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int iColumnsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int iDisplayLengthField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int iDisplayStartField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string iSortColumnField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int iSortingColsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string sColumnsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string sEchoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string sSearchField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int iColumns {
+            get {
+                return this.iColumnsField;
+            }
+            set {
+                if ((this.iColumnsField.Equals(value) != true)) {
+                    this.iColumnsField = value;
+                    this.RaisePropertyChanged("iColumns");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int iDisplayLength {
+            get {
+                return this.iDisplayLengthField;
+            }
+            set {
+                if ((this.iDisplayLengthField.Equals(value) != true)) {
+                    this.iDisplayLengthField = value;
+                    this.RaisePropertyChanged("iDisplayLength");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int iDisplayStart {
+            get {
+                return this.iDisplayStartField;
+            }
+            set {
+                if ((this.iDisplayStartField.Equals(value) != true)) {
+                    this.iDisplayStartField = value;
+                    this.RaisePropertyChanged("iDisplayStart");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string iSortColumn {
+            get {
+                return this.iSortColumnField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.iSortColumnField, value) != true)) {
+                    this.iSortColumnField = value;
+                    this.RaisePropertyChanged("iSortColumn");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int iSortingCols {
+            get {
+                return this.iSortingColsField;
+            }
+            set {
+                if ((this.iSortingColsField.Equals(value) != true)) {
+                    this.iSortingColsField = value;
+                    this.RaisePropertyChanged("iSortingCols");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string sColumns {
+            get {
+                return this.sColumnsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.sColumnsField, value) != true)) {
+                    this.sColumnsField = value;
+                    this.RaisePropertyChanged("sColumns");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string sEcho {
+            get {
+                return this.sEchoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.sEchoField, value) != true)) {
+                    this.sEchoField = value;
+                    this.RaisePropertyChanged("sEcho");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string sSearch {
+            get {
+                return this.sSearchField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.sSearchField, value) != true)) {
+                    this.sSearchField = value;
+                    this.RaisePropertyChanged("sSearch");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ClientProxy.IClientService")]
     public interface IClientService {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/TestConnection", ReplyAction="http://tempuri.org/IClientService/TestConnectionResponse")]
+        void TestConnection();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/TestConnection", ReplyAction="http://tempuri.org/IClientService/TestConnectionResponse")]
+        System.Threading.Tasks.Task TestConnectionAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/GetClient", ReplyAction="http://tempuri.org/IClientService/GetClientResponse")]
         Test.ConsoleApplication.ClientProxy.ClientResult GetClient(Test.ConsoleApplication.ClientProxy.GetClientBy searchBy, System.Nullable<int> clientID, string clientCode, string ipAddress, bool withDetail);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/GetClient", ReplyAction="http://tempuri.org/IClientService/GetClientResponse")]
+        System.Threading.Tasks.Task<Test.ConsoleApplication.ClientProxy.ClientResult> GetClientAsync(Test.ConsoleApplication.ClientProxy.GetClientBy searchBy, System.Nullable<int> clientID, string clientCode, string ipAddress, bool withDetail);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/SetClientState", ReplyAction="http://tempuri.org/IClientService/SetClientStateResponse")]
         Test.ConsoleApplication.ClientProxy.Result SetClientState(int clientID, Test.ConsoleApplication.ClientProxy.ClientState state);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/SetClientState", ReplyAction="http://tempuri.org/IClientService/SetClientStateResponse")]
+        System.Threading.Tasks.Task<Test.ConsoleApplication.ClientProxy.Result> SetClientStateAsync(int clientID, Test.ConsoleApplication.ClientProxy.ClientState state);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/Search", ReplyAction="http://tempuri.org/IClientService/SearchResponse")]
+        Test.ConsoleApplication.ClientProxy.ClientInfoResult Search(Test.ConsoleApplication.ClientProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> asOfDate, System.Nullable<int> clientTypeID, string clientCode, System.Nullable<bool> clientStatus, string ipAddress);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/Search", ReplyAction="http://tempuri.org/IClientService/SearchResponse")]
+        System.Threading.Tasks.Task<Test.ConsoleApplication.ClientProxy.ClientInfoResult> SearchAsync(Test.ConsoleApplication.ClientProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> asOfDate, System.Nullable<int> clientTypeID, string clientCode, System.Nullable<bool> clientStatus, string ipAddress);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/Update", ReplyAction="http://tempuri.org/IClientService/UpdateResponse")]
+        Test.ConsoleApplication.ClientProxy.Result Update(System.Nullable<int> id, string m, string clientCode, bool activeList, bool status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, int state);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/Update", ReplyAction="http://tempuri.org/IClientService/UpdateResponse")]
+        System.Threading.Tasks.Task<Test.ConsoleApplication.ClientProxy.Result> UpdateAsync(System.Nullable<int> id, string m, string clientCode, bool activeList, bool status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, int state);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1165,12 +1735,44 @@ namespace Test.ConsoleApplication.ClientProxy {
                 base(binding, remoteAddress) {
         }
         
+        public void TestConnection() {
+            base.Channel.TestConnection();
+        }
+        
+        public System.Threading.Tasks.Task TestConnectionAsync() {
+            return base.Channel.TestConnectionAsync();
+        }
+        
         public Test.ConsoleApplication.ClientProxy.ClientResult GetClient(Test.ConsoleApplication.ClientProxy.GetClientBy searchBy, System.Nullable<int> clientID, string clientCode, string ipAddress, bool withDetail) {
             return base.Channel.GetClient(searchBy, clientID, clientCode, ipAddress, withDetail);
         }
         
+        public System.Threading.Tasks.Task<Test.ConsoleApplication.ClientProxy.ClientResult> GetClientAsync(Test.ConsoleApplication.ClientProxy.GetClientBy searchBy, System.Nullable<int> clientID, string clientCode, string ipAddress, bool withDetail) {
+            return base.Channel.GetClientAsync(searchBy, clientID, clientCode, ipAddress, withDetail);
+        }
+        
         public Test.ConsoleApplication.ClientProxy.Result SetClientState(int clientID, Test.ConsoleApplication.ClientProxy.ClientState state) {
             return base.Channel.SetClientState(clientID, state);
+        }
+        
+        public System.Threading.Tasks.Task<Test.ConsoleApplication.ClientProxy.Result> SetClientStateAsync(int clientID, Test.ConsoleApplication.ClientProxy.ClientState state) {
+            return base.Channel.SetClientStateAsync(clientID, state);
+        }
+        
+        public Test.ConsoleApplication.ClientProxy.ClientInfoResult Search(Test.ConsoleApplication.ClientProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> asOfDate, System.Nullable<int> clientTypeID, string clientCode, System.Nullable<bool> clientStatus, string ipAddress) {
+            return base.Channel.Search(param, asOfDate, clientTypeID, clientCode, clientStatus, ipAddress);
+        }
+        
+        public System.Threading.Tasks.Task<Test.ConsoleApplication.ClientProxy.ClientInfoResult> SearchAsync(Test.ConsoleApplication.ClientProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> asOfDate, System.Nullable<int> clientTypeID, string clientCode, System.Nullable<bool> clientStatus, string ipAddress) {
+            return base.Channel.SearchAsync(param, asOfDate, clientTypeID, clientCode, clientStatus, ipAddress);
+        }
+        
+        public Test.ConsoleApplication.ClientProxy.Result Update(System.Nullable<int> id, string m, string clientCode, bool activeList, bool status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, int state) {
+            return base.Channel.Update(id, m, clientCode, activeList, status, effectiveDate, expiredDate, state);
+        }
+        
+        public System.Threading.Tasks.Task<Test.ConsoleApplication.ClientProxy.Result> UpdateAsync(System.Nullable<int> id, string m, string clientCode, bool activeList, bool status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, int state) {
+            return base.Channel.UpdateAsync(id, m, clientCode, activeList, status, effectiveDate, expiredDate, state);
         }
     }
 }

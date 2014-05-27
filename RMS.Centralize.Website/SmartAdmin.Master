@@ -42,7 +42,7 @@
     <link rel="icon" href="img/favicon/favicon.ico" type="image/x-icon">
 
     <!-- GOOGLE FONT -->
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -176,7 +176,7 @@
                             <a href="<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/ActionList.aspx">Action Profile</a>
                         </li>
                         <li>
-                            <a href="<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/ClientList.aspx">Client Monitoring Setup</a>
+                            <a href="<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/ClientList.aspx">Client Monitoring</a>
                         </li>
                     </ul>
                 </li>

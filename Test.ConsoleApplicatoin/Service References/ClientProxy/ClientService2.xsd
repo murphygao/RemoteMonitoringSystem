@@ -1,11 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:complexType name="Result">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="ErrorCode" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="IsSuccess" type="xs:boolean" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Result" nillable="true" type="tns:Result" />
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/ClientService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" />
+  <xs:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/ClientService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" />
+  <xs:element name="TestConnection">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TestConnectionResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetClient">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="searchBy" type="q1:GetClientBy" />
+        <xs:element minOccurs="0" name="clientID" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="clientCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ipAddress" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="withDetail" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetClientResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="GetClientResult" nillable="true" type="q2:ClientResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetClientState">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="clientID" type="xs:int" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="state" type="q3:ClientState" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetClientStateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" minOccurs="0" name="SetClientStateResult" nillable="true" type="q4:Result" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Search">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" minOccurs="0" name="param" nillable="true" type="q5:JQueryDataTableParamModel" />
+        <xs:element minOccurs="0" name="asOfDate" nillable="true" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="clientTypeID" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="clientCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="clientStatus" nillable="true" type="xs:boolean" />
+        <xs:element minOccurs="0" name="ipAddress" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SearchResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="SearchResult" nillable="true" type="q6:ClientInfoResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Update">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="id" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="m" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="clientCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="activeList" type="xs:boolean" />
+        <xs:element minOccurs="0" name="status" type="xs:boolean" />
+        <xs:element minOccurs="0" name="effectiveDate" nillable="true" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="expiredDate" nillable="true" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="state" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" minOccurs="0" name="UpdateResult" nillable="true" type="q7:Result" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

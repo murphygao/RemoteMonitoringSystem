@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost/RMS.Centralize.WebService/ActionProfileService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" />
-  <xs:import schemaLocation="http://localhost/RMS.Centralize.WebService/ActionProfileService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" />
-  <xs:complexType name="ActionProfileResult">
-    <xs:complexContent mixed="false">
-      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" base="q1:Result">
-        <xs:sequence>
-          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="ActionProfile" nillable="true" type="q2:RmsActionProfile" />
-          <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="ListActionProfiles" nillable="true" type="q3:ArrayOfRmsActionProfile" />
-          <xs:element minOccurs="0" name="TotalRecords" type="xs:int" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="JQueryDataTableParamModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="iColumns" type="xs:int" />
+      <xs:element minOccurs="0" name="iDisplayLength" type="xs:int" />
+      <xs:element minOccurs="0" name="iDisplayStart" type="xs:int" />
+      <xs:element minOccurs="0" name="iSortColumn" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="iSortingCols" type="xs:int" />
+      <xs:element minOccurs="0" name="sColumns" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="sEcho" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="sSearch" nillable="true" type="xs:string" />
+    </xs:sequence>
   </xs:complexType>
-  <xs:element name="ActionProfileResult" nillable="true" type="tns:ActionProfileResult" />
+  <xs:element name="JQueryDataTableParamModel" nillable="true" type="tns:JQueryDataTableParamModel" />
+  <xs:complexType name="Result">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsSuccess" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Result" nillable="true" type="tns:Result" />
 </xs:schema>
