@@ -26,6 +26,7 @@ namespace RMS.Centralize.BSL.MonitoringEngine
              * 2. generate multi-thread for boardcasting message
              */
 
+            int activeClient = 0;
             try
             {
                 using (var db = new MyDbContext())
@@ -35,11 +36,14 @@ namespace RMS.Centralize.BSL.MonitoringEngine
                     db.Configuration.ProxyCreationEnabled = false;
                     db.Configuration.LazyLoadingEnabled = false;
 
-                    var listClients = ListClientWithIPAddress(licenseInfo);
+                    var listClients = ListClientWithIPAddress(licenseInfo, out activeClient);
+
+                    // Log into RMS_Log_Monitoring
+                    int refID = AddLogMonitoring(activeClient, true, null);
 
                     foreach (var client in listClients)
                     {
-                        BroadcastAliveMessage(client);
+                        BroadcastAliveMessage(client, refID);
                     }
 
                     #endregion
@@ -47,11 +51,18 @@ namespace RMS.Centralize.BSL.MonitoringEngine
             }
             catch (Exception ex)
             {
+                string exLicense = "License is invalid";
+                if (ex.Message.ToLower().IndexOf(exLicense.ToLower()) > -1)
+                {
+                    // Log into RMS_Log_Monitoring
+                    AddLogMonitoring(activeClient, false, ex.Message);
+                }
+
                 throw new Exception("Start failed. " + ex.Message, ex);
             }
         }
 
-        private void BroadcastAliveMessage(RmsClientWithIPAddress client)
+        private void BroadcastAliveMessage(RmsClientWithIPAddress client, int refID)
         {
             try
             {
@@ -59,6 +70,7 @@ namespace RMS.Centralize.BSL.MonitoringEngine
                 string clientEndpiont = ConfigurationManager.AppSettings["RMS.NetTcpBinding_AgentService"];
                 clientEndpiont = clientEndpiont.Replace("client_ip_address", client.IPAddress);
                 asc.Endpoint.Address = new EndpointAddress(clientEndpiont);
+                AddLogMonitoringClient(refID, client.ClientId, client.ClientCode, client.IPAddress, client.State, null);
                 var result = asc.Monitoring(client.ClientCode);
 
             }
@@ -66,6 +78,10 @@ namespace RMS.Centralize.BSL.MonitoringEngine
             {
                 try
                 {
+                    if (e.Message.IndexOf("AddLogMonitoringClient") > -1)
+                        throw;
+
+
                     // ถ้า Cleint State เป็น 1 (Normal) แสดงว่า Agent ผิดปกติ
                     if (client.State == 1)
                     {
@@ -101,12 +117,10 @@ namespace RMS.Centralize.BSL.MonitoringEngine
                 {
                     throw new Exception("BroadcastAliveMessage failed. " + ex.Message, ex);
                 }
-
-                Console.WriteLine(e);
             }
         }
 
-        public List<RmsClientWithIPAddress> ListClientWithIPAddress(LicenseInfo licenseInfo)
+        public List<RmsClientWithIPAddress> ListClientWithIPAddress(LicenseInfo licenseInfo, out int activeClient)
         {
 
             using (var db = new MyDbContext())
@@ -120,6 +134,8 @@ namespace RMS.Centralize.BSL.MonitoringEngine
 
                 var listClients = new List<RmsClientWithIPAddress>(listOfType.ToList());
 
+                activeClient = listClients.Count;
+
                 if (!licenseInfo.ValidateLicense(listClients.Count, null, null, null, null, null))
                 {
                     throw new Exception("License is invalid or exceed active client's quota or expired. Please contact product owner.");
@@ -130,6 +146,51 @@ namespace RMS.Centralize.BSL.MonitoringEngine
                 #endregion
             }
 
+        }
+
+        public int AddLogMonitoring(int numberOfMonitoring, bool isSuccess, string errorMessage)
+        {
+            try
+            {
+                using (var db = new MyDbContext())
+                {
+                    var rmsLogMonitoring = db.RmsLogMonitorings.Create();
+                    rmsLogMonitoring.NumberOfMonitoring = numberOfMonitoring;
+                    rmsLogMonitoring.MonitoringDateTime = DateTime.Now;
+                    rmsLogMonitoring.IsSuccess = isSuccess;
+                    rmsLogMonitoring.ErrorMessage = errorMessage;
+                    db.RmsLogMonitorings.Add(rmsLogMonitoring);
+                    db.SaveChanges();
+                    return rmsLogMonitoring.Id;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("AddLogMonitoring failed. " + ex.Message, ex);
+            }
+        }
+        public void AddLogMonitoringClient(int? refID, int? clientID, string clientCode, string clientIPAddress, int? clientState, string detail)
+        {
+            try
+            {
+                using (var db = new MyDbContext())
+                {
+                    var log = db.RmsLogMonitoringClients.Create();
+                    log.MonitoringDateTime = DateTime.Now;
+                    log.RefId = refID;
+                    log.ClientId = clientID;
+                    log.ClientCode = clientCode;
+                    log.ClientIpAddress = clientIPAddress;
+                    log.ClientState = clientState;
+                    log.Detail = detail;
+                    db.RmsLogMonitoringClients.Add(log);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("AddLogMonitoringClient failed. " + ex.Message, ex);
+            }
         }
     }
 }

@@ -106,6 +106,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SKS", "SKS", "{543B46A0-0CC
 		Solution Items\SKS\SKAdapter.dll.config = Solution Items\SKS\SKAdapter.dll.config
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ESN", "ESN", "{25E2516C-1899-4B1C-9E24-34A74E5E0E39}"
+	ProjectSection(SolutionItems) = preProject
+		Solution Items\ESN\ESN.LicenseManager.Helper.dll = Solution Items\ESN\ESN.LicenseManager.Helper.dll
+		Solution Items\ESN\ESN.LicenseManager.Model.dll = Solution Items\ESN\ESN.LicenseManager.Model.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -301,5 +307,6 @@ Global
 		{F62ECF90-E10D-4E67-905E-F6C7DCCB248F} = {9ADC7BA3-CCDD-4E3E-88D4-54DD057292DA}
 		{22541DDD-75FD-403F-A67A-2843FCC2A670} = {9ADC7BA3-CCDD-4E3E-88D4-54DD057292DA}
 		{543B46A0-0CC7-454B-82A7-2F242D2C3521} = {A8C20BC9-10F2-4D9D-865D-F93D3E0ED8D8}
+		{25E2516C-1899-4B1C-9E24-34A74E5E0E39} = {A8C20BC9-10F2-4D9D-865D-F93D3E0ED8D8}
 	EndGlobalSection
 EndGlobal

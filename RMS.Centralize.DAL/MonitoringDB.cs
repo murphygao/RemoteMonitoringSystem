@@ -39,6 +39,10 @@ namespace RMS.Centralize.DAL
         IDbSet<RmsColorLabel> RmsColorLabels { get; set; } // RMS_ColorLabel
         IDbSet<RmsDevice> RmsDevices { get; set; } // RMS_Device
         IDbSet<RmsDeviceType> RmsDeviceTypes { get; set; } // RMS_DeviceType
+        IDbSet<RmsLogActionSend> RmsLogActionSends { get; set; } // RMS_Log_ActionSend
+        IDbSet<RmsLogEvent> RmsLogEvents { get; set; } // RMS_Log_Event
+        IDbSet<RmsLogMonitoring> RmsLogMonitorings { get; set; } // RMS_Log_Monitoring
+        IDbSet<RmsLogMonitoringClient> RmsLogMonitoringClients { get; set; } // RMS_Log_MonitoringClient
         IDbSet<RmsMessage> RmsMessages { get; set; } // RMS_Message
         IDbSet<RmsMessageGroup> RmsMessageGroups { get; set; } // RMS_MessageGroup
         IDbSet<RmsMessageMaster> RmsMessageMasters { get; set; } // RMS_MessageMaster
@@ -65,6 +69,10 @@ namespace RMS.Centralize.DAL
         public IDbSet<RmsColorLabel> RmsColorLabels { get; set; } // RMS_ColorLabel
         public IDbSet<RmsDevice> RmsDevices { get; set; } // RMS_Device
         public IDbSet<RmsDeviceType> RmsDeviceTypes { get; set; } // RMS_DeviceType
+        public IDbSet<RmsLogActionSend> RmsLogActionSends { get; set; } // RMS_Log_ActionSend
+        public IDbSet<RmsLogEvent> RmsLogEvents { get; set; } // RMS_Log_Event
+        public IDbSet<RmsLogMonitoring> RmsLogMonitorings { get; set; } // RMS_Log_Monitoring
+        public IDbSet<RmsLogMonitoringClient> RmsLogMonitoringClients { get; set; } // RMS_Log_MonitoringClient
         public IDbSet<RmsMessage> RmsMessages { get; set; } // RMS_Message
         public IDbSet<RmsMessageGroup> RmsMessageGroups { get; set; } // RMS_MessageGroup
         public IDbSet<RmsMessageMaster> RmsMessageMasters { get; set; } // RMS_MessageMaster
@@ -109,6 +117,10 @@ namespace RMS.Centralize.DAL
             modelBuilder.Configurations.Add(new RmsColorLabelConfiguration());
             modelBuilder.Configurations.Add(new RmsDeviceConfiguration());
             modelBuilder.Configurations.Add(new RmsDeviceTypeConfiguration());
+            modelBuilder.Configurations.Add(new RmsLogActionSendConfiguration());
+            modelBuilder.Configurations.Add(new RmsLogEventConfiguration());
+            modelBuilder.Configurations.Add(new RmsLogMonitoringConfiguration());
+            modelBuilder.Configurations.Add(new RmsLogMonitoringClientConfiguration());
             modelBuilder.Configurations.Add(new RmsMessageConfiguration());
             modelBuilder.Configurations.Add(new RmsMessageGroupConfiguration());
             modelBuilder.Configurations.Add(new RmsMessageMasterConfiguration());
@@ -132,6 +144,10 @@ namespace RMS.Centralize.DAL
             modelBuilder.Configurations.Add(new RmsColorLabelConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsDeviceConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsDeviceTypeConfiguration(schema));
+            modelBuilder.Configurations.Add(new RmsLogActionSendConfiguration(schema));
+            modelBuilder.Configurations.Add(new RmsLogEventConfiguration(schema));
+            modelBuilder.Configurations.Add(new RmsLogMonitoringConfiguration(schema));
+            modelBuilder.Configurations.Add(new RmsLogMonitoringClientConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsMessageConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsMessageGroupConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsMessageMasterConfiguration(schema));
@@ -516,6 +532,145 @@ namespace RMS.Centralize.DAL
         public RmsDeviceType()
         {
             RmsDevices = new List<RmsDevice>();
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // RMS_Log_ActionSend
+    [DataContract]
+    public partial class RmsLogActionSend
+    {
+        [DataMember(Order = 1, IsRequired = true)]
+        public int Id { get; set; } // ID (Primary key)
+
+        [DataMember(Order = 2, IsRequired = false)]
+        public DateTime? ActionDateTime { get; set; } // ActionDateTime
+
+        [DataMember(Order = 3, IsRequired = false)]
+        public string ActionType { get; set; } // ActionType
+
+        [DataMember(Order = 4, IsRequired = false)]
+        public string From { get; set; } // From
+
+        [DataMember(Order = 5, IsRequired = false)]
+        public string To { get; set; } // To
+
+        [DataMember(Order = 6, IsRequired = false)]
+        public string Body { get; set; } // Body
+
+        [DataMember(Order = 7, IsRequired = false)]
+        public string BodyFull { get; set; } // BodyFull
+
+        [DataMember(Order = 8, IsRequired = false)]
+        public bool? IsSucess { get; set; } // IsSucess
+
+        [DataMember(Order = 9, IsRequired = false)]
+        public string ErrorMessage { get; set; } // ErrorMessage
+
+
+        public RmsLogActionSend()
+        {
+            ActionDateTime = System.DateTime.Now;
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // RMS_Log_Event
+    [DataContract]
+    public partial class RmsLogEvent
+    {
+        [DataMember(Order = 1, IsRequired = true)]
+        public int Id { get; set; } // ID (Primary key)
+
+        [DataMember(Order = 2, IsRequired = false)]
+        public DateTime? EventDate { get; set; } // EventDate
+
+        [DataMember(Order = 3, IsRequired = false)]
+        public string EventType { get; set; } // EventType
+
+        [DataMember(Order = 4, IsRequired = false)]
+        public string Name { get; set; } // Name
+
+        [DataMember(Order = 5, IsRequired = false)]
+        public string Detail { get; set; } // Detail
+
+        [DataMember(Order = 6, IsRequired = false)]
+        public bool? IsSuccess { get; set; } // IsSuccess
+
+        [DataMember(Order = 7, IsRequired = false)]
+        public string ErrorMessage { get; set; } // ErrorMessage
+
+
+        public RmsLogEvent()
+        {
+            EventDate = System.DateTime.Now;
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // RMS_Log_Monitoring
+    [DataContract]
+    public partial class RmsLogMonitoring
+    {
+        [DataMember(Order = 1, IsRequired = true)]
+        public int Id { get; set; } // ID (Primary key)
+
+        [DataMember(Order = 2, IsRequired = false)]
+        public DateTime? MonitoringDateTime { get; set; } // MonitoringDateTime
+
+        [DataMember(Order = 3, IsRequired = false)]
+        public int? NumberOfMonitoring { get; set; } // NumberOfMonitoring
+
+        [DataMember(Order = 4, IsRequired = false)]
+        public bool? IsSuccess { get; set; } // IsSuccess
+
+        [DataMember(Order = 5, IsRequired = false)]
+        public string ErrorMessage { get; set; } // ErrorMessage
+
+
+        public RmsLogMonitoring()
+        {
+            MonitoringDateTime = System.DateTime.Now;
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // RMS_Log_MonitoringClient
+    [DataContract]
+    public partial class RmsLogMonitoringClient
+    {
+        [DataMember(Order = 1, IsRequired = true)]
+        public int Id { get; set; } // ID (Primary key)
+
+        [DataMember(Order = 2, IsRequired = false)]
+        public int? RefId { get; set; } // RefID
+
+        [DataMember(Order = 3, IsRequired = false)]
+        public DateTime? MonitoringDateTime { get; set; } // MonitoringDateTime
+
+        [DataMember(Order = 4, IsRequired = false)]
+        public int? ClientId { get; set; } // ClientID
+
+        [DataMember(Order = 5, IsRequired = false)]
+        public string ClientCode { get; set; } // ClientCode
+
+        [DataMember(Order = 6, IsRequired = false)]
+        public string ClientIpAddress { get; set; } // ClientIPAddress
+
+        [DataMember(Order = 7, IsRequired = false)]
+        public int? ClientState { get; set; } // ClientState
+
+        [DataMember(Order = 8, IsRequired = false)]
+        public string Detail { get; set; } // Detail
+
+
+        public RmsLogMonitoringClient()
+        {
+            MonitoringDateTime = System.DateTime.Now;
             InitializePartial();
         }
         partial void InitializePartial();
@@ -1142,6 +1297,87 @@ namespace RMS.Centralize.DAL
             Property(x => x.DeviceType).HasColumnName("DeviceType").IsOptional().HasMaxLength(50);
             Property(x => x.DeviceTypeCode).HasColumnName("DeviceTypeCode").IsOptional().HasMaxLength(8);
             Property(x => x.DisplayOrder).HasColumnName("DisplayOrder").IsOptional();
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // RMS_Log_ActionSend
+    internal partial class RmsLogActionSendConfiguration : EntityTypeConfiguration<RmsLogActionSend>
+    {
+        public RmsLogActionSendConfiguration(string schema = "dbo")
+        {
+            ToTable(schema + ".RMS_Log_ActionSend");
+            HasKey(x => x.Id);
+
+            Property(x => x.Id).HasColumnName("ID").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            Property(x => x.ActionDateTime).HasColumnName("ActionDateTime").IsOptional();
+            Property(x => x.ActionType).HasColumnName("ActionType").IsOptional().HasMaxLength(10);
+            Property(x => x.From).HasColumnName("From").IsOptional().HasMaxLength(50);
+            Property(x => x.To).HasColumnName("To").IsOptional().HasMaxLength(500);
+            Property(x => x.Body).HasColumnName("Body").IsOptional().HasMaxLength(1000);
+            Property(x => x.BodyFull).HasColumnName("BodyFull").IsOptional();
+            Property(x => x.IsSucess).HasColumnName("IsSucess").IsOptional();
+            Property(x => x.ErrorMessage).HasColumnName("ErrorMessage").IsOptional().HasMaxLength(100);
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // RMS_Log_Event
+    internal partial class RmsLogEventConfiguration : EntityTypeConfiguration<RmsLogEvent>
+    {
+        public RmsLogEventConfiguration(string schema = "dbo")
+        {
+            ToTable(schema + ".RMS_Log_Event");
+            HasKey(x => x.Id);
+
+            Property(x => x.Id).HasColumnName("ID").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            Property(x => x.EventDate).HasColumnName("EventDate").IsOptional();
+            Property(x => x.EventType).HasColumnName("EventType").IsOptional().HasMaxLength(50);
+            Property(x => x.Name).HasColumnName("Name").IsOptional().HasMaxLength(100);
+            Property(x => x.Detail).HasColumnName("Detail").IsOptional().HasMaxLength(500);
+            Property(x => x.IsSuccess).HasColumnName("IsSuccess").IsOptional();
+            Property(x => x.ErrorMessage).HasColumnName("ErrorMessage").IsOptional().HasMaxLength(500);
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // RMS_Log_Monitoring
+    internal partial class RmsLogMonitoringConfiguration : EntityTypeConfiguration<RmsLogMonitoring>
+    {
+        public RmsLogMonitoringConfiguration(string schema = "dbo")
+        {
+            ToTable(schema + ".RMS_Log_Monitoring");
+            HasKey(x => x.Id);
+
+            Property(x => x.Id).HasColumnName("ID").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            Property(x => x.MonitoringDateTime).HasColumnName("MonitoringDateTime").IsOptional();
+            Property(x => x.NumberOfMonitoring).HasColumnName("NumberOfMonitoring").IsOptional();
+            Property(x => x.IsSuccess).HasColumnName("IsSuccess").IsOptional();
+            Property(x => x.ErrorMessage).HasColumnName("ErrorMessage").IsOptional().HasMaxLength(500);
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // RMS_Log_MonitoringClient
+    internal partial class RmsLogMonitoringClientConfiguration : EntityTypeConfiguration<RmsLogMonitoringClient>
+    {
+        public RmsLogMonitoringClientConfiguration(string schema = "dbo")
+        {
+            ToTable(schema + ".RMS_Log_MonitoringClient");
+            HasKey(x => x.Id);
+
+            Property(x => x.Id).HasColumnName("ID").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            Property(x => x.RefId).HasColumnName("RefID").IsOptional();
+            Property(x => x.MonitoringDateTime).HasColumnName("MonitoringDateTime").IsOptional();
+            Property(x => x.ClientId).HasColumnName("ClientID").IsOptional();
+            Property(x => x.ClientCode).HasColumnName("ClientCode").IsOptional().HasMaxLength(50);
+            Property(x => x.ClientIpAddress).HasColumnName("ClientIPAddress").IsOptional().HasMaxLength(50);
+            Property(x => x.ClientState).HasColumnName("ClientState").IsOptional();
+            Property(x => x.Detail).HasColumnName("Detail").IsOptional().HasMaxLength(250);
             InitializePartial();
         }
         partial void InitializePartial();

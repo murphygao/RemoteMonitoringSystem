@@ -8,6 +8,7 @@ using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
@@ -64,6 +65,7 @@ namespace RMS.Centralize.WebService.BSL
         {
             if (lRmsReportSummaryMonitorings == null || lRmsReportSummaryMonitorings.Count == 0) return;
 
+            int activeClients;
             try
             {
                 List<ActionInfo> lEmails = new List<ActionInfo>();
@@ -77,7 +79,7 @@ namespace RMS.Centralize.WebService.BSL
                     #region Check License Validity by Calling ListClientWithIPAddress
 
                     var ms = new Centralize.BSL.MonitoringEngine.MonitoringService();
-                    ms.ListClientWithIPAddress(licenseInfo);
+                    ms.ListClientWithIPAddress(licenseInfo, out activeClients);
 
                     #endregion
 
@@ -302,7 +304,15 @@ namespace RMS.Centralize.WebService.BSL
                         {
 
                             var actionGatewayService = new ActionGateway();
-                            var actionResult = actionGatewayService.SendEmail(gateway, emailFrom, new List<string> {to}, tSubject, tBody);
+                            try
+                            {
+                                var actionResult = actionGatewayService.SendEmail(gateway, emailFrom, new List<string> {to}, tSubject, tBody);
+                                AddLogActionSend("Email", emailFrom, to, tBody, true, null);
+                            }
+                            catch (Exception ex)
+                            {
+                                AddLogActionSend("Email", emailFrom, to, tBody, false, ex.Message);
+                            }
                         }
                         else
                         {
@@ -357,7 +367,16 @@ namespace RMS.Centralize.WebService.BSL
                             if (!Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.ActionModeTest"]))
                             {
                                 var actionGatewayService = new ActionGateway();
-                                var actionResult = actionGatewayService.SendSMS(gateway, actionInfo.To, smsSender, tBody);
+                                try
+                                {
+                                    var actionResult = actionGatewayService.SendSMS(gateway, actionInfo.To, smsSender, tBody);
+                                    AddLogActionSend("SMS", smsSender, actionInfo.To, tBody, true, null);
+
+                                }
+                                catch (Exception ex)
+                                {
+                                    AddLogActionSend("SMS", smsSender, actionInfo.To, tBody, false, ex.Message);
+                                }
                             }
                             else
                             {
@@ -439,12 +458,20 @@ namespace RMS.Centralize.WebService.BSL
             }
             catch (Exception ex)
             {
+                string exLicense = "License is invalid";
+                if (ex.Message.ToLower().IndexOf(exLicense.ToLower()) > -1)
+                {
+                    // Log into RMS_Log_Monitoring
+                    AddLogActionSend(null, null, null, null, false, ex.Message);
+                }
+
                 throw new Exception("ManualSending errors. " + ex.Message, ex);
             }
         }
 
         private void TechnicalSending()
         {
+            int activeClients;
             try
             {
                 using (var db = new MyDbContext())
@@ -452,7 +479,7 @@ namespace RMS.Centralize.WebService.BSL
                     #region Check License Validity by Calling ListClientWithIPAddress
 
                     var ms = new Centralize.BSL.MonitoringEngine.MonitoringService();
-                    ms.ListClientWithIPAddress(licenseInfo);
+                    ms.ListClientWithIPAddress(licenseInfo, out activeClients);
 
                     #endregion
 
@@ -468,9 +495,46 @@ namespace RMS.Centralize.WebService.BSL
             }
             catch (Exception ex)
             {
+                string exLicense = "License is invalid";
+                if (ex.Message.ToLower().IndexOf(exLicense.ToLower()) > -1)
+                {
+                    // Log into RMS_Log_Monitoring
+                    AddLogActionSend(null, null, null, null, false, ex.Message);
+                }
+
+
                 throw new Exception("TechnicalSending errors. " + ex.Message, ex);
             }
             
         }
+
+        public void AddLogActionSend(string actionType, string from, string to, string body, bool? isSuccess, string errorMessage)
+        {
+            try
+            {
+                using (var db = new MyDbContext())
+                {
+                    var log = db.RmsLogActionSends.Create();
+                    log.ActionDateTime = DateTime.Now;
+                    log.ActionType = actionType;
+                    log.From = from;
+                    log.To = to;
+                    if (!string.IsNullOrEmpty(body))
+                        log.Body = body.Length > 1000 ? body.Substring(0, 1000) : body;
+                    log.BodyFull = body;
+                    log.IsSucess = isSuccess;
+                    log.ErrorMessage = errorMessage;
+                    log.IsSucess = isSuccess;
+                    log.ErrorMessage = errorMessage;
+                    db.RmsLogActionSends.Add(log);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("AddLogActionSend failed. " + ex.Message, ex);
+            }
+        }
+
     }
 }
