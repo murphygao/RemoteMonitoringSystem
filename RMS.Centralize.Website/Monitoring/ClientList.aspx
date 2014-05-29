@@ -347,7 +347,7 @@
                                 if (oObj.aData["LocationCode"] != null)
                                     loc = oObj.aData["LocationCode"];
                                 if (oObj.aData["LocationName"] != null)
-                                    loc = loc + ' ' + oObj.aData["LocationName"];
+                                    loc = loc + ' - ' + oObj.aData["LocationName"];
                                 if (loc == '')
                                     loc = 'N/A';
                                 return loc;
@@ -418,7 +418,7 @@
                             "sClass": "center",
                             "fnRender": function (oObj) {
                                 return '<a id="edit_item_' + oObj.aData["ClientID"] + '" class="btn btn-primary btn-xs" href="javascript:toEditRow(' + oObj.aData["ClientID"] + ')"><i class="glyphicon glyphicon-edit"></i></a>' +
-                                    '&nbsp;<a id="del_item_' + oObj.aData["ClientID"] + '" class="btn btn-danger btn-xs" href="javascript:deleteRow(' + oObj.aData["ClientID"] + ');"><i class="glyphicon glyphicon-trash"></i></a>';
+                                    '&nbsp;<a id="del_item_' + oObj.aData["ClientID"] + '" class="btn btn-danger btn-xs" href="#"><i class="glyphicon glyphicon-trash"></i></a>';
                             }
                         }
                     ],
@@ -561,7 +561,7 @@
                         "type": "POST",
                         "dataType": 'json',
                         "contentType": "application/json; charset=utf-8",
-                        "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/ActionProfile/DeleteActionProfile",
+                        "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/DeleteClient",
                         "data": JSON.stringify(delRow),
                         "success": function (data) {
                             if (data == "-1") {
@@ -598,6 +598,17 @@
                                 });
 
                             }
+
+                        },
+                        "error": function (xhr, textStatus, errorThrown) {
+                            if (errorThrown == 'Not Found') errorThrown = '404 Service Not Found.';
+                            $.smallBox({
+                                title: "Resend Failed",
+                                content: "<i class='fa fa-clock-o'></i> <i>" + errorThrown + "</i>",
+                                color: "#C46A69",
+                                iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                timeout: 4000
+                            });
 
                         },
 

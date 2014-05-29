@@ -307,7 +307,15 @@ namespace RMS.Centralize.WebService.BSL
                             try
                             {
                                 var actionResult = actionGatewayService.SendEmail(gateway, emailFrom, new List<string> {to}, tSubject, tBody);
-                                AddLogActionSend("Email", emailFrom, to, tBody, true, null);
+                                if (actionResult.IsSuccess)
+                                {
+                                    AddLogActionSend("Email", emailFrom, to, tBody, true, null);
+                                
+                                }
+                                else
+                                {
+                                    AddLogActionSend("Email", emailFrom, to, tBody, false, actionResult.ErrorMessage);
+                                }
                             }
                             catch (Exception ex)
                             {
@@ -317,13 +325,21 @@ namespace RMS.Centralize.WebService.BSL
                         else
                         {
                             // Testing
-                            string fileName = DateTime.Now.ToString("yyyyMMddTHHmmssff", new CultureInfo("en-AU")) + "." + to + ".txt";
-                            if (!File.Exists(destinationPath + fileName))
-                                File.Create(destinationPath + fileName).Close();
-
-                            using (StreamWriter sw = File.AppendText(destinationPath + fileName))
+                            try
                             {
-                                sw.WriteLine(tBody);
+                                string fileName = DateTime.Now.ToString("yyyyMMddTHHmmssff", new CultureInfo("en-AU")) + "." + to + ".txt";
+                                if (!File.Exists(destinationPath + fileName))
+                                    File.Create(destinationPath + fileName).Close();
+
+                                using (StreamWriter sw = File.AppendText(destinationPath + fileName))
+                                {
+                                    sw.WriteLine(tBody);
+                                }
+
+                                AddLogActionSend("Email", emailFrom, to, tBody, true, "Testing Mode");
+                            }
+                            catch
+                            {
                             }
                             System.Threading.Thread.Sleep(100);
                         }
@@ -370,7 +386,15 @@ namespace RMS.Centralize.WebService.BSL
                                 try
                                 {
                                     var actionResult = actionGatewayService.SendSMS(gateway, actionInfo.To, smsSender, tBody);
-                                    AddLogActionSend("SMS", smsSender, actionInfo.To, tBody, true, null);
+                                    if (actionResult.IsSuccess)
+                                    {
+                                        AddLogActionSend("SMS", smsSender, actionInfo.To, tBody, true, null);
+
+                                    }
+                                    else
+                                    {
+                                        AddLogActionSend("SMS", smsSender, actionInfo.To, tBody, false, actionResult.ErrorMessage);
+                                    }
 
                                 }
                                 catch (Exception ex)
@@ -381,13 +405,21 @@ namespace RMS.Centralize.WebService.BSL
                             else
                             {
                                 // Testing
-                                string fileName = DateTime.Now.ToString("yyyyMMddTHHmmssff", new CultureInfo("en-AU")) + "." + actionInfo.To + ".txt";
-                                if (!File.Exists(destinationPath + fileName))
-                                    File.Create(destinationPath + fileName).Close();
-
-                                using (StreamWriter sw = File.AppendText(destinationPath + fileName))
+                                try
                                 {
-                                    sw.WriteLine(tBody);
+                                    string fileName = DateTime.Now.ToString("yyyyMMddTHHmmssff", new CultureInfo("en-AU")) + "." + actionInfo.To + ".txt";
+                                    if (!File.Exists(destinationPath + fileName))
+                                        File.Create(destinationPath + fileName).Close();
+
+                                    using (StreamWriter sw = File.AppendText(destinationPath + fileName))
+                                    {
+                                        sw.WriteLine(tBody);
+                                    }
+
+                                    AddLogActionSend("SMS", smsSender, actionInfo.To, tBody, true, "Testing Mode");
+                                }
+                                catch
+                                {
                                 }
                                 System.Threading.Thread.Sleep(100);
                             }

@@ -76,3 +76,28 @@
     font-weight: bold;
     padding: 6px 15px 3px 7px;
 }
+.width40 {
+    width: 40px!important;
+}
+.width50 {
+    width: 50px!important;
+}
+.width90 {
+    width: 90px!important;
+}
+.width100 {
+    width: 100px!important;
+}
+.width120 {
+    width: 120px!important;
+}
+.width150 {
+    width: 150px!important;
+}
+.width180 {
+    width: 180px!important;
+}
+.width200 {
+    width: 200px!important;
+}
+

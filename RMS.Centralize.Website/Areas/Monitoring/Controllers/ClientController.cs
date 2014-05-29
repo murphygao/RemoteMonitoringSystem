@@ -119,5 +119,42 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
         }
+
+        public ActionResult UpdateClient(int? id, string m, string clientCode, int? clientTypeID, int? referenceClientID, bool? activeList, bool? status, DateTime? effectiveDate, DateTime? expiredDate, int? state)
+        {
+
+            if (string.IsNullOrEmpty(clientCode)) throw new ArgumentNullException("clientCode");
+            if (clientTypeID == null) throw new ArgumentNullException("clientTypeID");
+            if (referenceClientID == null) throw new ArgumentNullException("referenceClientID");
+            if (status == null) throw new ArgumentNullException("status");
+            if (effectiveDate == null) throw new ArgumentNullException("effectiveDate");
+
+            if (m == "e" && id == null) throw new ArgumentNullException("id");
+
+            try
+            {
+                var apClient = new ClientService().clientService;
+                var result = apClient.Update(id, m, clientCode, clientTypeID, referenceClientID, activeList, status, effectiveDate, expiredDate, state);
+
+                var ret = new
+                {
+                    status = (result.IsSuccess) ? 1 : 0,
+                    error = (result.IsSuccess) ? "" : result.ErrorMessage
+                };
+
+                return Json(ret);
+
+            }
+            catch (Exception ex)
+            {
+                var ret = new
+                {
+                    status = 0,
+                    error = ex.Message
+                };
+                return Json(ret);
+            }
+        }
+
     }
 }

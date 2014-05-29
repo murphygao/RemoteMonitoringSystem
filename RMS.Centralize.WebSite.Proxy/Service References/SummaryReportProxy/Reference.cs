@@ -258,6 +258,12 @@ namespace RMS.Centralize.WebSite.Proxy.SummaryReportProxy {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private RMS.Centralize.WebSite.Proxy.SummaryReportProxy.ClientInfo ClientField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.SummaryReportProxy.ClientInfo> ListClientsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TotalRecordsField;
+        
         [System.Runtime.Serialization.DataMemberAttribute()]
         public RMS.Centralize.WebSite.Proxy.SummaryReportProxy.ClientInfo Client {
             get {
@@ -267,6 +273,32 @@ namespace RMS.Centralize.WebSite.Proxy.SummaryReportProxy {
                 if ((object.ReferenceEquals(this.ClientField, value) != true)) {
                     this.ClientField = value;
                     this.RaisePropertyChanged("Client");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.SummaryReportProxy.ClientInfo> ListClients {
+            get {
+                return this.ListClientsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ListClientsField, value) != true)) {
+                    this.ListClientsField = value;
+                    this.RaisePropertyChanged("ListClients");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int TotalRecords {
+            get {
+                return this.TotalRecordsField;
+            }
+            set {
+                if ((this.TotalRecordsField.Equals(value) != true)) {
+                    this.TotalRecordsField = value;
+                    this.RaisePropertyChanged("TotalRecords");
                 }
             }
         }
@@ -458,6 +490,9 @@ namespace RMS.Centralize.WebSite.Proxy.SummaryReportProxy {
         private string EmailField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool EnableField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> ExpiredDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -480,6 +515,9 @@ namespace RMS.Centralize.WebSite.Proxy.SummaryReportProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ProfileNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<long> RowNumField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<int> StateField;
@@ -574,6 +612,19 @@ namespace RMS.Centralize.WebSite.Proxy.SummaryReportProxy {
                 if ((object.ReferenceEquals(this.EmailField, value) != true)) {
                     this.EmailField = value;
                     this.RaisePropertyChanged("Email");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Enable {
+            get {
+                return this.EnableField;
+            }
+            set {
+                if ((this.EnableField.Equals(value) != true)) {
+                    this.EnableField = value;
+                    this.RaisePropertyChanged("Enable");
                 }
             }
         }
@@ -678,6 +729,19 @@ namespace RMS.Centralize.WebSite.Proxy.SummaryReportProxy {
                 if ((object.ReferenceEquals(this.ProfileNameField, value) != true)) {
                     this.ProfileNameField = value;
                     this.RaisePropertyChanged("ProfileName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<long> RowNum {
+            get {
+                return this.RowNumField;
+            }
+            set {
+                if ((this.RowNumField.Equals(value) != true)) {
+                    this.RowNumField = value;
+                    this.RaisePropertyChanged("RowNum");
                 }
             }
         }

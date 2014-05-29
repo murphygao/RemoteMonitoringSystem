@@ -134,20 +134,20 @@
     <None Include="Service References\ClientProxy\RMS.Centralize.WebSite.Proxy.ClientProxy.Result.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\MessageActionProxy\MessageActionService.wsdl" />
-    <None Include="Service References\MessageActionProxy\MessageActionService.xsd">
+    <None Include="Service References\MessageActionProxy\MessageActionService1.wsdl" />
+    <None Include="Service References\MessageActionProxy\MessageActionService5.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MessageActionProxy\MessageActionService1.xsd">
+    <None Include="Service References\MessageActionProxy\MessageActionService51.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MessageActionProxy\MessageActionService2.xsd">
+    <None Include="Service References\MessageActionProxy\MessageActionService52.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MessageActionProxy\MessageActionService3.xsd">
+    <None Include="Service References\MessageActionProxy\MessageActionService53.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MessageActionProxy\MessageActionService4.xsd">
+    <None Include="Service References\MessageActionProxy\MessageActionService54.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\MessageActionProxy\RMS.Centralize.WebSite.Proxy.MessageActionProxy.InitMessageActionResult.datasource">
@@ -159,21 +159,21 @@
     <None Include="Service References\MessageActionProxy\RMS.Centralize.WebSite.Proxy.MessageActionProxy.Result.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\MonitoringProxy\MonitoringService.wsdl" />
-    <None Include="Service References\MonitoringProxy\MonitoringService.xsd">
+    <None Include="Service References\MonitoringProxy\MonitoringService1.wsdl" />
+    <None Include="Service References\MonitoringProxy\MonitoringService3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MonitoringProxy\MonitoringService1.xsd">
+    <None Include="Service References\MonitoringProxy\MonitoringService31.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MonitoringProxy\MonitoringService2.xsd">
+    <None Include="Service References\MonitoringProxy\MonitoringService32.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\SelfTestingProxy\SelfTestingService.wsdl" />
-    <None Include="Service References\SelfTestingProxy\SelfTestingService.xsd">
+    <None Include="Service References\SelfTestingProxy\SelfTestingService1.wsdl" />
+    <None Include="Service References\SelfTestingProxy\SelfTestingService2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\SelfTestingProxy\SelfTestingService1.xsd">
+    <None Include="Service References\SelfTestingProxy\SelfTestingService21.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\SummaryReportProxy\RMS.Centralize.WebSite.Proxy.SummaryReportProxy.ClientInfoResult.datasource">
@@ -185,23 +185,23 @@
     <None Include="Service References\SummaryReportProxy\RMS.Centralize.WebSite.Proxy.SummaryReportProxy.SummaryMonitoringResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\SummaryReportProxy\SummaryReportService.wsdl" />
-    <None Include="Service References\SummaryReportProxy\SummaryReportService.xsd">
+    <None Include="Service References\SummaryReportProxy\SummaryReportService1.wsdl" />
+    <None Include="Service References\SummaryReportProxy\SummaryReportService6.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\SummaryReportProxy\SummaryReportService1.xsd">
+    <None Include="Service References\SummaryReportProxy\SummaryReportService61.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\SummaryReportProxy\SummaryReportService2.xsd">
+    <None Include="Service References\SummaryReportProxy\SummaryReportService62.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\SummaryReportProxy\SummaryReportService3.xsd">
+    <None Include="Service References\SummaryReportProxy\SummaryReportService63.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\SummaryReportProxy\SummaryReportService4.xsd">
+    <None Include="Service References\SummaryReportProxy\SummaryReportService64.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\SummaryReportProxy\SummaryReportService5.xsd">
+    <None Include="Service References\SummaryReportProxy\SummaryReportService65.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
@@ -212,9 +212,6 @@
     <WCFMetadataStorage Include="Service References\MonitoringProxy\" />
     <WCFMetadataStorage Include="Service References\SelfTestingProxy\" />
     <WCFMetadataStorage Include="Service References\SummaryReportProxy\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\MessageActionProxy\MessageActionService.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\MessageActionProxy\configuration91.svcinfo" />
@@ -241,9 +238,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\MonitoringProxy\MonitoringService.disco" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Service References\MonitoringProxy\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
@@ -256,9 +250,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\SummaryReportProxy\SummaryReportService.disco" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Service References\SummaryReportProxy\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
@@ -269,9 +260,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\SelfTestingProxy\SelfTestingService.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\SelfTestingProxy\configuration91.svcinfo" />
@@ -302,6 +290,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\ClientProxy\ClientService1.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MessageActionProxy\MessageActionService1.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MonitoringProxy\MonitoringService1.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SelfTestingProxy\SelfTestingService1.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SummaryReportProxy\SummaryReportService1.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

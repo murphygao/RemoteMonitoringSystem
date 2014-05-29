@@ -21,13 +21,13 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost/RMS.Centralize.WebService/SelfTestingService.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="https://esn-nb01/RMS.Centralize.WebService/SelfTestingService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="SelfTestingService.xsd" MetadataType="Schema" ID="76cb74b4-6ab9-4f52-b2bb-206d6de9d5c4" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/SelfTestingService.svc?xsd=xsd0" />
-    <MetadataFile FileName="SelfTestingService.disco" MetadataType="Disco" ID="c12e3ec1-9c95-46ec-b1c5-ea76f0ae251d" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/SelfTestingService.svc?disco" />
-    <MetadataFile FileName="SelfTestingService1.xsd" MetadataType="Schema" ID="a6698cfc-c465-4866-8bb0-dea693af8cb3" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/SelfTestingService.svc?xsd=xsd1" />
-    <MetadataFile FileName="SelfTestingService.wsdl" MetadataType="Wsdl" ID="d511c807-79a6-4f06-a646-c14b976ecff0" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/SelfTestingService.svc?wsdl" />
+    <MetadataFile FileName="SelfTestingService1.wsdl" MetadataType="Wsdl" ID="ac6f6706-25e4-425d-94c8-281be6aab677" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/SelfTestingService.svc?wsdl" />
+    <MetadataFile FileName="SelfTestingService1.disco" MetadataType="Disco" ID="5554c322-14fb-44c9-a8c5-26edc4206211" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/SelfTestingService.svc?disco" />
+    <MetadataFile FileName="SelfTestingService2.xsd" MetadataType="Schema" ID="2e233825-c9a5-42cc-8ab0-37f550b2c057" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/SelfTestingService.svc?xsd=xsd0" />
+    <MetadataFile FileName="SelfTestingService21.xsd" MetadataType="Schema" ID="d84fc1bc-ae47-4ddb-a952-c734d1a5a2ac" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/SelfTestingService.svc?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -152,7 +152,7 @@
                             <!-- widget content -->
                             <div class="widget-body">
 
-                                <table id="dt_device_status" class="table table-hover">
+                                <table id="dt_device_status" class="table table-hover" style="width: 100%;word-wrap:break-word; ">
                                     <tbody>
                                     </tbody>
                                 </table>
@@ -331,8 +331,8 @@
                     "mDataProp": "DeviceDescription",
                     "bSearchable": false,
                     "bSortable": false,
-                    "sWidth": "220",
-                    "sClass": "td-device-status-name",
+                    "sWidth": "200",
+                    "sClass": "td-device-status-name width200",
                 },
                 {
                     // status
@@ -340,7 +340,7 @@
                     "bSearchable": false,
                     "bSortable": false,
                     "sWidth": "120",
-                    "sClass": "center td-device-status",
+                    "sClass": "center td-device-status width120",
                     "fnRender": function(oObj) {
                         if (oObj.aData["Message"] == "Good") {
                             return oObj.aData["ColorTagStart"].replace('class=\"','class=\"device-severity-status ') + "Good" + oObj.aData["ColorTagEnd"];
@@ -355,8 +355,8 @@
                     "mDataProp": "Message",
                     "bSearchable": false,
                     "bSortable": false,
-                    "sWidth": "250",
-                    "sClass": "td-device-status",
+                    "sWidth": "180",
+                    "sClass": "td-device-status width180",
                     "fnRender": function(oObj) {
                         if (oObj.aData["Message"] == "Good") {
                             return "";
@@ -371,20 +371,27 @@
                     "mDataProp": "LastActionType",
                     "bSearchable": false,
                     "bSortable": false,
-                    "sClass": "td-device-status",
-                    "sWidth": "150"
+                    "sClass": "td-device-status width90",
+                    "sWidth": "90",
+                    "fnRender": function(oObj) {
+                        if (oObj.aData["LastActionType"] == "") {
+                            return "";
+                        } else {
+                            return oObj.aData["LastActionType"];
+                        }
+                    }
                 },
                 {
                     // action date
                     "mDataProp": "LastActionDateTime",
                     "bSearchable": false,
                     "bSortable": false,
-                    "sClass": "td-device-status",
+                    "sClass": "td-device-status width150",
                     "sWidth": "150",
                     "fnRender": function(oObj) {
                         if (oObj.aData["LastActionDateTime"] != null) {
                             var date = new Date(parseInt(oObj.aData["LastActionDateTime"].substr(6)));
-                            return dateFormat(date, "dd/mm/yyyy HH:mm:ss");
+                            return dateFormat(date, "dd/mm/yyyy HH:MM:ss");
                         }
                         return "";
                     }
@@ -395,8 +402,8 @@
                     "mData": null,
                     "bSearchable": false,
                     "bSortable": false,
-                    "sWidth": "50",
-                    "sClass": "td-device-status",
+                    "sWidth": "40",
+                    "sClass": "td-device-status width40",
                     "fnRender": function(oObj) {
                         if (oObj.aData["Message"] != "") {
                             return '<a id="btnResend" class="btn btn-xs btn-primary" href="javascript:Resend('+ oObj.aData["ReportID"] +');" style="line-height: inherit!important;"><i class="fa fa-mail-forward"></i></a>';
@@ -679,7 +686,7 @@
                     oTable.fnDraw();
                     oTable = $('#dt_basic').dataTable();
                     oTable.fnDraw();
-                    Pace.restart(); 
+                    //Pace.restart(); 
                     setTimeout(update, updateInterval);
 
                 } else {
@@ -690,7 +697,7 @@
 
             var $on = false;
 
-
+            $(document).ajaxStart(function() { Pace.restart(); });
         });
 
         function Resend(id) {
@@ -701,7 +708,6 @@
             var resendAction = new Row(id);
             var oTableDS = $('#dt_device_status').dataTable();
             var oTable = $('#dt_basic').dataTable();
-
             $.ajax({
                 "type": "POST",
                 "dataType": 'json',
@@ -740,7 +746,7 @@
                     if (errorThrown == 'Not Found') errorThrown = '404 Service Not Found.';
                     $.smallBox({
                         title: "Resend Failed",
-                        content: "<i class='fa fa-clock-o'></i> <i>" + errorThrown +"</i>",
+                        content: "<i class='fa fa-clock-o'></i> <i>" + errorThrown + "</i>",
                         color: "#C46A69",
                         iconSmall: "fa fa-times fa-2x fadeInRight animated",
                         timeout: 4000
@@ -748,8 +754,10 @@
 
                 },
 
-        });
+            });
+
         }
+
         function PrepareClientInfo() {
             {
                 var clientID = '<%=Request["id"]%>';

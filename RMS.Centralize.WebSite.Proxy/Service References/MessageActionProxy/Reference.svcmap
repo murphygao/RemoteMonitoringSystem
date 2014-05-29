@@ -21,16 +21,16 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost/RMS.Centralize.WebService/MessageActionService.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="https://esn-nb01/RMS.Centralize.WebService/MessageActionService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="MessageActionService.xsd" MetadataType="Schema" ID="6bc10662-d694-4a19-9789-9e0a99ece8c4" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/MessageActionService.svc?xsd=xsd0" />
-    <MetadataFile FileName="MessageActionService.disco" MetadataType="Disco" ID="b0ad6b42-af42-418f-ae42-b87c2a9fba1f" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/MessageActionService.svc?disco" />
-    <MetadataFile FileName="MessageActionService1.xsd" MetadataType="Schema" ID="e5bc5a81-c440-4ce5-b3d8-fcdffe60c420" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/MessageActionService.svc?xsd=xsd2" />
-    <MetadataFile FileName="MessageActionService.wsdl" MetadataType="Wsdl" ID="25a1c577-6e36-4ae2-8d0c-7faab6405528" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/MessageActionService.svc?wsdl" />
-    <MetadataFile FileName="MessageActionService4.xsd" MetadataType="Schema" ID="a16bdc53-ef47-457a-87bf-accec50f6872" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/MessageActionService.svc?xsd=xsd4" />
-    <MetadataFile FileName="MessageActionService2.xsd" MetadataType="Schema" ID="bb2c0f23-723f-4858-99a9-0ef7a40d2a2a" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/MessageActionService.svc?xsd=xsd3" />
-    <MetadataFile FileName="MessageActionService3.xsd" MetadataType="Schema" ID="aabf83b7-d205-43a3-8b4d-39fa131810ce" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/MessageActionService.svc?xsd=xsd1" />
+    <MetadataFile FileName="MessageActionService5.xsd" MetadataType="Schema" ID="99c0a913-3f98-4303-905c-2d652ea5cd9b" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MessageActionService.svc?xsd=xsd3" />
+    <MetadataFile FileName="MessageActionService51.xsd" MetadataType="Schema" ID="54906dfe-50c7-4ca1-a194-a2e653e76579" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MessageActionService.svc?xsd=xsd2" />
+    <MetadataFile FileName="MessageActionService52.xsd" MetadataType="Schema" ID="7f4ccb03-95a2-45b7-b0e7-0f3dbcbf4838" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MessageActionService.svc?xsd=xsd0" />
+    <MetadataFile FileName="MessageActionService53.xsd" MetadataType="Schema" ID="b5ec812d-df21-474d-9638-60c6ac8c2d0d" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MessageActionService.svc?xsd=xsd4" />
+    <MetadataFile FileName="MessageActionService1.wsdl" MetadataType="Wsdl" ID="e3d0fe67-fdea-4cfe-bdb4-3e5bd12be2b8" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MessageActionService.svc?wsdl" />
+    <MetadataFile FileName="MessageActionService1.disco" MetadataType="Disco" ID="a65252fc-b502-457a-8c6e-cba42ca22aec" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MessageActionService.svc?disco" />
+    <MetadataFile FileName="MessageActionService54.xsd" MetadataType="Schema" ID="9cf9ef19-6da7-4749-a9cf-9a37159e13c0" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MessageActionService.svc?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

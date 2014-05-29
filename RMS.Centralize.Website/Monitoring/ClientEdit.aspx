@@ -172,12 +172,12 @@
 
                                     <footer>
                                         <button type="submit" class="btn btn-primary" style="float: left;" ID="btnSubmit" onclick="update();">Submit</button>
-                                        <button type="button" class="btn btn-default" style="float: left;" onclick="window.location='MessageAction.aspx';">
+                                        <button type="button" class="btn btn-default" style="float: left;" onclick="window.location='ClientList.aspx';">
                                             Back
                                         </button>
                                         <input type="hidden" id="id1" />
                                         <input type="hidden" id="m" />
-
+                                        <input type="hidden" id="currentClientCode" />
                                     </footer>
                                 </form>
 
@@ -246,6 +246,7 @@
             $.validator.addMethod(
                 "uniqueClientCode",
                 function (value, element) {
+                    if (value == $('#currentClientCode').val()) return true;
                     $.ajax({
                         "type": "POST",
                         "dataType": 'json',
@@ -253,9 +254,11 @@
                         "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/ExistingClientCode/",
                         "data": "{'clientCode' : '" + value + "'}",
                         success: function (ret) {
-                            if (ret.isSuccess) {
 
-                                response = (ret.aaData == '0') ? true : false;
+                            if ($('#currentClientCode').val() == value && $('#m').val() == 'e') return true;
+
+                            if (ret.isSuccess) {
+                                response = (ret.aaData == 0) ? true : false;
                             } else {
                                 response = false;
                             }
@@ -263,7 +266,7 @@
                     });
                     return response;
                 },
-                "Username is Already Taken"
+                "Client code is taken already"
             );
 
             var $checkoutForm = $('#smartForm').validate({
@@ -358,25 +361,28 @@
                             var myData = JSON.parse(ret.data);
 
                             $('#txtClientCode').val(myData.ClientCode);
+                            $('#currentClientCode').val(myData.ClientCode);
+
                             $('#ddlClientTypeID').val(myData.ClientTypeId);
                             $('#txtReferenceClient').val(myData.ReferenceClientId);
 
                             $('#cbxActiveList').attr('checked', myData.ActiveList);
                             $('#cbxEnable').attr('checked', myData.Enable);
 
-                            if (myData.EffectiveDate != '') {
+                            if (myData.EffectiveDate != null && myData.EffectiveDate != '') {
                                 var eff = new Date(myData.EffectiveDate.substr(0, 10));
                                 $("#txtEffectiveDate").datepicker('setDate', eff);
                                 $('#txtExpiredDate').datepicker('option', 'minDate', eff);
 
                             }
-                            if (myData.txtExpiredDate != '') {
+
+                            if (myData.ExpiredDate != null && myData.ExpiredDate != '') {
                                 var exp = new Date(myData.ExpiredDate.substr(0, 10));
                                 $("#txtExpiredDate").datepicker('setDate', exp);
                                 $('#txtEffectiveDate').datepicker('option', 'maxDate', exp);
                             }
 
-                            $('#id1').val(myData.MessageId);
+                            $('#id1').val(myData.ClientId);
                             $('#m').val("e");
 
 
@@ -435,12 +441,20 @@
             tmpObj = function () {
                 this.id = $('#id1').val();
                 this.m = $('#m').val();
-                this.messageGroupID = $('#ddlMessageGroupID').val();
-                this.message = $('#txtMessage').val();
-                this.severityLevelID = $('#ddlSeverityLevelID').val();
-                this.ReadOnly = false;
+                this.clientCode = $('#txtClientCode').val();
+                this.clientTypeID = $('#ddlClientTypeID').val();
+                this.referenceClientID = $('#txtReferenceClient').val();
                 this.activeList = $('#cbxActiveList').is(':checked');
-                this.activeStatus = $('#cbxActiveStatus').is(':checked');
+                this.status = $('#cbxEnable').is(':checked');
+                this.effectiveDate = $('#txtEffectiveDate').val();
+                this.expiredDate = $('#txtExpiredDate').val();
+                this.state = $('#ddlState').val();
+
+
+                //(int? id, string m, string clientCode, int? clientTypeID
+                //, int? referenceClientID, bool? activeList, bool? status
+                //, DateTime? effectiveDate, DateTime? expiredDate, int? state)
+
             };
             var updObj = new tmpObj();
             Pace.restart();
@@ -449,7 +463,7 @@
                 "type": "POST",
                 "dataType": 'json',
                 "contentType": "application/json; charset=utf-8",
-                "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/MessageAction/UpdateMessage/",
+                "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/UpdateClient/",
                 "data": JSON.stringify(updObj),
                 "success": function (ret) {
 
@@ -463,7 +477,7 @@
                         });
 
                         setTimeout(function () {
-                            window.location.href = 'MessageAction.aspx';
+                            window.location.href = 'ClientList.aspx';
                         }, 1000);
 
                     } else if (ret.status == "-1") {

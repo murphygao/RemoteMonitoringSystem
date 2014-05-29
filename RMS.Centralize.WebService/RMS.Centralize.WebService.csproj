@@ -143,6 +143,7 @@
     <Compile Include="Model\ClientMessageAction.cs" />
     <Compile Include="Model\ClientMessageInfo.cs" />
     <Compile Include="Model\JQueryDataTableParamModel.cs" />
+    <Compile Include="Model\Location.cs" />
     <Compile Include="Model\MainAppClient.cs" />
     <Compile Include="Model\MessageDetail.cs" />
     <Compile Include="Model\Result.cs" />
@@ -204,7 +205,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1844</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/RMS.Centralize.WebService</IISUrl>
+          <IISUrl>https://esn-nb01/RMS.Centralize.WebService</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

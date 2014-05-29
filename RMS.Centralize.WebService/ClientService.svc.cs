@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using System.Web.Management;
 using RMS.Centralize.DAL;
 using RMS.Centralize.WebService.Model;
 
@@ -204,33 +205,67 @@ namespace RMS.Centralize.WebService
             }
         }
 
-        public Result Update(int? id, string m, string clientCode, bool activeList, bool status, DateTime? effectiveDate, DateTime? expiredDate, int state)
+        public Result Update(int? id, string m, string clientCode, int? clientTypeID, int? referenceClientID, bool? activeList, bool? status, DateTime? effectiveDate, DateTime? expiredDate, int? state)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var cs = new BSL.ClientService();
+                int result = cs.Updateclient(id, m, clientCode, clientTypeID, referenceClientID, activeList, status, effectiveDate, expiredDate, state);
+
+                if (result == 1) // Complete
+                {
+                    var sr = new Result
+                    {
+                        IsSuccess = true
+                    };
+                    return sr;
+                }
+                else if (result == 2)
+                {
+                    var sr = new Result
+                    {
+                        IsSuccess = false,
+                        ErrorMessage = "Client code is taken already."
+                    };
+                    return sr;
+                }
+                else
+                {
+                    var sr = new Result
+                    {
+                        IsSuccess = false,
+                        ErrorMessage = "Unknown error code: " + result
+                    };
+                    return sr;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                var sr = new Result
+                {
+                    IsSuccess = false,
+                    ErrorMessage = ex.Message
+                };
+                return sr;
+            }
+            
         }
 
         public ClientResult ExistingClientCode(string clientCode)
         {
             try
             {
-                using (var db = new MyDbContext())
+                var cs = new BSL.ClientService();
+                var clients = cs.CheckExistingClientCode(clientCode);
+
+                var sr = new ClientResult
                 {
-                    db.Configuration.ProxyCreationEnabled = false;
-                    db.Configuration.LazyLoadingEnabled = false;
-
-                    var ret = db.RmsClients.Where(c => c.ClientCode == clientCode);
-                    var lClients = new List<RmsClient>(ret.ToList());
-
-                    var sr = new ClientResult
-                    {
-                        IsSuccess = true,
-                        ListClients = lClients,
-                        TotalRecords = lClients.Count
-                    };
-
-                    return sr;
-
-                }
+                    IsSuccess = true,
+                    ListClients = clients,
+                    TotalRecords = clients.Count
+                };
+                return sr;
             }
             catch (Exception ex)
             {

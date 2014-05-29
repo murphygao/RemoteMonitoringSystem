@@ -26,6 +26,9 @@ namespace RMS.Agent.BSL.Monitoring
 
         public void Command(string clientCode)
         {
+            if (string.IsNullOrEmpty(clientCode)) return;
+
+            UpdateClientCode(clientCode);
             var caller = new ExecuteCommandAsync(ExecuteCommand);
             caller.BeginInvoke(clientCode, null, null);
         }
@@ -144,6 +147,18 @@ namespace RMS.Agent.BSL.Monitoring
                 
             }
 
+        }
+
+        private void UpdateClientCode(string clientCode)
+        {
+            if (ConfigurationManager.AppSettings["CLIENT_CODE"] != clientCode)
+            {
+                Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                configuration.AppSettings.Settings["CLIENT_CODE"].Value = clientCode;
+                configuration.Save();
+
+                ConfigurationManager.RefreshSection("appSettings");
+            }
         }
 
     }

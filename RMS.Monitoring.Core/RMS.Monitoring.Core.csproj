@@ -53,6 +53,10 @@
       <Project>{407de06d-39ac-4b2a-8486-e84068a2a3f9}</Project>
       <Name>RMS.Monitoring.Device.CardDespenser</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.Device.Keyboard\RMS.Monitoring.Device.Keyboard.csproj">
+      <Project>{4157a758-dcbb-44d3-83fd-8130920f82b1}</Project>
+      <Name>RMS.Monitoring.Device.Keyboard</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RMS.Monitoring.Device.MonitorDisplay\RMS.Monitoring.Device.MonitorDisplay.csproj">
       <Project>{d1474861-2f1d-4511-98da-a7fdd03cba3e}</Project>
       <Name>RMS.Monitoring.Device.MonitorDisplay</Name>

@@ -1702,10 +1702,10 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.ClientInfoResult> SearchAsync(RMS.Centralize.WebSite.Proxy.ClientProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> asOfDate, System.Nullable<int> clientTypeID, string clientCode, System.Nullable<bool> clientStatus, string ipAddress);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/Update", ReplyAction="http://tempuri.org/IClientService/UpdateResponse")]
-        RMS.Centralize.WebSite.Proxy.ClientProxy.Result Update(System.Nullable<int> id, string m, string clientCode, bool activeList, bool status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, int state);
+        RMS.Centralize.WebSite.Proxy.ClientProxy.Result Update(System.Nullable<int> id, string m, string clientCode, System.Nullable<int> clientTypeID, System.Nullable<int> referenceClientID, System.Nullable<bool> activeList, System.Nullable<bool> status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, System.Nullable<int> state);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/Update", ReplyAction="http://tempuri.org/IClientService/UpdateResponse")]
-        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.Result> UpdateAsync(System.Nullable<int> id, string m, string clientCode, bool activeList, bool status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, int state);
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.Result> UpdateAsync(System.Nullable<int> id, string m, string clientCode, System.Nullable<int> clientTypeID, System.Nullable<int> referenceClientID, System.Nullable<bool> activeList, System.Nullable<bool> status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, System.Nullable<int> state);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/ExistingClientCode", ReplyAction="http://tempuri.org/IClientService/ExistingClientCodeResponse")]
         RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult ExistingClientCode(string clientCode);
@@ -1773,12 +1773,12 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             return base.Channel.SearchAsync(param, asOfDate, clientTypeID, clientCode, clientStatus, ipAddress);
         }
         
-        public RMS.Centralize.WebSite.Proxy.ClientProxy.Result Update(System.Nullable<int> id, string m, string clientCode, bool activeList, bool status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, int state) {
-            return base.Channel.Update(id, m, clientCode, activeList, status, effectiveDate, expiredDate, state);
+        public RMS.Centralize.WebSite.Proxy.ClientProxy.Result Update(System.Nullable<int> id, string m, string clientCode, System.Nullable<int> clientTypeID, System.Nullable<int> referenceClientID, System.Nullable<bool> activeList, System.Nullable<bool> status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, System.Nullable<int> state) {
+            return base.Channel.Update(id, m, clientCode, clientTypeID, referenceClientID, activeList, status, effectiveDate, expiredDate, state);
         }
         
-        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.Result> UpdateAsync(System.Nullable<int> id, string m, string clientCode, bool activeList, bool status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, int state) {
-            return base.Channel.UpdateAsync(id, m, clientCode, activeList, status, effectiveDate, expiredDate, state);
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.Result> UpdateAsync(System.Nullable<int> id, string m, string clientCode, System.Nullable<int> clientTypeID, System.Nullable<int> referenceClientID, System.Nullable<bool> activeList, System.Nullable<bool> status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, System.Nullable<int> state) {
+            return base.Channel.UpdateAsync(id, m, clientCode, clientTypeID, referenceClientID, activeList, status, effectiveDate, expiredDate, state);
         }
         
         public RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult ExistingClientCode(string clientCode) {

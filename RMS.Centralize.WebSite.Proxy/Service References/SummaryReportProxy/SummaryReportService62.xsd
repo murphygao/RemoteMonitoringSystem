@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" />
+  <xs:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" />
   <xs:complexType name="JQueryDataTableParamModel">
     <xs:sequence>
       <xs:element minOccurs="0" name="iColumns" type="xs:int" />
@@ -51,6 +51,7 @@
       <xs:element minOccurs="0" name="CreatedDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="EffectiveDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Enable" type="xs:boolean" />
       <xs:element minOccurs="0" name="ExpiredDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="IPAddress" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="LocationCode" nillable="true" type="xs:string" />
@@ -59,10 +60,17 @@
       <xs:element minOccurs="0" name="LocationName2" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Mobile" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ProfileName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RowNum" nillable="true" type="xs:long" />
       <xs:element minOccurs="0" name="State" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="Telephone" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UpdatedDate" nillable="true" type="xs:dateTime" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ClientInfo" nillable="true" type="tns:ClientInfo" />
+  <xs:complexType name="ArrayOfClientInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ClientInfo" nillable="true" type="tns:ClientInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfClientInfo" nillable="true" type="tns:ArrayOfClientInfo" />
 </xs:schema>

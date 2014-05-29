@@ -158,7 +158,6 @@
     <Content Include="sound\bigbox.ogg" />
     <Content Include="sound\messagebox.ogg" />
     <Content Include="sound\smallbox.ogg" />
-    <Content Include="Areas\Test\Views\web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -939,8 +938,6 @@
     <Compile Include="Areas\Monitoring\Controllers\SummaryReportController.cs" />
     <Compile Include="Areas\Monitoring\Models\DeviceStatus.cs" />
     <Compile Include="Areas\Monitoring\MonitoringAreaRegistration.cs" />
-    <Compile Include="Areas\Test\Controllers\TestController.cs" />
-    <Compile Include="Areas\Test\TestAreaRegistration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1022,9 +1019,6 @@
     <Folder Include="Areas\Monitoring\Views\MessageAction\" />
     <Folder Include="Areas\Monitoring\Views\Shared\" />
     <Folder Include="Areas\Monitoring\Views\SummaryReport\" />
-    <Folder Include="Areas\Test\Models\" />
-    <Folder Include="Areas\Test\Views\Shared\" />
-    <Folder Include="Areas\Test\Views\Test\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

@@ -70,11 +70,13 @@
         <xs:element minOccurs="0" name="id" nillable="true" type="xs:int" />
         <xs:element minOccurs="0" name="m" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="clientCode" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="activeList" type="xs:boolean" />
-        <xs:element minOccurs="0" name="status" type="xs:boolean" />
+        <xs:element minOccurs="0" name="clientTypeID" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="referenceClientID" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="activeList" nillable="true" type="xs:boolean" />
+        <xs:element minOccurs="0" name="status" nillable="true" type="xs:boolean" />
         <xs:element minOccurs="0" name="effectiveDate" nillable="true" type="xs:dateTime" />
         <xs:element minOccurs="0" name="expiredDate" nillable="true" type="xs:dateTime" />
-        <xs:element minOccurs="0" name="state" type="xs:int" />
+        <xs:element minOccurs="0" name="state" nillable="true" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

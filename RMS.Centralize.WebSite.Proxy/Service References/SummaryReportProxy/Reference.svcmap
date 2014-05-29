@@ -21,17 +21,17 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="https://esn-nb01/RMS.Centralize.WebService/SummaryReportService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="SummaryReportService3.xsd" MetadataType="Schema" ID="e29f1e78-6b27-456f-bb9b-fe8c24b3d5fe" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd4" />
-    <MetadataFile FileName="SummaryReportService1.xsd" MetadataType="Schema" ID="8ba0dfc1-9eb8-4f4a-9e35-cb540782cd83" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd0" />
-    <MetadataFile FileName="SummaryReportService.disco" MetadataType="Disco" ID="f1f65fff-2329-4666-aa71-1c9205c43914" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc?disco" />
-    <MetadataFile FileName="SummaryReportService5.xsd" MetadataType="Schema" ID="6b03640c-215b-4f3f-9ee9-246ded6069b3" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd5" />
-    <MetadataFile FileName="SummaryReportService2.xsd" MetadataType="Schema" ID="709d130e-0a6c-486c-ad64-2afe6d12d854" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd2" />
-    <MetadataFile FileName="SummaryReportService.wsdl" MetadataType="Wsdl" ID="13542c40-b36b-41b1-a76f-176ce9b1127e" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc?wsdl" />
-    <MetadataFile FileName="SummaryReportService.xsd" MetadataType="Schema" ID="c99ae590-b85e-431c-83d0-452d1dd78211" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd3" />
-    <MetadataFile FileName="SummaryReportService4.xsd" MetadataType="Schema" ID="f223fc2a-130d-4030-b0f7-76e89001cc23" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd1" />
+    <MetadataFile FileName="SummaryReportService6.xsd" MetadataType="Schema" ID="b258dce9-bce5-4333-bed6-f992950a6257" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd3" />
+    <MetadataFile FileName="SummaryReportService1.disco" MetadataType="Disco" ID="1f3a0352-95ad-446d-8a69-ad223a1df470" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/SummaryReportService.svc?disco" />
+    <MetadataFile FileName="SummaryReportService1.wsdl" MetadataType="Wsdl" ID="1b0407a4-f334-4e2b-b244-6b50099d83d4" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/SummaryReportService.svc?wsdl" />
+    <MetadataFile FileName="SummaryReportService61.xsd" MetadataType="Schema" ID="881df331-5de3-49e7-b7cc-12aeaafb5758" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd1" />
+    <MetadataFile FileName="SummaryReportService62.xsd" MetadataType="Schema" ID="99f94e26-50cb-453c-a6d3-77a7a64c8809" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd2" />
+    <MetadataFile FileName="SummaryReportService63.xsd" MetadataType="Schema" ID="5017c541-5499-43db-8cf9-c7f09040d0e9" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd5" />
+    <MetadataFile FileName="SummaryReportService64.xsd" MetadataType="Schema" ID="f9a6cc71-bd99-4e25-959f-4b4fd0291968" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd0" />
+    <MetadataFile FileName="SummaryReportService65.xsd" MetadataType="Schema" ID="6878a627-58f8-4618-a6f0-617c6972cbba" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/SummaryReportService.svc?xsd=xsd4" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

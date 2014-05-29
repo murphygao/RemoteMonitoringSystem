@@ -21,14 +21,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost/RMS.Centralize.WebService/MonitoringService.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="https://esn-nb01/RMS.Centralize.WebService/MonitoringService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="MonitoringService.wsdl" MetadataType="Wsdl" ID="bce4a46e-3475-43b5-a983-fc42b5c1af15" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/MonitoringService.svc?wsdl" />
-    <MetadataFile FileName="MonitoringService.xsd" MetadataType="Schema" ID="15dd2c04-11e4-48fd-b795-01e7b1f7399c" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/MonitoringService.svc?xsd=xsd2" />
-    <MetadataFile FileName="MonitoringService1.xsd" MetadataType="Schema" ID="791eccec-4e10-4235-aba7-70dd2ddda2ae" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/MonitoringService.svc?xsd=xsd1" />
-    <MetadataFile FileName="MonitoringService.disco" MetadataType="Disco" ID="642eafeb-186b-44d4-981c-1d7c49fb75bf" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/MonitoringService.svc?disco" />
-    <MetadataFile FileName="MonitoringService2.xsd" MetadataType="Schema" ID="09617ba2-23f2-4d34-938b-c40ebc2ccf28" SourceId="1" SourceUrl="http://localhost/RMS.Centralize.WebService/MonitoringService.svc?xsd=xsd0" />
+    <MetadataFile FileName="MonitoringService1.wsdl" MetadataType="Wsdl" ID="02650919-acd8-4e83-b789-9d94bbc8a23a" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MonitoringService.svc?wsdl" />
+    <MetadataFile FileName="MonitoringService3.xsd" MetadataType="Schema" ID="db2100fe-10ad-4754-bc07-24d5b8d48377" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MonitoringService.svc?xsd=xsd1" />
+    <MetadataFile FileName="MonitoringService31.xsd" MetadataType="Schema" ID="4017f204-e796-4df4-ac92-2be651db41a1" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MonitoringService.svc?xsd=xsd0" />
+    <MetadataFile FileName="MonitoringService32.xsd" MetadataType="Schema" ID="b7f94e6e-7858-49ce-963a-950d75128943" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MonitoringService.svc?xsd=xsd2" />
+    <MetadataFile FileName="MonitoringService1.disco" MetadataType="Disco" ID="f581f378-3caa-4f03-a124-25c02d064eb3" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MonitoringService.svc?disco" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
