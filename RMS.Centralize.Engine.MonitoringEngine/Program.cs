@@ -37,6 +37,7 @@ namespace RMS.Centralize.Engine.MonitoringEngine
                     WebMonitoringEngineURL = ConfigurationManager.AppSettings["WEB_MONITORING_ENGINE_URL"];
 
                     timer = new Timer();
+                    timer.Interval = 30*1000; // Default
                     SetInterval();  //set interval of checking here
                     timer.Elapsed += timer_Elapsed;
                     timer.Start();
@@ -60,6 +61,7 @@ namespace RMS.Centralize.Engine.MonitoringEngine
             try
             {
                 int tempInterval = 30;
+
                 using (var db = new MyDbContext())
                 {
                     var config = db.RmsSystemConfigs.Find("MonitoringEngineInterval");
@@ -92,13 +94,46 @@ namespace RMS.Centralize.Engine.MonitoringEngine
 
         private static void CallEngine()
         {
-            //WebRequest webRequest = WebRequest.Create(WebMonitoringEngineURL);
-            //WebResponse webResp = webRequest.GetResponse();
+            try
+            {
+                //WebRequest webRequest = WebRequest.Create(WebMonitoringEngineURL);
+                //WebResponse webResp = webRequest.GetResponse();
 
-            var webpage = new WebClient();
-            string s = webpage.DownloadString(new Uri(WebMonitoringEngineURL));
-            s = s.Substring(0,s.Length-9).Substring(68);
-            Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : Finished -> " + s);
+                var webpage = new WebDownload();
+                
+                string s = webpage.DownloadString(new Uri(WebMonitoringEngineURL));
+                s = s.Substring(0,s.Length-9).Substring(68);
+                Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : Finished -> " + s);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : Error -> " + ex.Message);
+            }
+        }
+
+        public class WebDownload : WebClient
+        {
+            /// <summary>
+            /// Time in milliseconds
+            /// </summary>
+            public int Timeout { get; set; }
+
+            public WebDownload() : this(60000) { }
+
+            public WebDownload(int timeout)
+            {
+                this.Timeout = timeout;
+            }
+
+            protected override WebRequest GetWebRequest(Uri address)
+            {
+                var request = base.GetWebRequest(address);
+                if (request != null)
+                {
+                    request.Timeout = this.Timeout;
+                }
+                return request;
+            }
         }
 
         private static void SetAppGUID()

@@ -115,9 +115,13 @@
                                                     <option value="13">Smartcard Reader</option>
                                                     <option value="14">Thermal Printer</option>
                                                     <option value="15">Web Camera</option>
+                                                    <option value="16">UPS</option>
+                                                    <option value="18">Client</option>
+                                                    <option value="19">Monitor</option>
                                                 </optgroup>
                                                 <optgroup label="Busniess Message">
-                                                    <option value="16">General</option>
+                                                    <option value="17">General</option>
+                                                    <option value="20">SKS Batch</option>
                                                 </optgroup>
                                             </select>
                                         </section>

@@ -49,7 +49,7 @@ namespace RMS.Agent.BSL.Monitoring
             #region 1. Call Centralize to Get Client & Device Info for Monitoring
 
             ClientServiceClient cs = new ClientServiceClient();
-            var clientResult = cs.GetClient(GetClientBy.ClientCode, null, clientCode, null, true);
+            var clientResult = cs.GetClient(GetClientBy.ClientCode, null, clientCode, null, true, true);
 
             int? deviceId = null;
             int? monitoringProfileDeviceId = null;
@@ -129,7 +129,7 @@ namespace RMS.Agent.BSL.Monitoring
             try
             {
                 ClientServiceClient cs = new ClientServiceClient();
-                var clientResult = cs.GetClient(GetClientBy.ClientCode, null, clientCode, null, false);
+                var clientResult = cs.GetClient(GetClientBy.ClientCode, null, clientCode, null, false, false);
 
                 if (clientResult.Client.State == (int) ClientState.Normal && clientState == ClientState.Maintenance)
                 {
@@ -151,13 +151,20 @@ namespace RMS.Agent.BSL.Monitoring
 
         private void UpdateClientCode(string clientCode)
         {
-            if (ConfigurationManager.AppSettings["CLIENT_CODE"] != clientCode)
+            try
             {
-                Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                configuration.AppSettings.Settings["CLIENT_CODE"].Value = clientCode;
-                configuration.Save();
+                if (ConfigurationManager.AppSettings["CLIENT_CODE"] != clientCode)
+                {
+                    Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                    configuration.AppSettings.Settings["CLIENT_CODE"].Value = clientCode;
+                    configuration.Save();
 
-                ConfigurationManager.RefreshSection("appSettings");
+                    ConfigurationManager.RefreshSection("appSettings");
+                }
+            }
+            catch (Exception ex)
+            {
+                //throw new Exception("UpdateClientCode failed. " + ex.Message);
             }
         }
 

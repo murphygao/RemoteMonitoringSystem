@@ -39,6 +39,7 @@ namespace RMS.Centralize.DAL
         IDbSet<RmsColorLabel> RmsColorLabels { get; set; } // RMS_ColorLabel
         IDbSet<RmsDevice> RmsDevices { get; set; } // RMS_Device
         IDbSet<RmsDeviceType> RmsDeviceTypes { get; set; } // RMS_DeviceType
+        IDbSet<RmsLocation> RmsLocations { get; set; } // RMS_Location
         IDbSet<RmsLogActionSend> RmsLogActionSends { get; set; } // RMS_Log_ActionSend
         IDbSet<RmsLogEvent> RmsLogEvents { get; set; } // RMS_Log_Event
         IDbSet<RmsLogMonitoring> RmsLogMonitorings { get; set; } // RMS_Log_Monitoring
@@ -69,6 +70,7 @@ namespace RMS.Centralize.DAL
         public IDbSet<RmsColorLabel> RmsColorLabels { get; set; } // RMS_ColorLabel
         public IDbSet<RmsDevice> RmsDevices { get; set; } // RMS_Device
         public IDbSet<RmsDeviceType> RmsDeviceTypes { get; set; } // RMS_DeviceType
+        public IDbSet<RmsLocation> RmsLocations { get; set; } // RMS_Location
         public IDbSet<RmsLogActionSend> RmsLogActionSends { get; set; } // RMS_Log_ActionSend
         public IDbSet<RmsLogEvent> RmsLogEvents { get; set; } // RMS_Log_Event
         public IDbSet<RmsLogMonitoring> RmsLogMonitorings { get; set; } // RMS_Log_Monitoring
@@ -117,6 +119,7 @@ namespace RMS.Centralize.DAL
             modelBuilder.Configurations.Add(new RmsColorLabelConfiguration());
             modelBuilder.Configurations.Add(new RmsDeviceConfiguration());
             modelBuilder.Configurations.Add(new RmsDeviceTypeConfiguration());
+            modelBuilder.Configurations.Add(new RmsLocationConfiguration());
             modelBuilder.Configurations.Add(new RmsLogActionSendConfiguration());
             modelBuilder.Configurations.Add(new RmsLogEventConfiguration());
             modelBuilder.Configurations.Add(new RmsLogMonitoringConfiguration());
@@ -144,6 +147,7 @@ namespace RMS.Centralize.DAL
             modelBuilder.Configurations.Add(new RmsColorLabelConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsDeviceConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsDeviceTypeConfiguration(schema));
+            modelBuilder.Configurations.Add(new RmsLocationConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsLogActionSendConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsLogEventConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsLogMonitoringConfiguration(schema));
@@ -277,36 +281,45 @@ namespace RMS.Centralize.DAL
         public string ClientCode { get; set; } // ClientCode
 
         [DataMember(Order = 4, IsRequired = false)]
-        public int? ReferenceClientId { get; set; } // ReferenceClientID
+        public bool? UseLocalInfo { get; set; } // UseLocalInfo
 
         [DataMember(Order = 5, IsRequired = false)]
-        public int? LocationId { get; set; } // LocationID
+        public int? ReferenceClientId { get; set; } // ReferenceClientID
 
         [DataMember(Order = 6, IsRequired = false)]
-        public bool? ActiveList { get; set; } // ActiveList
+        public int? LocationId { get; set; } // LocationID
 
         [DataMember(Order = 7, IsRequired = false)]
-        public bool? Enable { get; set; } // Enable
+        public string IpAddress { get; set; } // IPAddress
 
         [DataMember(Order = 8, IsRequired = false)]
-        public DateTime? EffectiveDate { get; set; } // EffectiveDate
+        public bool? HasMonitoringAgent { get; set; } // HasMonitoringAgent
 
         [DataMember(Order = 9, IsRequired = false)]
-        public DateTime? ExpiredDate { get; set; } // ExpiredDate
+        public bool? ActiveList { get; set; } // ActiveList
 
         [DataMember(Order = 10, IsRequired = false)]
-        public int? State { get; set; } // State
+        public bool? Enable { get; set; } // Enable
 
         [DataMember(Order = 11, IsRequired = false)]
-        public DateTime? CreatedDate { get; set; } // CreatedDate
+        public DateTime? EffectiveDate { get; set; } // EffectiveDate
 
         [DataMember(Order = 12, IsRequired = false)]
-        public string CreatedBy { get; set; } // CreatedBy
+        public DateTime? ExpiredDate { get; set; } // ExpiredDate
 
         [DataMember(Order = 13, IsRequired = false)]
-        public DateTime? UpdatedDate { get; set; } // UpdatedDate
+        public int? State { get; set; } // State
 
         [DataMember(Order = 14, IsRequired = false)]
+        public DateTime? CreatedDate { get; set; } // CreatedDate
+
+        [DataMember(Order = 15, IsRequired = false)]
+        public string CreatedBy { get; set; } // CreatedBy
+
+        [DataMember(Order = 16, IsRequired = false)]
+        public DateTime? UpdatedDate { get; set; } // UpdatedDate
+
+        [DataMember(Order = 17, IsRequired = false)]
         public string UpdatedBy { get; set; } // UpdatedBy
 
 
@@ -319,6 +332,8 @@ namespace RMS.Centralize.DAL
 
         public RmsClient()
         {
+            UseLocalInfo = false;
+            HasMonitoringAgent = true;
             State = 1;
             RmsClientMonitorings = new List<RmsClientMonitoring>();
             RmsClientSeverityActions = new List<RmsClientSeverityAction>();
@@ -535,6 +550,21 @@ namespace RMS.Centralize.DAL
             InitializePartial();
         }
         partial void InitializePartial();
+    }
+
+    // RMS_Location
+    [DataContract]
+    public partial class RmsLocation
+    {
+        [DataMember(Order = 1, IsRequired = true)]
+        public int LocationId { get; set; } // LocationID (Primary key)
+
+        [DataMember(Order = 2, IsRequired = false)]
+        public string LocationCode { get; set; } // LocationCode
+
+        [DataMember(Order = 3, IsRequired = false)]
+        public string LocationName { get; set; } // LocationName
+
     }
 
     // RMS_Log_ActionSend
@@ -1147,11 +1177,14 @@ namespace RMS.Centralize.DAL
             ToTable(schema + ".RMS_Client");
             HasKey(x => x.ClientId);
 
-            Property(x => x.ClientId).HasColumnName("ClientID").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            Property(x => x.ClientId).HasColumnName("ClientID").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(x => x.ClientTypeId).HasColumnName("ClientTypeID").IsOptional();
             Property(x => x.ClientCode).HasColumnName("ClientCode").IsOptional().HasMaxLength(50);
+            Property(x => x.UseLocalInfo).HasColumnName("UseLocalInfo").IsOptional();
             Property(x => x.ReferenceClientId).HasColumnName("ReferenceClientID").IsOptional();
             Property(x => x.LocationId).HasColumnName("LocationID").IsOptional();
+            Property(x => x.IpAddress).HasColumnName("IPAddress").IsOptional().HasMaxLength(50);
+            Property(x => x.HasMonitoringAgent).HasColumnName("HasMonitoringAgent").IsOptional();
             Property(x => x.ActiveList).HasColumnName("ActiveList").IsOptional();
             Property(x => x.Enable).HasColumnName("Enable").IsOptional();
             Property(x => x.EffectiveDate).HasColumnName("EffectiveDate").IsOptional();
@@ -1297,6 +1330,22 @@ namespace RMS.Centralize.DAL
             Property(x => x.DeviceType).HasColumnName("DeviceType").IsOptional().HasMaxLength(50);
             Property(x => x.DeviceTypeCode).HasColumnName("DeviceTypeCode").IsOptional().HasMaxLength(8);
             Property(x => x.DisplayOrder).HasColumnName("DisplayOrder").IsOptional();
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // RMS_Location
+    internal partial class RmsLocationConfiguration : EntityTypeConfiguration<RmsLocation>
+    {
+        public RmsLocationConfiguration(string schema = "dbo")
+        {
+            ToTable(schema + ".RMS_Location");
+            HasKey(x => x.LocationId);
+
+            Property(x => x.LocationId).HasColumnName("LocationID").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            Property(x => x.LocationCode).HasColumnName("LocationCode").IsOptional().HasMaxLength(50);
+            Property(x => x.LocationName).HasColumnName("LocationName").IsOptional().HasMaxLength(250);
             InitializePartial();
         }
         partial void InitializePartial();
@@ -1569,7 +1618,7 @@ namespace RMS.Centralize.DAL
             HasKey(x => x.SeverityLevelId);
 
             Property(x => x.SeverityLevelId).HasColumnName("SeverityLevelID").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            Property(x => x.LevelCode).HasColumnName("LevelCode").IsOptional().HasMaxLength(10);
+            Property(x => x.LevelCode).HasColumnName("LevelCode").IsOptional().HasMaxLength(50);
             Property(x => x.LevelName).HasColumnName("LevelName").IsOptional().HasMaxLength(50);
             Property(x => x.OrderList).HasColumnName("OrderList").IsOptional();
             Property(x => x.ActiveList).HasColumnName("ActiveList").IsOptional();

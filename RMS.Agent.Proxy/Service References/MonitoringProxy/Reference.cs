@@ -205,6 +205,12 @@ namespace RMS.Agent.Proxy.MonitoringProxy {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="MonitoringProxy.IMonitoringService")]
     public interface IMonitoringService {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/TestConnection", ReplyAction="http://tempuri.org/IMonitoringService/TestConnectionResponse")]
+        void TestConnection();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/TestConnection", ReplyAction="http://tempuri.org/IMonitoringService/TestConnectionResponse")]
+        System.Threading.Tasks.Task TestConnectionAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/AddMessage", ReplyAction="http://tempuri.org/IMonitoringService/AddMessageResponse")]
         void AddMessage(RMS.Agent.Proxy.MonitoringProxy.RmsReportMonitoringRaw rawMessage);
         
@@ -255,6 +261,14 @@ namespace RMS.Agent.Proxy.MonitoringProxy {
         
         public MonitoringServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public void TestConnection() {
+            base.Channel.TestConnection();
+        }
+        
+        public System.Threading.Tasks.Task TestConnectionAsync() {
+            return base.Channel.TestConnectionAsync();
         }
         
         public void AddMessage(RMS.Agent.Proxy.MonitoringProxy.RmsReportMonitoringRaw rawMessage) {

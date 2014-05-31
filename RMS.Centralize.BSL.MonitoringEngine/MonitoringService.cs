@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using ESN.LicenseManager.Model;
 using RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy;
-using RMS.Centralize.BSL.MonitoringEngine.Model;
 using RMS.Centralize.DAL;
 using RMS.Centralize.WebService.Proxy.MonitoringProxy;
 
@@ -36,7 +35,7 @@ namespace RMS.Centralize.BSL.MonitoringEngine
                     db.Configuration.ProxyCreationEnabled = false;
                     db.Configuration.LazyLoadingEnabled = false;
 
-                    var listClients = ListClientWithIPAddress(licenseInfo, out activeClient);
+                    var listClients = ListClientWithIPAddress(licenseInfo, out activeClient, true);
 
                     // Log into RMS_Log_Monitoring
                     int refID = AddLogMonitoring(activeClient, true, null);
@@ -62,15 +61,15 @@ namespace RMS.Centralize.BSL.MonitoringEngine
             }
         }
 
-        private void BroadcastAliveMessage(RmsClientWithIPAddress client, int refID)
+        private void BroadcastAliveMessage(RmsClient client, int refID)
         {
             try
             {
                 var asc = new AgentServiceClient();
                 string clientEndpiont = ConfigurationManager.AppSettings["RMS.NetTcpBinding_AgentService"];
-                clientEndpiont = clientEndpiont.Replace("client_ip_address", client.IPAddress);
+                clientEndpiont = clientEndpiont.Replace("client_ip_address", client.IpAddress);
                 asc.Endpoint.Address = new EndpointAddress(clientEndpiont);
-                AddLogMonitoringClient(refID, client.ClientId, client.ClientCode, client.IPAddress, client.State, null);
+                AddLogMonitoringClient(refID, client.ClientId, client.ClientCode, client.IpAddress, client.State, null);
                 var result = asc.Monitoring(client.ClientCode);
 
             }
@@ -120,7 +119,7 @@ namespace RMS.Centralize.BSL.MonitoringEngine
             }
         }
 
-        public List<RmsClientWithIPAddress> ListClientWithIPAddress(LicenseInfo licenseInfo, out int activeClient)
+        public List<RmsClient> ListClientWithIPAddress(LicenseInfo licenseInfo, out int activeClient, bool? hasMonitoringAgent)
         {
 
             using (var db = new MyDbContext())
@@ -130,16 +129,29 @@ namespace RMS.Centralize.BSL.MonitoringEngine
                 db.Configuration.ProxyCreationEnabled = false;
                 db.Configuration.LazyLoadingEnabled = false;
 
-                var listOfType = db.Database.SqlQuery<RmsClientWithIPAddress>("RMS_ListClientWithIPAddress");
+                var listOfType = db.Database.SqlQuery<RmsClient>("RMS_ListClientWithIPAddress");
 
-                var listClients = new List<RmsClientWithIPAddress>(listOfType.ToList());
+                List<RmsClient> listClients = new List<RmsClient>(listOfType.ToList());
 
-                activeClient = listClients.Count;
+                var numOfHasAgent = listClients.Count(c => c.HasMonitoringAgent == true);
+                var numOfNoAgent = listClients.Count(c => c.HasMonitoringAgent == false || c.HasMonitoringAgent == null);
 
-                if (!licenseInfo.ValidateLicense(listClients.Count, null, null, null, null, null))
+
+                if (!licenseInfo.ValidateLicense(numOfHasAgent, numOfNoAgent, null, null, null, null, null, null))
                 {
                     throw new Exception("License is invalid or exceed active client's quota or expired. Please contact product owner.");
                 }
+
+                if (hasMonitoringAgent == null)
+                {
+                    listClients = new List<RmsClient>(listOfType.ToList());
+                }
+                else
+                {
+                    listClients = new List<RmsClient>(listOfType.Where(c => c.HasMonitoringAgent == hasMonitoringAgent));
+                }
+
+                activeClient = listClients.Count;
 
                 return listClients;
 

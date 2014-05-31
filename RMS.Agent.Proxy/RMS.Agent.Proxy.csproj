@@ -61,21 +61,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Service References\ClientProxy\ClientService.wsdl" />
-    <None Include="Service References\ClientProxy\ClientService.xsd">
+    <None Include="Service References\ClientProxy\ClientService1.wsdl" />
+    <None Include="Service References\ClientProxy\ClientService5.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ClientProxy\ClientService1.xsd">
+    <None Include="Service References\ClientProxy\ClientService51.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ClientProxy\ClientService2.xsd">
+    <None Include="Service References\ClientProxy\ClientService52.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ClientProxy\ClientService3.xsd">
+    <None Include="Service References\ClientProxy\ClientService53.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ClientProxy\ClientService4.xsd">
+    <None Include="Service References\ClientProxy\ClientService54.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ClientProxy\RMS.Agent.Proxy.ClientProxy.ClientInfoResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ClientProxy\RMS.Agent.Proxy.ClientProxy.ClientResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -83,23 +86,10 @@
     <None Include="Service References\ClientProxy\RMS.Agent.Proxy.ClientProxy.Result.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\MonitoringProxy\MonitoringService.wsdl" />
-    <None Include="Service References\MonitoringProxy\MonitoringService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\MonitoringProxy\MonitoringService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\MonitoringProxy\MonitoringService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ClientProxy\" />
     <WCFMetadataStorage Include="Service References\MonitoringProxy\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ClientProxy\ClientService.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\ClientProxy\configuration91.svcinfo" />
@@ -114,19 +104,32 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\MonitoringProxy\MonitoringService.disco" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Service References\MonitoringProxy\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\MonitoringProxy\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Service References\MonitoringProxy\MonitoringService1.wsdl" />
+    <None Include="Service References\MonitoringProxy\MonitoringService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MonitoringProxy\MonitoringService31.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MonitoringProxy\MonitoringService32.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\MonitoringProxy\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ClientProxy\ClientService1.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MonitoringProxy\MonitoringService1.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

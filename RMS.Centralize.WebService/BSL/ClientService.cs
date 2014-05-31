@@ -6,7 +6,9 @@ using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
+using System.ServiceModel;
 using System.Web;
+using System.Web.UI;
 using RMS.Centralize.DAL;
 using RMS.Centralize.WebService.Model;
 
@@ -132,18 +134,86 @@ namespace RMS.Centralize.WebService.BSL
 
         }
 
-        public int Updateclient(int? id, string m, string clientCode, int? clientTypeID, int? referenceClientID, bool? activeList, bool? status, DateTime? effectiveDate, DateTime? expiredDate,
+        public int Updateclient(int? id, string m, string clientCode, int? clientTypeID, bool? useLocalInfo, int? referenceClientID, string ipAddress, int? locationID, bool? hasMonitoringAgent, bool? activeList, bool? status, DateTime? effectiveDate, DateTime? expiredDate,
             int? state)
         {
             if (string.IsNullOrEmpty(m))
             {
-                return Add(clientCode, clientTypeID, referenceClientID, activeList, status, effectiveDate, expiredDate, state);
+                return Add(clientCode, clientTypeID, useLocalInfo, referenceClientID, ipAddress, locationID, hasMonitoringAgent, activeList, status, effectiveDate, expiredDate, state);
             }
             else if (m == "e" && id != null)
             {
-                return Update(id, clientCode, clientTypeID, referenceClientID, activeList, status, effectiveDate, expiredDate, state);
+                return Update(id, clientCode, clientTypeID, useLocalInfo, referenceClientID, ipAddress, locationID, hasMonitoringAgent, activeList, status, effectiveDate, expiredDate, state);
             }
             return 0;
+        }
+
+
+        public RmsClient GetClient(GetClientBy getClientBy, int? clientID, string clientCode, string ipAddress, bool activeClient)
+        {
+            try
+            {
+                using (var db = new MyDbContext())
+                {
+                    db.Configuration.ProxyCreationEnabled = false;
+                    db.Configuration.LazyLoadingEnabled = false;
+
+                    RmsClient client = new RmsClient();
+
+                    if (getClientBy == GetClientBy.ClientID)
+                    {
+                        var ret = db.RmsClients.Where(c => c.ClientId == clientID && (!activeClient || (c.Enable == true && c.EffectiveDate <= DateTime.Today && (c.ExpiredDate == null || c.ExpiredDate >= DateTime.Today))));
+                        var lClients = new List<RmsClient>(ret.ToList());
+
+                        if (lClients.Count == 0)
+                            throw new Exception("Client not found by ClientID: " + clientID + ". Please check Monitoring Database");
+
+                        client = lClients[0];
+
+                    }
+                    else if (getClientBy == GetClientBy.ClientCode)
+                    {
+                        var ret = db.RmsClients.Where(c => c.ClientCode == clientCode && (!activeClient || (c.Enable == true && c.EffectiveDate <= DateTime.Today && (c.ExpiredDate == null || c.ExpiredDate >= DateTime.Today))));
+                        var lClients = new List<RmsClient>(ret.ToList());
+
+                        if (lClients.Count > 1)
+                            throw new Exception("Found more thand one client by ClientCode: " + clientCode + ". Please check Monitoring Database");
+                        if (lClients.Count == 0)
+                            throw new Exception("Client not found by ClientCode: " + clientCode + ". Please check Monitoring Database");
+
+                        client = lClients[0];
+
+                    }
+                    else if (getClientBy == GetClientBy.IPAddress)
+                    {
+
+                        SqlParameter[] parameters = new SqlParameter[1];
+                        SqlParameter p1 = new SqlParameter("IPAddress", ipAddress);
+                        parameters[0] = p1;
+
+                        var details = db.Database.SqlQuery<RmsClient>("RMS_GetClientByIPAddress " +
+                                                                      "@IPAddress", parameters);
+
+                        var actives = details.Where(c => (!activeClient || (c.Enable == true && c.EffectiveDate <= DateTime.Today && (c.ExpiredDate == null || c.ExpiredDate >= DateTime.Today))));
+
+                        var lClients = new List<RmsClient>(actives.ToList());
+
+                        if (lClients.Count > 1)
+                            throw new Exception("Found more thand one client by IPAddress: " + ipAddress +
+                                                ". Please check Monitoring Database");
+                        if (lClients.Count == 0)
+                            throw new Exception("Client not found by IPAddress: " + ipAddress + ". Please check Monitoring Database");
+
+                        client = lClients[0];
+
+                    }
+                    return client;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Get Client failed. " + ex.Message);
+            }
         }
 
         public List<RmsClient> CheckExistingClientCode(string clientCode)
@@ -168,7 +238,7 @@ namespace RMS.Centralize.WebService.BSL
             }
         }
 
-        private int Add(string clientCode, int? clientTypeID, int? referenceClientID, bool? activeList, bool? status, DateTime? effectiveDate, DateTime? expiredDate, int? state)
+        private int Add(string clientCode, int? clientTypeID, bool? useLocalInfo, int? referenceClientID, string ipAddress, int? locationID, bool? hasMonitoringAgent, bool? activeList, bool? status, DateTime? effectiveDate, DateTime? expiredDate, int? state)
         {
             int activeClients;
 
@@ -178,8 +248,20 @@ namespace RMS.Centralize.WebService.BSL
                 if (status == true)
                 {
                     var ms = new Centralize.BSL.MonitoringEngine.MonitoringService();
-                    ms.ListClientWithIPAddress(licenseInfo, out activeClients);
-                    if (activeClients >= licenseInfo.quota1)
+                    ms.ListClientWithIPAddress(licenseInfo, out activeClients, hasMonitoringAgent);
+                    int? quota;
+                    if (hasMonitoringAgent == null)
+                        quota = licenseInfo.quota1 + licenseInfo.quota2;
+                    else if (hasMonitoringAgent.Value)
+                    {
+                        quota = licenseInfo.quota1;
+                    }
+                    else
+                    {
+                        quota = licenseInfo.quota2;
+                    }
+
+                    if (activeClients >= quota)
                     {
                         throw new Exception("Out of active client's quota or expired. Please contact product owner.");
                     }
@@ -189,7 +271,20 @@ namespace RMS.Centralize.WebService.BSL
                     var newClient = db.RmsClients.Create();
                     newClient.ClientCode = clientCode;
                     newClient.ClientTypeId = clientTypeID;
-                    newClient.ReferenceClientId = referenceClientID;
+                    if (useLocalInfo == null || useLocalInfo.Value)
+                    {
+                        newClient.ReferenceClientId = null;
+                        newClient.IpAddress = ipAddress;
+                        newClient.LocationId = locationID;
+                    }
+                    else
+                    {
+                        newClient.ReferenceClientId = referenceClientID;
+                        newClient.IpAddress = null;
+                        newClient.LocationId = null;
+                    }
+
+                    newClient.HasMonitoringAgent = hasMonitoringAgent;
                     newClient.ActiveList = activeList;
                     newClient.Enable = status;
                     newClient.EffectiveDate = effectiveDate;
@@ -215,7 +310,7 @@ namespace RMS.Centralize.WebService.BSL
             }
         }
 
-        private int Update(int? id, string clientCode, int? clientTypeID, int? referenceClientID, bool? activeList, bool? status, DateTime? effectiveDate, DateTime? expiredDate, int? state)
+        private int Update(int? id, string clientCode, int? clientTypeID, bool? useLocalInfo, int? referenceClientID, string ipAddress, int? locationID, bool? hasMonitoringAgent, bool? activeList, bool? status, DateTime? effectiveDate, DateTime? expiredDate, int? state)
         {
             int activeClients;
 
@@ -227,14 +322,41 @@ namespace RMS.Centralize.WebService.BSL
                     if (client == null) throw new Exception("Client ID not found in database.");
                     client.ClientCode = clientCode;
                     client.ClientTypeId = clientTypeID;
-                    client.ReferenceClientId = referenceClientID;
+                    client.UseLocalInfo = useLocalInfo;
+
+                    if (useLocalInfo == null || useLocalInfo.Value)
+                    {
+                        client.ReferenceClientId = null;
+                        client.IpAddress = ipAddress;
+                        client.LocationId = locationID;
+                    }
+                    else
+                    {
+                        client.ReferenceClientId = referenceClientID;
+                        client.IpAddress = null;
+                        client.LocationId = null;
+                    }
+
+                    client.HasMonitoringAgent = hasMonitoringAgent;
                     client.ActiveList = activeList;
 
                     if (client.Enable == false && status == true) // เปลี่ยนสถานะเป็น Active
                     {
                         var ms = new Centralize.BSL.MonitoringEngine.MonitoringService();
-                        ms.ListClientWithIPAddress(licenseInfo, out activeClients);
-                        if (activeClients >= licenseInfo.quota1)
+                        ms.ListClientWithIPAddress(licenseInfo, out activeClients, hasMonitoringAgent);
+                        int? quota;
+                        if (hasMonitoringAgent == null)
+                            quota = licenseInfo.quota1 + licenseInfo.quota2;
+                        else if (hasMonitoringAgent.Value)
+                        {
+                            quota = licenseInfo.quota1;
+                        }
+                        else
+                        {
+                            quota = licenseInfo.quota2;
+                        }
+
+                        if (activeClients >= quota)
                         {
                             throw new Exception("Out of active client's quota or expired. Please contact product owner.");
                         }

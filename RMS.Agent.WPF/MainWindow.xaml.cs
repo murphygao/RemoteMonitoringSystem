@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,16 +11,19 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using RMS.Agent.BSL.Monitoring;
 using RMS.Agent.Helper;
 using RMS.Agent.Model;
 using RMS.Agent.Proxy.ClientProxy;
 using RMS.Agent.WCF;
+using MessageBox = System.Windows.MessageBox;
 
 namespace RMS.Agent.WPF
 {
@@ -44,35 +48,41 @@ namespace RMS.Agent.WPF
 
         public MainWindow()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
 
-            ni = new System.Windows.Forms.NotifyIcon();
+                ni = new NotifyIcon();
 
-            ni.Icon = RMS.Agent.WPF.Properties.Resources.monitoring;
+                ni.Icon = Properties.Resources.monitoring;
 
-            ni.Visible = true;
-            ni.DoubleClick +=
-                delegate(object sender, EventArgs args)
-                {
-                    this.Show();
-                    this.WindowState = WindowState.Normal;
-                };
+                ni.Visible = true;
+                ni.DoubleClick +=
+                    delegate(object sender, EventArgs args)
+                    {
+                        this.Show();
+                        this.WindowState = WindowState.Normal;
+                    };
 
-            lblExecPath.Content = System.Reflection.Assembly.GetExecutingAssembly().Location;
+                lblExecPath.Content = Assembly.GetExecutingAssembly().Location;
 
-            var logs = Generate();
+                var logs = Generate();
 
-            InitResultHistory();
+                InitResultHistory();
 
 
-            // MA State?
-            lblState.Content = File.Exists(maFilePath) ? "Maintenance" : "Normal";
-            currentState = lblState.Content.ToString();
+                // MA State?
+                lblState.Content = File.Exists(maFilePath) ? "Maintenance" : "Normal";
+                currentState = lblState.Content.ToString();
 
-            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
-
+                dispatcherTimer = new DispatcherTimer();
+                dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+                dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
+            }
+            catch (Exception ex)
+            {
+                logs.Add(new EventLog { EventDateTime = DateTime.Now, EventType = "Error", Message = "MainWindow errors", Detail = ex.Message });
+            }
         }
         
         protected override void OnStateChanged(EventArgs e)
@@ -92,38 +102,56 @@ namespace RMS.Agent.WPF
                 dgLogs.ItemsSource = logs;
                 btnStart_Click(null, null);
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                Console.WriteLine(exception);
+                logs.Add(new EventLog { EventDateTime = DateTime.Now, EventType = "Error", Message = "Window_Loaded errors", Detail = ex.Message });
             }
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            btnStart.IsEnabled = false;
-            btnStop.IsEnabled = true;
-            logs.Add(new EventLog { EventDateTime = DateTime.Now, EventType = "Agent", Message = "Application Started", Detail = "" });
-            dgLogs.ItemsSource = null;
-            dgLogs.ItemsSource = logs;
-            StartService();
-            dispatcherTimer.Start();
+            try
+            {
+                btnStart.IsEnabled = false;
+                btnStop.IsEnabled = true;
+                logs.Add(new EventLog { EventDateTime = DateTime.Now, EventType = "Agent", Message = "Application Started", Detail = "" });
+                dgLogs.ItemsSource = null;
+                dgLogs.ItemsSource = logs;
+                StartService();
+                dispatcherTimer.Start();
+            }
+            catch (Exception ex)
+            {
+                logs.Add(new EventLog { EventDateTime = DateTime.Now, EventType = "Error", Message = "btnStart_Click errors", Detail = ex.Message });
+            }
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
-            btnStart.IsEnabled = true;
-            btnStop.IsEnabled = false;
-            logs.Add(new EventLog { EventDateTime = DateTime.Now, EventType = "Agent", Message = "Application Stopped", Detail = "" });
-            dgLogs.ItemsSource = null;
-            dgLogs.ItemsSource = logs;
-            StopService();
-            dispatcherTimer.Stop();
+            try
+            {
+                btnStart.IsEnabled = true;
+                btnStop.IsEnabled = false;
+                logs.Add(new EventLog { EventDateTime = DateTime.Now, EventType = "Agent", Message = "Application Stopped", Detail = "" });
+                dgLogs.ItemsSource = null;
+                dgLogs.ItemsSource = logs;
+                StopService();
+                dispatcherTimer.Stop();
+            }
+            catch (Exception ex)
+            {
+                logs.Add(new EventLog { EventDateTime = DateTime.Now, EventType = "Error", Message = "btnStop_Click errors", Detail = ex.Message });
+            }
         }
 
         private void StartService()
         {
             try
             {
+                string ip_port = ConfigurationManager.AppSettings["RMS.LOCAL_IP"];
+                string netTCP = "net.tcp://" + ip_port + "/AgentNetTcp";
+
+
                 host = new ServiceHost(typeof(RMS.Agent.WCF.AgentService));
 
                 //host.AddServiceEndpoint(typeof(RMS.Agent.WCF.IAgentService),
@@ -133,7 +161,7 @@ namespace RMS.Agent.WPF
                 //    new WSHttpBinding(), "http://localhost:8080/agent/wsAddress");
 
                 host.AddServiceEndpoint(typeof(RMS.Agent.WCF.IAgentService),
-                    new NetTcpBinding(), "net.tcp://localhost:8081/AgentNetTcp");
+                    new NetTcpBinding(), netTCP);
 
                 host.Open();
                 lblStatus.Content = "Started";
@@ -142,7 +170,7 @@ namespace RMS.Agent.WPF
             {
                 host.Abort();
                 lblStatus.Content = "Stopped";
-                MessageBox.Show("Error = " + ex.Message);
+                logs.Add(new EventLog { EventDateTime = DateTime.Now, EventType = "Error", Message = "StartService errors", Detail = ex.Message });
                 btnStart.IsEnabled = true;
                 btnStop.IsEnabled = false;
             }
@@ -150,9 +178,16 @@ namespace RMS.Agent.WPF
 
         private void StopService()
         {
-            if (host.State == CommunicationState.Opened)
-                host.Close();
-            lblStatus.Content = "Stopped";
+            try
+            {
+                if (host.State == CommunicationState.Opened)
+                    host.Close();
+                lblStatus.Content = "Stopped";
+            }
+            catch (Exception ex)
+            {
+                logs.Add(new EventLog { EventDateTime = DateTime.Now, EventType = "Error", Message = "StopService errors", Detail = ex.Message });
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -177,8 +212,6 @@ namespace RMS.Agent.WPF
             }
             catch (Exception)
             {
-                
-                throw;
             }
         }
 
@@ -298,7 +331,7 @@ namespace RMS.Agent.WPF
             }
             catch (Exception ex)
             {
-                //throw new SabreSessionManagerException(this, "0500", "InitResultHistory occurs an error. " + ex.Message, ex, false);
+                logs.Add(new EventLog { EventDateTime = DateTime.Now, EventType = "Error", Message = "InitResultHistory errors", Detail = ex.Message });
             }
         }
 

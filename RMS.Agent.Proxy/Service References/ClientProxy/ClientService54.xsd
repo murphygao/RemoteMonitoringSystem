@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost/RMS.Centralize.WebService/ClientService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" />
-  <xs:import schemaLocation="http://localhost/RMS.Centralize.WebService/ClientService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" />
-  <xs:import schemaLocation="http://localhost/RMS.Centralize.WebService/ClientService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/ClientService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" />
+  <xs:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/ClientService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" />
+  <xs:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/ClientService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:simpleType name="GetClientBy">
     <xs:restriction base="xs:string">
       <xs:enumeration value="ClientID" />
@@ -46,4 +46,16 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="ClientState" nillable="true" type="tns:ClientState" />
+  <xs:complexType name="ClientInfoResult">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q8="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" base="q8:Result">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Client" nillable="true" type="q8:ClientInfo" />
+          <xs:element minOccurs="0" name="ListClients" nillable="true" type="q8:ArrayOfClientInfo" />
+          <xs:element minOccurs="0" name="TotalRecords" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ClientInfoResult" nillable="true" type="tns:ClientInfoResult" />
 </xs:schema>

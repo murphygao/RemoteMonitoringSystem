@@ -8,6 +8,8 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Management;
+using System.Net;
+using System.Net.Sockets;
 using System.Printing;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -24,9 +26,9 @@ using Test.ConsoleApplication.MonitoringProxy;
 
 namespace Test.ConsoleApplication
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             //CheckPrinterStatus();
 
@@ -49,8 +51,8 @@ namespace Test.ConsoleApplication
                 //CheckUSBDevice3();
 
                 //TestClientProxy();
-                CallMonitoringAgent();
-
+                //CallMonitoringAgent();
+                LocalIPAddress();
                 //TestPrinter("Brother MFC-7450 Printer");
                 //TestCustomThermalPrinter();
                 //TestPrintingStatus();
@@ -69,7 +71,8 @@ namespace Test.ConsoleApplication
 
             Console.ReadKey();
         }
-        enum PrinterStatus
+
+        private enum PrinterStatus
         {
             Other = 1,
             Unknown,
@@ -80,7 +83,8 @@ namespace Test.ConsoleApplication
             printing,
             Offline
         }
-        static void CheckPrinterStatus()
+
+        private static void CheckPrinterStatus()
         {
             // Set management scope
             ManagementScope scope = new ManagementScope(@"\root\cimv2");
@@ -88,7 +92,7 @@ namespace Test.ConsoleApplication
 
             // Select Printers from WMI Object Collections
             ManagementObjectSearcher searcher = new
-             ManagementObjectSearcher("SELECT * FROM Win32_Printer");
+                ManagementObjectSearcher("SELECT * FROM Win32_Printer");
 
             string printerName = "";
             foreach (ManagementObject printer in searcher.Get())
@@ -110,7 +114,7 @@ namespace Test.ConsoleApplication
         }
 
 
-        static void CheckUSBDevice()
+        private static void CheckUSBDevice()
         {
             ManagementObjectCollection mbsList = null;
             ManagementObjectSearcher mbs = new ManagementObjectSearcher("Select * From Win32_USBHub");
@@ -121,8 +125,8 @@ namespace Test.ConsoleApplication
                 Console.WriteLine("USBHub device Friendly name:{0}", mo["Name"].ToString());
             }
         }
-        
-        static void CheckUSBDevice2()
+
+        private static void CheckUSBDevice2()
         {
             ObjectQuery query =
                 new ObjectQuery("Select * from Win32_USBHub");
@@ -138,7 +142,7 @@ namespace Test.ConsoleApplication
             }
         }
 
-        static void CheckUSBDevice3()
+        private static void CheckUSBDevice3()
         {
             ObjectQuery query =
                 new ObjectQuery("Select * from Win32_PnPEntity");
@@ -172,7 +176,7 @@ namespace Test.ConsoleApplication
 
         }
 
-        static void TestWebCamera()
+        private static void TestWebCamera()
         {
             //WebCameraService wcs = new WebCameraService("LG", "", "Integrated Camera", "");
             //Console.WriteLine("LG Web Camera Status : " + wcs.Monitoring());
@@ -181,7 +185,7 @@ namespace Test.ConsoleApplication
             //Console.WriteLine("LG Web Camera Status : " + wcs.Monitoring());
         }
 
-        static void TestPrinter(string printerName)
+        private static void TestPrinter(string printerName)
         {
             string printer = printerName;
             IntPtr handle = IntPtr.Zero;
@@ -194,14 +198,14 @@ namespace Test.ConsoleApplication
             UInt32 sizeNeeded = 0;
             IntPtr buffer = IntPtr.Zero;
             Win32.GetPrinter(handle, level, buffer, 0, out sizeNeeded);
-            buffer = Marshal.AllocHGlobal((int)sizeNeeded);
+            buffer = Marshal.AllocHGlobal((int) sizeNeeded);
             if (!Win32.GetPrinter(handle, level, buffer, sizeNeeded, out sizeNeeded))
             {
-                System.Console.WriteLine("Fail GetPrinter: {0}",Marshal.GetLastWin32Error());
+                System.Console.WriteLine("Fail GetPrinter: {0}", Marshal.GetLastWin32Error());
                 return;
             }
             Win32.PRINTER_INFO_2 info = (Win32.PRINTER_INFO_2)
-                Marshal.PtrToStructure(buffer, typeof(Win32.PRINTER_INFO_2));
+                Marshal.PtrToStructure(buffer, typeof (Win32.PRINTER_INFO_2));
             System.Console.WriteLine("status:\t{0}", info.Status);
             System.Console.WriteLine("type:\t{0}", info.pDriverName);
             System.Console.WriteLine("where:\t{0}", info.pLocation);
@@ -210,7 +214,7 @@ namespace Test.ConsoleApplication
             Win32.ClosePrinter(handle);
         }
 
-        static void TestPrintingStatus()
+        private static void TestPrintingStatus()
         {
             PrintServer server = new PrintServer();
 
@@ -225,7 +229,7 @@ namespace Test.ConsoleApplication
                     // Since the user may not be able to articulate which job is problematic, 
                     // present information about each job the user has submitted. 
                     Console.WriteLine((DateTime.UtcNow - job.TimeJobSubmitted).TotalSeconds);
-                }// end for each p
+                } // end for each p
             }
         }
 
@@ -252,7 +256,7 @@ namespace Test.ConsoleApplication
                 //There are more attributes you can use.
                 //Check the MSDN link for a complete example.
                 Console.WriteLine(drive.Name);
-                if (drive.IsReady) Console.WriteLine(Math.Round(drive.TotalFreeSpace / Math.Pow(2, 30), 2) + " GB");
+                if (drive.IsReady) Console.WriteLine(Math.Round(drive.TotalFreeSpace/Math.Pow(2, 30), 2) + " GB");
             }
 
         }
@@ -282,7 +286,7 @@ namespace Test.ConsoleApplication
         private static void TestClientProxy()
         {
             ClientProxy.ClientServiceClient cp = new ClientServiceClient();
-            var clientResult = cp.GetClient(GetClientBy.ClientID, 1, null, null, true);
+            var clientResult = cp.GetClient(GetClientBy.ClientID, 1, null, null, true, true);
 
             MonitoringProxy.MonitoringServiceClient mp = new MonitoringServiceClient();
 
@@ -331,16 +335,19 @@ namespace Test.ConsoleApplication
         }
 
         [DllImport("Kernel32.DLL", CharSet = CharSet.Auto, SetLastError = true)]
-        private extern static bool GetDevicePowerState(IntPtr hDevice,out bool fOn);
+        private static extern bool GetDevicePowerState(IntPtr hDevice, out bool fOn);
 
         public class PlatformInvokeUSER32
         {
             #region Class Variables
+
             public const int SM_CXSCREEN = 0;
             public const int SM_CYSCREEN = 1;
+
             #endregion
 
             #region Class Functions
+
             [DllImport("user32.dll", EntryPoint = "GetDesktopWindow")]
             public static extern IntPtr GetDesktopWindow();
 
@@ -358,6 +365,7 @@ namespace Test.ConsoleApplication
 
             #endregion
         }
+
         private static void getDisplayStatus()
         {
             bool fOn;
@@ -545,6 +553,24 @@ namespace Test.ConsoleApplication
 
                 // Wait for user input..
                 Console.ReadKey();
+            }
+        }
+
+
+        private static void LocalIPAddress()
+        {
+            if (!System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+            {
+                return;
+            }
+
+            IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
+
+            var addresses = host.AddressList.Where(ip => ip.AddressFamily == AddressFamily.InterNetwork);
+            var listIP = new List<IPAddress>(addresses.ToList());
+            foreach (var ipAddress in listIP)
+            {
+                Console.WriteLine(ipAddress);
             }
         }
     }

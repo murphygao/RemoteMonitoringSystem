@@ -1,9 +1,10 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ClientEdit.aspx.cs" Inherits="RMS.Centralize.Website.Monitoring.ClientEdit" %>
+
 <%@ Import Namespace="System.Web.Optimization" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:content id="Content1" contentplaceholderid="head" runat="server">
+</asp:content>
+<asp:content id="Content2" contentplaceholderid="ContentPlaceHolder1" runat="server">
 
     <div id="content">
 
@@ -110,6 +111,7 @@
                                                     <select id="ddlClientTypeID" class="input-sm">
                                                         <option value="1">Kiosk</option>
                                                         <option value="2">Agent</option>
+                                                        <option value="3">Server</option>
                                                     </select>
                                                     <i></i>
                                                 </label>
@@ -120,7 +122,33 @@
                                         </div>
 
                                         <div class="row">
-                                            <section class="col col-8">
+                                            <section class="col col-4">
+                                                <label class="toggle">
+                                                    <input type="checkbox" id="cbxUseLocalInfo">
+                                                    <i data-swchon-text="ON" data-swchoff-text="OFF"></i><span style="font-size: 13px!important; font-weight: 400!important;">Use Local Info</span></label>
+                                            </section>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <section class="col col-4">
+                                                    <label class="label">Local Info - IP Address</label>
+                                                    <label class="input">
+                                                        <input type="text" id="txtIPAddress" name="txtIPAddress" class="input-sm">
+                                                    </label>
+                                                    <div class="note">
+                                                        <strong>Required Field</strong>
+                                                    </div>
+                                                    <label class="label">Local Info - Location ID</label>
+                                                    <label class="input">
+                                                        <input type="text" id="txtLocationID" name="txtLocationID" class="input-sm">
+                                                    </label>
+                                                    <div class="note">
+                                                        <strong>Required Field</strong>
+                                                    </div>
+                                            </section>
+
+                                            <section class="col col-4">
                                                 <label class="label">Reference Client</label>
                                                 <label class="input">
                                                     <input type="text" id="txtReferenceClient" name="txtReferenceClient" class="input-sm">
@@ -130,8 +158,18 @@
                                                 </div>
 
                                             </section>
+
                                         </div>
 
+                                        <div class="row">
+                                            <section class="col col-4">
+                                                <label class="toggle">
+                                                    <input type="checkbox" id="cbxHasMonitoringAgent" checked="checked">
+                                                    <i data-swchon-text="ON" data-swchoff-text="OFF"></i><span style="font-size: 13px!important; font-weight: 400!important;">Has Monitoring Agent</span></label>
+                                            </section>
+
+                                        </div>
+                                        
                                         <div class="row">
                                             <section class="col col-4">
                                                 <label class="toggle">
@@ -243,9 +281,7 @@
             // PAGE RELATED SCRIPTS
 
             var response;
-            $.validator.addMethod(
-                "uniqueClientCode",
-                function (value, element) {
+            $.validator.addMethod("uniqueClientCode",function (value, element) {
                     if (value == $('#currentClientCode').val()) return true;
                     $.ajax({
                         "type": "POST",
@@ -262,12 +298,35 @@
                             } else {
                                 response = false;
                             }
+                            return true;
                         }
                     });
                     return response;
                 },
                 "Client code is taken already"
             );
+
+            $.validator.addMethod("UseLocalInfo",function (value) {
+                  if (!$('#cbxUseLocalInfo').is(':checked')) return true;
+                  if (value.trim() == '') return false;
+                  return true;
+              },
+                "Please enter IP Address"
+            );
+
+            $.validator.addMethod("NotUseLocalInfo",function (value) {
+                  if ($('#cbxUseLocalInfo').is(':checked')) return true;
+                  if (value.trim() == '') return false;
+                  return true;
+              },
+                "Please enter IP Address"
+            );
+
+            $.validator.addMethod('IP4Checker', function (value) {
+                if (!$('#cbxUseLocalInfo').is(':checked')) return true;
+                var ip = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$";
+                return value.match(ip);
+            }, 'Invalid IP address');
 
             var $checkoutForm = $('#smartForm').validate({
                 // Rules for form validation
@@ -277,7 +336,7 @@
                         uniqueClientCode: true
                     },
                     txtReferenceClient: {
-                        required: true
+                        NotUseLocalInfo: true
                     },
                     txtEffectiveDate: {
                         required: true,
@@ -286,14 +345,21 @@
                     txtExpiredDate: {
                         dateISO: true
                     },
+                    txtIPAddress: {
+                        UseLocalInfo: true,
+                        IP4Checker: true
+                    },
+                    txtLocationID: {
+                        UseLocalInfo: true
+                    },
                 },
                 messages: {
                     txtClientCode: {
                         required: 'Please enter client code',
                         uniqueClientCode: 'This client code is taken already'
-                     },
+                    },
                     txtReferenceClient: {
-                        required: 'Please enter reference client'
+                        NotUseLocalInfo: 'Please enter reference client'
                     },
                     txtEffectiveDate: {
                         required: 'Please enter effective date',
@@ -301,6 +367,13 @@
                     },
                     txtExpiredDate: {
                         dateISO: 'Please enter expired date in DATE format'
+                    },
+                    txtIPAddress: {
+                        UseLocalInfo: 'Please enter IP address',
+                        IP4Checker: "Invalid IP address"
+                    },
+                    txtLocationID: {
+                        UseLocalInfo: 'Please enter location id'
                     },
                 },
 
@@ -364,8 +437,14 @@
                             $('#currentClientCode').val(myData.ClientCode);
 
                             $('#ddlClientTypeID').val(myData.ClientTypeId);
-                            $('#txtReferenceClient').val(myData.ReferenceClientId);
 
+
+                            $('#cbxUseLocalInfo').attr('checked', myData.UseLocalInfo);
+                            $('#txtReferenceClient').val(myData.ReferenceClientId);
+                            $('#txtIPAddress').val(myData.IpAddress);
+                            $('#txtLocationID').val(myData.LocationId);
+
+                            $('#cbxHasMonitoringAgent').attr('checked', myData.HasMonitoringAgent);
                             $('#cbxActiveList').attr('checked', myData.ActiveList);
                             $('#cbxEnable').attr('checked', myData.Enable);
 
@@ -443,7 +522,11 @@
                 this.m = $('#m').val();
                 this.clientCode = $('#txtClientCode').val();
                 this.clientTypeID = $('#ddlClientTypeID').val();
+                this.useLocalInfo = $('#cbxUseLocalInfo').is(':checked');
                 this.referenceClientID = $('#txtReferenceClient').val();
+                this.ipAddress = $('#txtIPAddress').val();
+                this.locationID = $('#txtLocationID').val();
+                this.hasMonitoringAgent = $('#cbxHasMonitoringAgent').is(':checked');
                 this.activeList = $('#cbxActiveList').is(':checked');
                 this.status = $('#cbxEnable').is(':checked');
                 this.effectiveDate = $('#txtEffectiveDate').val();
@@ -510,4 +593,4 @@
 
 
 
-</asp:Content>
+</asp:content>

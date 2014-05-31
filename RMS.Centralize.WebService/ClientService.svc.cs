@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -19,91 +20,38 @@ namespace RMS.Centralize.WebService
         {
         }
 
-        public ClientResult GetClient(GetClientBy getClientBy, int? clientID, string clientCode, string ipAddress, bool withDetail)
+        public ClientResult GetClient(GetClientBy getClientBy, int? clientID, string clientCode, string ipAddress, bool withDetail, bool activeClient)
         {
             try
             {
-                using (var db = new MyDbContext())
+                BSL.ClientService cs = new BSL.ClientService();
+                var client = cs.GetClient(getClientBy, clientID, clientCode, ipAddress, activeClient);
+
+                var sr = new ClientResult
                 {
-                    db.Configuration.ProxyCreationEnabled = false;
-                    db.Configuration.LazyLoadingEnabled = false;
+                    IsSuccess = true,
+                    Client = client,
 
-                    RmsClient client = new RmsClient();
+                };
 
-                    if (getClientBy == GetClientBy.ClientID)
+                if (client != null && withDetail)
+                {
+
+                    using (var db = new MyDbContext())
                     {
-                        var ret = db.RmsClients.Where(c => c.ClientId == clientID && c.EffectiveDate <= DateTime.Today);
-                        var lClients = new List<RmsClient>(ret.ToList());
+                        db.Configuration.ProxyCreationEnabled = false;
+                        db.Configuration.LazyLoadingEnabled = false;
 
-                        if (lClients.Count == 0)
-                            throw new Exception("Active Client not found by ClientID:" + clientID + ". Please check Monitoring Database");
-
-                        client = lClients[0];
-
-                    }
-                    else if (getClientBy == GetClientBy.ClientCode)
-                    {
-                        var ret = db.RmsClients.Where(c => c.ClientCode == clientCode && c.EffectiveDate <= DateTime.Today);
-                        var lClients = new List<RmsClient>(ret.ToList());
-
-                        if (lClients.Count > 1)
-                            throw new Exception("Found more thand one client by ClientCode:" + clientCode + ". Please check Monitoring Database");
-                        if (lClients.Count == 0)
-                            throw new Exception("Active Client not found by ClientCode:" + clientCode + ". Please check Monitoring Database");
-
-                        client = lClients[0];
-                        clientID = client.ClientId;
-
-                    }
-                    else if (getClientBy == GetClientBy.IPAddress)
-                    {
-
-                        // Finding Main App Client by IP Address
-                        var ret = db.Database.SqlQuery<MainAppClient>("RMS_GetMainAppClientByIPAddress " +
-                                                                      "@IPAddress");
-
-                        var lMainAppClients = new List<MainAppClient>(ret.ToList());
-
-                        if (lMainAppClients.Count > 1)
-                            throw new Exception("Found more thand one client by IPAddress:" + clientCode + ". Please check MainApp Database");
-                        if (lMainAppClients.Count == 0)
-                            throw new Exception("Client not found by IPAddress:" + clientCode + ". Please check MainApp Database");
-
-                        // Got Main App Client
-                        var mainAppClient = lMainAppClients[0];
-
-                        // Finding Client by Reference Client ID
-                        var ret2 = db.RmsClients.Where(c => c.ReferenceClientId == mainAppClient.ClientID && c.EffectiveDate <= DateTime.Today);
-                        var lClients = new List<RmsClient>(ret2.ToList());
-                        if (lClients.Count > 1)
-                            throw new Exception("Found more thand one client by ReferenceClientId:" + clientCode +
-                                                ". Please check Monitoring Database");
-                        if (lClients.Count == 0)
-                            throw new Exception("Active Client not found by ReferenceClientId:" + clientCode + ". Please check Monitoring Database");
-
-                        client = lClients[0];
-                        clientID = client.ClientId;
-
-                    }
-
-                    var sr = new ClientResult
-                    {
-                        IsSuccess = true,
-                        Client = client,
-
-                    };
-
-                    if (client != null && withDetail)
-                    {
                         RmsMonitoringProfile monitorngProfile = new RmsMonitoringProfile();
                         List<RmsMonitoringProfileDevice> monitoringProfileDevices = new List<RmsMonitoringProfileDevice>();
                         List<RmsDevice> devices = new List<RmsDevice>();
 
-                        db.Configuration.ProxyCreationEnabled = false;
-                        db.Configuration.LazyLoadingEnabled = false;
 
-                        var _client = db.RmsClients.Where(c => c.ClientId == clientID && c.Enable == true && c.EffectiveDate <= DateTime.Today)
-                            .Include(i => i.RmsClientMonitorings.Select(cm => cm.RmsMonitoringProfile).Select(mp => mp.RmsMonitoringProfileDevices.Select(mpd => mpd.RmsDevice))).FirstOrDefault();
+                        var _client = db.RmsClients.Where(c => c.ClientId == client.ClientId && (!activeClient || (c.Enable == true && c.EffectiveDate <= DateTime.Today && (c.ExpiredDate == null || c.ExpiredDate >= DateTime.Today))))
+                            .Include(
+                                i =>
+                                    i.RmsClientMonitorings.Select(cm => cm.RmsMonitoringProfile)
+                                        .Select(mp => mp.RmsMonitoringProfileDevices.Select(mpd => mpd.RmsDevice))).FirstOrDefault();
 
                         if (_client != null)
                         {
@@ -130,10 +78,8 @@ namespace RMS.Centralize.WebService
                         sr.ListDeviceType = db.RmsDeviceTypes.ToList();
                     }
 
-
-                    return sr;
-
                 }
+                return sr;
             }
             catch (Exception ex)
             {
@@ -144,7 +90,6 @@ namespace RMS.Centralize.WebService
                 };
                 return sr;
             }
-            return null;
         }
 
         public Result SetClientState(int clientID, ClientState state)
@@ -205,12 +150,12 @@ namespace RMS.Centralize.WebService
             }
         }
 
-        public Result Update(int? id, string m, string clientCode, int? clientTypeID, int? referenceClientID, bool? activeList, bool? status, DateTime? effectiveDate, DateTime? expiredDate, int? state)
+        public Result Update(int? id, string m, string clientCode, int? clientTypeID, bool? useLocalInfo, int? referenceClientID, string ipAddress, int? locationID, bool? hasMonitoringAgent, bool? activeList, bool? status, DateTime? effectiveDate, DateTime? expiredDate, int? state)
         {
             try
             {
                 var cs = new BSL.ClientService();
-                int result = cs.Updateclient(id, m, clientCode, clientTypeID, referenceClientID, activeList, status, effectiveDate, expiredDate, state);
+                int result = cs.Updateclient(id, m, clientCode, clientTypeID, useLocalInfo, referenceClientID, ipAddress, locationID, hasMonitoringAgent, activeList, status, effectiveDate, expiredDate, state);
 
                 if (result == 1) // Complete
                 {

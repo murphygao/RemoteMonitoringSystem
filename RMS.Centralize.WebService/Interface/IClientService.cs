@@ -17,7 +17,7 @@ namespace RMS.Centralize.WebService
         void TestConnection();
 
         [OperationContract]
-        ClientResult GetClient(GetClientBy searchBy, int? clientID, string clientCode, string ipAddress, bool withDetail);
+        ClientResult GetClient(GetClientBy searchBy, int? clientID, string clientCode, string ipAddress, bool withDetail, bool activeClient);
 
         [OperationContract]
         Result SetClientState(int clientID, ClientState state);
@@ -27,7 +27,7 @@ namespace RMS.Centralize.WebService
 
 
         [OperationContract]
-        Result Update(int? id, string m, string clientCode, int? clientTypeID, int? referenceClientID, bool? activeList, bool? status, DateTime? effectiveDate, DateTime? expiredDate, int? state);
+        Result Update(int? id, string m, string clientCode, int? clientTypeID, bool? useLocalInfo, int? referenceClientID, string ipAddress, int? locationID, bool? hasMonitoringAgent, bool? activeList, bool? status, DateTime? effectiveDate, DateTime? expiredDate, int? state);
 
         [OperationContract]
         ClientResult ExistingClientCode(string clientCode);

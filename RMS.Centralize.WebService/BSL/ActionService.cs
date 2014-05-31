@@ -12,7 +12,6 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
-using RMS.Centralize.BSL.MonitoringEngine.Model;
 using RMS.Centralize.DAL;
 using RMS.Centralize.WebService.Gateway;
 using RMS.Centralize.WebService.Model;
@@ -76,10 +75,10 @@ namespace RMS.Centralize.WebService.BSL
                 using (var db = new MyDbContext())
                 {
 
-                    #region Check License Validity by Calling ListClientWithIPAddress
+                    #region Check License Validity by Calling ListClientWithIPAddresss
 
                     var ms = new Centralize.BSL.MonitoringEngine.MonitoringService();
-                    ms.ListClientWithIPAddress(licenseInfo, out activeClients);
+                    ms.ListClientWithIPAddress(licenseInfo, out activeClients, null);
 
                     #endregion
 
@@ -511,7 +510,7 @@ namespace RMS.Centralize.WebService.BSL
                     #region Check License Validity by Calling ListClientWithIPAddress
 
                     var ms = new Centralize.BSL.MonitoringEngine.MonitoringService();
-                    ms.ListClientWithIPAddress(licenseInfo, out activeClients);
+                    ms.ListClientWithIPAddress(licenseInfo, out activeClients, null);
 
                     #endregion
 

@@ -169,6 +169,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="rms.lic" />
+    <None Include="Properties\PublishProfiles\RMS.Centralize.WebService.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

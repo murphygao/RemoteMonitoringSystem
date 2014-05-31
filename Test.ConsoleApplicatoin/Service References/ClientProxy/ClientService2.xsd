@@ -20,6 +20,7 @@
         <xs:element minOccurs="0" name="clientCode" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="ipAddress" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="withDetail" type="xs:boolean" />
+        <xs:element minOccurs="0" name="activeClient" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -70,11 +71,13 @@
         <xs:element minOccurs="0" name="id" nillable="true" type="xs:int" />
         <xs:element minOccurs="0" name="m" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="clientCode" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="activeList" type="xs:boolean" />
-        <xs:element minOccurs="0" name="status" type="xs:boolean" />
+        <xs:element minOccurs="0" name="clientTypeID" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="referenceClientID" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="activeList" nillable="true" type="xs:boolean" />
+        <xs:element minOccurs="0" name="status" nillable="true" type="xs:boolean" />
         <xs:element minOccurs="0" name="effectiveDate" nillable="true" type="xs:dateTime" />
         <xs:element minOccurs="0" name="expiredDate" nillable="true" type="xs:dateTime" />
-        <xs:element minOccurs="0" name="state" type="xs:int" />
+        <xs:element minOccurs="0" name="state" nillable="true" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -82,6 +85,20 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" minOccurs="0" name="UpdateResult" nillable="true" type="q7:Result" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ExistingClientCode">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="clientCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ExistingClientCodeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="ExistingClientCodeResult" nillable="true" type="q8:ClientResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

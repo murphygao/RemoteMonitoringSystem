@@ -9,14 +9,14 @@
         <Grid.Background>
             <ImageBrush ImageSource="Resources/oss_context.png" Stretch="None"/>
         </Grid.Background>
-        <Button x:Name="btnNumber1" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="250" Height="200" Opacity="0.05" Tag="1"/>
-        <Button x:Name="btnNumber2" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" Width="250" Height="200" Margin="0" Opacity="0.05" Tag="2"/>
-        <Button x:Name="btnNumber3" Content="" HorizontalAlignment="Right" VerticalAlignment="Top" Width="250" Height="200" Margin="0" Opacity="0.05" Tag="3"/>
-        <Button x:Name="btnNumber4" Content="" HorizontalAlignment="Left" VerticalAlignment="Center" Width="250" Height="200" Margin="0" Opacity="0.05" Tag="4"/>
-        <Button x:Name="btnNumber5" Content="" HorizontalAlignment="Center" VerticalAlignment="Center" Width="250" Height="200" Margin="0" Opacity="0.05" Tag="5"/>
-        <Button x:Name="btnNumber6" Content="" HorizontalAlignment="Right" VerticalAlignment="Center" Width="250" Height="200" Margin="0" Opacity="0.05" Tag="6"/>
-        <Button x:Name="btnNumber7" Content="" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="250" Height="200" Margin="0" Opacity="0.05" Tag="7"/>
-        <Button x:Name="btnNumber8" Content="8" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="250" Height="200" Margin="383,0" Opacity="0.05" Tag="8"/>
-        <Button x:Name="btnNumber9" Content="" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="250" Height="200" Margin="0" Opacity="0.05" Tag="9"/>
+        <Button x:Name="btnNumber1" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="250" Height="200" Opacity="0" Tag="1"/>
+        <Button x:Name="btnNumber2" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" Width="250" Height="200" Margin="0" Opacity="0" Tag="2"/>
+        <Button x:Name="btnNumber3" Content="" HorizontalAlignment="Right" VerticalAlignment="Top" Width="250" Height="200" Margin="0" Opacity="0" Tag="3"/>
+        <Button x:Name="btnNumber4" Content="" HorizontalAlignment="Left" VerticalAlignment="Center" Width="250" Height="200" Margin="0" Opacity="0" Tag="4"/>
+        <Button x:Name="btnNumber5" Content="" HorizontalAlignment="Center" VerticalAlignment="Center" Width="250" Height="200" Margin="0" Opacity="0" Tag="5"/>
+        <Button x:Name="btnNumber6" Content="" HorizontalAlignment="Right" VerticalAlignment="Center" Width="250" Height="200" Margin="0" Opacity="0" Tag="6"/>
+        <Button x:Name="btnNumber7" Content="" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="250" Height="200" Margin="0" Opacity="0" Tag="7"/>
+        <Button x:Name="btnNumber8" Content="8" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="250" Height="200" Margin="383,0" Opacity="0" Tag="8"/>
+        <Button x:Name="btnNumber9" Content="" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="250" Height="200" Margin="0" Opacity="0" Tag="9"/>
     </Grid>
 </Window>

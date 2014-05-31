@@ -5,8 +5,11 @@
       <xs:element name="ClientId" type="xs:int" />
       <xs:element minOccurs="0" name="ClientTypeId" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="ClientCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UseLocalInfo" nillable="true" type="xs:boolean" />
       <xs:element minOccurs="0" name="ReferenceClientId" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="LocationId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="IpAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HasMonitoringAgent" nillable="true" type="xs:boolean" />
       <xs:element minOccurs="0" name="ActiveList" nillable="true" type="xs:boolean" />
       <xs:element minOccurs="0" name="Enable" nillable="true" type="xs:boolean" />
       <xs:element minOccurs="0" name="EffectiveDate" nillable="true" type="xs:dateTime" />

@@ -176,7 +176,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             try
             {
                 var serviceClient = new RMS.Centralize.WebSite.Proxy.ClientService().clientService;
-                var clientResult = serviceClient.GetClient(GetClientBy.ClientID, clientID, null, null, true);
+                var clientResult = serviceClient.GetClient(GetClientBy.ClientID, clientID, null, null, true, false);
                 if (clientResult != null && clientResult.IsSuccess)
                 {
                     var service = new RMS.Centralize.WebSite.Proxy.SummaryReportService().summaryReportService;

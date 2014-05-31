@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ClientList.aspx.cs" Inherits="RMS.Centralize.Website.Monitoring.ClientList" %>
+﻿    <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ClientList.aspx.cs" Inherits="RMS.Centralize.Website.Monitoring.ClientList" %>
 <%@ Import Namespace="System.Web.Optimization" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -95,6 +95,7 @@
                                                     <option value="">Client Type</option>
                                                     <option value="1">Kiosk</option>
                                                     <option value="2">Agent</option>
+                                                    <option value="3">Server</option>
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -193,16 +194,17 @@
                                 <table id="dt_basic" class="table table-striped table-hover">
                                     <thead>
                                         <tr>
-                                            <th style="text-align: center">#</th>
-                                            <th>Type</th>
-                                            <th>Client Code</th>
-                                            <th>Location</th>
-                                            <th>IP Address</th>
-                                            <th style="text-align: center">Status</th>
-                                            <th>Effective Date</th>
-                                            <th>Expired Date</th>
-                                            <th>Monitoring Profile</th>
-                                            <th>&nbsp;</th>
+                                            <th style="text-align: center; vertical-align: middle">#</th>
+                                            <th style="vertical-align: middle">Type</th>
+                                            <th style="vertical-align: middle">Client Code</th>
+                                            <th style="vertical-align: middle">Location</th>
+                                            <th style="vertical-align: middle">IP Address</th>
+                                            <th style="text-align: center; vertical-align: middle">Monitoring<br/>Agent</th>
+                                            <th style="text-align: center; vertical-align: middle">Status</th>
+                                            <th style="vertical-align: middle">Effective Date</th>
+                                            <th style="vertical-align: middle">Expired Date</th>
+                                            <th style="vertical-align: middle">Monitoring Profile</th>
+                                            <th style="vertical-align: middle">&nbsp;</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -359,6 +361,21 @@
                             "bSearchable": false,
                             "bSortable": false,
                             "sWidth": "100",
+                        },
+                        {
+                            // Has Monitoring Agent
+                            "mDataProp": "HasMonitoringAgent",
+                            "bSearchable": false,
+                            "bSortable": false,
+                            "sWidth": "50",
+                            "sClass": "center",
+                            "fnRender": function (oObj) {
+                                if (oObj.aData["HasMonitoringAgent"]) {
+                                    return '<span class="label label-success">Yes</span>';
+                                } else {
+                                    return '<span class="label label-danger">No</span>';
+                                }
+                            }
                         },
                         {
                             //status

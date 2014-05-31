@@ -298,10 +298,19 @@ namespace Test.ConsoleApplication.ClientProxy {
         private string ClientCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> UseLocalInfoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<int> ReferenceClientIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<int> LocationIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IpAddressField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> HasMonitoringAgentField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<bool> ActiveListField;
@@ -380,6 +389,19 @@ namespace Test.ConsoleApplication.ClientProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+        public System.Nullable<bool> UseLocalInfo {
+            get {
+                return this.UseLocalInfoField;
+            }
+            set {
+                if ((this.UseLocalInfoField.Equals(value) != true)) {
+                    this.UseLocalInfoField = value;
+                    this.RaisePropertyChanged("UseLocalInfo");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=4)]
         public System.Nullable<int> ReferenceClientId {
             get {
                 return this.ReferenceClientIdField;
@@ -392,7 +414,7 @@ namespace Test.ConsoleApplication.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=5)]
         public System.Nullable<int> LocationId {
             get {
                 return this.LocationIdField;
@@ -405,7 +427,33 @@ namespace Test.ConsoleApplication.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+        public string IpAddress {
+            get {
+                return this.IpAddressField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IpAddressField, value) != true)) {
+                    this.IpAddressField = value;
+                    this.RaisePropertyChanged("IpAddress");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+        public System.Nullable<bool> HasMonitoringAgent {
+            get {
+                return this.HasMonitoringAgentField;
+            }
+            set {
+                if ((this.HasMonitoringAgentField.Equals(value) != true)) {
+                    this.HasMonitoringAgentField = value;
+                    this.RaisePropertyChanged("HasMonitoringAgent");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=8)]
         public System.Nullable<bool> ActiveList {
             get {
                 return this.ActiveListField;
@@ -418,7 +466,7 @@ namespace Test.ConsoleApplication.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=9)]
         public System.Nullable<bool> Enable {
             get {
                 return this.EnableField;
@@ -431,7 +479,7 @@ namespace Test.ConsoleApplication.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=10)]
         public System.Nullable<System.DateTime> EffectiveDate {
             get {
                 return this.EffectiveDateField;
@@ -444,7 +492,7 @@ namespace Test.ConsoleApplication.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=11)]
         public System.Nullable<System.DateTime> ExpiredDate {
             get {
                 return this.ExpiredDateField;
@@ -457,7 +505,7 @@ namespace Test.ConsoleApplication.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=12)]
         public System.Nullable<int> State {
             get {
                 return this.StateField;
@@ -470,7 +518,7 @@ namespace Test.ConsoleApplication.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=13)]
         public System.Nullable<System.DateTime> CreatedDate {
             get {
                 return this.CreatedDateField;
@@ -483,7 +531,7 @@ namespace Test.ConsoleApplication.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=11)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=14)]
         public string CreatedBy {
             get {
                 return this.CreatedByField;
@@ -496,7 +544,7 @@ namespace Test.ConsoleApplication.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=12)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=15)]
         public System.Nullable<System.DateTime> UpdatedDate {
             get {
                 return this.UpdatedDateField;
@@ -509,7 +557,7 @@ namespace Test.ConsoleApplication.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=13)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=16)]
         public string UpdatedBy {
             get {
                 return this.UpdatedByField;
@@ -1684,10 +1732,10 @@ namespace Test.ConsoleApplication.ClientProxy {
         System.Threading.Tasks.Task TestConnectionAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/GetClient", ReplyAction="http://tempuri.org/IClientService/GetClientResponse")]
-        Test.ConsoleApplication.ClientProxy.ClientResult GetClient(Test.ConsoleApplication.ClientProxy.GetClientBy searchBy, System.Nullable<int> clientID, string clientCode, string ipAddress, bool withDetail);
+        Test.ConsoleApplication.ClientProxy.ClientResult GetClient(Test.ConsoleApplication.ClientProxy.GetClientBy searchBy, System.Nullable<int> clientID, string clientCode, string ipAddress, bool withDetail, bool activeClient);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/GetClient", ReplyAction="http://tempuri.org/IClientService/GetClientResponse")]
-        System.Threading.Tasks.Task<Test.ConsoleApplication.ClientProxy.ClientResult> GetClientAsync(Test.ConsoleApplication.ClientProxy.GetClientBy searchBy, System.Nullable<int> clientID, string clientCode, string ipAddress, bool withDetail);
+        System.Threading.Tasks.Task<Test.ConsoleApplication.ClientProxy.ClientResult> GetClientAsync(Test.ConsoleApplication.ClientProxy.GetClientBy searchBy, System.Nullable<int> clientID, string clientCode, string ipAddress, bool withDetail, bool activeClient);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/SetClientState", ReplyAction="http://tempuri.org/IClientService/SetClientStateResponse")]
         Test.ConsoleApplication.ClientProxy.Result SetClientState(int clientID, Test.ConsoleApplication.ClientProxy.ClientState state);
@@ -1702,10 +1750,16 @@ namespace Test.ConsoleApplication.ClientProxy {
         System.Threading.Tasks.Task<Test.ConsoleApplication.ClientProxy.ClientInfoResult> SearchAsync(Test.ConsoleApplication.ClientProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> asOfDate, System.Nullable<int> clientTypeID, string clientCode, System.Nullable<bool> clientStatus, string ipAddress);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/Update", ReplyAction="http://tempuri.org/IClientService/UpdateResponse")]
-        Test.ConsoleApplication.ClientProxy.Result Update(System.Nullable<int> id, string m, string clientCode, bool activeList, bool status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, int state);
+        Test.ConsoleApplication.ClientProxy.Result Update(System.Nullable<int> id, string m, string clientCode, System.Nullable<int> clientTypeID, System.Nullable<int> referenceClientID, System.Nullable<bool> activeList, System.Nullable<bool> status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, System.Nullable<int> state);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/Update", ReplyAction="http://tempuri.org/IClientService/UpdateResponse")]
-        System.Threading.Tasks.Task<Test.ConsoleApplication.ClientProxy.Result> UpdateAsync(System.Nullable<int> id, string m, string clientCode, bool activeList, bool status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, int state);
+        System.Threading.Tasks.Task<Test.ConsoleApplication.ClientProxy.Result> UpdateAsync(System.Nullable<int> id, string m, string clientCode, System.Nullable<int> clientTypeID, System.Nullable<int> referenceClientID, System.Nullable<bool> activeList, System.Nullable<bool> status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, System.Nullable<int> state);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/ExistingClientCode", ReplyAction="http://tempuri.org/IClientService/ExistingClientCodeResponse")]
+        Test.ConsoleApplication.ClientProxy.ClientResult ExistingClientCode(string clientCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/ExistingClientCode", ReplyAction="http://tempuri.org/IClientService/ExistingClientCodeResponse")]
+        System.Threading.Tasks.Task<Test.ConsoleApplication.ClientProxy.ClientResult> ExistingClientCodeAsync(string clientCode);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1743,12 +1797,12 @@ namespace Test.ConsoleApplication.ClientProxy {
             return base.Channel.TestConnectionAsync();
         }
         
-        public Test.ConsoleApplication.ClientProxy.ClientResult GetClient(Test.ConsoleApplication.ClientProxy.GetClientBy searchBy, System.Nullable<int> clientID, string clientCode, string ipAddress, bool withDetail) {
-            return base.Channel.GetClient(searchBy, clientID, clientCode, ipAddress, withDetail);
+        public Test.ConsoleApplication.ClientProxy.ClientResult GetClient(Test.ConsoleApplication.ClientProxy.GetClientBy searchBy, System.Nullable<int> clientID, string clientCode, string ipAddress, bool withDetail, bool activeClient) {
+            return base.Channel.GetClient(searchBy, clientID, clientCode, ipAddress, withDetail, activeClient);
         }
         
-        public System.Threading.Tasks.Task<Test.ConsoleApplication.ClientProxy.ClientResult> GetClientAsync(Test.ConsoleApplication.ClientProxy.GetClientBy searchBy, System.Nullable<int> clientID, string clientCode, string ipAddress, bool withDetail) {
-            return base.Channel.GetClientAsync(searchBy, clientID, clientCode, ipAddress, withDetail);
+        public System.Threading.Tasks.Task<Test.ConsoleApplication.ClientProxy.ClientResult> GetClientAsync(Test.ConsoleApplication.ClientProxy.GetClientBy searchBy, System.Nullable<int> clientID, string clientCode, string ipAddress, bool withDetail, bool activeClient) {
+            return base.Channel.GetClientAsync(searchBy, clientID, clientCode, ipAddress, withDetail, activeClient);
         }
         
         public Test.ConsoleApplication.ClientProxy.Result SetClientState(int clientID, Test.ConsoleApplication.ClientProxy.ClientState state) {
@@ -1767,12 +1821,20 @@ namespace Test.ConsoleApplication.ClientProxy {
             return base.Channel.SearchAsync(param, asOfDate, clientTypeID, clientCode, clientStatus, ipAddress);
         }
         
-        public Test.ConsoleApplication.ClientProxy.Result Update(System.Nullable<int> id, string m, string clientCode, bool activeList, bool status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, int state) {
-            return base.Channel.Update(id, m, clientCode, activeList, status, effectiveDate, expiredDate, state);
+        public Test.ConsoleApplication.ClientProxy.Result Update(System.Nullable<int> id, string m, string clientCode, System.Nullable<int> clientTypeID, System.Nullable<int> referenceClientID, System.Nullable<bool> activeList, System.Nullable<bool> status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, System.Nullable<int> state) {
+            return base.Channel.Update(id, m, clientCode, clientTypeID, referenceClientID, activeList, status, effectiveDate, expiredDate, state);
         }
         
-        public System.Threading.Tasks.Task<Test.ConsoleApplication.ClientProxy.Result> UpdateAsync(System.Nullable<int> id, string m, string clientCode, bool activeList, bool status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, int state) {
-            return base.Channel.UpdateAsync(id, m, clientCode, activeList, status, effectiveDate, expiredDate, state);
+        public System.Threading.Tasks.Task<Test.ConsoleApplication.ClientProxy.Result> UpdateAsync(System.Nullable<int> id, string m, string clientCode, System.Nullable<int> clientTypeID, System.Nullable<int> referenceClientID, System.Nullable<bool> activeList, System.Nullable<bool> status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, System.Nullable<int> state) {
+            return base.Channel.UpdateAsync(id, m, clientCode, clientTypeID, referenceClientID, activeList, status, effectiveDate, expiredDate, state);
+        }
+        
+        public Test.ConsoleApplication.ClientProxy.ClientResult ExistingClientCode(string clientCode) {
+            return base.Channel.ExistingClientCode(clientCode);
+        }
+        
+        public System.Threading.Tasks.Task<Test.ConsoleApplication.ClientProxy.ClientResult> ExistingClientCodeAsync(string clientCode) {
+            return base.Channel.ExistingClientCodeAsync(clientCode);
         }
     }
 }

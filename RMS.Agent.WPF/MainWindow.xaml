@@ -7,13 +7,6 @@
         <Button x:Name="btnStop" Content="Stop" HorizontalAlignment="Left" Margin="115,178,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.03,-0.09" Click="btnStop_Click"/>
         <Label Content="Application status:" HorizontalAlignment="Left" Margin="20,146,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblStatus" Content="" HorizontalAlignment="Left" Margin="152,146,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.284,0.021" Width="128"/>
-        <Menu Height="21" VerticalAlignment="Top">
-            <MenuItem Header="_FILE">
-                <MenuItem Header="Restart"/>
-                <Separator/>
-                <MenuItem Header="Exit"/>
-            </MenuItem>
-        </Menu>
         <Label Content="Application name:" HorizontalAlignment="Left" Margin="20,34,0,0" VerticalAlignment="Top"/>
         <Label Content="Description:" HorizontalAlignment="Left" Margin="20,60,0,0" VerticalAlignment="Top"/>
         <Label Content="Remote Monitoring Agent" HorizontalAlignment="Left" Margin="152,34,0,0" VerticalAlignment="Top" Width="420"/>

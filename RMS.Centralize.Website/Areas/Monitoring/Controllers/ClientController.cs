@@ -91,13 +91,13 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             }
         }
 
-        // GET: /Monitoring/Client/Get/
+        // GET: /Monitoring/Client/GetClient/
         public ActionResult GetClient(int? id)
         {
             try
             {
                 var cClient = new ClientService().clientService;
-                var searchResult = cClient.GetClient(GetClientBy.ClientID, id, null, null, false);
+                var searchResult = cClient.GetClient(GetClientBy.ClientID, id, null, null, false, false);
                 var data = new
                 {
                     data = JsonConvert.SerializeObject(searchResult.Client),
@@ -120,12 +120,21 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             }
         }
 
-        public ActionResult UpdateClient(int? id, string m, string clientCode, int? clientTypeID, int? referenceClientID, bool? activeList, bool? status, DateTime? effectiveDate, DateTime? expiredDate, int? state)
+        public ActionResult UpdateClient(int? id, string m, string clientCode, int? clientTypeID, bool? useLocalInfo, int? referenceClientID, string ipAddress, int? locationID, bool? hasMonitoringAgent, bool? activeList, bool? status, DateTime? effectiveDate, DateTime? expiredDate, int? state)
         {
 
             if (string.IsNullOrEmpty(clientCode)) throw new ArgumentNullException("clientCode");
             if (clientTypeID == null) throw new ArgumentNullException("clientTypeID");
-            if (referenceClientID == null) throw new ArgumentNullException("referenceClientID");
+            if (useLocalInfo == null) throw new ArgumentNullException("useLocalInfo");
+            if (useLocalInfo.Value)
+            {
+                if (ipAddress == null) throw new ArgumentNullException("ipAddress");
+                if (locationID == null) throw new ArgumentNullException("locationID");
+            }
+            else
+            {
+                if (referenceClientID == null) throw new ArgumentNullException("referenceClientID");
+            }
             if (status == null) throw new ArgumentNullException("status");
             if (effectiveDate == null) throw new ArgumentNullException("effectiveDate");
 
@@ -134,7 +143,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             try
             {
                 var apClient = new ClientService().clientService;
-                var result = apClient.Update(id, m, clientCode, clientTypeID, referenceClientID, activeList, status, effectiveDate, expiredDate, state);
+                var result = apClient.Update(id, m, clientCode, clientTypeID, useLocalInfo, referenceClientID, ipAddress, locationID, hasMonitoringAgent, activeList, status, effectiveDate, expiredDate, state);
 
                 var ret = new
                 {
