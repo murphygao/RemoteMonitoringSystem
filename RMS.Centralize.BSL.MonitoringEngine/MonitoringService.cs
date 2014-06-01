@@ -11,6 +11,7 @@ using ESN.LicenseManager.Model;
 using RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy;
 using RMS.Centralize.DAL;
 using RMS.Centralize.WebService.Proxy.MonitoringProxy;
+using RMS.Common.Exception;
 
 
 namespace RMS.Centralize.BSL.MonitoringEngine
@@ -56,8 +57,7 @@ namespace RMS.Centralize.BSL.MonitoringEngine
                     // Log into RMS_Log_Monitoring
                     AddLogMonitoring(activeClient, false, ex.Message);
                 }
-
-                throw new Exception("Start failed. " + ex.Message, ex);
+                throw new RMSWebException(this, "0500", "Start failed. " + ex.Message, ex, false);
             }
         }
 
@@ -78,7 +78,9 @@ namespace RMS.Centralize.BSL.MonitoringEngine
                 try
                 {
                     if (e.Message.IndexOf("AddLogMonitoringClient") > -1)
-                        throw;
+                    {
+                        throw new RMSWebException(this, "0500", "BroadcastAliveMessage failed. " + e.Message, e, false);
+                    }
 
 
                     // ถ้า Cleint State เป็น 1 (Normal) แสดงว่า Agent ผิดปกติ
@@ -114,7 +116,7 @@ namespace RMS.Centralize.BSL.MonitoringEngine
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("BroadcastAliveMessage failed. " + ex.Message, ex);
+                    throw new RMSWebException(this, "0500", "BroadcastAliveMessage failed. " + ex.Message, ex, false);
                 }
             }
         }
@@ -122,42 +124,49 @@ namespace RMS.Centralize.BSL.MonitoringEngine
         public List<RmsClient> ListClientWithIPAddress(LicenseInfo licenseInfo, out int activeClient, bool? hasMonitoringAgent)
         {
 
-            using (var db = new MyDbContext())
+            try
             {
-                #region Prepare Parameters
-
-                db.Configuration.ProxyCreationEnabled = false;
-                db.Configuration.LazyLoadingEnabled = false;
-
-                var listOfType = db.Database.SqlQuery<RmsClient>("RMS_ListClientWithIPAddress");
-
-                List<RmsClient> listClients = new List<RmsClient>(listOfType.ToList());
-
-                var numOfHasAgent = listClients.Count(c => c.HasMonitoringAgent == true);
-                var numOfNoAgent = listClients.Count(c => c.HasMonitoringAgent == false || c.HasMonitoringAgent == null);
-
-
-                if (!licenseInfo.ValidateLicense(numOfHasAgent, numOfNoAgent, null, null, null, null, null, null))
+                using (var db = new MyDbContext())
                 {
-                    throw new Exception("License is invalid or exceed active client's quota or expired. Please contact product owner.");
+                    db.Configuration.ProxyCreationEnabled = false;
+                    db.Configuration.LazyLoadingEnabled = false;
+
+                    var listOfType = db.Database.SqlQuery<RmsClient>("RMS_ListClientWithIPAddress");
+
+                    List<RmsClient> listClients = new List<RmsClient>(listOfType.ToList());
+
+                    var numOfHasAgent = listClients.Count(c => c.HasMonitoringAgent == true);
+                    var numOfNoAgent = listClients.Count(c => c.HasMonitoringAgent == false || c.HasMonitoringAgent == null);
+
+
+                    if (!licenseInfo.ValidateLicense(numOfHasAgent, numOfNoAgent, null, null, null, null, null, null))
+                    {
+                        new RMSLicenseException("ValidateLicense failed. numOfHasAgent: " + numOfHasAgent + "/" + licenseInfo.quota1 + ", numOfNoAgent:" + numOfNoAgent + "/" + licenseInfo.quota2, true);
+                        throw new Exception("License is invalid or exceed active client's quota or expired. Please contact product owner.");
+                    }
+
+                    if (hasMonitoringAgent == null)
+                    {
+                        listClients = new List<RmsClient>(listOfType.ToList());
+                    }
+                    else
+                    {
+                        listClients = new List<RmsClient>(listOfType.Where(c => c.HasMonitoringAgent == hasMonitoringAgent));
+                    }
+
+                    activeClient = listClients.Count;
+
+                    return listClients;
+
+
                 }
 
-                if (hasMonitoringAgent == null)
-                {
-                    listClients = new List<RmsClient>(listOfType.ToList());
-                }
-                else
-                {
-                    listClients = new List<RmsClient>(listOfType.Where(c => c.HasMonitoringAgent == hasMonitoringAgent));
-                }
-
-                activeClient = listClients.Count;
-
-                return listClients;
-
-                #endregion
             }
+            catch (Exception ex)
+            {
+                throw new RMSWebException(this, "0500", "ListClientWithIPAddress failed. " + ex.Message, ex, false);
 
+            }
         }
 
         public int AddLogMonitoring(int numberOfMonitoring, bool isSuccess, string errorMessage)
@@ -178,7 +187,7 @@ namespace RMS.Centralize.BSL.MonitoringEngine
             }
             catch (Exception ex)
             {
-                throw new Exception("AddLogMonitoring failed. " + ex.Message, ex);
+                throw new RMSWebException(this, "0500", "AddLogMonitoring failed. " + ex.Message, ex, false);
             }
         }
         public void AddLogMonitoringClient(int? refID, int? clientID, string clientCode, string clientIPAddress, int? clientState, string detail)
@@ -201,7 +210,7 @@ namespace RMS.Centralize.BSL.MonitoringEngine
             }
             catch (Exception ex)
             {
-                throw new Exception("AddLogMonitoringClient failed. " + ex.Message, ex);
+                throw new RMSWebException(this, "0500", "AddLogMonitoringClient failed. " + ex.Message, ex, false);
             }
         }
     }

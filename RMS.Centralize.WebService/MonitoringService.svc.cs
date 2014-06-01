@@ -7,6 +7,7 @@ using System.ServiceModel.Channels;
 using System.Text;
 using RMS.Centralize.DAL;
 using RMS.Centralize.WebService.BSL;
+using RMS.Common.Exception;
 
 namespace RMS.Centralize.WebService
 {
@@ -27,7 +28,10 @@ namespace RMS.Centralize.WebService
                 lRawMessages.Add(rawMessage);
                 AddMessages(lRawMessages);
             }
-            catch {}
+            catch (Exception ex)
+            {
+                new RMSWebException(this, "0500", "AddMessage failed. " + ex.Message, ex, true);
+            }
         }
 
         public void AddMessages(List<RmsReportMonitoringRaw> lRawMessages)
@@ -50,7 +54,10 @@ namespace RMS.Centralize.WebService
                 var caller = new SummaryService.DoSummaryMonitoringAsync(sv.DoSummaryMonitoring);
                 caller.BeginInvoke(lRawMessages, null, null);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                new RMSWebException(this, "0500", "AddMessages failed. " + ex.Message, ex, true);
+            }
         }
 
         public void AddBusinessMessage(RmsReportMonitoringRaw rawMessage)
@@ -77,9 +84,9 @@ namespace RMS.Centralize.WebService
                 var caller = new SummaryService.DoSummaryMonitoringForBusinessAsync(sv.DoSummaryMonitoringForBusiness);
                 caller.BeginInvoke(rawMessage, null, null);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                
+                new RMSWebException(this, "0500", "AddBusinessMessage failed. " + ex.Message, ex, true);
             }
 
         }
@@ -91,21 +98,28 @@ namespace RMS.Centralize.WebService
                 BSL.MonitoringEngineService mes = new MonitoringEngineService();
                 mes.Start();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "StartMonitoringEngine failed. " + ex.Message, ex, true);
             }
         }
 
         private string GetIP()
         {
-            OperationContext context = OperationContext.Current;
-            MessageProperties prop = context.IncomingMessageProperties;
-            RemoteEndpointMessageProperty endpoint =
-               prop[RemoteEndpointMessageProperty.Name] as RemoteEndpointMessageProperty;
-            string ip = endpoint.Address;
+            try
+            {
+                OperationContext context = OperationContext.Current;
+                MessageProperties prop = context.IncomingMessageProperties;
+                RemoteEndpointMessageProperty endpoint =
+                    prop[RemoteEndpointMessageProperty.Name] as RemoteEndpointMessageProperty;
+                string ip = endpoint.Address;
 
-            return ip;
-
+                return ip;
+            }
+            catch (Exception ex)
+            {
+                throw new RMSWebException(this, "0500", "GetIP failed. " + ex.Message, ex, false);
+            }
         }
     }
 }

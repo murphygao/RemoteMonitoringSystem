@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Web.Caching;
 using RMS.Centralize.WebService.BSL;
+using RMS.Common.Exception;
 
 namespace RMS.Centralize.WebService
 {
@@ -28,6 +29,8 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "StartMonitoringEngine failed. " + ex.Message, ex, true);
+
                 return "Failed: " + ex.Message;
             }
         }

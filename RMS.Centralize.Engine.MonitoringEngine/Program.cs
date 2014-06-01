@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using RMS.Centralize.DAL;
+using RMS.Common.Exception;
 using Timer = System.Timers.Timer;
 
 namespace RMS.Centralize.Engine.MonitoringEngine
@@ -46,13 +47,13 @@ namespace RMS.Centralize.Engine.MonitoringEngine
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw new RMSAppException("Main failed. " + ex.Message, ex, true);
             }
             finally
             {
-                //Environment.Exit(1);
+                Environment.Exit(1);
             }
         }
 
@@ -87,8 +88,7 @@ namespace RMS.Centralize.Engine.MonitoringEngine
             }
             catch (Exception ex)
             {
-                
-                Console.WriteLine("Error: " + ex.Message);
+                throw new RMSAppException("SetInterval failed. " + ex.Message, ex, false);
             }
         }
 
@@ -108,6 +108,7 @@ namespace RMS.Centralize.Engine.MonitoringEngine
             catch (Exception ex)
             {
                 Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : Error -> " + ex.Message);
+                new RMSAppException("CallEngine failed. WWebMonitoringEngineURL = " + WebMonitoringEngineURL + ", " + ex.Message, ex, true);
             }
         }
 
@@ -138,9 +139,16 @@ namespace RMS.Centralize.Engine.MonitoringEngine
 
         private static void SetAppGUID()
         {
-            var assembly = typeof(Program).Assembly;
-            var attribute = (GuidAttribute)assembly.GetCustomAttributes(typeof(GuidAttribute), true)[0];
-            appGuid = attribute.Value;
+            try
+            {
+                var assembly = typeof(Program).Assembly;
+                var attribute = (GuidAttribute)assembly.GetCustomAttributes(typeof(GuidAttribute), true)[0];
+                appGuid = attribute.Value;
+            }
+            catch (Exception ex)
+            {
+                throw new RMSAppException("SetAppGUID failed. " + ex.Message, ex, false);
+            }
         }
         static void timer_Elapsed(object sender, ElapsedEventArgs e)
         {

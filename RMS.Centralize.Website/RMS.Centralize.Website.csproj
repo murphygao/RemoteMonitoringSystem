@@ -42,6 +42,10 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="ESN.Common.Exception, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Solution Items\ESN\ESN.Common.Exception.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -1027,6 +1031,10 @@
     <ProjectReference Include="..\RMS.Centralize.WebSite.Proxy\RMS.Centralize.WebSite.Proxy.csproj">
       <Project>{499de468-4e59-4c42-91e2-f2a0070131b0}</Project>
       <Name>RMS.Centralize.WebSite.Proxy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Common.Exception\RMS.Common.Exception.csproj">
+      <Project>{F8EC98BC-37BB-42FD-9B50-78F928BB08A2}</Project>
+      <Name>RMS.Common.Exception</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

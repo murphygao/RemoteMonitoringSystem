@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Newtonsoft.Json;
 using RMS.Centralize.WebSite.Proxy;
 using RMS.Centralize.WebSite.Proxy.MessageActionProxy;
+using RMS.Common.Exception;
 
 namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 {
@@ -39,6 +40,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     isSuccess = false,
                     errorMessage = ex.Message
                 };
+                new RMSWebException(this, "0500", "InitDataForMeesageAction failed. " + ex.Message, ex, true);
 
                 return Json(data);
             }
@@ -101,8 +103,15 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
         public ActionResult Delete(int? id)
         {
 
-            if (id == null) throw new ArgumentNullException("MessageID");
-
+            try
+            {
+                if (id == null) throw new ArgumentNullException("MessageID");
+            }
+            catch (ArgumentNullException ex)
+            {
+                new RMSWebException(this, "0500", "Delete failed. " + ex.Message, ex, true);
+                throw;
+            }
             string ret;
 
             try
@@ -115,6 +124,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             catch (Exception ex)
             {
                 ret = "0";
+                new RMSWebException(this, "0500", "Delete failed. " + ex.Message, ex, true);
             }
 
             return Json(ret);
@@ -152,6 +162,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     isSuccess = false,
                     errorMessage = ex.Message
                 };
+                new RMSWebException(this, "0500", "InitDataForMeesageEdit failed. " + ex.Message, ex, true);
 
                 return Json(data);
             }
@@ -161,10 +172,18 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
         public ActionResult UpdateMessage(int? id, string m, int? messageGroupID, string message, int? severityLevelID, bool activeList, bool activeStatus)
         {
 
-            if (messageGroupID == null) throw new ArgumentNullException("messageGroupID");
-            if (string.IsNullOrEmpty(message)) throw new ArgumentNullException("message");
+            try
+            {
+                if (messageGroupID == null) throw new ArgumentNullException("messageGroupID");
+                if (string.IsNullOrEmpty(message)) throw new ArgumentNullException("message");
 
-            if (m == "e" && id == null) throw new ArgumentNullException("id");
+                if (m == "e" && id == null) throw new ArgumentNullException("id");
+            }
+            catch (ArgumentNullException ex)
+            {
+                new RMSWebException(this, "0500", "UpdateMessage failed. " + ex.Message, ex, true);
+                throw;
+            }
 
             try
             {
@@ -187,6 +206,9 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     status = 0,
                     error = ex.Message
                 };
+
+                new RMSWebException(this, "0500", "UpdateMessage failed. " + ex.Message, ex, true);
+
                 return Json(ret);
             }
         }
@@ -195,8 +217,15 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
         // GET: /Monitoring/ActionProfile/GetMessage/
         public ActionResult GetMessage(int? id)
         {
-            if (id == null) throw new ArgumentNullException("MessageID");
-
+            try
+            {
+                if (id == null) throw new ArgumentNullException("MessageID");
+            }
+            catch (ArgumentNullException ex)
+            {
+                new RMSWebException(this, "0500", "GetMessage failed. " + ex.Message, ex, true);
+                throw;
+            }
             try
             {
                 var serviceClient = new MessageActionService().messsageActionService;
@@ -217,6 +246,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     status = -1,
                     error = ex.Message
                 };
+                new RMSWebException(this, "0500", "GetMessage failed. " + ex.Message, ex, true);
+
                 return Json(ret);
             }
         }

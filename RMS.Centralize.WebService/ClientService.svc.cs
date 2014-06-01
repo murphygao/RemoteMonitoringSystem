@@ -9,6 +9,7 @@ using System.Text;
 using System.Web.Management;
 using RMS.Centralize.DAL;
 using RMS.Centralize.WebService.Model;
+using RMS.Common.Exception;
 
 namespace RMS.Centralize.WebService
 {
@@ -83,6 +84,8 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "GetClient failed. " + ex.Message, ex, true);
+
                 var sr = new ClientResult
                 {
                     IsSuccess = false,
@@ -112,6 +115,8 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "SetClientState failed. " + ex.Message, ex, true);
+
                 var sr = new Result
                 {
                     IsSuccess = false,
@@ -141,6 +146,8 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "Search failed. " + ex.Message, ex, true);
+
                 var sr = new ClientInfoResult
                 {
                     IsSuccess = false,
@@ -187,6 +194,8 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "Update failed. " + ex.Message, ex, true);
+
                 var sr = new Result
                 {
                     IsSuccess = false,
@@ -214,6 +223,8 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "ExistingClientCode failed. " + ex.Message, ex, true);
+
                 var sr = new ClientResult
                 {
                     IsSuccess = false,

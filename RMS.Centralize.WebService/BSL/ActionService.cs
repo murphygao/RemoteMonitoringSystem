@@ -15,6 +15,7 @@ using System.Web.Mvc;
 using RMS.Centralize.DAL;
 using RMS.Centralize.WebService.Gateway;
 using RMS.Centralize.WebService.Model;
+using RMS.Common.Exception;
 
 namespace RMS.Centralize.WebService.BSL
 {
@@ -56,7 +57,7 @@ namespace RMS.Centralize.WebService.BSL
             }
             catch (Exception ex)
             {
-                throw new Exception("ActionSend errors. " + ex.Message, ex);
+                throw new RMSWebException(this, "0500", "ActionSend failed. " + ex.Message, ex, false);
             }
         }
 
@@ -90,6 +91,8 @@ namespace RMS.Centralize.WebService.BSL
                                                                             "@ClientID", parameters);
                     List<ClientMessageAction> lClientMessageActions = new List<ClientMessageAction>(details.ToList());
 
+                    // lClientMessageActions ถ้าเป็น 0 แสดงว่า table: RMS_ClientSeverityAction ไม่มีข้อมูลของ Client ID นี้
+                    if (lClientMessageActions.Count == 0) throw new Exception("Defined action not found. Please check table: RMS_ClientSeverityAction for Client code: " + lRmsReportSummaryMonitorings[0].ClientCode);
 
                     foreach (var monitoring in lRmsReportSummaryMonitorings)
                     {
@@ -493,10 +496,16 @@ namespace RMS.Centralize.WebService.BSL
                 if (ex.Message.ToLower().IndexOf(exLicense.ToLower()) > -1)
                 {
                     // Log into RMS_Log_Monitoring
-                    AddLogActionSend(null, null, null, null, false, ex.Message);
+                    try
+                    {
+                        AddLogActionSend(null, null, null, null, false, ex.Message);
+                    }
+                    catch (Exception ex2)
+                    {
+                        new RMSWebException(this, "0500", "AddLogActionSend failed. " + ex2.Message + ". " + ex.Message, ex2, true);
+                    }
                 }
-
-                throw new Exception("ManualSending errors. " + ex.Message, ex);
+                throw new RMSWebException(this, "0500", "ManualSending failed. " + ex.Message, ex, false);
             }
         }
 
@@ -530,11 +539,17 @@ namespace RMS.Centralize.WebService.BSL
                 if (ex.Message.ToLower().IndexOf(exLicense.ToLower()) > -1)
                 {
                     // Log into RMS_Log_Monitoring
-                    AddLogActionSend(null, null, null, null, false, ex.Message);
+                    try
+                    {
+                        AddLogActionSend(null, null, null, null, false, ex.Message);
+                    }
+                    catch (Exception ex2)
+                    {
+                        new RMSWebException(this, "0500", "AddLogActionSend failed. " + ex2.Message + ". " + ex.Message, ex2, true);
+                    }
                 }
 
-
-                throw new Exception("TechnicalSending errors. " + ex.Message, ex);
+                throw new RMSWebException(this, "0500", "TechnicalSending failed. " + ex.Message, ex, false);
             }
             
         }
@@ -563,7 +578,7 @@ namespace RMS.Centralize.WebService.BSL
             }
             catch (Exception ex)
             {
-                throw new Exception("AddLogActionSend failed. " + ex.Message, ex);
+                throw new RMSWebException(this, "0500", "AddLogActionSend failed. " + ex.Message, ex, false);
             }
         }
 

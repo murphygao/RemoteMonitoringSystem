@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using RMS.Common.Exception;
 using SKAdapter;
 
 namespace RMS.Centralize.WebService.Gateway
@@ -13,34 +14,48 @@ namespace RMS.Centralize.WebService.Gateway
     {
         public ActionResult SendEmail(GatewayName gatewayName, string from, List<string> toList, string subject, string body)
         {
-            if (toList == null || toList.Count == 0) return new ActionResult { IsSuccess = false, ErrorMessage = "Recipient cannot be null." };
-
-            switch (gatewayName)
+            try
             {
-                case GatewayName.AIS_SKS:
-                    return AIS_SKS_Email(from, toList, subject, body);
-                    break;
-                case GatewayName.KTB_VTM:
-                    break;
-            }
+                if (toList == null || toList.Count == 0) return new ActionResult { IsSuccess = false, ErrorMessage = "Recipient cannot be null." };
 
-            return null;
+                switch (gatewayName)
+                {
+                    case GatewayName.AIS_SKS:
+                        return AIS_SKS_Email(from, toList, subject, body);
+                        break;
+                    case GatewayName.KTB_VTM:
+                        break;
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw new RMSWebException(this, "0500", "SendEmail failed. " + ex.Message, ex, false);
+            }
         }
 
         public ActionResult SendSMS(GatewayName gatewayName, string mobileNumber, string sender, string body)
         {
-            if (string.IsNullOrEmpty(mobileNumber)) return new ActionResult { IsSuccess = false, ErrorMessage = "Mobile Number cannot be null." };
-
-            switch (gatewayName)
+            try
             {
-                case GatewayName.AIS_SKS:
-                    return AIS_SKS_SMS(mobileNumber, sender, body);
-                    break;
-                case GatewayName.KTB_VTM:
-                    break;
-            }
+                if (string.IsNullOrEmpty(mobileNumber)) return new ActionResult { IsSuccess = false, ErrorMessage = "Mobile Number cannot be null." };
 
-            return null;
+                switch (gatewayName)
+                {
+                    case GatewayName.AIS_SKS:
+                        return AIS_SKS_SMS(mobileNumber, sender, body);
+                        break;
+                    case GatewayName.KTB_VTM:
+                        break;
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw new RMSWebException(this, "0500", "SendSMS failed. " + ex.Message, ex, false);
+            }
         }
 
         #region AIS Gateway
@@ -69,6 +84,8 @@ namespace RMS.Centralize.WebService.Gateway
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "AIS_SKS_Email failed. " + ex.Message, ex, true);
+
                 return new ActionResult
                 {
                     IsSuccess = false,
@@ -100,6 +117,8 @@ namespace RMS.Centralize.WebService.Gateway
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "AIS_SKS_SMS failed. " + ex.Message, ex, true);
+
                 return new ActionResult
                 {
                     IsSuccess = false,

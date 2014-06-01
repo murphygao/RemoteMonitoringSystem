@@ -9,6 +9,7 @@ using System.Text;
 using RMS.Centralize.DAL;
 using RMS.Centralize.WebService.BSL;
 using RMS.Centralize.WebService.Model;
+using RMS.Common.Exception;
 
 namespace RMS.Centralize.WebService
 {
@@ -203,6 +204,7 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "SearchSummaryMonitoring failed. " + ex.Message, ex, true);
 
                 return new SummaryMonitoringResult
                 {
@@ -249,6 +251,7 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "GetClientInfo failed. " + ex.Message, ex, true);
 
                 return new ClientInfoResult
                 {
@@ -285,6 +288,8 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "ActionRequest failed. " + ex.Message, ex, true);
+
                 return new Result
                 {
                     IsSuccess = false,

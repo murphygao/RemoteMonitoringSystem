@@ -13,6 +13,7 @@ using RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy;
 using RMS.Centralize.DAL;
 using RMS.Centralize.WebService.BSL;
 using RMS.Centralize.WebService.Gateway;
+using RMS.Common.Exception;
 
 namespace RMS.Centralize.WebService
 {
@@ -51,6 +52,16 @@ namespace RMS.Centralize.WebService
 
                  */
 
+                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.ErrorLogFile"]))
+                {
+                    ret += "<br/>AppSettings[\"RMS.ErrorLogFile\"] not found or empty.";
+                }
+
+                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.LicenseLogFile"]))
+                {
+                    ret += "<br/>AppSettings[\"RMS.LicenseLogFile\"] not found or empty.";
+                }
+
                 if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.OverrideProxy"]))
                 {
                     ret += "<br/>AppSettings[\"RMS.OverrideProxy\"] not found or empty.";
@@ -69,6 +80,11 @@ namespace RMS.Centralize.WebService
                 if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.ActionModeTest"]))
                 {
                     ret += "<br/>AppSettings[\"RMS.ActionModeTest\"] not found or empty.";
+                }
+
+                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.LicenseFile"]))
+                {
+                    ret += "<br/>AppSettings[\"RMS.LicenseFile\"] not found or empty.";
                 }
 
                 if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.SMSGW.URL"]))
@@ -135,6 +151,8 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "TestWebConfig failed. " + ex.Message, ex, true);
+
                 return ret + "<br/><br/>" + ex.Message;
             }
         }
@@ -176,6 +194,8 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "TestDatabaseConnection failed. " + ex.Message, ex, true);
+
                 return "<br/>" + ex.Message;
             }
 
@@ -209,6 +229,8 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "TestAgentConnection failed. " + ex.Message, ex, true);
+
                 return "<br/>" + ex.Message;
             }
             return ret;
@@ -243,6 +265,7 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "TestEmailSmsConnection failed. " + ex.Message, ex, true);
 
                 ret += "<br/>" + ex.Message;
             }
@@ -263,6 +286,7 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "TestEmailSmsConnection failed. " + ex.Message, ex, true);
 
                 ret += "<br/>" + ex.Message;
             }

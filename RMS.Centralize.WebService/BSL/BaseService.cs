@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Web;
 using ESN.LicenseManager.Helper;
 using ESN.LicenseManager.Model;
+using RMS.Common.Exception;
 
 namespace RMS.Centralize.WebService.BSL
 {
@@ -56,7 +57,8 @@ namespace RMS.Centralize.WebService.BSL
             }
             catch (Exception ex)
             {
-                throw new Exception("Initial License errors. " + ex.Message, ex);
+                new RMSLicenseException("InitialLicense failed. " + ex.Message, ex, true);
+                throw new RMSWebException(this, "0500", "InitialLicense failed. " + ex.Message, ex, false);
             }
         }
     }

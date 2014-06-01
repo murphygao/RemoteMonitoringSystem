@@ -52,7 +52,10 @@ namespace Test.ConsoleApplication
 
                 //TestClientProxy();
                 //CallMonitoringAgent();
-                LocalIPAddress();
+                //LocalIPAddress();
+
+                SendBusinessMessage();
+
                 //TestPrinter("Brother MFC-7450 Printer");
                 //TestCustomThermalPrinter();
                 //TestPrintingStatus();
@@ -384,6 +387,17 @@ namespace Test.ConsoleApplication
             msc.StartMonitoringEngine();
             //RMS.Centralize.BSL.MonitoringEngine.MonitoringService ms = new MonitoringService();
             //ms.Start();
+        }
+
+        private static void SendBusinessMessage()
+        {
+            MonitoringProxy.MonitoringServiceClient msc = new MonitoringServiceClient();
+            var raw = new RmsReportMonitoringRaw();
+            raw.ClientCode = "SKSSGWS01";
+            raw.Message = "CLIENT_ERROR";
+            raw.MessageGroupCode = "B001";
+            raw.MessageRemark = "Testing Business Message";
+            msc.AddBusinessMessage(raw);
         }
 
 

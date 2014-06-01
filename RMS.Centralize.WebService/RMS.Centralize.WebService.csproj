@@ -45,6 +45,10 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="ESN.Common.Exception, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Solution Items\ESN\ESN.Common.Exception.dll</HintPath>
+    </Reference>
     <Reference Include="ESN.LicenseManager.Helper">
       <HintPath>..\Solution Items\ESN\ESN.LicenseManager.Helper.dll</HintPath>
     </Reference>
@@ -189,6 +193,10 @@
     <ProjectReference Include="..\RMS.Centralize.WebService.Gateway\RMS.Centralize.WebService.Gateway.csproj">
       <Project>{22541ddd-75fd-403f-a67a-2843fcc2a670}</Project>
       <Name>RMS.Centralize.WebService.Gateway</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Common.Exception\RMS.Common.Exception.csproj">
+      <Project>{F8EC98BC-37BB-42FD-9B50-78F928BB08A2}</Project>
+      <Name>RMS.Common.Exception</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -8,6 +8,7 @@ using System.ServiceModel;
 using System.Text;
 using RMS.Centralize.DAL;
 using RMS.Centralize.WebService.Model;
+using RMS.Common.Exception;
 
 namespace RMS.Centralize.WebService
 {
@@ -97,6 +98,7 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "Search failed. " + ex.Message, ex, true);
 
                 return new ActionProfileResult
                 {
@@ -126,6 +128,8 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "Delete failed. " + ex.Message, ex, true);
+
                 return new Result { IsSuccess = false };
             }
 
@@ -155,6 +159,8 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "Get failed. " + ex.Message, ex, true);
+
                 var sr = new ActionProfileResult
                 {
                     IsSuccess = false,
@@ -166,10 +172,17 @@ namespace RMS.Centralize.WebService
 
         public Result Update(int? id, string m, string ActionProfileName, string Email, string SMS, bool ActiveList)
         {
-            if (string.IsNullOrEmpty(ActionProfileName)) throw new ArgumentNullException("ActionProfileName");
+            try
+            {
+                if (string.IsNullOrEmpty(ActionProfileName)) throw new ArgumentNullException("ActionProfileName");
 
-            if (m == "e" && id == null) throw new ArgumentNullException("id");
-
+                if (m == "e" && id == null) throw new ArgumentNullException("id");
+            }
+            catch (ArgumentNullException ex)
+            {
+                new RMSWebException(this, "0500", "Update failed. " + ex.Message, ex, true);
+                throw;
+            }
             if (string.IsNullOrEmpty(m))
             {
                 try
@@ -188,6 +201,8 @@ namespace RMS.Centralize.WebService
                 }
                 catch (Exception ex)
                 {
+                    new RMSWebException(this, "0500", "Update failed. " + ex.Message, ex, true);
+
                     return new Result
                     {
                         IsSuccess = false,
@@ -212,6 +227,8 @@ namespace RMS.Centralize.WebService
                 }
                 catch (Exception ex)
                 {
+                    new RMSWebException(this, "0500", "Update failed. " + ex.Message, ex, true);
+
                     return new Result
                     {
                         IsSuccess = false,
@@ -222,6 +239,8 @@ namespace RMS.Centralize.WebService
             }
             else
             {
+                new RMSWebException(this, "0500", "Update failed. Missing Parameter m=" + m, true);
+
                 return new Result
                 {
                     IsSuccess = false,

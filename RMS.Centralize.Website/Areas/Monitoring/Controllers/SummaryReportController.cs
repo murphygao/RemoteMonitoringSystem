@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using RMS.Centralize.Website.Areas.Monitoring.Models;
 using RMS.Centralize.WebSite.Proxy.ClientProxy;
 using RMS.Centralize.WebSite.Proxy.SummaryReportProxy;
+using RMS.Common.Exception;
 using JQueryDataTableParamModel = RMS.Centralize.WebSite.Proxy.SummaryReportProxy.JQueryDataTableParamModel;
 
 namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
@@ -69,6 +70,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     isSuccess = false,
                     errorMessage = ex.Message
                 };
+                new RMSWebException(this, "0500", "SearchMonitoringReport failed. " + ex.Message, ex, true);
 
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
@@ -78,8 +80,15 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
         // GET: /Monitoring/SummaryReport/GetClientInfo/
         public ActionResult GetClientInfo(int? id)
         {
-            if (id == null) throw new ArgumentNullException("ClientID");
-
+            try
+            {
+                if (id == null) throw new ArgumentNullException("ClientID");
+            }
+            catch (ArgumentNullException ex)
+            {
+                new RMSWebException(this, "0500", "GetClientInfo failed. " + ex.Message, ex, true);
+                throw;
+            }
             try
             {
                 var service = new RMS.Centralize.WebSite.Proxy.SummaryReportService().summaryReportService;
@@ -102,6 +111,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     status = -1,
                     error = ex.Message
                 };
+                new RMSWebException(this, "0500", "GetClientInfo failed. " + ex.Message, ex, true);
                 return Json(ret);
             }
 
@@ -161,6 +171,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     isSuccess = false,
                     errorMessage = ex.Message
                 };
+                new RMSWebException(this, "0500", "SearchClientMonitoring failed. " + ex.Message, ex, true);
 
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
@@ -283,6 +294,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     isSuccess = false,
                     errorMessage = ex.Message
                 };
+                new RMSWebException(this, "0500", "GetCurrentDeviceStatus failed. " + ex.Message, ex, true);
 
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
@@ -325,6 +337,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     isSuccess = false,
                     errorMessage = ex.Message
                 };
+                new RMSWebException(this, "0500", "ResendAction failed. " + ex.Message, ex, true);
 
                 return Json(exError, JsonRequestBehavior.AllowGet);
             }
@@ -332,10 +345,17 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
         private int? FindDeviceTypeIDByDeviceID(List<RmsDevice> devices, int? deviceID)
         {
-            if (deviceID == null) return null;
-            var rmsDevice = devices.First(d => d.DeviceId == deviceID);
-            if (rmsDevice != null) return rmsDevice.DeviceTypeId;
-            return null;
+            try
+            {
+                if (deviceID == null) return null;
+                var rmsDevice = devices.First(d => d.DeviceId == deviceID);
+                if (rmsDevice != null) return rmsDevice.DeviceTypeId;
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw new RMSWebException(this, "0500", "FindDeviceTypeIDByDeviceID failed. " + ex.Message, ex, false);
+            }
         }
     }
 }

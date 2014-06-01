@@ -7,6 +7,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using RMS.Centralize.WebSite.Proxy.ClientProxy;
+using RMS.Common.Exception;
 
 namespace RMS.Centralize.WebSite.Proxy
 {
@@ -48,9 +49,10 @@ namespace RMS.Centralize.WebSite.Proxy
                 _clientService = new ClientServiceClient();
                 Initialize(urlWebService);
             }
-            catch
+            catch (Exception ex)
             {
                 _clientService = null;
+                throw new RMSWebException(this, "0500", "ClientService ctor failed. " + ex.Message, ex, false);
             }
         }
 
@@ -115,7 +117,7 @@ namespace RMS.Centralize.WebSite.Proxy
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Web.config/App.config contains errors. " + ex.Message, ex);
+                    throw new RMSWebException(this, "0500", "Initialize Web.config/App.config failed. " + ex.Message, ex, false);
                 }
 
                 /*** set initial ***/
@@ -135,26 +137,33 @@ namespace RMS.Centralize.WebSite.Proxy
             }
             catch (Exception ex)
             {
-                throw new Exception("MobileService - Initialize() ctor failed. " + ex.Message, ex);
+                throw new RMSWebException(this, "0500", "Initialize failed. " + ex.Message, ex, false);
             }
         }
 
         public WebProxy GetWebProxy()
         {
-            if (proxyEnable != null && !string.IsNullOrEmpty(proxyAddress)
-                && proxyPort != null && proxyEnable.Value == 1)
+            try
             {
-                if (maxServicePointIdleTime1 != null)
-                    ServicePointManager.MaxServicePointIdleTime = 1000 * maxServicePointIdleTime1.Value;
-                var proxy = new WebProxy(proxyAddress, proxyPort.Value);
-                proxy.Credentials = new NetworkCredential(proxyUserName, proxyPassword);
-                return proxy;
+                if (proxyEnable != null && !string.IsNullOrEmpty(proxyAddress)
+                    && proxyPort != null && proxyEnable.Value == 1)
+                {
+                    if (maxServicePointIdleTime1 != null)
+                        ServicePointManager.MaxServicePointIdleTime = 1000 * maxServicePointIdleTime1.Value;
+                    var proxy = new WebProxy(proxyAddress, proxyPort.Value);
+                    proxy.Credentials = new NetworkCredential(proxyUserName, proxyPassword);
+                    return proxy;
+                }
+                else
+                {
+                    if (maxServicePointIdleTime2 != null)
+                        ServicePointManager.MaxServicePointIdleTime = 1000 * maxServicePointIdleTime2.Value;
+                    return null;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                if (maxServicePointIdleTime2 != null)
-                    ServicePointManager.MaxServicePointIdleTime = 1000 * maxServicePointIdleTime2.Value;
-                return null;
+                throw new RMSWebException(this, "0500", "GetWebProxy failed. " + ex.Message, ex, false);
             }
         }
 

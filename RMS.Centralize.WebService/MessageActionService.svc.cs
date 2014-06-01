@@ -8,6 +8,7 @@ using System.ServiceModel;
 using System.Text;
 using RMS.Centralize.DAL;
 using RMS.Centralize.WebService.Model;
+using RMS.Common.Exception;
 
 namespace RMS.Centralize.WebService
 {
@@ -37,6 +38,8 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "InitDataForMeesageAction failed. " + ex.Message, ex, true);
+
                 return new InitMessageActionResult
                 {
                     IsSuccess = false,
@@ -140,6 +143,8 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "MessageAction-Search failed. " + ex.Message, ex, true);
+
                 return new MessageActionResult
                 {
                     IsSuccess = false
@@ -166,6 +171,8 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "MessageAction-Delete failed. " + ex.Message, ex, true);
+
                 return new Result { IsSuccess = false, ErrorMessage = ex.Message};
             }
         }
@@ -192,6 +199,8 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "InitDataForMeesageEdit failed. " + ex.Message, ex, true);
+                
                 return new InitMessageActionResult
                 {
                     IsSuccess = false,
@@ -227,6 +236,8 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "InitDataForMeesageEdit failed. " + ex.Message, ex, true);
+
                 return new InitMessageActionResult
                 {
                     IsSuccess = false,
@@ -254,8 +265,15 @@ namespace RMS.Centralize.WebService
 
         public MessageActionResult Get(int? id)
         {
-            if (id == null) throw new ArgumentNullException("MessageID");
-
+            try
+            {
+                if (id == null) throw new ArgumentNullException("MessageID");
+            }
+            catch (ArgumentNullException ex)
+            {
+                new RMSWebException(this, "0500", "MessageEdit-Get failed. " + ex.Message, ex, true);
+                throw;
+            }
             try
             {
                 using (var db = new MyDbContext())
@@ -274,6 +292,8 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
+                new RMSWebException(this, "0500", "MessageEdit-Get failed. " + ex.Message, ex, true);
+
                 return new MessageActionResult
                 {
                     IsSuccess = false,
@@ -284,11 +304,20 @@ namespace RMS.Centralize.WebService
 
         public Result UpdateMessage(int? id, string m, int? messageGroupID, string message, int? severityLevelID, bool activeList, bool activeStatus)
         {
-            if (messageGroupID == null) throw new ArgumentNullException("messageGroupID");
-            if (string.IsNullOrEmpty(message)) throw new ArgumentNullException("message");
+            try
+            {
+                if (messageGroupID == null) throw new ArgumentNullException("messageGroupID");
+                if (string.IsNullOrEmpty(message)) throw new ArgumentNullException("message");
 
-            if (m == "e" && id == null) throw new ArgumentNullException("id");
+                if (m == "e" && id == null) throw new ArgumentNullException("id");
 
+            }
+            catch (ArgumentNullException ex)
+            {
+                new RMSWebException(this, "0500", "MessageEdit-UpdateMessage failed. " + ex.Message, ex, true);
+                throw;
+            }            
+            
             // Add New Mode
             if (string.IsNullOrEmpty(m))
             {
@@ -310,6 +339,8 @@ namespace RMS.Centralize.WebService
                 }
                 catch (Exception ex)
                 {
+                    new RMSWebException(this, "0500", "MessageEdit-UpdateMessage failed. " + ex.Message, ex, true);
+
                     return new Result
                     {
                         IsSuccess = false,
@@ -335,6 +366,8 @@ namespace RMS.Centralize.WebService
                 }
                 catch (Exception ex)
                 {
+                    new RMSWebException(this, "0500", "MessageEdit-UpdateMessage failed. " + ex.Message, ex, true);
+                    
                     return new Result
                     {
                         IsSuccess = false,
@@ -344,6 +377,7 @@ namespace RMS.Centralize.WebService
             }
             else
             {
+                new RMSWebException(this, "0500", "MessageEdit-UpdateMessage Missing Parameter. m=" + m, true);
                 return new Result
                 {
                     IsSuccess = false,

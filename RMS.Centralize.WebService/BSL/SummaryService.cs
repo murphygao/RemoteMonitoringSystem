@@ -10,6 +10,7 @@ using System.Transactions;
 using System.Web;
 using RMS.Centralize.DAL;
 using RMS.Centralize.WebService.Model;
+using RMS.Common.Exception;
 
 namespace RMS.Centralize.WebService.BSL
 {
@@ -374,7 +375,7 @@ namespace RMS.Centralize.WebService.BSL
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new RMSWebException(this, "0500", "DoSummaryMonitoring failed. " + ex.Message, ex, false);
             }
 
 
@@ -517,7 +518,7 @@ namespace RMS.Centralize.WebService.BSL
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new RMSWebException(this, "0500", "DoSummaryMonitoringForBusiness failed. " + ex.Message, ex, false);
             }
         }
     }

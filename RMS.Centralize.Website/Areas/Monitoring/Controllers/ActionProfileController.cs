@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using Newtonsoft.Json;
 using RMS.Centralize.WebSite.Proxy;
 using RMS.Centralize.WebSite.Proxy.ActionProfileProxy;
+using RMS.Common.Exception;
 
 namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 {
@@ -52,6 +53,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     errorMessage = ex.Message
                 };
 
+                new RMSWebException(this, "0500", "SearchActionList failed. " + ex.Message, ex, true);
+
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
         }
@@ -76,6 +79,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             catch (Exception ex)
             {
                 ret = "0";
+                new RMSWebException(this, "0500", "DeleteActionProfile failed. " + ex.Message, ex, true);
             }
 
 
@@ -112,6 +116,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     status = -1,
                     error = ex.Message
                 };
+                new RMSWebException(this, "0500", "GetActionProfile failed. " + ex.Message, ex, true);
+
                 return Json(ret);
             }
 
@@ -146,6 +152,9 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     status = 0,
                     error = ex.Message
                 };
+
+                new RMSWebException(this, "0500", "UpdateActionProfile failed. " + ex.Message, ex, true);
+
                 return Json(ret);
             }
         }

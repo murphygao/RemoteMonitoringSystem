@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using RMS.Common.Exception;
 
 namespace RMS.Centralize.WebService.BSL
 {
@@ -17,9 +18,8 @@ namespace RMS.Centralize.WebService.BSL
             }
             catch (Exception ex)
             {
-                return "Fail: " + ex.Message;
+                throw new RMSWebException(this, "0500", "Start failed. " + ex.Message, ex, false);
             }
-
         }
     }
 }

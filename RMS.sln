@@ -114,6 +114,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ESN", "ESN", "{25E2516C-189
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Monitoring.Device.Keyboard", "RMS.Monitoring.Device.Keyboard\RMS.Monitoring.Device.Keyboard.csproj", "{4157A758-DCBB-44D3-83FD-8130920F82B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Common.Exception", "RMS.Common.Exception\RMS.Common.Exception.csproj", "{F8EC98BC-37BB-42FD-9B50-78F928BB08A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -272,6 +274,10 @@ Global
 		{4157A758-DCBB-44D3-83FD-8130920F82B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4157A758-DCBB-44D3-83FD-8130920F82B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4157A758-DCBB-44D3-83FD-8130920F82B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8EC98BC-37BB-42FD-9B50-78F928BB08A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8EC98BC-37BB-42FD-9B50-78F928BB08A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8EC98BC-37BB-42FD-9B50-78F928BB08A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8EC98BC-37BB-42FD-9B50-78F928BB08A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

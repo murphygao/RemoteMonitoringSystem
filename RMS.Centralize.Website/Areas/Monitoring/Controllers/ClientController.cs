@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Newtonsoft.Json;
 using RMS.Centralize.WebSite.Proxy;
 using RMS.Centralize.WebSite.Proxy.ClientProxy;
+using RMS.Common.Exception;
 
 namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 {
@@ -58,6 +59,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     errorMessage = ex.Message
                 };
 
+                new RMSWebException(this, "0500", "Search failed. " + ex.Message, ex, true);
+
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
         }
@@ -86,6 +89,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     isSuccess = false,
                     errorMessage = ex.Message
                 };
+                new RMSWebException(this, "0500", "ExistingClientCode failed. " + ex.Message, ex, true);
 
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
@@ -115,6 +119,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     status = 0,
                     errorMessage = ex.Message
                 };
+                new RMSWebException(this, "0500", "GetClient failed. " + ex.Message, ex, true);
 
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
@@ -161,6 +166,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     status = 0,
                     error = ex.Message
                 };
+                new RMSWebException(this, "0500", "UpdateClient failed. " + ex.Message, ex, true);
+
                 return Json(ret);
             }
         }

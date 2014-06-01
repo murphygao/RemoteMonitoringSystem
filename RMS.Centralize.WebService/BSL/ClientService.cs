@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.UI;
 using RMS.Centralize.DAL;
 using RMS.Centralize.WebService.Model;
+using RMS.Common.Exception;
 
 namespace RMS.Centralize.WebService.BSL
 {
@@ -128,24 +129,29 @@ namespace RMS.Centralize.WebService.BSL
             }
             catch (Exception ex)
             {
-                throw new Exception("SearchClient errors. " + ex.Message, ex);
+                throw new RMSWebException(this, "0500", "SearchClient failed. " + ex.Message, ex, false);
             }
-
-
         }
 
         public int Updateclient(int? id, string m, string clientCode, int? clientTypeID, bool? useLocalInfo, int? referenceClientID, string ipAddress, int? locationID, bool? hasMonitoringAgent, bool? activeList, bool? status, DateTime? effectiveDate, DateTime? expiredDate,
             int? state)
         {
-            if (string.IsNullOrEmpty(m))
+            try
             {
-                return Add(clientCode, clientTypeID, useLocalInfo, referenceClientID, ipAddress, locationID, hasMonitoringAgent, activeList, status, effectiveDate, expiredDate, state);
+                if (string.IsNullOrEmpty(m))
+                {
+                    return Add(clientCode, clientTypeID, useLocalInfo, referenceClientID, ipAddress, locationID, hasMonitoringAgent, activeList, status, effectiveDate, expiredDate, state);
+                }
+                else if (m == "e" && id != null)
+                {
+                    return Update(id, clientCode, clientTypeID, useLocalInfo, referenceClientID, ipAddress, locationID, hasMonitoringAgent, activeList, status, effectiveDate, expiredDate, state);
+                }
+                return 0;
             }
-            else if (m == "e" && id != null)
+            catch (Exception ex)
             {
-                return Update(id, clientCode, clientTypeID, useLocalInfo, referenceClientID, ipAddress, locationID, hasMonitoringAgent, activeList, status, effectiveDate, expiredDate, state);
+                throw new RMSWebException(this, "0500", "Updateclient failed. " + ex.Message, ex, false);
             }
-            return 0;
         }
 
 
@@ -212,7 +218,7 @@ namespace RMS.Centralize.WebService.BSL
             }
             catch (Exception ex)
             {
-                throw new Exception("Get Client failed. " + ex.Message);
+                throw new RMSWebException(this, "0500", "GetClient failed. " + ex.Message, ex, false);
             }
         }
 
@@ -234,7 +240,7 @@ namespace RMS.Centralize.WebService.BSL
             }
             catch (Exception ex)
             {
-                throw new Exception("CheckExistingClientCode failed. " + ex.Message, ex);
+                throw new RMSWebException(this, "0500", "CheckExistingClientCode failed. " + ex.Message, ex, false);
             }
         }
 
@@ -306,7 +312,7 @@ namespace RMS.Centralize.WebService.BSL
             }
             catch (Exception ex)
             {
-                throw new Exception("Add failed. " + ex.Message);
+                throw new RMSWebException(this, "0500", "Add failed. " + ex.Message, ex, false);
             }
         }
 
@@ -384,7 +390,7 @@ namespace RMS.Centralize.WebService.BSL
             }
             catch (Exception ex)
             {
-                throw new Exception("Update failed. " + ex.Message, ex);
+                throw new RMSWebException(this, "0500", "Update failed. " + ex.Message, ex, false);
             }
             
         }
