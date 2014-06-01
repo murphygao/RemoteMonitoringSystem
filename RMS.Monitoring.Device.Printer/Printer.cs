@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Management;
 using System.Printing;
+using RMS.Common.Exception;
 
 namespace RMS.Monitoring.Device.Printer
 {
@@ -64,33 +65,40 @@ namespace RMS.Monitoring.Device.Printer
 
         public virtual int CheckPrinterOnline()
         {
-            if (string.IsNullOrEmpty(printerName)) return -1;
-
-            ManagementScope scope = new ManagementScope(@"\root\cimv2");
-            scope.Connect();
-
-            // Select Printers from WMI Object Collections
-            ManagementObjectSearcher searcher = new
-             ManagementObjectSearcher("SELECT * FROM Win32_Printer");
-
-            foreach (ManagementObject printer in searcher.Get())
+            try
             {
-                if (printer["Name"].ToString().ToLower().IndexOf(printerName.ToLower().Trim()) > -1)
+                if (string.IsNullOrEmpty(printerName)) return -1;
+
+                ManagementScope scope = new ManagementScope(@"\root\cimv2");
+                scope.Connect();
+
+                // Select Printers from WMI Object Collections
+                ManagementObjectSearcher searcher = new
+                    ManagementObjectSearcher("SELECT * FROM Win32_Printer");
+
+                foreach (ManagementObject printer in searcher.Get())
                 {
-                    if (printer["WorkOffline"].ToString().ToLower().Equals("true"))
+                    if (printer["Name"].ToString().ToLower().IndexOf(printerName.ToLower().Trim()) > -1)
                     {
-                        // printer is offline by user
-                        return 0;
-                    }
-                    else
-                    {
-                        // printer is not offline
-                        return 1;
+                        if (printer["WorkOffline"].ToString().ToLower().Equals("true"))
+                        {
+                            // printer is offline by user
+                            return 0;
+                        }
+                        else
+                        {
+                            // printer is not offline
+                            return 1;
+                        }
                     }
                 }
-            }
 
-            return -1;
+                return -1;
+            }
+            catch (Exception ex)
+            {
+                throw new RMSAppException(this, "0500", "CheckPrinterOnline failed. " + ex.Message, ex, false);
+            }
         }
 
         /// <summary>
@@ -100,29 +108,36 @@ namespace RMS.Monitoring.Device.Printer
         /// <returns>จำนวน queue ที่เกินเวลาที่กำหนดไว้</returns>
         public virtual int CheckPrintQueueStatus(int? second)
         {
-            if (second == null) second = 7;
-
-            int ret = 0;
-
-            PrintServer server = new PrintServer();
-
-            foreach (PrintQueue pq in server.GetPrintQueues())
+            try
             {
-                if (pq.FullName.Trim().ToLower() != deviceManagerName.Trim().ToLower()) continue;
+                if (second == null) second = 7;
 
-                pq.Refresh();
-                PrintJobInfoCollection jobs = pq.GetPrintJobInfoCollection();
-                foreach (PrintSystemJobInfo job in jobs)
+                int ret = 0;
+
+                PrintServer server = new PrintServer();
+
+                foreach (PrintQueue pq in server.GetPrintQueues())
                 {
-                    // Since the user may not be able to articulate which job is problematic, 
-                    // present information about each job the user has submitted. 
-                    //Console.WriteLine((DateTime.UtcNow - job.TimeJobSubmitted).TotalSeconds);
+                    if (pq.FullName.Trim().ToLower() != deviceManagerName.Trim().ToLower()) continue;
 
-                    if ((DateTime.UtcNow - job.TimeJobSubmitted).TotalSeconds > second)
-                        ret++;
-                }// end for each p
+                    pq.Refresh();
+                    PrintJobInfoCollection jobs = pq.GetPrintJobInfoCollection();
+                    foreach (PrintSystemJobInfo job in jobs)
+                    {
+                        // Since the user may not be able to articulate which job is problematic, 
+                        // present information about each job the user has submitted. 
+                        //Console.WriteLine((DateTime.UtcNow - job.TimeJobSubmitted).TotalSeconds);
+
+                        if ((DateTime.UtcNow - job.TimeJobSubmitted).TotalSeconds > second)
+                            ret++;
+                    }// end for each p
+                }
+                return ret;
             }
-            return ret;
+            catch (Exception ex)
+            {
+                throw new RMSAppException(this, "0500", "CheckPrintQueueStatus failed. " + ex.Message, ex, false);
+            }
 
         }
 

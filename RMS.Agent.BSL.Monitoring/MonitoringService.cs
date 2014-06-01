@@ -9,6 +9,7 @@ using RMS.Agent.Entity;
 using RMS.Agent.Proxy;
 using RMS.Agent.Proxy.ClientProxy;
 using RMS.Agent.Proxy.MonitoringProxy;
+using RMS.Common.Exception;
 using RMS.Monitoring.Helper;
 
 namespace RMS.Agent.BSL.Monitoring
@@ -26,11 +27,18 @@ namespace RMS.Agent.BSL.Monitoring
 
         public void Command(string clientCode)
         {
-            if (string.IsNullOrEmpty(clientCode)) return;
+            try
+            {
+                if (string.IsNullOrEmpty(clientCode)) return;
 
-            UpdateClientCode(clientCode);
-            var caller = new ExecuteCommandAsync(ExecuteCommand);
-            caller.BeginInvoke(clientCode, null, null);
+                UpdateClientCode(clientCode);
+                var caller = new ExecuteCommandAsync(ExecuteCommand);
+                caller.BeginInvoke(clientCode, null, null);
+            }
+            catch (Exception ex)
+            {
+                throw new RMSAppException("Command failed. clientCode=" + clientCode + "  " + ex.Message, ex, false);
+            }
         }
 
 
@@ -46,81 +54,105 @@ namespace RMS.Agent.BSL.Monitoring
              */
 
 
-            #region 1. Call Centralize to Get Client & Device Info for Monitoring
-
-            ClientServiceClient cs = new ClientServiceClient();
-            var clientResult = cs.GetClient(GetClientBy.ClientCode, null, clientCode, null, true, true);
-
-            int? deviceId = null;
-            int? monitoringProfileDeviceId = null;
-
-            var rmsMonitoringProfileDevices = Common.GetRmsMonitoringProfileDevicebyDeviceCode(clientResult, "CLIENT", Models.DeviceCode.Client);
-            // for CLIENT code, there are only one rmsMonitoringProfileDevices
-            if (rmsMonitoringProfileDevices.Count > 0)
-                monitoringProfileDeviceId = rmsMonitoringProfileDevices[0].MonitoringProfileDeviceId;
-
-            #endregion
-
-
-            #region 2. Send Alive Message
-
-            RMS.Agent.Proxy.MonitoringProxy.MonitoringServiceClient mp = new MonitoringServiceClient();
-
-            var rawMessage = new RmsReportMonitoringRaw();
-            rawMessage.ClientCode = clientResult.Client.ClientCode;
-            rawMessage.DeviceCode = "CLIENT";
-
-            rawMessage.Message = "OK";
-            rawMessage.MessageDateTime = DateTime.Now;
-            rawMessage.MonitoringProfileDeviceId = monitoringProfileDeviceId;
-
-            mp.AddMessage(rawMessage); 
-
-            #endregion
-
-
-            #region 3. Check Maintenance State
-
-            string maFilePath = ConfigurationManager.AppSettings["RMS.MA_FILE_PATH"];
-
-            // MA State?
-            if (File.Exists(maFilePath))
+            try
             {
-                if (clientResult.Client.State == (int) ClientState.Normal)
+                #region 1. Call Centralize to Get Client & Device Info for Monitoring
+
+                ClientServiceClient cs = new ClientServiceClient();
+                var clientResult = cs.GetClient(GetClientBy.ClientCode, null, clientCode, null, true, true);
+
+                int? deviceId = null;
+                int? monitoringProfileDeviceId = null;
+
+                var rmsMonitoringProfileDevices = RMS.Monitoring.Helper.Common.GetRmsMonitoringProfileDevicebyDeviceCode(clientResult, "CLIENT", Models.DeviceCode.Client);
+                // for CLIENT code, there are only one rmsMonitoringProfileDevices
+                if (rmsMonitoringProfileDevices.Count > 0)
+                    monitoringProfileDeviceId = rmsMonitoringProfileDevices[0].MonitoringProfileDeviceId;
+
+                #endregion
+
+                MonitoringServiceClient mp = new MonitoringServiceClient();
+
+                #region 2. Send Alive Message
+
+                try
                 {
-                    var client = new ClientServiceClient();
-                    client.SetClientState(clientResult.Client.ClientId, ClientState.Maintenance);
+                    var rawMessage = new RmsReportMonitoringRaw();
+                    rawMessage.ClientCode = clientResult.Client.ClientCode;
+                    rawMessage.DeviceCode = "CLIENT";
+
+                    rawMessage.Message = "OK";
+                    rawMessage.MessageDateTime = DateTime.Now;
+                    rawMessage.MonitoringProfileDeviceId = monitoringProfileDeviceId;
+
+                    mp.AddMessage(rawMessage);
                 }
-                return;
-            }
-            // Normal State
-            else
-            {
-                if (clientResult.Client.State == (int)ClientState.Maintenance)
+                catch (Exception ex)
                 {
-                    var client = new ClientServiceClient();
-                    client.SetClientState(clientResult.Client.ClientId, ClientState.Normal);
+                    throw new RMSAppException(this, "0500", "Send Alive Message failed. " + ex.Message, ex, false);
                 }
-            }
+                #endregion
 
-            #endregion
 
-            #region 4. Check Device Monitoring
+                #region 3. Check Maintenance State
 
-            var monitoringService = new RMS.Monitoring.Core.MonitoringService();
+                try
+                {
+                    string maFilePath = ConfigurationManager.AppSettings["RMS.MA_FILE_PATH"];
 
-            // Performance
-            var monitoringRaws = monitoringService.Monitoring("performance", clientResult);
+                    // MA State?
+                    if (File.Exists(maFilePath))
+                    {
+                        if (clientResult.Client.State == (int) ClientState.Normal)
+                        {
+                            var client = new ClientServiceClient();
+                            client.SetClientState(clientResult.Client.ClientId, ClientState.Maintenance);
+                        }
+                        return;
+                    }
+                        // Normal State
+                    else
+                    {
+                        if (clientResult.Client.State == (int)ClientState.Maintenance)
+                        {
+                            var client = new ClientServiceClient();
+                            client.SetClientState(clientResult.Client.ClientId, ClientState.Normal);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new RMSAppException(this, "0500", "Check Maintenance State failed. " + ex.Message, ex, false);
+                }
 
-            // Device
-            monitoringRaws.AddRange(monitoringService.Monitoring("device", clientResult));
+                #endregion
+
+                #region 4. Check Device Monitoring
+
+                try
+                {
+                    var monitoringService = new RMS.Monitoring.Core.MonitoringService();
+
+                    // Performance
+                    var monitoringRaws = monitoringService.Monitoring("performance", clientResult);
+
+                    // Device
+                    monitoringRaws.AddRange(monitoringService.Monitoring("device", clientResult));
             
-            if (monitoringRaws.Count > 0)
-                mp.AddMessages(monitoringRaws);
+                    if (monitoringRaws.Count > 0)
+                        mp.AddMessages(monitoringRaws);
+                }
+                catch (Exception ex)
+                {
+                    throw new RMSAppException(this, "0500", "Check Device Monitoring failed. " + ex.Message, ex, false);
+                }
 
-
-            #endregion
-
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                throw new RMSAppException(this, "0500", "ExecuteCommand failed. " + ex.Message, ex, false);
+            }
         }
 
 
@@ -143,8 +175,7 @@ namespace RMS.Agent.BSL.Monitoring
             }
             catch (Exception ex)
             {
-                
-                
+                new RMSAppException(this, "0500", "SetMonitoringState failed. ClientCode="+ clientCode + "   " + ex.Message, ex, true);
             }
 
         }
@@ -164,7 +195,7 @@ namespace RMS.Agent.BSL.Monitoring
             }
             catch (Exception ex)
             {
-                //throw new Exception("UpdateClientCode failed. " + ex.Message);
+                new RMSAppException(this, "0500", "UpdateClientCode failed. ClientCode=" + clientCode + "   " + ex.Message, ex, true);
             }
         }
 

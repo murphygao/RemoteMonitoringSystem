@@ -12,11 +12,13 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RMS.Agent.Watchdog.BSL;
+using RMS.Common.Exception;
 
 namespace RMS.Agent.Watchdog
 {
@@ -63,7 +65,7 @@ namespace RMS.Agent.Watchdog
             }
             catch (Exception ex)
             {
-
+                throw new RMSAppException(this, "0500", "MainWindow failed. " + ex.Message, ex, true);
             }
 
         }
@@ -77,26 +79,46 @@ namespace RMS.Agent.Watchdog
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            lblAppStatus.Content = "Started";
-            btnStart.IsEnabled = false;
-            btnStop.IsEnabled = true;
+            try
+            {
+                lblAppStatus.Content = "Started";
+                btnStart.IsEnabled = false;
+                btnStop.IsEnabled = true;
 
-            dispatcherTimer.Start();
-
+                dispatcherTimer.Start();
+            }
+            catch (Exception ex)
+            {
+                throw new RMSAppException(this, "0500", "btnStart_Click failed. " + ex.Message, ex, true);
+            }
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
-            lblAppStatus.Content = "Stopped";
-            btnStart.IsEnabled = true;
-            btnStop.IsEnabled = false;
+            try
+            {
+                lblAppStatus.Content = "Stopped";
+                btnStart.IsEnabled = true;
+                btnStop.IsEnabled = false;
 
-            dispatcherTimer.Stop();
+                dispatcherTimer.Stop();
+            }
+            catch (Exception ex)
+            {
+                throw new RMSAppException(this, "0500", "btnStop_Click failed. " + ex.Message, ex, true);
+            }
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            ws.Start();
+            try
+            {
+                ws.Start();
+            }
+            catch (Exception ex)
+            {
+                throw new RMSAppException(this, "0500", "dispatcherTimer_Tick failed. " + ex.Message, ex, true);
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -120,10 +142,16 @@ namespace RMS.Agent.Watchdog
 
         internal static void HideMinimizeAndMaximizeButtons(this Window window)
         {
-            IntPtr hwnd = new System.Windows.Interop.WindowInteropHelper(window).Handle;
-            var currentStyle = GetWindowLong(hwnd, GWL_STYLE);
+            try
+            {
+                IntPtr hwnd = new WindowInteropHelper(window).Handle;
+                var currentStyle = GetWindowLong(hwnd, GWL_STYLE);
 
-            SetWindowLong(hwnd, GWL_STYLE, (currentStyle & ~WS_MAXIMIZEBOX));
+                SetWindowLong(hwnd, GWL_STYLE, (currentStyle & ~WS_MAXIMIZEBOX));
+            }
+            catch
+            {
+            }
         }
     }
 

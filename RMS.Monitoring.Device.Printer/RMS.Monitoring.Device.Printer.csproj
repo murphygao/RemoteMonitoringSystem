@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ESN.Common.Exception">
+      <HintPath>..\Solution Items\ESN\ESN.Common.Exception.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
@@ -52,6 +55,10 @@
     <ProjectReference Include="..\RMS.Agent.Proxy\RMS.Agent.Proxy.csproj">
       <Project>{34CC6B3A-D552-480A-B3D1-F94A389C1C86}</Project>
       <Name>RMS.Agent.Proxy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Common.Exception\RMS.Common.Exception.csproj">
+      <Project>{F8EC98BC-37BB-42FD-9B50-78F928BB08A2}</Project>
+      <Name>RMS.Common.Exception</Name>
     </ProjectReference>
     <ProjectReference Include="..\RMS.Monitoring.Device\RMS.Monitoring.Device.csproj">
       <Project>{ba999f8e-4f2b-443a-b59a-f8f82c4d9103}</Project>

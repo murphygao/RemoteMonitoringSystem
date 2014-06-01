@@ -23,6 +23,7 @@ using RMS.Agent.Helper;
 using RMS.Agent.Model;
 using RMS.Agent.Proxy.ClientProxy;
 using RMS.Agent.WCF;
+using RMS.Common.Exception;
 using MessageBox = System.Windows.MessageBox;
 
 namespace RMS.Agent.WPF
@@ -81,6 +82,7 @@ namespace RMS.Agent.WPF
             }
             catch (Exception ex)
             {
+                new RMSAppException(this, "0500", "MainWindow failed. " + ex.Message, ex, true);
                 logs.Add(new EventLog { EventDateTime = DateTime.Now, EventType = "Error", Message = "MainWindow errors", Detail = ex.Message });
             }
         }
@@ -104,6 +106,7 @@ namespace RMS.Agent.WPF
             }
             catch (Exception ex)
             {
+                new RMSAppException(this, "0500", "Window_Loaded failed. " + ex.Message, ex, true);
                 logs.Add(new EventLog { EventDateTime = DateTime.Now, EventType = "Error", Message = "Window_Loaded errors", Detail = ex.Message });
             }
         }
@@ -122,6 +125,11 @@ namespace RMS.Agent.WPF
             }
             catch (Exception ex)
             {
+                btnStart.IsEnabled = true;
+                btnStop.IsEnabled = false;
+
+                new RMSAppException(this, "0500", "btnStart_Click failed. " + ex.Message, ex, true);
+
                 logs.Add(new EventLog { EventDateTime = DateTime.Now, EventType = "Error", Message = "btnStart_Click errors", Detail = ex.Message });
             }
         }
@@ -140,6 +148,11 @@ namespace RMS.Agent.WPF
             }
             catch (Exception ex)
             {
+                btnStart.IsEnabled = false;
+                btnStop.IsEnabled = true;
+
+                new RMSAppException(this, "0500", "btnStop_Click failed. " + ex.Message, ex, true);
+
                 logs.Add(new EventLog { EventDateTime = DateTime.Now, EventType = "Error", Message = "btnStop_Click errors", Detail = ex.Message });
             }
         }
@@ -162,17 +175,25 @@ namespace RMS.Agent.WPF
 
                 host.AddServiceEndpoint(typeof(RMS.Agent.WCF.IAgentService),
                     new NetTcpBinding(), netTCP);
-
                 host.Open();
                 lblStatus.Content = "Started";
             }
             catch (Exception ex)
             {
-                host.Abort();
-                lblStatus.Content = "Stopped";
-                logs.Add(new EventLog { EventDateTime = DateTime.Now, EventType = "Error", Message = "StartService errors", Detail = ex.Message });
-                btnStart.IsEnabled = true;
-                btnStop.IsEnabled = false;
+                try
+                {
+                    host.Abort();
+                    lblStatus.Content = "Stopped";
+                    logs.Add(new EventLog { EventDateTime = DateTime.Now, EventType = "Error", Message = "StartService errors", Detail = ex.Message });
+                    btnStart.IsEnabled = true;
+                    btnStop.IsEnabled = false;
+                }
+                catch (Exception ex2)
+                {
+                    throw new RMSAppException(this, "0500", "host.Abort() failed. " + ex2.Message, ex2, false);
+                }
+
+                throw new RMSAppException(this, "0500", "StartService failed. " + ex.Message, ex, false);
             }
         }
 
@@ -186,7 +207,10 @@ namespace RMS.Agent.WPF
             }
             catch (Exception ex)
             {
+
                 logs.Add(new EventLog { EventDateTime = DateTime.Now, EventType = "Error", Message = "StopService errors", Detail = ex.Message });
+
+                throw new RMSAppException(this, "0500", "StopService failed. " + ex.Message, ex, false);
             }
         }
 
@@ -210,90 +234,109 @@ namespace RMS.Agent.WPF
                     tw.Close();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                new RMSAppException(this, "0500", "Window_Closing failed. " + ex.Message, ex, true);
             }
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            if (File.Exists(maFilePath))
-            {
-                if (currentState == lblState.Content.ToString())
-                {
-                    MonitoringService ms = new MonitoringService();
-                    ms.SetMonitoringState(clientCode, ClientState.Maintenance);
-                }
-
-                lblState.Content = "Maintenance";
-            }
-            else
-            {
-                if (currentState == lblState.Content.ToString())
-                {
-                    MonitoringService ms = new MonitoringService();
-                    ms.SetMonitoringState(clientCode, ClientState.Normal);
-                }
-                lblState.Content = "Normal";
-            }
-
-            if (processingTempEvent) return;
-
             try
             {
-                processingTempEvent = true;
-
-                lock (AgentService._lock)
+                if (File.Exists(maFilePath))
                 {
-                    if (File.Exists(tempEventFile))
+                    if (currentState == lblState.Content.ToString())
                     {
+                        MonitoringService ms = new MonitoringService();
+                        ms.SetMonitoringState(clientCode, ClientState.Maintenance);
+                    }
 
-                        string strResultList = string.Empty;
+                    lblState.Content = "Maintenance";
+                }
+                else
+                {
+                    if (currentState == lblState.Content.ToString())
+                    {
+                        MonitoringService ms = new MonitoringService();
+                        ms.SetMonitoringState(clientCode, ClientState.Normal);
+                    }
+                    lblState.Content = "Normal";
+                }
 
-                        using (FileStream fs = File.OpenRead(tempEventFile))
+                if (processingTempEvent) return;
+
+                try
+                {
+                    processingTempEvent = true;
+
+                    lock (AgentService._lock)
+                    {
+                        if (File.Exists(tempEventFile))
                         {
-                            using (TextReader tr = new StreamReader(fs))
+
+                            string strResultList = string.Empty;
+
+                            using (FileStream fs = File.OpenRead(tempEventFile))
                             {
-                                strResultList = tr.ReadToEnd();
-                                tr.Close();
-                            }
-                            fs.Close();
+                                using (TextReader tr = new StreamReader(fs))
+                                {
+                                    strResultList = tr.ReadToEnd();
+                                    tr.Close();
+                                }
+                                fs.Close();
 
-                        }
-                        if (!string.IsNullOrEmpty(strResultList))
-                        {
-                            logs.AddRange(Serializer.XML.DeserializeObject<ListEventLogs>(strResultList));
-                            File.Delete(tempEventFile);
-                            dgLogs.ItemsSource = null;
-                            dgLogs.ItemsSource = logs;
+                            }
+                            if (!string.IsNullOrEmpty(strResultList))
+                            {
+                                logs.AddRange(Serializer.XML.DeserializeObject<ListEventLogs>(strResultList));
+                                File.Delete(tempEventFile);
+                                dgLogs.ItemsSource = null;
+                                dgLogs.ItemsSource = logs;
+                            }
                         }
                     }
                 }
+                catch (Exception ex)
+                {
+                    throw new RMSAppException(this, "0500", "Import tempEventFile failed. " + ex.Message, ex, false);
+                }
+                finally
+                {
+                    processingTempEvent = false;
+                }
             }
-            finally
+            catch (Exception ex)
             {
-                processingTempEvent = false;
+                new RMSAppException(this, "0500", "dispatcherTimer_Tick failed. " + ex.Message, ex, true);
             }
         }
 
 
         private IEnumerable<EventLog> Generate()
         {
-            for (int i = -1000; i < 0; i=i+50)
+            try
             {
-                DateTime d = DateTime.Now.AddMinutes(i);
-
-                EventLog log = new EventLog
+                for (int i = -1000; i < 0; i=i+50)
                 {
-                    EventDateTime = d,
-                    EventType = "General",
-                    Message = "Testing Message",
-                    Detail = "Description"
-                };
+                    DateTime d = DateTime.Now.AddMinutes(i);
 
-                logs.Add(log);
+                    EventLog log = new EventLog
+                    {
+                        EventDateTime = d,
+                        EventType = "General",
+                        Message = "Testing Message",
+                        Detail = "Description"
+                    };
+
+                    logs.Add(log);
+                }
+                return logs;
             }
-            return logs;
+            catch (Exception ex)
+            {
+                throw new RMSAppException(this, "0500", "Generate failed. " + ex.Message, ex, false);
+            }
         }
 
         private void InitResultHistory()
@@ -331,6 +374,8 @@ namespace RMS.Agent.WPF
             }
             catch (Exception ex)
             {
+                new RMSAppException(this, "0500", "InitResultHistory failed. " + ex.Message, ex, true);
+
                 logs.Add(new EventLog { EventDateTime = DateTime.Now, EventType = "Error", Message = "InitResultHistory errors", Detail = ex.Message });
             }
         }

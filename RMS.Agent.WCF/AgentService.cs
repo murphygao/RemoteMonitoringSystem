@@ -6,11 +6,14 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using RMS.Agent.BSL.AutoUpate;
 using RMS.Agent.BSL.Monitoring;
+using RMS.Agent.BSL.RemoteCommand;
 using RMS.Agent.Entity;
 using RMS.Agent.Helper;
 using RMS.Agent.Model;
 using RMS.Agent.WCF.Model;
+using RMS.Common.Exception;
 using EventLog = RMS.Agent.Model.EventLog;
 
 namespace RMS.Agent.WCF
@@ -26,31 +29,58 @@ namespace RMS.Agent.WCF
 
         public void TestConnection()
         {
-            AddLog("Testing", "Testing Agent Service", "");
+            try
+            {
+                AddLog("Testing", "Testing Agent Service", "");
+            }
+            catch (Exception ex)
+            {
+                throw new RMSAppException(this, "0500", "TestConnection failed. " + ex.Message, ex, true);
+            }
         }
 
         public void AutoUpdate(string type)
         {
-            AddLog("Auto Update", "Update Agent", "");
-            autoUpdateService = new BSL.AutoUpate.AutoUpdateService();
-            autoUpdateService.Command(type);
-
+            try
+            {
+                AddLog("Auto Update", "Update Agent", "");
+                autoUpdateService = new AutoUpdateService();
+                autoUpdateService.Command(type);
+            }
+            catch (Exception ex)
+            {
+                throw new RMSAppException(this, "0500", "AutoUpdate failed. " + ex.Message, ex, true);
+            }
         }
 
         public void RemoteCommand(RemoteCommand remoteCommand)
         {
-            commandService = new BSL.RemoteCommand.RemoteCommandService();
-            commandService.Command(remoteCommand);
+            try
+            {
+                commandService = new RemoteCommandService();
+                commandService.Command(remoteCommand);
+            }
+            catch (Exception ex)
+            {
+                throw new RMSAppException(this, "0500", "RemoteCommand failed. " + ex.Message, ex, true);
+            }
         }
 
         public Result Monitoring(string clientCode)
         {
-            AddLog("Monitoring", "Monitoring Performances & Peripherals", "Client Code: " + clientCode);
+            try
+            {
+                AddLog("Monitoring", "Monitoring Performances & Peripherals", "Client Code: " + clientCode);
 
-            monitoringService = new MonitoringService();
-            monitoringService.Command(clientCode);
+                monitoringService = new MonitoringService();
+                monitoringService.Command(clientCode);
 
-            return new Result {IsSuccess = true};
+                return new Result {IsSuccess = true};
+            }
+            catch (Exception ex)
+            {
+                throw new RMSAppException(this, "0500", "Monitoring failed. " + ex.Message, ex, true);
+            }
         }
 
         private void AddLog(string eventType, string message, string detail)
@@ -95,10 +125,10 @@ namespace RMS.Agent.WCF
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                //string eventType, string message, string detail
+                throw new RMSAppException(this, "0500", "AddLog failed. eventType=" + eventType + ", message=" + message + ", detail=" + detail + ", " + ex.Message, ex, false);
             }
         }
     }

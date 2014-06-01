@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using RMS.Agent.Proxy.ClientProxy;
 using RMS.Agent.Proxy.MonitoringProxy;
+using RMS.Common.Exception;
 
 namespace RMS.Monitoring.Device.Printer
 {
@@ -14,103 +15,119 @@ namespace RMS.Monitoring.Device.Printer
 
         public PrinterService(string brand, string model, string deviceManagerName, string deviceManagerID, string printerName, bool useCOMPort, string portName, ClientResult clientResult)
         {
-            this.clientResult = clientResult;
+            try
+            {
+                this.clientResult = clientResult;
 
-            if (brand.ToLower() == "brother") _device = new Brother(model, deviceManagerName, deviceManagerID, printerName, useCOMPort, portName);
-            else if (brand.ToLower() == "winpos") _device = new WinPOS(model, deviceManagerName, deviceManagerID, printerName, useCOMPort, portName);
+                if (brand.ToLower() == "brother") _device = new Brother(model, deviceManagerName, deviceManagerID, printerName, useCOMPort, portName);
+                else if (brand.ToLower() == "winpos") _device = new WinPOS(model, deviceManagerName, deviceManagerID, printerName, useCOMPort, portName);
+
+                throw new Exception("Brand Not Found. brand=" + brand);
+            }
+            catch (Exception ex)
+            {
+                throw new RMSAppException(this, "0500", "PrinterService failed. " + ex.Message, ex, false);
+            }
         }
 
         public List<RmsReportMonitoringRaw> Monitoring()
         {
-            List<RmsReportMonitoringRaw> lRmsReportMonitoringRaws = new List<RmsReportMonitoringRaw>();
-
-            int ret = _device.CheckDeviceManager();
-
-            if (ret != 0)
+            try
             {
-                RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
-                raw.ClientCode = clientResult.Client.ClientCode;
-                raw.DeviceCode = clientResult.ListDevices[0].DeviceCode;
+                List<RmsReportMonitoringRaw> lRmsReportMonitoringRaws = new List<RmsReportMonitoringRaw>();
 
-                if (ret == -1)
+                int ret = _device.CheckDeviceManager();
+
+                if (ret != 0)
                 {
-                    raw.Message = "DEVICE_NOT_FOUND";
+                    RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
+                    raw.ClientCode = clientResult.Client.ClientCode;
+                    raw.DeviceCode = clientResult.ListDevices[0].DeviceCode;
+
+                    if (ret == -1)
+                    {
+                        raw.Message = "DEVICE_NOT_FOUND";
+                    }
+                    else
+                    {
+                        raw.Message = "DEVICE_NOT_READY";
+                    }
+                    raw.MessageDateTime = DateTime.Now;
+                    raw.MonitoringProfileDeviceId = clientResult.ListMonitoringProfileDevices[0].MonitoringProfileDeviceId;
+
+                    lRmsReportMonitoringRaws.Add(raw);
                 }
                 else
                 {
-                    raw.Message = "DEVICE_NOT_READY";
-                }
-                raw.MessageDateTime = DateTime.Now;
-                raw.MonitoringProfileDeviceId = clientResult.ListMonitoringProfileDevices[0].MonitoringProfileDeviceId;
+                    int[] arrRet = _device.CheckPaperStatus();
+                    if (arrRet != null)
+                    {
+                        if (arrRet[0] > 0)
+                        {
+                            RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
+                            raw.ClientCode = clientResult.Client.ClientCode;
+                            raw.DeviceCode = clientResult.ListDevices[0].DeviceCode;
 
-                lRmsReportMonitoringRaws.Add(raw);
-            }
-            else
-            {
-                int[] arrRet = _device.CheckPaperStatus();
-                if (arrRet != null)
+                            raw.Message = "LOW_PAPER";
+
+                            raw.MessageDateTime = DateTime.Now;
+                            raw.MonitoringProfileDeviceId = clientResult.ListMonitoringProfileDevices[0].MonitoringProfileDeviceId;
+
+                            lRmsReportMonitoringRaws.Add(raw);
+                        }
+
+                        if (arrRet[1] > 0)
+                        {
+                            RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
+                            raw.ClientCode = clientResult.Client.ClientCode;
+                            raw.DeviceCode = clientResult.ListDevices[0].DeviceCode;
+
+                            raw.Message = "END_PAPER";
+
+                            raw.MessageDateTime = DateTime.Now;
+                            raw.MonitoringProfileDeviceId = clientResult.ListMonitoringProfileDevices[0].MonitoringProfileDeviceId;
+
+                            lRmsReportMonitoringRaws.Add(raw);
+                        }
+
+
+                        var NumOfQueues = _device.CheckPrintQueueStatus(7);
+                        if (NumOfQueues > 0)
+                        {
+                            RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
+                            raw.ClientCode = clientResult.Client.ClientCode;
+                            raw.DeviceCode = clientResult.ListDevices[0].DeviceCode;
+
+                            raw.Message = "CANNOT_PRINT";
+
+                            raw.MessageDateTime = DateTime.Now;
+                            raw.MonitoringProfileDeviceId = clientResult.ListMonitoringProfileDevices[0].MonitoringProfileDeviceId;
+
+                            lRmsReportMonitoringRaws.Add(raw);
+                        }
+                    }
+                }
+
+                if (lRmsReportMonitoringRaws.Count == 0)
                 {
-                    if (arrRet[0] > 0)
-                    {
-                        RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
-                        raw.ClientCode = clientResult.Client.ClientCode;
-                        raw.DeviceCode = clientResult.ListDevices[0].DeviceCode;
+                    RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
+                    raw.ClientCode = clientResult.Client.ClientCode;
+                    raw.DeviceCode = clientResult.ListDevices[0].DeviceCode;
 
-                        raw.Message = "LOW_PAPER";
+                    raw.Message = "OK";
 
-                        raw.MessageDateTime = DateTime.Now;
-                        raw.MonitoringProfileDeviceId = clientResult.ListMonitoringProfileDevices[0].MonitoringProfileDeviceId;
+                    raw.MessageDateTime = DateTime.Now;
+                    raw.MonitoringProfileDeviceId = clientResult.ListMonitoringProfileDevices[0].MonitoringProfileDeviceId;
 
-                        lRmsReportMonitoringRaws.Add(raw);
-                    }
-
-                    if (arrRet[1] > 0)
-                    {
-                        RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
-                        raw.ClientCode = clientResult.Client.ClientCode;
-                        raw.DeviceCode = clientResult.ListDevices[0].DeviceCode;
-
-                        raw.Message = "END_PAPER";
-
-                        raw.MessageDateTime = DateTime.Now;
-                        raw.MonitoringProfileDeviceId = clientResult.ListMonitoringProfileDevices[0].MonitoringProfileDeviceId;
-
-                        lRmsReportMonitoringRaws.Add(raw);
-                    }
-
-
-                    var NumOfQueues = _device.CheckPrintQueueStatus(7);
-                    if (NumOfQueues > 0)
-                    {
-                        RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
-                        raw.ClientCode = clientResult.Client.ClientCode;
-                        raw.DeviceCode = clientResult.ListDevices[0].DeviceCode;
-
-                        raw.Message = "CANNOT_PRINT";
-
-                        raw.MessageDateTime = DateTime.Now;
-                        raw.MonitoringProfileDeviceId = clientResult.ListMonitoringProfileDevices[0].MonitoringProfileDeviceId;
-
-                        lRmsReportMonitoringRaws.Add(raw);
-                    }
+                    lRmsReportMonitoringRaws.Add(raw);
                 }
-            }
 
-            if (lRmsReportMonitoringRaws.Count == 0)
+                return lRmsReportMonitoringRaws;
+            }
+            catch (Exception ex)
             {
-                RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
-                raw.ClientCode = clientResult.Client.ClientCode;
-                raw.DeviceCode = clientResult.ListDevices[0].DeviceCode;
-
-                raw.Message = "OK";
-
-                raw.MessageDateTime = DateTime.Now;
-                raw.MonitoringProfileDeviceId = clientResult.ListMonitoringProfileDevices[0].MonitoringProfileDeviceId;
-
-                lRmsReportMonitoringRaws.Add(raw);
+                throw new RMSAppException(this, "0500", "Monitoring failed. " + ex.Message, ex, false);
             }
-
-            return lRmsReportMonitoringRaws;
         }
     }
 }

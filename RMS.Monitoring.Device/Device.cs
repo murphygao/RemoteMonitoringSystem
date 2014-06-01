@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Management;
+using RMS.Common.Exception;
 using RMS.Monitoring.Device.DeviceManager;
 
 namespace RMS.Monitoring.Device
@@ -70,7 +71,7 @@ namespace RMS.Monitoring.Device
             }
             catch (Exception ex)
             {
-                throw;
+                throw new RMSAppException(this, "0500", "CheckDeviceManager failed. " + ex.Message, ex, false);
             }
         }
     }

@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ESN.Common.Exception">
+      <HintPath>..\Solution Items\ESN\ESN.Common.Exception.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
@@ -43,6 +46,12 @@
     <Compile Include="Device.cs" />
     <Compile Include="DeviceManager\DeviceManagerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RMS.Common.Exception\RMS.Common.Exception.csproj">
+      <Project>{F8EC98BC-37BB-42FD-9B50-78F928BB08A2}</Project>
+      <Name>RMS.Common.Exception</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RMS.Common.Exception;
 
 namespace RMS.Agent.Watchdog.BSL
 {
@@ -13,11 +14,18 @@ namespace RMS.Agent.Watchdog.BSL
     {
         public void Start()
         {
-            if (CanStartAgentApp())
-                Process.Start(ConfigurationManager.AppSettings["RMS.AGENT_FILE_PATH"]);
+            try
+            {
+                if (CanStartAgentApp())
+                    Process.Start(ConfigurationManager.AppSettings["RMS.AGENT_FILE_PATH"]);
 
-            if (CanStartOutOfServiceApp())
-                Process.Start(ConfigurationManager.AppSettings["RMS.OUT_OF_SERVICE_FILE_PATH"]);
+                if (CanStartOutOfServiceApp())
+                    Process.Start(ConfigurationManager.AppSettings["RMS.OUT_OF_SERVICE_FILE_PATH"]);
+            }
+            catch (Exception ex)
+            {
+                throw new RMSAppException(this, "0500", "Start failed. " + ex.Message, ex, false);
+            }
         }
 
         public void Stop()
@@ -27,37 +35,58 @@ namespace RMS.Agent.Watchdog.BSL
 
         private bool CanStartAgentApp()
         {
-            if (IsProcessRunning(ConfigurationManager.AppSettings["RMS.AGENT_PROCESS_NAME"])) return false;
-            return true;
+            try
+            {
+                if (IsProcessRunning(ConfigurationManager.AppSettings["RMS.AGENT_PROCESS_NAME"])) return false;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new RMSAppException(this, "0500", "CanStartAgentApp failed. " + ex.Message, ex, false);
+            }
         }
 
         private bool IsProcessRunning(string sProcessName)
         {
-            System.Diagnostics.Process[] proc = System.Diagnostics.Process.GetProcessesByName(sProcessName);
-            if (proc.Length > 0)
+            try
             {
-                return true;
+                Process[] proc = Process.GetProcessesByName(sProcessName);
+                if (proc.Length > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return false;
+                throw new RMSAppException(this, "0500", "IsProcessRunning failed. " + ex.Message, ex, false);
             }
         }
 
         private bool CanStartOutOfServiceApp()
         {
-            if (IsProcessRunning(ConfigurationManager.AppSettings["RMS.BIZ_APP_PROCESS_NAME"])) return false;
-
-            if (IsProcessRunning(ConfigurationManager.AppSettings["RMS.OUT_OF_SERVICE_PROCESS_NAME"])) return false;
-
-            string maFilePath = ConfigurationManager.AppSettings["RMS.MA_FILE_PATH"];
-            if (File.Exists(maFilePath))
+            try
             {
-                return false;
+                if (IsProcessRunning(ConfigurationManager.AppSettings["RMS.BIZ_APP_PROCESS_NAME"])) return false;
+
+                if (IsProcessRunning(ConfigurationManager.AppSettings["RMS.OUT_OF_SERVICE_PROCESS_NAME"])) return false;
+
+                string maFilePath = ConfigurationManager.AppSettings["RMS.MA_FILE_PATH"];
+                if (File.Exists(maFilePath))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return true;
+                throw new RMSAppException(this, "0500", "CanStartOutOfServiceApp failed. " + ex.Message, ex, false);
             }
         }
 

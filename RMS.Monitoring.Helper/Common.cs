@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using RMS.Agent.Proxy.ClientProxy;
+using RMS.Common.Exception;
 
 namespace RMS.Monitoring.Helper
 {
@@ -15,18 +16,25 @@ namespace RMS.Monitoring.Helper
     {
         public static List<RmsMonitoringProfileDevice> GetRmsMonitoringProfileDevicebyDeviceCode(ClientResult clientResult, string deviceCode, string deviceTypeCode)
         {
-            List<RmsMonitoringProfileDevice> ret = new List<RmsMonitoringProfileDevice>();
-            var device = clientResult.ListDevices.FirstOrDefault(d => d.DeviceCode == deviceCode);
-            if (device != null)
+            try
             {
-                var deviceType = clientResult.ListDeviceType.SingleOrDefault(dt => dt.DeviceTypeId == device.DeviceTypeId);
-                if (deviceType != null && deviceType.DeviceTypeCode == deviceTypeCode)
+                List<RmsMonitoringProfileDevice> ret = new List<RmsMonitoringProfileDevice>();
+                var device = clientResult.ListDevices.FirstOrDefault(d => d.DeviceCode == deviceCode);
+                if (device != null)
                 {
-                    int? id = device.DeviceId;
-                    ret = clientResult.ListMonitoringProfileDevices.Where(p => p.DeviceId == id).ToList();
+                    var deviceType = clientResult.ListDeviceType.SingleOrDefault(dt => dt.DeviceTypeId == device.DeviceTypeId);
+                    if (deviceType != null && deviceType.DeviceTypeCode == deviceTypeCode)
+                    {
+                        int? id = device.DeviceId;
+                        ret = clientResult.ListMonitoringProfileDevices.Where(p => p.DeviceId == id).ToList();
+                    }
                 }
+                return ret;
             }
-            return ret;
+            catch (Exception ex)
+            {
+                throw new RMSAppException("GetRmsMonitoringProfileDevicebyDeviceCode failed. " + ex.Message, ex, false);
+            }
         }
 
     }
@@ -35,12 +43,14 @@ namespace RMS.Monitoring.Helper
     {
         public static class DeviceCode
         {
+            // Refer to RMS Database, Table : RMS_DeviceType
             public const string Client = "CLI";
             public const string Performance = "PERF";
             public const string ATMCardReader = "ACR";
             public const string BarcodeReader = "BR";
             public const string CardDispenser = "CD";
             public const string ElectronicSignaturePad = "ESP";
+            public const string EncryptedPinPad = "EPP";
             public const string IDCardSanner = "IDCS";
             public const string Keyboard = "KB";
             public const string MonitorDisplay = "MD";
@@ -50,6 +60,7 @@ namespace RMS.Monitoring.Helper
             public const string ThermalPrinter = "TMP";
             public const string WebCamera = "WC";
             public const string UPS = "UPS";
+
         }
     }
 }

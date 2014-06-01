@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ESN.Common.Exception">
+      <HintPath>..\Solution Items\ESN\ESN.Common.Exception.dll</HintPath>
+    </Reference>
     <Reference Include="LibUsbDotNet">
       <HintPath>..\packages\LibUsbDotNet.2.2.8\lib\LibUsbDotNet.dll</HintPath>
     </Reference>
@@ -50,6 +53,10 @@
     <ProjectReference Include="..\RMS.Agent.Proxy\RMS.Agent.Proxy.csproj">
       <Project>{34CC6B3A-D552-480A-B3D1-F94A389C1C86}</Project>
       <Name>RMS.Agent.Proxy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Common.Exception\RMS.Common.Exception.csproj">
+      <Project>{f8ec98bc-37bb-42fd-9b50-78f928bb08a2}</Project>
+      <Name>RMS.Common.Exception</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

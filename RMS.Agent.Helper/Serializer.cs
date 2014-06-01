@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+using RMS.Common.Exception;
 
 namespace RMS.Agent.Helper
 {
@@ -87,11 +88,14 @@ namespace RMS.Agent.Helper
                     XmlSerializer xs = new XmlSerializer(obj.GetType());
                     XmlTextWriter xmlTextWriter = new XmlTextWriter(memoryStream, Encoding.UTF8);
                     xs.Serialize(xmlTextWriter, obj);
-                    memoryStream = (MemoryStream)xmlTextWriter.BaseStream;
+                    memoryStream = (MemoryStream) xmlTextWriter.BaseStream;
                     XmlizedString = UTF8ByteArrayToString(memoryStream.ToArray());
                     return XmlizedString.Trim();
                 }
-                catch (Exception e) { Console.WriteLine(e); return null; }
+                catch (Exception ex)
+                {
+                    throw new RMSAppException("SerializeObject<T>(T obj) failed. " + ex.Message, ex, false);
+                }
             }
 
             public static string SerializeObject<T>(T obj, Type[] types)
@@ -109,7 +113,10 @@ namespace RMS.Agent.Helper
                     stringWriter.Flush();
                     return stringWriter.ToString().Trim();
                 }
-                catch (Exception e) { Console.WriteLine(e); return null; }
+                catch (Exception ex)
+                {
+                    throw new RMSAppException("SerializeObject<T>(T obj, Type[] types) failed. " + ex.Message, ex, false);
+                }
             }
 
             public static T DeserializeObject<T>(String pXmlizedString)
@@ -121,9 +128,9 @@ namespace RMS.Agent.Helper
                     //                    MemoryStream memoryStream = new MemoryStream(StringToUTF8ByteArray(pXmlizedString));
                     return (T)xs.Deserialize(stringReader);
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    throw e;
+                    throw new RMSAppException("DeserializeObject<T>(String pXmlizedString) failed. " + ex.Message, ex, false);
                 }
             }
 
@@ -136,9 +143,9 @@ namespace RMS.Agent.Helper
                     //                    MemoryStream memoryStream = new MemoryStream(StringToUTF8ByteArray(pXmlizedString));
                     return (T)xs.Deserialize(stringReader);
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    throw e;
+                    throw new RMSAppException("DeserializeObject<T>(String pXmlizedString, Type[] types) failed. " + ex.Message, ex, false);
                 }
             }
 

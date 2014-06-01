@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LibUsbDotNet;
 using LibUsbDotNet.Main;
+using RMS.Common.Exception;
 
 namespace RMS.Monitoring.Helper
 {
@@ -24,7 +25,7 @@ namespace RMS.Monitoring.Helper
                 MyUsbDevice = UsbDevice.OpenUsbDevice(MyUsbFinder);
 
                 // If the device is open and ready
-                if (MyUsbDevice == null) throw new Exception("Device Not Found.");
+                if (MyUsbDevice == null) throw new Exception("Device Not Found. vid=" + vid + ", pid=" + pid);
 
                 // If this is a "whole" usb device (libusb-win32, linux libusb)
                 // it will have an IUsbDevice interface. If not (WinUSB) the 
@@ -82,7 +83,7 @@ namespace RMS.Monitoring.Helper
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message, ex);
+                throw new RMSAppException("WriteAndRead failed. " + ex.Message, ex, false);
                 //Console.WriteLine();
                 //Console.WriteLine((ec != ErrorCode.None ? ec + ":" : String.Empty) + ex.Message);
             }

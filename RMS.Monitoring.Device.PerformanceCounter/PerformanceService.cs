@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading;
 using RMS.Agent.Proxy.ClientProxy;
 using RMS.Agent.Proxy.MonitoringProxy;
+using RMS.Common.Exception;
 using RMS.Monitoring.Helper;
 
 namespace RMS.Monitoring.Device.PerformanceCounter
@@ -12,103 +13,133 @@ namespace RMS.Monitoring.Device.PerformanceCounter
     {
         public List<RmsReportMonitoringRaw> Monitoring(ClientResult clientResult)
         {
-            List<RmsReportMonitoringRaw> lRmsReportMonitoringRaws = new List<RmsReportMonitoringRaw>();
+            try
+            {
+                List<RmsReportMonitoringRaw> lRmsReportMonitoringRaws = new List<RmsReportMonitoringRaw>();
 
-            /*
+                /*
              * 1. Check CPU
              * 2. Check RAM
              * 3. Check Disk
              * 
              */
 
-            #region 1. Check CPU
+                #region 1. Check CPU
 
-            var list = Common.GetRmsMonitoringProfileDevicebyDeviceCode(clientResult, "CPU", Models.DeviceCode.Performance);
-
-            if (list.Count > 0)
-            {
-                decimal? highThreshold = list[0].HighThreshold;
-                var processorUsage = GetProcessorUsage();
-
-                RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
-                raw.ClientCode = clientResult.Client.ClientCode;
-                raw.DeviceCode = "CPU";
-
-                if (processorUsage > highThreshold)
+                try
                 {
-                    raw.Message = "OVER_CPU_USAGE";
-                }
-                else
-                {
-                    raw.Message = "OK";
-                }
-                raw.MessageDateTime = DateTime.Now;
-                raw.MonitoringProfileDeviceId = list[0].MonitoringProfileDeviceId;
+                    var list = Helper.Common.GetRmsMonitoringProfileDevicebyDeviceCode(clientResult, "CPU", Models.DeviceCode.Performance);
 
-                lRmsReportMonitoringRaws.Add(raw);
+                    if (list.Count > 0)
+                    {
+                        decimal? highThreshold = list[0].HighThreshold;
+                        var processorUsage = GetProcessorUsage();
+
+                        RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
+                        raw.ClientCode = clientResult.Client.ClientCode;
+                        raw.DeviceCode = "CPU";
+
+                        if (processorUsage > highThreshold)
+                        {
+                            raw.Message = "OVER_CPU_USAGE";
+                        }
+                        else
+                        {
+                            raw.Message = "OK";
+                        }
+                        raw.MessageDateTime = DateTime.Now;
+                        raw.MonitoringProfileDeviceId = list[0].MonitoringProfileDeviceId;
+
+                        lRmsReportMonitoringRaws.Add(raw);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw new RMSAppException(this, "0500", "Check CPU failed. " + ex.Message, ex, false);
+                }
+
+                #endregion
+
+                #region 2. Check RAM
+
+                try
+                {
+                    var list = Helper.Common.GetRmsMonitoringProfileDevicebyDeviceCode(clientResult, "MEMORY", Models.DeviceCode.Performance);
+
+                    if (list.Count > 0)
+                    {
+                        decimal? lowThreshold = list[0].LowThreshold;
+                        var availableMemory = GetAvailableMemory();
+
+                        RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
+                        raw.ClientCode = clientResult.Client.ClientCode;
+                        raw.DeviceCode = "MEMORY";
+
+                        if (availableMemory < lowThreshold)
+                        {
+                            raw.Message = "LOW_MEMORY";
+                        }
+                        else
+                        {
+                            raw.Message = "OK";
+                        }
+                        raw.MessageDateTime = DateTime.Now;
+                        raw.MonitoringProfileDeviceId = list[0].MonitoringProfileDeviceId;
+
+                        lRmsReportMonitoringRaws.Add(raw);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new RMSAppException(this, "0500", "Check RAM failed. " + ex.Message, ex, false);
+                }
+
+                #endregion
+
+                #region 3. Check Disk
+
+                try
+                {
+                    var list = Helper.Common.GetRmsMonitoringProfileDevicebyDeviceCode(clientResult, "DISK", Models.DeviceCode.Performance);
+                    foreach (var rmsMonitoringProfileDevice in list)
+                    {
+                        decimal? lowThreshold = rmsMonitoringProfileDevice.LowThreshold;
+                        var diskFreeSpace = GetDiskFreeSpace(rmsMonitoringProfileDevice.StringValue);
+
+                        RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
+                        raw.ClientCode = clientResult.Client.ClientCode;
+                        raw.DeviceCode = "DISK";
+
+                        if (diskFreeSpace < lowThreshold)
+                        {
+                            raw.Message = "LOW_DISK_SPACE";
+                        }
+                        else
+                        {
+                            raw.Message = "OK";
+                        }
+                        raw.MessageDateTime = DateTime.Now;
+                        raw.MonitoringProfileDeviceId = rmsMonitoringProfileDevice.MonitoringProfileDeviceId;
+
+                        lRmsReportMonitoringRaws.Add(raw);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new RMSAppException(this, "0500", "Check Disk failed. " + ex.Message, ex, false);
+                }
+
+                #endregion
+
+
+                return lRmsReportMonitoringRaws;
             }
-
-            #endregion
-
-            #region 2. Check RAM
-
-            list = Common.GetRmsMonitoringProfileDevicebyDeviceCode(clientResult, "MEMORY", Models.DeviceCode.Performance);
-
-            if (list.Count > 0)
+            catch (Exception ex)
             {
-                decimal? lowThreshold = list[0].LowThreshold;
-                var availableMemory = GetAvailableMemory();
+                throw new RMSAppException(this, "0500", "Monitoring failed. " + ex.Message, ex, false);
 
-                RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
-                raw.ClientCode = clientResult.Client.ClientCode;
-                raw.DeviceCode = "MEMORY";
-
-                if (availableMemory < lowThreshold)
-                {
-                    raw.Message = "LOW_MEMORY";
-                }
-                else
-                {
-                    raw.Message = "OK";
-                }
-                raw.MessageDateTime = DateTime.Now;
-                raw.MonitoringProfileDeviceId = list[0].MonitoringProfileDeviceId;
-
-                lRmsReportMonitoringRaws.Add(raw);
             }
-
-            #endregion
-
-            #region 3. Check Disk
-
-            list = Common.GetRmsMonitoringProfileDevicebyDeviceCode(clientResult, "DISK", Models.DeviceCode.Performance);
-            foreach (var rmsMonitoringProfileDevice in list)
-            {
-                decimal? lowThreshold = rmsMonitoringProfileDevice.LowThreshold;
-                var diskFreeSpace = GetDiskFreeSpace(rmsMonitoringProfileDevice.StringValue);
-
-                RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
-                raw.ClientCode = clientResult.Client.ClientCode;
-                raw.DeviceCode = "DISK";
-
-                if (diskFreeSpace < lowThreshold)
-                {
-                    raw.Message = "LOW_DISK_SPACE";
-                }
-                else
-                {
-                    raw.Message = "OK";
-                }
-                raw.MessageDateTime = DateTime.Now;
-                raw.MonitoringProfileDeviceId = rmsMonitoringProfileDevice.MonitoringProfileDeviceId;
-
-                lRmsReportMonitoringRaws.Add(raw);
-            }
-
-            #endregion
-
-
-            return lRmsReportMonitoringRaws;
         }
 
         #region Private Methods
@@ -131,7 +162,7 @@ namespace RMS.Monitoring.Device.PerformanceCounter
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new RMSAppException(this, "0500", "GetProcessorUsage failed. " + ex.Message, ex, false);
             }
             finally
             {
@@ -152,7 +183,7 @@ namespace RMS.Monitoring.Device.PerformanceCounter
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new RMSAppException(this, "0500", "GetAvailableMemory failed. " + ex.Message, ex, false);
             }
             finally
             {
@@ -187,7 +218,7 @@ namespace RMS.Monitoring.Device.PerformanceCounter
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new RMSAppException(this, "0500", "GetDiskFreeSpace failed. " + ex.Message, ex, false);
             }
         }
 

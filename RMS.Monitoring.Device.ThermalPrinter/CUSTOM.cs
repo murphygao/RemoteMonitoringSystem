@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RMS.Common.Exception;
+using RMS.Monitoring.Helper;
 
 namespace RMS.Monitoring.Device.ThermalPrinter
 {
@@ -28,33 +31,40 @@ namespace RMS.Monitoring.Device.ThermalPrinter
         /// </returns>
         public override int[] CheckPaperStatus()
         {
-            string sVid = deviceManagerID.Substring(deviceManagerID.ToUpper().IndexOf("VID_") + 4, 4);
-            int iVid = Int32.Parse(sVid, System.Globalization.NumberStyles.HexNumber);
-            string sPid = deviceManagerID.Substring(deviceManagerID.ToUpper().IndexOf("PID_") + 4, 4);
-            int iPid = Int32.Parse(sPid, System.Globalization.NumberStyles.HexNumber);
+            try
+            {
+                string sVid = deviceManagerID.Substring(deviceManagerID.ToUpper().IndexOf("VID_") + 4, 4);
+                int iVid = Int32.Parse(sVid, NumberStyles.HexNumber);
+                string sPid = deviceManagerID.Substring(deviceManagerID.ToUpper().IndexOf("PID_") + 4, 4);
+                int iPid = Int32.Parse(sPid, NumberStyles.HexNumber);
 
-            byte[] byteArray = new byte[3];
-            byteArray[0] = 0x10;
-            byteArray[1] = 0x04;
-            byteArray[2] = 4;
+                byte[] byteArray = new byte[3];
+                byteArray[0] = 0x10;
+                byteArray[1] = 0x04;
+                byteArray[2] = 4;
 
-            byte[] read = Helper.USB.WriteAndRead(iVid, iPid, byteArray);
+                byte[] read = USB.WriteAndRead(iVid, iPid, byteArray);
 
-            if (read == null || read.Length == 0)
-                return new int[]{500, 500};
+                if (read == null || read.Length == 0)
+                    return new int[]{500, 500};
 
-            int[] ret = new int[2]{0, 0};
-            var bit2 = (read[0] & (1 << 2)) != 0; // Near End
-            var bit3 = (read[0] & (1 << 3)) != 0; // Near End
-            var bit5 = (read[0] & (1 << 5)) != 0; // Out of Paper
-            var bit6 = (read[0] & (1 << 6)) != 0; // Out of Paper
+                int[] ret = new int[2]{0, 0};
+                var bit2 = (read[0] & (1 << 2)) != 0; // Near End
+                var bit3 = (read[0] & (1 << 3)) != 0; // Near End
+                var bit5 = (read[0] & (1 << 5)) != 0; // Out of Paper
+                var bit6 = (read[0] & (1 << 6)) != 0; // Out of Paper
 
-            if (bit2 || bit3)
-                ret[0] = 1;
-            if (bit5 || bit6)
-                ret[1] = 1;
+                if (bit2 || bit3)
+                    ret[0] = 1;
+                if (bit5 || bit6)
+                    ret[1] = 1;
 
-            return ret;
+                return ret;
+            }
+            catch (Exception ex)
+            {
+                throw new RMSAppException(this, "0500", "CheckPaperStatus failed. " + ex.Message, ex, false);
+            }
         }
     }
 }

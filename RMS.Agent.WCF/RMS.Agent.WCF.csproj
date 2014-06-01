@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ESN.Common.Exception">
+      <HintPath>..\Solution Items\ESN\ESN.Common.Exception.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -81,6 +84,10 @@
     <ProjectReference Include="..\RMS.Agent.Model\RMS.Agent.Model.csproj">
       <Project>{5d7e5abc-ed70-4986-a93b-ea637cc35445}</Project>
       <Name>RMS.Agent.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Common.Exception\RMS.Common.Exception.csproj">
+      <Project>{F8EC98BC-37BB-42FD-9B50-78F928BB08A2}</Project>
+      <Name>RMS.Common.Exception</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
