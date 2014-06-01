@@ -14,6 +14,7 @@ namespace RMS.Centralize.WebService.Model
         public string ClientCode { get; set; }
         public string LevelCode { get; set; }
         public string Message { get; set; }
+        public string MessageRemark { get; set; }
         public string LocationCode { get; set; }
         public string LocationName { get; set; }
         public string MessageGroupName { get; set; }
@@ -32,6 +33,7 @@ namespace RMS.Centralize.WebService.Model
             ret += "DeviceDescription | ";
             ret += "Message | ";
             ret += "MessageGroupName | ";
+            ret += "MessageRemark | ";
             ret += "LocationCode | ";
             ret += "LocationName | ";
             ret += "MessageDateTime";
@@ -47,6 +49,7 @@ namespace RMS.Centralize.WebService.Model
             ret += DeviceDescription + " | ";
             ret += Message + " | ";
             ret += MessageGroupName + " | ";
+            ret += MessageRemark + " | ";
             ret += LocationCode + " | ";
             ret += LocationName + " | ";
             if (MessageDateTime != null) ret += MessageDateTime.Value.ToString("dd/MM/yyyy HH:mm:ss");

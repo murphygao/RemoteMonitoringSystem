@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RMS.Common.Exception;
 
 namespace RMS.Agent.OutOfServiceApp.BSL
 {
@@ -33,7 +34,7 @@ namespace RMS.Agent.OutOfServiceApp.BSL
             }
             catch (Exception ex)
             {
-                return false;
+                throw new RMSAppException(this, "0500", "PrepareForClosing failed. " + ex.Message, ex, false);
             }
         }
     }

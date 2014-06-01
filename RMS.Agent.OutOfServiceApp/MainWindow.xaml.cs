@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,6 +16,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RMS.Agent.OutOfServiceApp.BSL;
+using RMS.Common.Exception;
+using Path = System.IO.Path;
 
 namespace RMS.Agent.OutOfServiceApp
 {
@@ -29,18 +32,25 @@ namespace RMS.Agent.OutOfServiceApp
 
         public MainWindow()
         {
-            InitializeComponent();
-
-            string keyFilePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\key.txt";
-
-            if (File.Exists(keyFilePath))
+            try
             {
-                password = File.ReadAllText(keyFilePath).Trim();
+                InitializeComponent();
+
+                string keyFilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\key.txt";
+
+                if (File.Exists(keyFilePath))
+                {
+                    password = File.ReadAllText(keyFilePath).Trim();
+                }
+
+                keyInValue = keyInValue.PadLeft(password.Length, '0');
+
+                this.Activate();
             }
-
-            keyInValue = keyInValue.PadLeft(password.Length, '0');
-
-            this.Activate();
+            catch (Exception ex)
+            {
+                throw new RMSAppException(this, "0500", "MainWindow failed. " + ex.Message, ex, true);
+            }
         }
 
 
@@ -72,13 +82,20 @@ namespace RMS.Agent.OutOfServiceApp
 
         public void btnNumber_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            keyInValue += (sender as Button).Tag.ToString();
-            keyInValue = keyInValue.Substring(1);
-            if (keyInValue == password)
+            try
             {
-                //OOSService service = new OOSService();
-                //if (service.PrepareForClosing())
-                    Application.Current.Shutdown();
+                keyInValue += (sender as Button).Tag.ToString();
+                keyInValue = keyInValue.Substring(1);
+                if (keyInValue == password)
+                {
+                    OOSService service = new OOSService();
+                    if (service.PrepareForClosing())
+                        Application.Current.Shutdown();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new RMSAppException(this, "0500", "btnNumber_Click failed. " + ex.Message, ex, true);
             }
         }
 

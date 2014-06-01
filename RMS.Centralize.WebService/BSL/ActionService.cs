@@ -146,6 +146,7 @@ namespace RMS.Centralize.WebService.BSL
                                 }
                                 info.DeviceDescription += monitoring.MessageRemark;
                             }
+
                             info.SummaryMonitoringReportID = monitoring.Id;
 
                             lEmails.Add(info);
@@ -187,17 +188,14 @@ namespace RMS.Centralize.WebService.BSL
                             info.MessageDateTime = monitoring.MessageDateTime;
                             info.DeviceCode = monitoring.DeviceCode;
                             info.DeviceDescription = monitoring.DeviceDescription;
-                            if (string.IsNullOrEmpty(info.DeviceDescription)) info.DeviceDescription = monitoring.MessageRemark;
-                            if (string.IsNullOrEmpty(info.DeviceDescription)) info.DeviceDescription = monitoring.Message;
-
-                            //if (!string.IsNullOrEmpty(monitoring.MessageRemark))
-                            //{
-                            //    if (!string.IsNullOrEmpty(info.DeviceDescription))
-                            //    {
-                            //        info.DeviceDescription += " - ";
-                            //    }
-                            //    info.DeviceDescription += monitoring.MessageRemark;
-                            //}
+                            if (!string.IsNullOrEmpty(monitoring.MessageRemark))
+                            {
+                                if (!string.IsNullOrEmpty(info.DeviceDescription))
+                                {
+                                    info.DeviceDescription += " - ";
+                                }
+                                info.DeviceDescription += monitoring.MessageRemark;
+                            }
 
                             info.SummaryMonitoringReportID = monitoring.Id;
 
