@@ -32,6 +32,8 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
     [System.Runtime.Serialization.DataContractAttribute(Name="Result", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model")]
     [System.SerializableAttribute()]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Centralize.WebSite.Proxy.ClientProxy.ClientInfoResult))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Centralize.WebSite.Proxy.ClientProxy.MainAppClientResult))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Centralize.WebSite.Proxy.ClientProxy.LocationResult))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult))]
     public partial class Result : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -143,6 +145,84 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
                 if ((object.ReferenceEquals(this.ListClientsField, value) != true)) {
                     this.ListClientsField = value;
                     this.RaisePropertyChanged("ListClients");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int TotalRecords {
+            get {
+                return this.TotalRecordsField;
+            }
+            set {
+                if ((this.TotalRecordsField.Equals(value) != true)) {
+                    this.TotalRecordsField = value;
+                    this.RaisePropertyChanged("TotalRecords");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MainAppClientResult", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService")]
+    [System.SerializableAttribute()]
+    public partial class MainAppClientResult : RMS.Centralize.WebSite.Proxy.ClientProxy.Result {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.ClientProxy.MainAppClient> ListMainAppClientsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.ClientProxy.MainAppClient> ListMainAppClients {
+            get {
+                return this.ListMainAppClientsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ListMainAppClientsField, value) != true)) {
+                    this.ListMainAppClientsField = value;
+                    this.RaisePropertyChanged("ListMainAppClients");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="LocationResult", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService")]
+    [System.SerializableAttribute()]
+    public partial class LocationResult : RMS.Centralize.WebSite.Proxy.ClientProxy.Result {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.ClientProxy.RmsLocation> ListLocationsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RMS.Centralize.WebSite.Proxy.ClientProxy.RmsLocation LocationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TotalRecordsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.ClientProxy.RmsLocation> ListLocations {
+            get {
+                return this.ListLocationsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ListLocationsField, value) != true)) {
+                    this.ListLocationsField = value;
+                    this.RaisePropertyChanged("ListLocations");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RMS.Centralize.WebSite.Proxy.ClientProxy.RmsLocation Location {
+            get {
+                return this.LocationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LocationField, value) != true)) {
+                    this.LocationField = value;
+                    this.RaisePropertyChanged("Location");
                 }
             }
         }
@@ -1569,6 +1649,159 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MainAppClient", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model")]
+    [System.SerializableAttribute()]
+    public partial class MainAppClient : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ClientCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ClientIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ClientNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ClientCode {
+            get {
+                return this.ClientCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ClientCodeField, value) != true)) {
+                    this.ClientCodeField = value;
+                    this.RaisePropertyChanged("ClientCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ClientID {
+            get {
+                return this.ClientIDField;
+            }
+            set {
+                if ((this.ClientIDField.Equals(value) != true)) {
+                    this.ClientIDField = value;
+                    this.RaisePropertyChanged("ClientID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ClientName {
+            get {
+                return this.ClientNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ClientNameField, value) != true)) {
+                    this.ClientNameField = value;
+                    this.RaisePropertyChanged("ClientName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RmsLocation", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL")]
+    [System.SerializableAttribute()]
+    public partial class RmsLocation : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private int LocationIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LocationCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LocationNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int LocationId {
+            get {
+                return this.LocationIdField;
+            }
+            set {
+                if ((this.LocationIdField.Equals(value) != true)) {
+                    this.LocationIdField = value;
+                    this.RaisePropertyChanged("LocationId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+        public string LocationCode {
+            get {
+                return this.LocationCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LocationCodeField, value) != true)) {
+                    this.LocationCodeField = value;
+                    this.RaisePropertyChanged("LocationCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+        public string LocationName {
+            get {
+                return this.LocationNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LocationNameField, value) != true)) {
+                    this.LocationNameField = value;
+                    this.RaisePropertyChanged("LocationName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ClientState", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService")]
     public enum ClientState : int {
@@ -1776,6 +2009,18 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/ExistingClientCode", ReplyAction="http://tempuri.org/IClientService/ExistingClientCodeResponse")]
         System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult> ExistingClientCodeAsync(string clientCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/ListMainAppClient", ReplyAction="http://tempuri.org/IClientService/ListMainAppClientResponse")]
+        RMS.Centralize.WebSite.Proxy.ClientProxy.MainAppClientResult ListMainAppClient();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/ListMainAppClient", ReplyAction="http://tempuri.org/IClientService/ListMainAppClientResponse")]
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.MainAppClientResult> ListMainAppClientAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/ListLocation", ReplyAction="http://tempuri.org/IClientService/ListLocationResponse")]
+        RMS.Centralize.WebSite.Proxy.ClientProxy.LocationResult ListLocation();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/ListLocation", ReplyAction="http://tempuri.org/IClientService/ListLocationResponse")]
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.LocationResult> ListLocationAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1851,6 +2096,22 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         
         public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult> ExistingClientCodeAsync(string clientCode) {
             return base.Channel.ExistingClientCodeAsync(clientCode);
+        }
+        
+        public RMS.Centralize.WebSite.Proxy.ClientProxy.MainAppClientResult ListMainAppClient() {
+            return base.Channel.ListMainAppClient();
+        }
+        
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.MainAppClientResult> ListMainAppClientAsync() {
+            return base.Channel.ListMainAppClientAsync();
+        }
+        
+        public RMS.Centralize.WebSite.Proxy.ClientProxy.LocationResult ListLocation() {
+            return base.Channel.ListLocation();
+        }
+        
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.LocationResult> ListLocationAsync() {
+            return base.Channel.ListLocationAsync();
         }
     }
 }

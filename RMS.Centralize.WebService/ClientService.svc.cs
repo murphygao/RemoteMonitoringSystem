@@ -104,7 +104,7 @@ namespace RMS.Centralize.WebService
                     var client = db.RmsClients.Find(clientID);
                     client.State = (int) state;
 
-                    db.SaveChanges();
+                    db.SaveChanges(); 
                 }
 
                 var sr = new Result
@@ -228,11 +228,66 @@ namespace RMS.Centralize.WebService
                 var sr = new ClientResult
                 {
                     IsSuccess = false,
-                    ErrorMessage = "Search errors. " + ex.Message
+                    ErrorMessage = "ExistingClientCode errors. " + ex.Message
                 };
                 return sr;
             }
 
         }
+
+        public MainAppClientResult ListMainAppClient()
+        {
+            try
+            {
+                BSL.ClientService cs = new BSL.ClientService();
+                var listMainAppClient = cs.ListMainAppClient();
+
+                var sr = new MainAppClientResult
+                {
+                    IsSuccess = true,
+                    ListMainAppClients = listMainAppClient,
+                };
+                return sr;
+            }
+            catch (Exception ex)
+            {
+                new RMSWebException(this, "0500", "ListMainAppClient failed. " + ex.Message, ex, true);
+
+                var sr = new MainAppClientResult
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "ListMainAppClient errors. " + ex.Message
+                };
+                return sr;
+            }
+        }
+
+        public LocationResult ListLocation()
+        {
+            try
+            {
+                BSL.ClientService cs = new BSL.ClientService();
+                var listLocation = cs.ListLocation();
+
+                var sr = new LocationResult
+                {
+                    IsSuccess = true,
+                    ListLocations = listLocation,
+                };
+                return sr;
+            }
+            catch (Exception ex)
+            {
+                new RMSWebException(this, "0500", "ListLocation failed. " + ex.Message, ex, true);
+
+                var sr = new LocationResult
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "ListLocation errors. " + ex.Message
+                };
+                return sr;
+            }
+        }
+
     }
 }

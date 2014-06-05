@@ -27,6 +27,7 @@
     <MetadataFile FileName="SelfTestingService1.wsdl" MetadataType="Wsdl" ID="ac6f6706-25e4-425d-94c8-281be6aab677" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/SelfTestingService.svc?wsdl" />
     <MetadataFile FileName="SelfTestingService1.disco" MetadataType="Disco" ID="5554c322-14fb-44c9-a8c5-26edc4206211" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/SelfTestingService.svc?disco" />
     <MetadataFile FileName="SelfTestingService2.xsd" MetadataType="Schema" ID="2e233825-c9a5-42cc-8ab0-37f550b2c057" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/SelfTestingService.svc?xsd=xsd0" />
+    <MetadataFile FileName="SelfTestingService.xsd" MetadataType="Schema" ID="1c22e8b6-eb7e-4dab-b420-d76d24225a68" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/SelfTestingService.svc?xsd=xsd2" />
     <MetadataFile FileName="SelfTestingService21.xsd" MetadataType="Schema" ID="d84fc1bc-ae47-4ddb-a952-c734d1a5a2ac" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/SelfTestingService.svc?xsd=xsd1" />
   </Metadata>
   <Extensions>

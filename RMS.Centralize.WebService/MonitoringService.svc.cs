@@ -17,7 +17,7 @@ namespace RMS.Centralize.WebService
     {
         public void TestConnection()
         {
-
+              
         }
 
         public void AddMessage(RmsReportMonitoringRaw rawMessage)

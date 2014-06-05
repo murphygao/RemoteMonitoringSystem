@@ -128,6 +128,7 @@
     <Compile Include="BSL\BaseService.cs" />
     <Compile Include="BSL\ClientService.cs" />
     <Compile Include="BSL\MonitoringEngineService.cs" />
+    <Compile Include="BSL\SelfTestingService.cs" />
     <Compile Include="BSL\SummaryService.cs" />
     <Compile Include="ClientService.svc.cs">
       <DependentUpon>ClientService.svc</DependentUpon>

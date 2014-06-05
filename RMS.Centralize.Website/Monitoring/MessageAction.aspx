@@ -269,13 +269,14 @@
             /*
          * BASIC
          */
-            $('#dt_basic').dataTable({
+           $('#dt_basic').dataTable({
                 "sPaginationType": "bootstrap_full",
                 "bFilter": false,
                 "bAutoWidth": false,
                 "bPaginate": true,
                 "bInfo": true,
                 "bScrollCollapse": true,
+                "sDom": 'r<"dt-top-row"lf><"dt-wrapper"<"datatable-scroll"t>><"dt-row dt-bottom-row"<"row"<"col-sm-6"i><"col-sm-6 text-right"p>>>',
                 "bServerSide": true,
                 "sAjaxSource": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/MessageAction/SearchMessageAction/",
                 "fnServerData": function (sSource, aoData, fnCallback) {

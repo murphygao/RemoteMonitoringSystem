@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
+using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -190,6 +193,23 @@ namespace RMS.Centralize.WebService
                         }
                     }
                 }
+                using (var db = new MyDbContext())
+                {
+
+                        //db.Configuration.ProxyCreationEnabled = false;
+                        //db.Configuration.LazyLoadingEnabled = false;
+
+                    try
+                    {
+                        var listOfType = db.Database.SqlQuery<RmsClient>("RMS_ListClientWithIPAddress");
+                        List<RmsClient> listClients = new List<RmsClient>(listOfType.ToList());
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
 
             }
             catch (Exception ex)
@@ -292,6 +312,12 @@ namespace RMS.Centralize.WebService
             }
 
             return ret;
+        }
+
+        public DataTable TestQuery(string sql)
+        {
+            var st = new BSL.SelfTestingService();
+            return st.TestSQL(sql);
         }
     }
 }

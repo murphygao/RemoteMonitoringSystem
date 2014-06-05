@@ -90,6 +90,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\DataSources\System.Data.DataTable.datasource" />
     <None Include="Service References\ActionProfileProxy\ActionProfileService.wsdl" />
     <None Include="Service References\ActionProfileProxy\ActionProfileService.xsd">
       <SubType>Designer</SubType>
@@ -134,6 +135,12 @@
     <None Include="Service References\ClientProxy\RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ClientProxy\RMS.Centralize.WebSite.Proxy.ClientProxy.LocationResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ClientProxy\RMS.Centralize.WebSite.Proxy.ClientProxy.MainAppClientResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ClientProxy\RMS.Centralize.WebSite.Proxy.ClientProxy.Result.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -170,6 +177,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\MonitoringProxy\MonitoringService32.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SelfTestingProxy\SelfTestingService.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\SelfTestingProxy\SelfTestingService1.wsdl" />

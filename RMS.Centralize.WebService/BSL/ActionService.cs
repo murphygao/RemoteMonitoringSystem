@@ -319,6 +319,7 @@ namespace RMS.Centralize.WebService.BSL
                             }
                             catch (Exception ex)
                             {
+                                new RMSWebException(this, "0500", "GatewayService.SendEmail failed. " + ex.Message, ex, true);
                                 AddLogActionSend("Email", emailFrom, to, tBody, false, ex.Message);
                             }
                         }
@@ -380,6 +381,9 @@ namespace RMS.Centralize.WebService.BSL
                                     DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("en-AU")) :
                                     actionInfo.MessageDateTime.Value.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("en-AU")));
 
+                            if (!string.IsNullOrEmpty(actionInfo.To))
+                                actionInfo.To = actionInfo.To.Replace("-", "").Replace(" ", "");
+
                             if (!Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.ActionModeTest"]))
                             {
                                 var actionGatewayService = new ActionGateway();
@@ -399,6 +403,7 @@ namespace RMS.Centralize.WebService.BSL
                                 }
                                 catch (Exception ex)
                                 {
+                                    new RMSWebException(this, "0500", "GatewayService.SendSMS failed. " + ex.Message, ex, true);
                                     AddLogActionSend("SMS", smsSender, actionInfo.To, tBody, false, ex.Message);
                                 }
                             }

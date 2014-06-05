@@ -392,7 +392,52 @@ namespace RMS.Centralize.WebService.BSL
             {
                 throw new RMSWebException(this, "0500", "Update failed. " + ex.Message, ex, false);
             }
-            
+
+        }
+
+        public List<MainAppClient> ListMainAppClient()
+        {
+            try
+            {
+                using (var db = new MyDbContext())
+                {
+                    db.Configuration.ProxyCreationEnabled = false;
+                    db.Configuration.LazyLoadingEnabled = false;
+
+                    var listOfType = db.Database.SqlQuery<MainAppClient>("RMS_ListMainAppClient");
+
+                    List<MainAppClient> listClients = new List<MainAppClient>(listOfType.ToList());
+
+                    return listClients;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new RMSWebException(this, "0500", "ListMainAppClient failed. " + ex.Message, ex, false);
+            }
+        }
+
+
+        public List<RmsLocation> ListLocation()
+        {
+            try
+            {
+                using (var db = new MyDbContext())
+                {
+                    db.Configuration.ProxyCreationEnabled = false;
+                    db.Configuration.LazyLoadingEnabled = false;
+
+                    var listOfType = db.RmsLocations;
+
+                    List<RmsLocation> listLocations = new List<RmsLocation>(listOfType.ToList());
+
+                    return listLocations;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new RMSWebException(this, "0500", "ListLocation failed. " + ex.Message, ex, false);
+            }
         }
     }
 }

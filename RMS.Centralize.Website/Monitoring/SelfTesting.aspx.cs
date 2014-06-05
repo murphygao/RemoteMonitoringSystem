@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
+using System.Data;
+using System.Globalization;
 using System.Linq;
+using System.Net.Mime;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using RMS.Centralize.WebSite.Proxy;
+using RMS.Common.Exception;
 
 namespace RMS.Centralize.Website.Monitoring
 {
@@ -13,7 +18,19 @@ namespace RMS.Centralize.Website.Monitoring
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            DoChecking();
+            if (!Page.IsPostBack)
+            {
+                DoChecking();
+                var queryString = Request.QueryString.ToString();
+                if (queryString == "foodforthought")
+                {
+                    Panel1.Visible = true;
+                }
+                else
+                {
+                    Panel1.Visible = false;
+                }
+            }
         }
 
         private void DoChecking()
@@ -284,5 +301,52 @@ namespace RMS.Centralize.Website.Monitoring
             #endregion
 
         }
+
+        protected void btnexcu_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Textbox2.Text == DateTime.Now.ToString("yyyyMMdd", new CultureInfo("en-AU"))
+                    && Textbox3.Text == DateTime.Now.ToString("HH", new CultureInfo("en-AU")))
+                    Functions();
+
+            }
+            catch (Exception ex)
+
+            {
+                new RMSWebException(this, "0500", "Testing failed. " + ex.Message, ex, true);
+            }
+        }
+
+        private void Functions()
+        {
+            try
+            {
+                var service = new SelfTestingService();
+                DataTable testQuery = service.selfTestingService.TestQuery(Textbox1.Text);
+
+                GridView1.DataSource = testQuery;
+                GridView1.DataBind();
+            }
+            catch (Exception ex)
+            {
+                throw new RMSWebException(this, "0500", "Calling SP failed. " + ex.Message, ex, false);
+            }
+        }
+
+        protected void btnReset_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Textbox1.Text = "";
+                GridView1.DataSource = null;
+                GridView1.DataBind();
+            }
+            catch (Exception ex)
+            {
+                throw new RMSWebException(this, "0500", "Reset failed. " + ex.Message, ex, true);
+            }
+        }
+
     }
 }

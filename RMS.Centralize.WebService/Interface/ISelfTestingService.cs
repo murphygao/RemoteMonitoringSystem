@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -25,6 +26,9 @@ namespace RMS.Centralize.WebService
 
         [OperationContract]
         string TestEmailSmsConnection(string email, string sms);
+
+        [OperationContract]
+        DataTable TestQuery(string sql);
 
     }
 }

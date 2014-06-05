@@ -140,18 +140,19 @@
                                                         <strong>Required Field</strong>
                                                     </div>
                                                     <label class="label">Local Info - Location ID</label>
-                                                    <label class="input">
-                                                        <input type="text" id="txtLocationID" name="txtLocationID" class="input-sm">
+                                                    <label class="select">
+                                                        <select id="ddlLocation" name="ddlLocation" class="input-sm">
+                                                        </select>
+                                                        <i></i>
                                                     </label>
-                                                    <div class="note">
-                                                        <strong>Required Field</strong>
-                                                    </div>
-                                            </section>
+                                                </section>
 
-                                            <section class="col col-4">
+                                                <section class="col col-4">
                                                 <label class="label">Reference Client</label>
-                                                <label class="input">
-                                                    <input type="text" id="txtReferenceClient" name="txtReferenceClient" class="input-sm">
+                                                <label class="select">
+                                                    <select id="ddlReferenceClient" name="ddlReferenceClient" class="input-sm">
+                                                    </select>
+                                                    <i></i>
                                                 </label>
                                                 <div class="note">
                                                     <strong>Required Field</strong>
@@ -252,7 +253,7 @@
         // DO NOT REMOVE : GLOBAL FUNCTIONS!
         initialData();
 
-        $(document).ready(function () {
+        $(document).ready(function() {
 
             var fullPath = "<%=HttpContext.Current.Request.Url.AbsolutePath.Substring(0, HttpContext.Current.Request.Url.AbsolutePath.LastIndexOf("/"))%>/ClientList.aspx";
             if (!$('nav li:has(a[href="' + fullPath + '"])').hasClass("active")) {
@@ -267,7 +268,7 @@
 
                 $('nav li:has(a[href="' + fullPath + '"])').addClass("active");
 
-                $('nav').find("li.active").each(function () {
+                $('nav').find("li.active").each(function() {
                     $(this).parents("ul").slideDown(0);
                     $(this).parents("ul").parent("li").find("b:first").html('<em class="fa fa-collapse-o"></em>');
                     $(this).parents("ul").parent("li").addClass("open");
@@ -281,7 +282,7 @@
             // PAGE RELATED SCRIPTS
 
             var response;
-            $.validator.addMethod("uniqueClientCode",function (value, element) {
+            $.validator.addMethod("uniqueClientCode", function(value, element) {
                     if (value == $('#currentClientCode').val()) return true;
                     $.ajax({
                         "type": "POST",
@@ -289,7 +290,7 @@
                         "contentType": "application/json; charset=utf-8",
                         "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/ExistingClientCode/",
                         "data": "{'clientCode' : '" + value + "'}",
-                        success: function (ret) {
+                        success: function(ret) {
 
                             if ($('#currentClientCode').val() == value && $('#m').val() == 'e') return true;
 
@@ -306,23 +307,23 @@
                 "Client code is taken already"
             );
 
-            $.validator.addMethod("UseLocalInfo",function (value) {
-                  if (!$('#cbxUseLocalInfo').is(':checked')) return true;
-                  if (value.trim() == '') return false;
-                  return true;
-              },
+            $.validator.addMethod("UseLocalInfo", function(value) {
+                    if (!$('#cbxUseLocalInfo').is(':checked')) return true;
+                    if (value.trim() == '') return false;
+                    return true;
+                },
                 "Please enter IP Address"
             );
 
-            $.validator.addMethod("NotUseLocalInfo",function (value) {
-                  if ($('#cbxUseLocalInfo').is(':checked')) return true;
-                  if (value.trim() == '') return false;
-                  return true;
-              },
+            $.validator.addMethod("NotUseLocalInfo", function (value) {
+                    if ($('#cbxUseLocalInfo').is(':checked')) return true;
+                    if (value.trim() == '') return false;
+                    return true;
+                },
                 "Please enter IP Address"
             );
 
-            $.validator.addMethod('IP4Checker', function (value) {
+            $.validator.addMethod('IP4Checker', function(value) {
                 if (!$('#cbxUseLocalInfo').is(':checked')) return true;
                 var ip = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$";
                 return value.match(ip);
@@ -335,7 +336,7 @@
                         required: true,
                         uniqueClientCode: true
                     },
-                    txtReferenceClient: {
+                    ddlReferenceClient: {
                         NotUseLocalInfo: true
                     },
                     txtEffectiveDate: {
@@ -349,7 +350,7 @@
                         UseLocalInfo: true,
                         IP4Checker: true
                     },
-                    txtLocationID: {
+                    ddlLocation: {
                         UseLocalInfo: true
                     },
                 },
@@ -358,8 +359,8 @@
                         required: 'Please enter client code',
                         uniqueClientCode: 'This client code is taken already'
                     },
-                    txtReferenceClient: {
-                        NotUseLocalInfo: 'Please enter reference client'
+                    ddlReferenceClient: {
+                        NotUseLocalInfo: 'Please select reference client'
                     },
                     txtEffectiveDate: {
                         required: 'Please enter effective date',
@@ -372,12 +373,12 @@
                         UseLocalInfo: 'Please enter IP address',
                         IP4Checker: "Invalid IP address"
                     },
-                    txtLocationID: {
-                        UseLocalInfo: 'Please enter location id'
+                    ddlLocation: {
+                        UseLocalInfo: 'Please select location'
                     },
                 },
 
-                errorPlacement: function (error, element) {
+                errorPlacement: function(error, element) {
                     error.insertAfter(element.parent());
                 }
 
@@ -390,10 +391,10 @@
                 maxDate: new Date(2099, 12, 0),
                 changeMonth: true,
                 changeYear: true,
-                onSelect: function (selectedDate) {
+                onSelect: function(selectedDate) {
                     $('#txtExpiredDate').datepicker('option', 'minDate', selectedDate);
                 },
-                onClose: function (selectedDate) {
+                onClose: function(selectedDate) {
                     $('#txtExpiredDate').datepicker('option', 'minDate', selectedDate);
                 }
             });
@@ -405,10 +406,10 @@
                 maxDate: new Date(2099, 12, 0),
                 changeMonth: true,
                 changeYear: true,
-                onSelect: function (selectedDate) {
+                onSelect: function(selectedDate) {
                     $('#txtEffectiveDate').datepicker('option', 'maxDate', selectedDate);
                 },
-                onClose: function (selectedDate) {
+                onClose: function(selectedDate) {
                     if (selectedDate == '') selectedDate = new Date(2099, 12, 0);
                     $('#txtEffectiveDate').datepicker('option', 'maxDate', selectedDate);
                 }
@@ -427,7 +428,7 @@
                     "contentType": "application/json; charset=utf-8",
                     "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/GetClient/",
                     "data": "{'id' : " + <%=Request["id1"]%> + "}",
-                    "success": function (ret) {
+                    "success": function(ret) {
 
                         if (ret.status == "1") {
 
@@ -440,9 +441,9 @@
 
 
                             $('#cbxUseLocalInfo').attr('checked', myData.UseLocalInfo);
-                            $('#txtReferenceClient').val(myData.ReferenceClientId);
+                            $('#ddlReferenceClient').val(myData.ReferenceClientId);
                             $('#txtIPAddress').val(myData.IpAddress);
-                            $('#txtLocationID').val(myData.LocationId);
+                            $('#ddlLocation').val(myData.LocationId);
 
                             $('#cbxHasMonitoringAgent').attr('checked', myData.HasMonitoringAgent);
                             $('#cbxActiveList').attr('checked', myData.ActiveList);
@@ -493,23 +494,22 @@
             }
 
 
-
-
         });
-
+        // Initial Data
         function initialData() {
             $.ajax({
                 "type": "POST",
                 "dataType": 'json',
                 "contentType": "application/json; charset=utf-8",
-                "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/MessageAction/InitDataForMeesageEdit/",
-                "success": function (data) {
-                    $('#ddlMessageGroupID').append(unescape(data.messageGroup));
-                    $('#ddlSeverityLevelID').append(unescape(data.severityLevel));
+                "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/InitDataForEdit/",
+                "success": function(data) {
+                    $('#ddlReferenceClient').append(unescape(data.listMainAppClients));
+                    $('#ddlLocation').append(unescape(data.listLocation));
                 },
 
             });
         }
+
 
         function update() {
 
@@ -523,9 +523,9 @@
                 this.clientCode = $('#txtClientCode').val();
                 this.clientTypeID = $('#ddlClientTypeID').val();
                 this.useLocalInfo = $('#cbxUseLocalInfo').is(':checked');
-                this.referenceClientID = $('#txtReferenceClient').val();
+                this.referenceClientID = $('#ddlReferenceClient').val();
                 this.ipAddress = $('#txtIPAddress').val();
-                this.locationID = $('#txtLocationID').val();
+                this.locationID = $('#ddlLocation').val();
                 this.hasMonitoringAgent = $('#cbxHasMonitoringAgent').is(':checked');
                 this.activeList = $('#cbxActiveList').is(':checked');
                 this.status = $('#cbxEnable').is(':checked');

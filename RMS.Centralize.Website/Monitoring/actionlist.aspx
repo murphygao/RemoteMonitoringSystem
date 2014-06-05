@@ -267,6 +267,7 @@
                 "bAutoWidth": false,
                 "bPaginate": true,
                 "bInfo": true,
+                "sDom": 'r<"dt-top-row"lf><"dt-wrapper"<"datatable-scroll"t>><"dt-row dt-bottom-row"<"row"<"col-sm-6"i><"col-sm-6 text-right"p>>>',
                 "bServerSide": true,
                 "sAjaxSource": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/ActionProfile/SearchActionList/",
                 "fnServerData": function (sSource, aoData, fnCallback) {

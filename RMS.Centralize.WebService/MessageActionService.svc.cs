@@ -23,7 +23,7 @@ namespace RMS.Centralize.WebService
 
         #region Page: MessageAction
 
-        public InitMessageActionResult InitDataForMeesageAction()
+        public InitMessageActionResult InitDataForMeesageAction() 
         {
             var mg = new List<RmsMessageGroup>();
 

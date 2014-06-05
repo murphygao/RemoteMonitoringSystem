@@ -32,6 +32,12 @@ namespace RMS.Centralize.WebService
         [OperationContract]
         ClientResult ExistingClientCode(string clientCode);
 
+        [OperationContract]
+        MainAppClientResult ListMainAppClient();
+
+        [OperationContract]
+        LocationResult ListLocation();
+
 
     }
 
@@ -103,7 +109,27 @@ namespace RMS.Centralize.WebService
         [DataMember]
         public int TotalRecords { get; set; }
 
-
     }
 
+    public class MainAppClientResult : Result
+    {
+        [DataMember]
+        public List<MainAppClient> ListMainAppClients { get; set; }
+ 
+ 
+    }
+    public class LocationResult : Result
+    {
+        [DataMember]
+        public List<RmsLocation> ListLocations { get; set; }
+        [DataMember]
+        public int TotalRecords { get; set; }
+        [DataMember]
+        public RmsLocation Location { get; set; }
+ 
+
+ 
+    }
+
+    
 }

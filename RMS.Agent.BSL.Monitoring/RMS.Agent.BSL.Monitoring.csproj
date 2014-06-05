@@ -53,6 +53,10 @@
       <Project>{f63949c0-3f8d-4508-92c9-980c2db5c15c}</Project>
       <Name>RMS.Agent.Entity</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RMS.Agent.Helper\RMS.Agent.Helper.csproj">
+      <Project>{2f770264-9c79-446b-9d93-5ce71db1f4d7}</Project>
+      <Name>RMS.Agent.Helper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RMS.Agent.Proxy\RMS.Agent.Proxy.csproj">
       <Project>{34cc6b3a-d552-480a-b3d1-f94a389c1c86}</Project>
       <Name>RMS.Agent.Proxy</Name>

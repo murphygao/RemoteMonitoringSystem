@@ -29,6 +29,7 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/SelfTestingService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/SelfTestingService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/SelfTestingService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/System.Data" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="ISelfTestingService_TestConnection_InputMessage">
@@ -61,6 +62,12 @@
   <wsdl:message name="ISelfTestingService_TestEmailSmsConnection_OutputMessage">
     <wsdl:part name="parameters" element="tns:TestEmailSmsConnectionResponse" />
   </wsdl:message>
+  <wsdl:message name="ISelfTestingService_TestQuery_InputMessage">
+    <wsdl:part name="parameters" element="tns:TestQuery" />
+  </wsdl:message>
+  <wsdl:message name="ISelfTestingService_TestQuery_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TestQueryResponse" />
+  </wsdl:message>
   <wsdl:portType name="ISelfTestingService">
     <wsdl:operation name="TestConnection">
       <wsdl:input wsaw:Action="http://tempuri.org/ISelfTestingService/TestConnection" message="tns:ISelfTestingService_TestConnection_InputMessage" />
@@ -81,6 +88,10 @@
     <wsdl:operation name="TestEmailSmsConnection">
       <wsdl:input wsaw:Action="http://tempuri.org/ISelfTestingService/TestEmailSmsConnection" message="tns:ISelfTestingService_TestEmailSmsConnection_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISelfTestingService/TestEmailSmsConnectionResponse" message="tns:ISelfTestingService_TestEmailSmsConnection_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TestQuery">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISelfTestingService/TestQuery" message="tns:ISelfTestingService_TestQuery_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISelfTestingService/TestQueryResponse" message="tns:ISelfTestingService_TestQuery_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ISelfTestingService" type="tns:ISelfTestingService">
@@ -130,6 +141,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="TestQuery">
+      <soap:operation soapAction="http://tempuri.org/ISelfTestingService/TestQuery" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="BasicHttpsBinding_ISelfTestingService" type="tns:ISelfTestingService">
     <wsp:PolicyReference URI="#BasicHttpsBinding_ISelfTestingService_policy" />
@@ -172,6 +192,15 @@
     </wsdl:operation>
     <wsdl:operation name="TestEmailSmsConnection">
       <soap:operation soapAction="http://tempuri.org/ISelfTestingService/TestEmailSmsConnection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TestQuery">
+      <soap:operation soapAction="http://tempuri.org/ISelfTestingService/TestQuery" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

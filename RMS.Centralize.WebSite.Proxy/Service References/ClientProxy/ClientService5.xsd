@@ -99,4 +99,18 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="RmsMonitoringProfile" nillable="true" type="tns:RmsMonitoringProfile" />
+  <xs:complexType name="ArrayOfRmsLocation">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RmsLocation" nillable="true" type="tns:RmsLocation" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRmsLocation" nillable="true" type="tns:ArrayOfRmsLocation" />
+  <xs:complexType name="RmsLocation">
+    <xs:sequence>
+      <xs:element name="LocationId" type="xs:int" />
+      <xs:element minOccurs="0" name="LocationCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LocationName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RmsLocation" nillable="true" type="tns:RmsLocation" />
 </xs:schema>

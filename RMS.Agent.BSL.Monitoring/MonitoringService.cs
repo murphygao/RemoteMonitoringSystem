@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Proxies;
 using System.Text;
 using System.Threading.Tasks;
 using RMS.Agent.Entity;
@@ -58,7 +59,7 @@ namespace RMS.Agent.BSL.Monitoring
             {
                 #region 1. Call Centralize to Get Client & Device Info for Monitoring
 
-                ClientServiceClient cs = new ClientServiceClient();
+                ClientServiceClient cs = new ClientService().clientService;
                 var clientResult = cs.GetClient(GetClientBy.ClientCode, null, clientCode, null, true, true);
 
                 int? deviceId = null;
@@ -69,9 +70,18 @@ namespace RMS.Agent.BSL.Monitoring
                 if (rmsMonitoringProfileDevices.Count > 0)
                     monitoringProfileDeviceId = rmsMonitoringProfileDevices[0].MonitoringProfileDeviceId;
 
+                if (Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.DebugLogEnable"] ?? "false"))
+                {
+                    string log = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss  ") + Helper.Serializer.XML.SerializeObject(clientResult);
+                    new RMSDebugLog(log, true);
+                    log = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss  ") + Helper.Serializer.XML.SerializeObject(rmsMonitoringProfileDevices);
+                    new RMSDebugLog(log, true);
+                }
+
+
                 #endregion
 
-                MonitoringServiceClient mp = new MonitoringServiceClient();
+                MonitoringServiceClient mp = new Proxy.MonitoringService().monitoringService;
 
                 #region 2. Send Alive Message
 
@@ -86,6 +96,13 @@ namespace RMS.Agent.BSL.Monitoring
                     rawMessage.MonitoringProfileDeviceId = monitoringProfileDeviceId;
 
                     mp.AddMessage(rawMessage);
+
+                    if (Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.DebugLogEnable"] ?? "false"))
+                    {
+                        string log = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss  ") +  Helper.Serializer.XML.SerializeObject(rawMessage);
+                        new RMSDebugLog(log, true);
+                    }
+
                 }
                 catch (Exception ex)
                 {
@@ -138,9 +155,17 @@ namespace RMS.Agent.BSL.Monitoring
 
                     // Device
                     monitoringRaws.AddRange(monitoringService.Monitoring("device", clientResult));
-            
+
                     if (monitoringRaws.Count > 0)
+                    {
+                        if (Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.DebugLogEnable"] ?? "false"))
+                        {
+                            string log = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss  ") + Helper.Serializer.XML.SerializeObject(monitoringRaws);
+                            new RMSDebugLog(log, true);
+                        }
+
                         mp.AddMessages(monitoringRaws);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -160,7 +185,7 @@ namespace RMS.Agent.BSL.Monitoring
         {
             try
             {
-                ClientServiceClient cs = new ClientServiceClient();
+                var cs = new ClientService().clientService;
                 var clientResult = cs.GetClient(GetClientBy.ClientCode, null, clientCode, null, false, false);
 
                 if (clientResult.Client.State == (int) ClientState.Normal && clientState == ClientState.Maintenance)

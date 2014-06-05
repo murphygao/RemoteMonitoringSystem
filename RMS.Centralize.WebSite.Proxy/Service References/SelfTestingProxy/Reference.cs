@@ -44,6 +44,12 @@ namespace RMS.Centralize.WebSite.Proxy.SelfTestingProxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISelfTestingService/TestEmailSmsConnection", ReplyAction="http://tempuri.org/ISelfTestingService/TestEmailSmsConnectionResponse")]
         System.Threading.Tasks.Task<string> TestEmailSmsConnectionAsync(string email, string sms);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISelfTestingService/TestQuery", ReplyAction="http://tempuri.org/ISelfTestingService/TestQueryResponse")]
+        System.Data.DataTable TestQuery(string sql);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISelfTestingService/TestQuery", ReplyAction="http://tempuri.org/ISelfTestingService/TestQueryResponse")]
+        System.Threading.Tasks.Task<System.Data.DataTable> TestQueryAsync(string sql);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -111,6 +117,14 @@ namespace RMS.Centralize.WebSite.Proxy.SelfTestingProxy {
         
         public System.Threading.Tasks.Task<string> TestEmailSmsConnectionAsync(string email, string sms) {
             return base.Channel.TestEmailSmsConnectionAsync(email, sms);
+        }
+        
+        public System.Data.DataTable TestQuery(string sql) {
+            return base.Channel.TestQuery(sql);
+        }
+        
+        public System.Threading.Tasks.Task<System.Data.DataTable> TestQueryAsync(string sql) {
+            return base.Channel.TestQueryAsync(sql);
         }
     }
 }

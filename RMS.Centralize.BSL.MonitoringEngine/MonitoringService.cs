@@ -97,7 +97,7 @@ namespace RMS.Centralize.BSL.MonitoringEngine
                             var device = lists.First(f => f.DeviceId == 1 || f.DeviceDescription == "Alive");
                             if (device != null)
                             {
-                                RMS.Centralize.WebService.Proxy.MonitoringProxy.MonitoringServiceClient mp = new MonitoringServiceClient();
+                                var mp = new Centralize.WebService.Proxy.MonitoringService().monitoringService;
 
                                 RMS.Centralize.WebService.Proxy.MonitoringProxy.RmsReportMonitoringRaw rawMessage = new WebService.Proxy.
                                     MonitoringProxy.RmsReportMonitoringRaw
@@ -117,7 +117,7 @@ namespace RMS.Centralize.BSL.MonitoringEngine
                 catch (Exception ex)
                 {
                     throw new RMSWebException(this, "0500", "BroadcastAliveMessage failed. " + ex.Message, ex, false);
-                }
+                  }
             }
         }
 

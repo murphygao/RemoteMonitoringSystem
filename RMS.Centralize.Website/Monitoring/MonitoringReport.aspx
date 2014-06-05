@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SmartAdmin.Master" AutoEventWireup="true" CodeBehind="MonitoringReport.aspx.cs" Inherits="RMS.Centralize.Website.Monitoring.MonitoringReport" %>
+
 <%@ Import Namespace="System.Web.Optimization" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -85,45 +86,48 @@
                                         <section class="col col-md-3 col-xs-6">
                                             <label class="input">
                                                 <i class="icon-append fa fa-calendar"></i>
-                                                <input type="text" class="input-sm" name="txtStartEventDate" id="txtStartEventDate" placeholder="Start Event Date"/>
+                                                <input type="text" class="input-sm" name="txtStartEventDate" id="txtStartEventDate" placeholder="Start Event Date" />
                                             </label>
                                         </section>
 
                                         <section class="col col-md-3 col-xs-6">
                                             <label class="input">
                                                 <i class="icon-append fa fa-calendar"></i>
-                                                <input type="text" class="input-sm" name="txtEndEventDate" id="txtEndEventDate" placeholder="End Event Date"/>
+                                                <input type="text" class="input-sm" name="txtEndEventDate" id="txtEndEventDate" placeholder="End Event Date" />
                                             </label>
                                         </section>
 
                                         <section class="col col-md-6 col-xs-12">
-                                            <select id="ddlMessageGroup" name="ddlMessageGroup" multiple style="width: 100%" class="select2 input-sm">
-                                                <option value="" selected="selected">Select All Message Group</option>
-                                                <optgroup label="Technical Message">
-                                                    <option value="1">CPU</option>
-                                                    <option value="2">Memory</option>
-                                                    <option value="3">Disk</option>
-                                                    <option value="4">ATM Card Reader</option>
-                                                    <option value="5">Barcode Reader</option>
-                                                    <option value="6">Card Dispenser</option>
-                                                    <option value="7">Signature Pad</option>
-                                                    <option value="8">Encrypted Pin Pad</option>
-                                                    <option value="9">ID Card Scanner</option>
-                                                    <option value="10">Keyboard</option>
-                                                    <option value="11">Printer</option>
-                                                    <option value="12">Scanner</option>
-                                                    <option value="13">Smartcard Reader</option>
-                                                    <option value="14">Thermal Printer</option>
-                                                    <option value="15">Web Camera</option>
-                                                    <option value="16">UPS</option>
-                                                    <option value="18">Client</option>
-                                                    <option value="19">Monitor</option>
-                                                </optgroup>
-                                                <optgroup label="Busniess Message">
-                                                    <option value="17">General</option>
-                                                    <option value="20">SKS Batch</option>
-                                                </optgroup>
-                                            </select>
+                                            <label class="select">
+                                                <select id="ddlMessageGroup" name="ddlMessageGroup" multiple style="width: 100%" class="select2 input-sm">
+                                                    <option value="" selected="selected">Select All Message Group</option>
+                                                    <optgroup label="Technical Message">
+                                                        <option value="1">CPU</option>
+                                                        <option value="2">Memory</option>
+                                                        <option value="3">Disk</option>
+                                                        <option value="4">ATM Card Reader</option>
+                                                        <option value="5">Barcode Reader</option>
+                                                        <option value="6">Card Dispenser</option>
+                                                        <option value="7">Signature Pad</option>
+                                                        <option value="8">Encrypted Pin Pad</option>
+                                                        <option value="9">ID Card Scanner</option>
+                                                        <option value="10">Keyboard</option>
+                                                        <option value="11">Printer</option>
+                                                        <option value="12">Scanner</option>
+                                                        <option value="13">Smartcard Reader</option>
+                                                        <option value="14">Thermal Printer</option>
+                                                        <option value="15">Web Camera</option>
+                                                        <option value="16">UPS</option>
+                                                        <option value="18">Client</option>
+                                                        <option value="19">Monitor</option>
+                                                    </optgroup>
+                                                    <optgroup label="Busniess Message">
+                                                        <option value="17">General</option>
+                                                        <option value="20">SKS Batch</option>
+                                                    </optgroup>
+                                                </select>
+                                                <i></i>
+                                            </label>
                                         </section>
 
                                         <section class="col col-md-6 col-xs-12">
@@ -179,11 +183,13 @@
             </div>
             <!-- row -->
             <div class="row">
-                <span class="monitoring-liveupdate-1"> <span class="onoffswitch-title txt-color-white">Live switch</span> <span class="onoffswitch">
-										        <input type="checkbox" name="start_interval" class="onoffswitch-checkbox" id="start_interval">
-										        <label class="onoffswitch-label" for="start_interval"> 
-											        <span class="onoffswitch-inner" data-swchon-text="ON" data-swchoff-text="OFF"></span> 
-											        <span class="onoffswitch-switch"></span> </label> </span> </span>
+                <span class="monitoring-liveupdate-1"><span class="onoffswitch-title txt-color-white">Live switch</span> <span class="onoffswitch">
+                    <input type="checkbox" name="start_interval" class="onoffswitch-checkbox" id="start_interval">
+                    <label class="onoffswitch-label" for="start_interval">
+                        <span class="onoffswitch-inner" data-swchon-text="ON" data-swchoff-text="OFF"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span></span>
 
                 <!-- NEW WIDGET START -->
                 <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -275,7 +281,7 @@
     <%: Scripts.Render("~/bundles/defaultJs") %>
     <%: Scripts.Render("~/bundles/datatableJs") %>
     <%: Scripts.Render("~/bundles/myJs") %>
-    
+
     <!-- JS TOUCH : include this plugin for mobile drag / drop touch events
 		<script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script> -->
 
@@ -290,12 +296,12 @@
 
             if (!$('nav li:has(a[href="<%=HttpContext.Current.Request.Url.AbsolutePath%>"])').hasClass("active")) {
 
-                    $('nav').find('li.active:first').removeClass('active');
+                $('nav').find('li.active:first').removeClass('active');
 
-                    //var index = window.location.pathname.lastIndexOf("/") + 1;
-                    //var filename = window.location.pathname.substr(index);
+                //var index = window.location.pathname.lastIndexOf("/") + 1;
+                //var filename = window.location.pathname.substr(index);
 
-                    var _obj = $('ul li a[href="<%=HttpContext.Current.Request.Url.AbsolutePath%>"]');
+                var _obj = $('ul li a[href="<%=HttpContext.Current.Request.Url.AbsolutePath%>"]');
                     _obj.parent().addClass('active');
 
                     $('nav li:has(a[href="<%=HttpContext.Current.Request.Url.AbsolutePath%>"])').addClass("active");
@@ -307,23 +313,24 @@
                     });
                 }
 
-                pageSetUp();
-                drawBreadCrumb();
+            pageSetUp();
+            drawBreadCrumb();
 
-                /*
-             * BASIC
-             */
-                $('#dt_basic').dataTable({
-                    "sPaginationType": "bootstrap_full",
-                    "bFilter": false,
-                    "bAutoWidth": false,
-                    "bPaginate": true,
-                    "bInfo": true,
-                    "bScrollCollapse": true,
-                    "bServerSide": true,
-                    "aaSorting": [[1, "desc"]],
-                    "iDisplayLength": 50,
-                    "sAjaxSource": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/SummaryReport/SearchMonitoringReport/",
+            /*
+         * BASIC
+         */
+            $('#dt_basic').dataTable({
+                "sPaginationType": "bootstrap_full",
+                "bFilter": false,
+                "bAutoWidth": false,
+                "bPaginate": true,
+                "bInfo": true,
+                "sDom": 'r<"dt-top-row"lf><"dt-wrapper"<"datatable-scroll"t>><"dt-row dt-bottom-row"<"row"<"col-sm-6"i><"col-sm-6 text-right"p>>>',
+                "bScrollCollapse": true,
+                "bServerSide": true,
+                "aaSorting": [[1, "desc"]],
+                "iDisplayLength": 50,
+                "sAjaxSource": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/SummaryReport/SearchMonitoringReport/",
                     "fnServerData": function (sSource, aoData, fnCallback) {
                         aoData.push({ "name": "txtStartEventDate", "value": $('#txtStartEventDate').val() });
                         aoData.push({ "name": "txtEndEventDate", "value": $('#txtEndEventDate').val() });
@@ -418,7 +425,7 @@
                             "bSortable": false,
                             "sWidth": "150",
                             "sClass": "center",
-                            "fnRender": function(oObj) {
+                            "fnRender": function (oObj) {
                                 return oObj.aData["ColorTagStart"] + oObj.aData["LevelName"] + oObj.aData["ColorTagEnd"];
                             }
                         },
@@ -463,180 +470,180 @@
 
                 });
 
-                var today = new Date();
-                var dd = today.getDate();
-                var mm = today.getMonth() + 1; //January is 0!
-                var yyyy = today.getFullYear();
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+            var yyyy = today.getFullYear();
 
-                if (dd < 10) {
-                    dd = '0' + dd;
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+
+            today = yyyy + '.' + mm + '.' + dd;
+
+            //$('#txtMessageDate').attr("placeholder", today);
+
+            $('#txtStartEventDate').datepicker({
+                dateFormat: 'yy-mm-dd',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                maxDate: '0',
+                changeMonth: true,
+                changeYear: true,
+                onSelect: function (selectedDate) {
+                    $('#txtEndEventDate').datepicker('option', 'minDate', selectedDate);
+                },
+                onClose: function (selectedDate) {
+                    $('#txtEndEventDate').datepicker('option', 'minDate', selectedDate);
+                }
+            });
+
+            $('#txtEndEventDate').datepicker({
+                dateFormat: 'yy-mm-dd',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                maxDate: '0',
+                changeMonth: true,
+                changeYear: true,
+                onSelect: function (selectedDate) {
+                    $('#txtStartEventDate').datepicker('option', 'maxDate', selectedDate);
+                },
+                onClose: function (selectedDate) {
+                    if (selectedDate == '') selectedDate = '0';
+                    $('#txtStartEventDate').datepicker('option', 'maxDate', selectedDate);
                 }
 
-                if (mm < 10) {
-                    mm = '0' + mm;
+            });
+
+
+            /* END TABLE TOOLS */
+
+            $.fn.dataTableExt.oApi.fnReloadAjax = function (oSettings, sNewSource, fnCallback, bStandingRedraw) {
+                // DataTables 1.10 compatibility - if 1.10 then versionCheck exists.
+                // 1.10s API has ajax reloading built in, so we use those abilities
+                // directly.
+                if ($.fn.dataTable.versionCheck) {
+                    var api = new $.fn.dataTable.Api(oSettings);
+
+                    if (sNewSource) {
+                        api.ajax.url(sNewSource).load(fnCallback, !bStandingRedraw);
+                    }
+                    else {
+                        api.ajax.reload(fnCallback, !bStandingRedraw);
+                    }
+                    return;
                 }
 
-                today = yyyy + '.' + mm + '.' + dd;
+                if (sNewSource !== undefined && sNewSource !== null) {
+                    oSettings.sAjaxSource = sNewSource;
+                }
 
-                //$('#txtMessageDate').attr("placeholder", today);
+                // Server-side processing should just call fnDraw
+                if (oSettings.oFeatures.bServerSide) {
+                    this.fnDraw();
+                    return;
+                }
 
-                $('#txtStartEventDate').datepicker({
-                    dateFormat: 'yy-mm-dd',
-                    prevText: '<i class="fa fa-chevron-left"></i>',
-                    nextText: '<i class="fa fa-chevron-right"></i>',
-                    maxDate: '0',
-                    changeMonth: true,
-                    changeYear: true,
-                    onSelect: function (selectedDate) {
-                        $('#txtEndEventDate').datepicker('option', 'minDate', selectedDate);
-                    },
-                    onClose: function (selectedDate) {
-                        $('#txtEndEventDate').datepicker('option', 'minDate', selectedDate);
-                    }
-                });
+                this.oApi._fnProcessingDisplay(oSettings, true);
+                var that = this;
+                var iStart = oSettings._iDisplayStart;
+                var aData = [];
 
-                $('#txtEndEventDate').datepicker({
-                    dateFormat: 'yy-mm-dd',
-                    prevText: '<i class="fa fa-chevron-left"></i>',
-                    nextText: '<i class="fa fa-chevron-right"></i>',
-                    maxDate: '0',
-                    changeMonth: true,
-                    changeYear: true,
-                    onSelect: function (selectedDate) {
-                        $('#txtStartEventDate').datepicker('option', 'maxDate', selectedDate);
-                    },
-                    onClose: function (selectedDate) {
-                        if (selectedDate == '') selectedDate = '0';
-                        $('#txtStartEventDate').datepicker('option', 'maxDate', selectedDate);
+                this.oApi._fnServerParams(oSettings, aData);
+
+                oSettings.fnServerData.call(oSettings.oInstance, oSettings.sAjaxSource, aData, function (json) {
+                    /* Clear the old information from the table */
+                    that.oApi._fnClearTable(oSettings);
+
+                    /* Got the data - add it to the table */
+                    var aData = (oSettings.sAjaxDataProp !== "") ?
+                        that.oApi._fnGetObjectDataFn(oSettings.sAjaxDataProp)(json) : json;
+
+                    for (var i = 0 ; i < aData.length ; i++) {
+                        that.oApi._fnAddData(oSettings, aData[i]);
                     }
 
-                });
+                    oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
 
+                    that.fnDraw();
 
-                /* END TABLE TOOLS */
-
-                $.fn.dataTableExt.oApi.fnReloadAjax = function (oSettings, sNewSource, fnCallback, bStandingRedraw) {
-                    // DataTables 1.10 compatibility - if 1.10 then versionCheck exists.
-                    // 1.10s API has ajax reloading built in, so we use those abilities
-                    // directly.
-                    if ($.fn.dataTable.versionCheck) {
-                        var api = new $.fn.dataTable.Api(oSettings);
-
-                        if (sNewSource) {
-                            api.ajax.url(sNewSource).load(fnCallback, !bStandingRedraw);
-                        }
-                        else {
-                            api.ajax.reload(fnCallback, !bStandingRedraw);
-                        }
-                        return;
+                    if (bStandingRedraw === true) {
+                        oSettings._iDisplayStart = iStart;
+                        that.oApi._fnCalculateEnd(oSettings);
+                        that.fnDraw(false);
                     }
 
-                    if (sNewSource !== undefined && sNewSource !== null) {
-                        oSettings.sAjaxSource = sNewSource;
+                    that.oApi._fnProcessingDisplay(oSettings, false);
+
+                    /* Callback user function - for event handlers etc */
+                    if (typeof fnCallback == 'function' && fnCallback !== null) {
+                        fnCallback(oSettings);
                     }
+                }, oSettings);
+            };
 
-                    // Server-side processing should just call fnDraw
-                    if (oSettings.oFeatures.bServerSide) {
-                        this.fnDraw();
-                        return;
-                    }
+            $.fn.dataTableExt.oApi.fnStandingRedraw = function (oSettings, idx) {
+                if (oSettings.oFeatures.bServerSide === false) {
+                    var before = oSettings._iDisplayStart - idx;
 
-                    this.oApi._fnProcessingDisplay(oSettings, true);
-                    var that = this;
-                    var iStart = oSettings._iDisplayStart;
-                    var aData = [];
+                    oSettings.oApi._fnReDraw(oSettings);
 
-                    this.oApi._fnServerParams(oSettings, aData);
+                    // iDisplayStart has been reset to zero - so lets change it back
+                    oSettings._iDisplayStart = before;
+                    oSettings.oApi._fnCalculateEnd(oSettings);
+                }
+                oSettings._iDisplayStart = oSettings._iDisplayStart - (idx * oSettings._iDisplayLength);
+                // draw the 'current' page
+                oSettings.oApi._fnDraw(oSettings);
+            };
 
-                    oSettings.fnServerData.call(oSettings.oInstance, oSettings.sAjaxSource, aData, function (json) {
-                        /* Clear the old information from the table */
-                        that.oApi._fnClearTable(oSettings);
+            $('#searhForm').submit(function (event) {
+                /* stop form from submitting normally */
+                event.preventDefault();
 
-                        /* Got the data - add it to the table */
-                        var aData = (oSettings.sAjaxDataProp !== "") ?
-                            that.oApi._fnGetObjectDataFn(oSettings.sAjaxDataProp)(json) : json;
+                var oTable = $('#dt_basic').dataTable();
+                Pace.restart(); oTable.fnDraw();
 
-                        for (var i = 0 ; i < aData.length ; i++) {
-                            that.oApi._fnAddData(oSettings, aData[i]);
-                        }
+            });
 
-                        oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
+            /* live switch */
+            $('input[type="checkbox"]#start_interval').click(function () {
+                if ($(this).prop('checked')) {
+                    $on = true;
+                    updateInterval = 10000;
+                    update();
+                } else {
+                    clearInterval(updateInterval);
+                    $on = false;
+                }
+            });
 
-                        that.fnDraw();
-
-                        if (bStandingRedraw === true) {
-                            oSettings._iDisplayStart = iStart;
-                            that.oApi._fnCalculateEnd(oSettings);
-                            that.fnDraw(false);
-                        }
-
-                        that.oApi._fnProcessingDisplay(oSettings, false);
-
-                        /* Callback user function - for event handlers etc */
-                        if (typeof fnCallback == 'function' && fnCallback !== null) {
-                            fnCallback(oSettings);
-                        }
-                    }, oSettings);
-                };
-
-                $.fn.dataTableExt.oApi.fnStandingRedraw = function (oSettings, idx) {
-                    if (oSettings.oFeatures.bServerSide === false) {
-                        var before = oSettings._iDisplayStart - idx;
-
-                        oSettings.oApi._fnReDraw(oSettings);
-
-                        // iDisplayStart has been reset to zero - so lets change it back
-                        oSettings._iDisplayStart = before;
-                        oSettings.oApi._fnCalculateEnd(oSettings);
-                    }
-                    oSettings._iDisplayStart = oSettings._iDisplayStart - (idx * oSettings._iDisplayLength);
-                    // draw the 'current' page
-                    oSettings.oApi._fnDraw(oSettings);
-                };
-
-                $('#searhForm').submit(function (event) {
-                    /* stop form from submitting normally */
-                    event.preventDefault();
+            function update() {
+                if ($on == true) {
 
                     var oTable = $('#dt_basic').dataTable();
                     Pace.restart(); oTable.fnDraw();
+                    setTimeout(update, updateInterval);
 
-                });
-
-                /* live switch */
-                $('input[type="checkbox"]#start_interval').click(function () {
-                    if ($(this).prop('checked')) {
-                        $on = true;
-                        updateInterval = 10000;
-                        update();
-                    } else {
-                        clearInterval(updateInterval);
-                        $on = false;
-                    }
-                });
-
-                function update() {
-                    if ($on == true) {
-
-                        var oTable = $('#dt_basic').dataTable();
-                        Pace.restart(); oTable.fnDraw();
-                        setTimeout(update, updateInterval);
-
-                    } else {
-                        clearInterval(updateInterval);
-                    }
-
+                } else {
+                    clearInterval(updateInterval);
                 }
 
-                var $on = false;
+            }
+
+            var $on = false;
         });
 
-        function ViewClientReport(id) {
-            var params = new Array();
-            params["id"] = id;
+            function ViewClientReport(id) {
+                var params = new Array();
+                params["id"] = id;
 
-            post_to_url("ClientReport.aspx", params, null);
-        }
+                post_to_url("ClientReport.aspx", params, null);
+            }
 
     </script>
 

@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="RMSAppException.cs" />
+    <Compile Include="RMSDebugLog.cs" />
     <Compile Include="RMSLicenseException.cs" />
     <Compile Include="RMSWebException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -57,10 +57,12 @@ namespace RMS.Agent.Watchdog
 
                 ws = new WatchdogService();
 
+
                 dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
                 dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
                 dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
                 
+                System.Threading.Thread.Sleep(10000);
                 btnStart_Click(null, null);
             }
             catch (Exception ex)

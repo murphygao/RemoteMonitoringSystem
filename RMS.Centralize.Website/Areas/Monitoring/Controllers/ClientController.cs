@@ -172,5 +172,60 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             }
         }
 
+        public ActionResult InitDataForEdit()
+        {
+            try
+            {
+                var cClient = new ClientService().clientService;
+                var listResult = cClient.ListMainAppClient();
+
+                string ddlMainAppClient = string.Empty;
+
+                if (listResult.IsSuccess)
+                {
+                    ddlMainAppClient = "<option value=\"\">Please Select</option>";
+                    foreach (MainAppClient app in listResult.ListMainAppClients)
+                    {
+                        ddlMainAppClient += "<option value=\"" + app.ClientID + "\">" + app.ClientCode + " - " + app.ClientName + "</option>";
+                    }
+                }
+
+                var retLocation = cClient.ListLocation();
+
+                string ddlLocation = string.Empty;
+
+                if (listResult.IsSuccess)
+                {
+                    ddlLocation = "<option value=\"\">Please Select</option>";
+                    foreach (RmsLocation loc in retLocation.ListLocations)
+                    {
+                        ddlLocation += "<option value=\"" + loc.LocationId + "\">" + loc.LocationCode + " - " + loc.LocationName + "</option>";
+                    }
+                }
+
+                var data = new
+                {
+                    listMainAppClients = ddlMainAppClient,
+                    listLocation = ddlLocation,
+                    status = (listResult.IsSuccess) ? 1 : 0,
+                    errorMessage = listResult.ErrorMessage
+                };
+
+                return Json(data);
+            }
+            catch (Exception ex)
+            {
+                var data = new
+                {
+                    status = 0,
+                    errorMessage = ex.Message
+                };
+                new RMSWebException(this, "0500", "ListMainAppClient failed. " + ex.Message, ex, true);
+
+                return Json(data);
+            }
+        }
+
+
     }
 }
