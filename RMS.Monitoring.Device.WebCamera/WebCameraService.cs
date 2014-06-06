@@ -19,8 +19,8 @@ namespace RMS.Monitoring.Device.WebCamera
 
                 if (brand.ToLower() == "lenovo") _device = new Lenovo(model, deviceManagerName, deviceManagerID);
                 else if (brand.ToLower() == "lg") _device = new LG(model, deviceManagerName, deviceManagerID);
-
-                throw new Exception("Brand Not Found. brand=" + brand);
+                else
+                    throw new Exception("Brand Not Found. brand=" + brand);
             }
             catch (Exception ex)
             {

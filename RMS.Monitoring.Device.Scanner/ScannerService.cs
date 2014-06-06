@@ -21,8 +21,8 @@ namespace RMS.Monitoring.Device.Scanner
                 this.clientResult = clientResult;
 
                 if (brand.ToLower() == "brother") _device = new Brother(model, deviceManagerName, deviceManagerID);
-
-                throw new Exception("Brand Not Found. brand=" + brand);
+                else
+                    throw new Exception("Brand Not Found. brand=" + brand);
             }
             catch (Exception ex)
             {

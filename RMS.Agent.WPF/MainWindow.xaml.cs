@@ -84,6 +84,8 @@ namespace RMS.Agent.WPF
             {
                 new RMSAppException(this, "0500", "MainWindow failed. " + ex.Message, ex, true);
                 logs.Add(new EventLog { EventDateTime = DateTime.Now, EventType = "Error", Message = "MainWindow errors", Detail = ex.Message });
+
+                System.Windows.Application.Current.Shutdown();
             }
         }
         
@@ -145,6 +147,7 @@ namespace RMS.Agent.WPF
                 dgLogs.ItemsSource = logs;
                 StopService();
                 dispatcherTimer.Stop();
+
             }
             catch (Exception ex)
             {

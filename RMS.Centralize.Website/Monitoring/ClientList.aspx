@@ -304,11 +304,13 @@
                         aoData.push({ "name": "txtClientCode", "value": $('#txtClientCode').val() });
                         aoData.push({ "name": "ddlClientStatus", "value": $('#ddlClientStatus').val() });
                         aoData.push({ "name": "txtIPAddress", "value": $('#txtIPAddress').val() });
+                        aoData.push({ "name": "dt", "value": dateFormat(new Date(), "yyyymmddHHMMss") });
+
+                        
                         Pace.restart();
                         $.ajax({
-                            "type": "GET",
+                            "type": "POST",
                             "dataType": 'json',
-                            "contentType": "application/json; charset=utf-8",
                             "url": sSource,
                             "data": aoData,
                             "success": function (data) {
@@ -566,6 +568,7 @@
         function deleteRow(id) {
             Row = function (id) {
                 this.actionprofileid = id;
+                this.dt = dateFormat(new Date(), "yyyymmddHHMMss");
             };
             var delRow = new Row(id);
 

@@ -20,9 +20,10 @@ namespace RMS.Monitoring.Device.SmartCardReader
             {
                 this.clientResult = clientResult;
 
-                if (brand.ToLower() == "acs") _device = new ACS(model, deviceManagerName, deviceManagerID);
-
-                throw new Exception("Brand Not Found. brand=" + brand);
+                if (brand.ToLower() == "acs") 
+                    _device = new ACS(model, deviceManagerName, deviceManagerID);
+                else
+                    throw new Exception("Brand Not Found. brand=" + brand);
             }
             catch (Exception ex)
             {

@@ -22,8 +22,8 @@ namespace RMS.Monitoring.Device.CardDespenser
                 this.clientResult = clientResult;
 
                 if (brand.ToLower() == "mutek") _device = new MUTEK(model, deviceManagerName, deviceManagerID);
-
-                throw new Exception("Brand Not Found. brand=" + brand);
+                else
+                    throw new Exception("Brand Not Found. brand=" + brand);
 
             }
             catch (Exception ex)

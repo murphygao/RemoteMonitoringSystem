@@ -21,8 +21,8 @@ namespace RMS.Monitoring.Device.Keyboard
                 this.clientResult = clientResult;
 
                 if (brand.ToLower() == "keytechnology") _device = new KeyTechnology(model, deviceManagerName, deviceManagerID);
-
-                throw new Exception("Brand Not Found. brand=" + brand);
+                else
+                    throw new Exception("Brand Not Found. brand=" + brand);
             }
             catch (Exception ex)
             {

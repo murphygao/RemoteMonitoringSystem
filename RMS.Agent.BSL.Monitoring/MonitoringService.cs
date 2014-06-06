@@ -72,9 +72,9 @@ namespace RMS.Agent.BSL.Monitoring
 
                 if (Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.DebugLogEnable"] ?? "false"))
                 {
-                    string log = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss  ") + Helper.Serializer.XML.SerializeObject(clientResult);
+                    string log = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " Call Centerlize - ClientResult " + Helper.Serializer.XML.SerializeObject(clientResult);
                     new RMSDebugLog(log, true);
-                    log = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss  ") + Helper.Serializer.XML.SerializeObject(rmsMonitoringProfileDevices);
+                    log = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " Call Centerlize - Monitoring Profile " + Helper.Serializer.XML.SerializeObject(rmsMonitoringProfileDevices);
                     new RMSDebugLog(log, true);
                 }
 
@@ -99,7 +99,7 @@ namespace RMS.Agent.BSL.Monitoring
 
                     if (Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.DebugLogEnable"] ?? "false"))
                     {
-                        string log = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss  ") +  Helper.Serializer.XML.SerializeObject(rawMessage);
+                        string log = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " Send Alive Message " +  Helper.Serializer.XML.SerializeObject(rawMessage);
                         new RMSDebugLog(log, true);
                     }
 
@@ -160,7 +160,7 @@ namespace RMS.Agent.BSL.Monitoring
                     {
                         if (Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.DebugLogEnable"] ?? "false"))
                         {
-                            string log = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss  ") + Helper.Serializer.XML.SerializeObject(monitoringRaws);
+                            string log = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " Check Device Monitoring " + Helper.Serializer.XML.SerializeObject(monitoringRaws);
                             new RMSDebugLog(log, true);
                         }
 
@@ -176,7 +176,7 @@ namespace RMS.Agent.BSL.Monitoring
             }
             catch (Exception ex)
             {
-                throw new RMSAppException(this, "0500", "ExecuteCommand failed. " + ex.Message, ex, false);
+                throw new RMSAppException(this, "0500", "ExecuteCommand failed. " + ex.Message, ex, true);
             }
         }
 

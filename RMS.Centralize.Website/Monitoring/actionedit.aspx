@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SmartAdmin.Master" AutoEventWireup="true" CodeBehind="ActionEdit.aspx.cs" Inherits="RMS.Centralize.Website.Monitoring.ActionEdit" %>
+
 <%@ Import Namespace="System.Web.Optimization" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -139,8 +140,8 @@
                                     </fieldset>
 
                                     <footer>
-                                        <button type="submit" class="btn btn-primary" style="float: left;" ID="btnSubmit" onclick="update();">Submit</button>
-                                        <button type="button" class="btn btn-default" style="float: left;" onclick="window.location='ActionList.aspx';">
+                                        <button type="submit" class="btn btn-primary" style="float: left;" id="btnSubmit" onclick="update();">Submit</button>
+                                        <button type="button" class="btn btn-default" style="float: left;" onclick="window.history.go(-1); return false;">
                                             Back
                                         </button>
                                         <input type="hidden" name="id1" />
@@ -211,18 +212,18 @@
 
             var $checkoutForm = $('#smartForm').validate({
                 // Rules for form validation
-                rules : {
+                rules: {
                     txtActionProfileName: {
                         required: true
                     }
                 },
-                messages : {
+                messages: {
                     txtActionProfileName: {
                         required: 'Please enter action profile name'
                     }
                 },
 
-                errorPlacement : function (error, element) {
+                errorPlacement: function (error, element) {
                     error.insertAfter(element.parent());
                 }
 
@@ -237,8 +238,8 @@
                     "dataType": 'json',
                     "contentType": "application/json; charset=utf-8",
                     "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/ActionProfile/GetActionProfile/",
-                    "data": "{'id' : " + actionProfileId + "}",
-                    "success": function (ret) {
+                    "data": "{'id' : " + actionProfileId + ", 'dt' : " + dateFormat(new Date(), "yyyymmddHHMMss") + "}",
+                    "success": function(ret) {
 
                         if (ret.status == "1") {
 
@@ -258,36 +259,64 @@
                             $('input[name="m"]').val("e");
 
                         } else if (ret.status == "-1") {
+                            try {
+                                $.smallBox({
+                                    title: "Access Denied!",
+                                    content: "<i class='fa fa-clock-o'></i> <i>No access rights to complete this operation.</i>",
+                                    color: "#C46A69",
+                                    iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                    timeout: 4000
+                                });
 
-                            $.smallBox({
-                                title: "Access Denied!",
-                                content: "<i class='fa fa-clock-o'></i> <i>No access rights to complete this operation.</i>",
-                                color: "#C46A69",
-                                iconSmall: "fa fa-times fa-2x fadeInRight animated",
-                                timeout: 4000
-                            });
+                            } catch (e) {
+                                alert("No access rights to complete this operation.");
+                            }
 
                         } else if (ret.status == "0") {
-                            $.smallBox({
-                                title: "Get Action Profile Failed",
-                                content: "<i class='fa fa-clock-o'></i> <i>Failed to complete this operation.</i>",
-                                color: "#C46A69",
-                                iconSmall: "fa fa-times fa-2x fadeInRight animated",
-                                timeout: 4000
-                            });
+                            try {
+                                $.smallBox({
+                                    title: "Get Action Profile Failed",
+                                    content: "<i class='fa fa-clock-o'></i> <i>Failed to complete this operation.</i>",
+                                    color: "#C46A69",
+                                    iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                    timeout: 4000
+                                });
 
+                            } catch (e) {
+                                alert("Failed to complete this operation.");
+                            }
                         }
 
                     },
 
                 });
 
+            } else {
+                try {
+                    $.smallBox({
+                        title: "Get Action Profile Failed",
+                        content: "<i class='fa fa-clock-o'></i> <i>Failed to complete this operation.</i>",
+                        color: "#C46A69",
+                        iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                        timeout: 4000
+                    });
+
+                } catch (e) {
+                    alert("Failed to complete this operation.");
+                }
+
+                setTimeout(function() {
+                    window.location.href = 'ActionList.aspx';
+                }, 3000);
+
             }
+
+            $("#btnSubmit").on("click", function (event) {
+                event.preventDefault(); // will work!
+            });
         });
 
         function update() {
-
-            event.preventDefault();
 
             if (!$('#smartForm').valid()) return;
 
@@ -298,6 +327,7 @@
                 this.Email = $('textarea[name="txtEmail"]').val();
                 this.SMS = $('textarea[name="txtSMS"]').val();
                 this.ActiveList = $('input[name="cbxActiveList"]').is(':checked');
+                this.dt = dateFormat(new Date(), "yyyymmddHHMMss");
             };
             var updObj = new tmpObj();
             Pace.restart();
@@ -308,39 +338,47 @@
                 "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/ActionProfile/UpdateActionProfile/",
                 "data": JSON.stringify(updObj),
                 "success": function (ret) {
-
                     if (ret.status == "1") {
-                        $.smallBox({
-                            title: "Update Complete",
-                            content: "<i class='fa fa-clock-o'></i> <i>This operation is complete.</i>",
-                            color: "#659265",
-                            iconSmall: "fa fa-check fa-2x fadeInRight animated",
-                            timeout: 2000
-                        });
-
+                        try {
+                            $.smallBox({
+                                title: "Update Complete",
+                                content: "<i class='fa fa-clock-o'></i> <i>This operation is complete.</i>",
+                                color: "#659265",
+                                iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                                timeout: 2000
+                            });
+                        } catch (e) {
+                            alert('This operation is complete.');
+                        }
                         setTimeout(function () {
                             window.location.href = 'ActionList.aspx';
                         }, 1000);
 
                     } else if (ret.status == "-1") {
-
-                        $.smallBox({
-                            title: "Update Failed!",
-                            content: "<i class='fa fa-clock-o'></i> <i>" + ret.error + "</i>",
-                            color: "#C46A69",
-                            iconSmall: "fa fa-times fa-2x fadeInRight animated",
-                            timeout: 4000
-                        });
+                        try {
+                            $.smallBox({
+                                title: "Update Failed!",
+                                content: "<i class='fa fa-clock-o'></i> <i>" + ret.error + "</i>",
+                                color: "#C46A69",
+                                iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                timeout: 4000
+                            });
+                        } catch (ex) {
+                            alert(ret.error);
+                        }
 
                     } else if (ret.status == "0") {
-                        $.smallBox({
-                            title: "Update Failed",
-                            content: "<i class='fa fa-clock-o'></i> <i>" + ret.error + "</i>",
-                            color: "#C46A69",
-                            iconSmall: "fa fa-times fa-2x fadeInRight animated",
-                            timeout: 4000
-                        });
-
+                        try {
+                            $.smallBox({
+                                title: "Update Failed!",
+                                content: "<i class='fa fa-clock-o'></i> <i>" + ret.error + "</i>",
+                                color: "#C46A69",
+                                iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                timeout: 4000
+                            });
+                        } catch (ex) {
+                            alert(ret.error);
+                        }
                     }
 
                 },

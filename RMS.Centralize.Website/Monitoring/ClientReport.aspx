@@ -101,10 +101,14 @@
                                     <dd class="padding-10 margin-bottom-5 bg-color-grayLight">Tel.: <label id="lblTelephone"></label><br />
                                         Mobile: <label id="lblMobile"></label><br />
                                         Email: <label id="lblEmail"></label></dd>
+                                    <dt class="padding-10 margin-bottom-5">&nbsp;</dt>
+                                    <dd class="padding-top-10 padding-bottom-10"><button type="button" class="btn btn-default" style="float: left;" onclick="window.history.go(-1); return false;">&nbsp;&nbsp;Back&nbsp;&nbsp;</button></dd>
                                 </dl>
 
                             </div>
                             <!-- end widget content -->
+                            
+                       
 
                         </div>
                         <!-- end widget div -->
@@ -268,6 +272,8 @@
 
         // DO NOT REMOVE : GLOBAL FUNCTIONS!
 
+
+
         $(document).ready(function () {
 
             var fullPath = "<%=HttpContext.Current.Request.Url.AbsolutePath.Substring(0, HttpContext.Current.Request.Url.AbsolutePath.LastIndexOf("/"))%>/MonitoringReport.aspx";
@@ -313,11 +319,11 @@
                 "sAjaxSource": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/SummaryReport/GetCurrentDeviceStatus/",
                 "fnServerData": function (sSource, aoData, fnCallback) {
                     aoData.push({ "name": "clientID", "value": <%=Request["id"]%> });
-                        Pace.restart();
+                    aoData.push({ "name": "dt", "value": dateFormat(new Date(), "yyyymmddHHMMss") });
+                    Pace.restart();
                         $.ajax({
-                            "type": "GET",
+                            "type": "POST",
                             "dataType": 'json',
-                            "contentType": "application/json; charset=utf-8",
                             "url": sSource,
                             "data": aoData,
                             "success": function (data) {
@@ -436,11 +442,11 @@
                 "sAjaxSource": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/SummaryReport/SearchClientMonitoring/",
                     "fnServerData": function (sSource, aoData, fnCallback) {
                         aoData.push({ "name": "clientID", "value": <%=Request["id"]%> });
+                        aoData.push({ "name": "dt", "value": dateFormat(new Date(), "yyyymmddHHMMss") });
                         Pace.restart();
                         $.ajax({
-                            "type": "GET",
+                            "type": "POST",
                             "dataType": 'json',
-                            "contentType": "application/json; charset=utf-8",
                             "url": sSource,
                             "data": aoData,
                             "success": function (data) {
@@ -563,31 +569,6 @@
             });
 
 
-            var today = new Date();
-            var dd = today.getDate();
-            var mm = today.getMonth() + 1; //January is 0!
-            var yyyy = today.getFullYear();
-
-            if (dd < 10) {
-                dd = '0' + dd;
-            }
-
-            if (mm < 10) {
-                mm = '0' + mm;
-            }
-
-            today = dd + '.' + mm + '.' + yyyy;
-
-            //$('#txtMessageDate').attr("placeholder", today);
-
-            $('#txtMessageDate').datepicker({
-                dateFormat: 'dd.mm.yy',
-                prevText: '<i class="fa fa-chevron-left"></i>',
-                nextText: '<i class="fa fa-chevron-right"></i>',
-                maxDate: '0'
-            });
-            //$("#txtMessageDate").datepicker().datepicker("setDate", new Date());
-
             /* END TABLE TOOLS */
             $.fn.dataTableExt.oApi.fnReloadAjax = function (oSettings, sNewSource, fnCallback, bStandingRedraw) {
                 // DataTables 1.10 compatibility - if 1.10 then versionCheck exists.
@@ -705,6 +686,7 @@
             Row = function(id) {
                 this.id = id;
                 this.sentType = "ManualSending";
+                this.dt = dateFormat(new Date(), "yyyymmddHHMMss");
             };
             var resendAction = new Row(id);
             var oTableDS = $('#dt_device_status').dataTable();
@@ -724,35 +706,48 @@
                         oTable.fnStandingRedraw(0);
 
                     if (data.isSuccess) {
-                        $.smallBox({
-                            title: "Resend Complete",
-                            content: "<i class='fa fa-clock-o'></i> <i>This operation is complete.</i>",
-                            color: "#659265",
-                            iconSmall: "fa fa-check fa-2x fadeInRight animated",
-                            timeout: 4000
-                        });
+                        try {
+                            $.smallBox({
+                                title: "Resend Complete",
+                                content: "<i class='fa fa-clock-o'></i> <i>This operation is complete.</i>",
+                                color: "#659265",
+                                iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                                timeout: 4000
+                            });
 
+                        } catch (e) {
+                            alert("This operation is complete.");
+                        }
                     } else {
-                        $.smallBox({
-                            title: "Resend Failed",
-                            content: "<i class='fa fa-clock-o'></i> <i>Failed to complete this operation. " + data.errorMessage + "</i>",
-                            color: "#C46A69",
-                            iconSmall: "fa fa-times fa-2x fadeInRight animated",
-                            timeout: 4000
-                        });
+                        try {
+                            $.smallBox({
+                                title: "Resend Failed",
+                                content: "<i class='fa fa-clock-o'></i> <i>Failed to complete this operation. " + data.errorMessage + "</i>",
+                                color: "#C46A69",
+                                iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                timeout: 4000
+                            });
+
+                        } catch (e) {
+                            alert("Failed to complete this operation. " + data.errorMessage);
+                        }
                     }
 
                 },
                 "error": function(xhr, textStatus, errorThrown) {
                     if (errorThrown == 'Not Found') errorThrown = '404 Service Not Found.';
-                    $.smallBox({
-                        title: "Resend Failed",
-                        content: "<i class='fa fa-clock-o'></i> <i>" + errorThrown + "</i>",
-                        color: "#C46A69",
-                        iconSmall: "fa fa-times fa-2x fadeInRight animated",
-                        timeout: 4000
-                    });
+                    try {
+                        $.smallBox({
+                            title: "Resend Failed",
+                            content: "<i class='fa fa-clock-o'></i> <i>" + errorThrown + "</i>",
+                            color: "#C46A69",
+                            iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                            timeout: 4000
+                        });
 
+                    } catch (e) {
+                        alert(errorThrown);
+                    }
                 },
 
             });
@@ -762,82 +757,86 @@
         function PrepareClientInfo() {
             {
                 var clientID = '<%=Request["id"]%>';
-                Pace.restart();
-                $.ajax({
-                    "type": "POST",
-                    "dataType": 'json',
-                    "contentType": "application/json; charset=utf-8",
-                    "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/SummaryReport/GetClientInfo",
-                    "data": "{'id' : " + clientID + "}",
-                    "success": function (ret) {
 
-                        if (ret.status == "1") {
+                if (clientID != '') {
+                    Pace.restart();
+                    $.ajax({
+                        "type": "POST",
+                        "dataType": 'json',
+                        "contentType": "application/json; charset=utf-8",
+                        "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/SummaryReport/GetClientInfo",
+                        "data": "{'id' : " + clientID + ", 'dt' : " + dateFormat(new Date(), "yyyymmddHHMMss") + "}",
+                        "success": function(ret) {
 
-                            var myData = JSON.parse(ret.data);
+                            if (ret.status == "1") {
 
-                            $('#lblClientCode').text(myData.ClientCode);
-                            $('#lblClientType').text(myData.ClientType);
+                                var myData = JSON.parse(ret.data);
 
-                            var loc = '';
-                            if (myData.LocationCode != null)
-                                loc = myData.LocationCode;
-                            if (myData.LocationName != null)
-                                loc = loc + ' ' + myData.LocationName;
-                            if (loc == '')
-                                loc = 'N/A';
-                            $('#lblLocation').text(loc);
+                                $('#lblClientCode').text(myData.ClientCode);
+                                $('#lblClientType').text(myData.ClientType);
 
-                            $('#lblIPAddress').text(myData.IPAddress);
+                                var loc = '';
+                                if (myData.LocationCode != null)
+                                    loc = myData.LocationCode;
+                                if (myData.LocationName != null)
+                                    loc = loc + ' ' + myData.LocationName;
+                                if (loc == '')
+                                    loc = 'N/A';
+                                $('#lblLocation').text(loc);
 
-                            if (myData.State == 1)
-                                $('#lblState').text('Normal');
-                            else if (myData.State == 2)
-                                $('#lblState').text('Maintenance');
+                                $('#lblIPAddress').text(myData.IPAddress);
 
-                            var createdDate = new Date(myData.CreatedDate);
-                            $('#lblCreatedDate').text(dateFormat(createdDate, "dd/mm/yyyy HH:mm:ss", true));
-                            var updatedDate = new Date(myData.UpdatedDate);
-                            $('#lblUpdatedDate').text(dateFormat(updatedDate, "dd/mm/yyyy HH:mm:ss", true));
+                                if (myData.State == 1)
+                                    $('#lblState').text('Normal');
+                                else if (myData.State == 2)
+                                    $('#lblState').text('Maintenance');
 
-                            $('#lblProfileName').text(myData.ProfileName);
+                                var createdDate = new Date(myData.CreatedDate);
+                                $('#lblCreatedDate').text(dateFormat(createdDate, "dd/mm/yyyy HH:mm:ss", true));
+                                var updatedDate = new Date(myData.UpdatedDate);
+                                $('#lblUpdatedDate').text(dateFormat(updatedDate, "dd/mm/yyyy HH:mm:ss", true));
 
-                            var tmp = myData.Telephone;
-                            if (tmp == null) tmp = 'N/A';
-                            $('#lblTelephone').text(tmp);
+                                $('#lblProfileName').text(myData.ProfileName);
 
-                            tmp = myData.Mobile;
-                            if (tmp == null) tmp = 'N/A';
-                            $('#lblMobile').text(tmp);
+                                var tmp = myData.Telephone;
+                                if (tmp == null) tmp = 'N/A';
+                                $('#lblTelephone').text(tmp);
 
-                            tmp = myData.Email;
-                            if (tmp == null) tmp = 'N/A';
-                            $('#lblEmail').text(tmp);
+                                tmp = myData.Mobile;
+                                if (tmp == null) tmp = 'N/A';
+                                $('#lblMobile').text(tmp);
 
-                        } else if (ret.status == "-1") {
+                                tmp = myData.Email;
+                                if (tmp == null) tmp = 'N/A';
+                                $('#lblEmail').text(tmp);
 
-                            $.smallBox({
-                                title: "Access Denied!",
-                                content: "<i class='fa fa-clock-o'></i> <i>No access rights to complete this operation.</i>",
-                                color: "#C46A69",
-                                iconSmall: "fa fa-times fa-2x fadeInRight animated",
-                                timeout: 4000
-                            });
+                            } else if (ret.status == "-1") {
 
-                        } else if (ret.status == "0") {
-                            $.smallBox({
-                                title: "Get Client Information Failed",
-                                content: "<i class='fa fa-clock-o'></i> <i>Failed to complete this operation.</i>",
-                                color: "#C46A69",
-                                iconSmall: "fa fa-times fa-2x fadeInRight animated",
-                                timeout: 4000
-                            });
+                                $.smallBox({
+                                    title: "Access Denied!",
+                                    content: "<i class='fa fa-clock-o'></i> <i>No access rights to complete this operation.</i>",
+                                    color: "#C46A69",
+                                    iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                    timeout: 4000
+                                });
 
-                        }
+                            } else if (ret.status == "0") {
+                                $.smallBox({
+                                    title: "Get Client Information Failed",
+                                    content: "<i class='fa fa-clock-o'></i> <i>Failed to complete this operation.</i>",
+                                    color: "#C46A69",
+                                    iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                    timeout: 4000
+                                });
 
-                    },
+                            }
+
+                        },
 
                     });
                 }
+
+            }
         }
 
     </script>

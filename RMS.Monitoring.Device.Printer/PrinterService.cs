@@ -21,8 +21,8 @@ namespace RMS.Monitoring.Device.Printer
 
                 if (brand.ToLower() == "brother") _device = new Brother(model, deviceManagerName, deviceManagerID, printerName, useCOMPort, portName);
                 else if (brand.ToLower() == "winpos") _device = new WinPOS(model, deviceManagerName, deviceManagerID, printerName, useCOMPort, portName);
-
-                throw new Exception("Brand Not Found. brand=" + brand);
+                else
+                    throw new Exception("Brand Not Found. brand=" + brand);
             }
             catch (Exception ex)
             {

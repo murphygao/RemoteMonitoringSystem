@@ -18,8 +18,8 @@ namespace RMS.Monitoring.Device.BarcodeReader
                 this.clientResult = clientResult;
 
                 if (brand.ToLower() == "honeywell") _device = new Honeywell(model, deviceManagerName, deviceManagerID);
-
-                throw new Exception("Brand Not Found. brand=" + brand);
+                else
+                    throw new Exception("Brand Not Found. brand=" + brand);
 
             }
             catch (Exception ex)

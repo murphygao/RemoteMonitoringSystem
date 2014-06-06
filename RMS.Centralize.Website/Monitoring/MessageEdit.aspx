@@ -154,7 +154,7 @@
 
                                     <footer>
                                         <button type="submit" class="btn btn-primary" style="float: left;" ID="btnSubmit" onclick="update();">Submit</button>
-                                        <button type="button" class="btn btn-default" style="float: left;" onclick="window.location='MessageAction.aspx';">
+                                        <button type="button" class="btn btn-default" style="float: left;" onclick="window.history.go(-1); return false;">
                                             Back
                                         </button>
                                         <input type="hidden" id="id1" />
@@ -250,7 +250,7 @@
                     "dataType": 'json',
                     "contentType": "application/json; charset=utf-8",
                     "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/MessageAction/GetMessage/",
-                    "data": "{'id' : " + <%=Request["id1"]%> + "}",
+                    "data": "{'id' : " + <%=Request["id1"]%> + ", 'dt' : " + dateFormat(new Date(), "yyyymmddHHMMss") + "}",
                     "success": function (ret) {
 
                         if (ret.status == "1") {
@@ -298,6 +298,11 @@
                 });
 
             }
+
+            $("#btnSubmit").on("click", function (event) {
+                event.preventDefault(); // will work!
+            });
+
         });
 
         function initialData() {
@@ -305,6 +310,7 @@
                 "type": "POST",
                 "dataType": 'json',
                 "contentType": "application/json; charset=utf-8",
+                "data" : dateFormat(new Date(), "yyyymmddHHMMss"),
                 "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/MessageAction/InitDataForMeesageEdit/",
                 "success": function (data) {
                     $('#ddlMessageGroupID').append(unescape(data.messageGroup));
@@ -315,8 +321,6 @@
         }
 
         function update() {
-
-            event.preventDefault();
 
             if (!$('#smartForm').valid()) return;
 
@@ -330,6 +334,7 @@
                 this.ReadOnly = false;
                 this.activeList = $('#cbxActiveList').is(':checked');
                 this.activeStatus = $('#cbxActiveStatus').is(':checked');
+                this.dt = dateFormat(new Date(), "yyyymmddHHMMss");
             };
             var updObj = new tmpObj();
             Pace.restart();

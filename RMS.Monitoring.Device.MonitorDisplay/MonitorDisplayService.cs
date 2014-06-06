@@ -21,8 +21,8 @@ namespace RMS.Monitoring.Device.MonitorDisplay
                 this.clientResult = clientResult;
 
                 if (brand.ToLower() == "elo") _device = new Elo(model, deviceManagerName, deviceManagerID);
-
-                throw new Exception("Brand Not Found. brand=" + brand);
+                else
+                    throw new Exception("Brand Not Found. brand=" + brand);
 
             }
             catch (Exception ex)

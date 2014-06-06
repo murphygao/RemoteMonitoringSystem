@@ -339,11 +339,11 @@
                         aoData.push({ "name": "txtMessage", "value": $('#txtMessage').val() });
                         aoData.push({ "name": "txtLocation", "value": $('#txtLocation').val() });
                         aoData.push({ "name": "ddlMessageStatus", "value": $('#ddlMessageStatus').val() });
+                        aoData.push({ "name": "dt", "value": dateFormat(new Date(), "yyyymmddHHMMss") });
                         Pace.restart();
                         $.ajax({
-                            "type": "GET",
+                            "type": "POST",
                             "dataType": 'json',
-                            "contentType": "application/json; charset=utf-8",
                             "url": sSource,
                             "data": aoData,
                             "success": function (data) {
@@ -469,21 +469,6 @@
 
 
                 });
-
-            var today = new Date();
-            var dd = today.getDate();
-            var mm = today.getMonth() + 1; //January is 0!
-            var yyyy = today.getFullYear();
-
-            if (dd < 10) {
-                dd = '0' + dd;
-            }
-
-            if (mm < 10) {
-                mm = '0' + mm;
-            }
-
-            today = yyyy + '.' + mm + '.' + dd;
 
             //$('#txtMessageDate').attr("placeholder", today);
 

@@ -80,7 +80,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     errorMessage = result.ErrorMessage
                 };
 
-                return Json(data, JsonRequestBehavior.AllowGet);
+                return Json(data);
 
             }
 
@@ -93,7 +93,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     errorMessage = ex.Message
                 };
 
-                return Json(data, JsonRequestBehavior.AllowGet);
+                return Json(data);
             }
 
         }

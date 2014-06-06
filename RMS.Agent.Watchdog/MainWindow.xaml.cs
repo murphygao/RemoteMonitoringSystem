@@ -67,7 +67,10 @@ namespace RMS.Agent.Watchdog
             }
             catch (Exception ex)
             {
-                throw new RMSAppException(this, "0500", "MainWindow failed. " + ex.Message, ex, true);
+                new RMSAppException(this, "0500", "MainWindow failed. " + ex.Message, ex, true);
+
+                System.Diagnostics.Process.Start(System.Windows.Application.ResourceAssembly.Location);
+                System.Windows.Application.Current.Shutdown();
             }
 
         }
@@ -119,7 +122,7 @@ namespace RMS.Agent.Watchdog
             }
             catch (Exception ex)
             {
-                throw new RMSAppException(this, "0500", "dispatcherTimer_Tick failed. " + ex.Message, ex, true);
+                new RMSAppException(this, "0500", "dispatcherTimer_Tick failed. " + ex.Message, ex, true);
             }
         }
 

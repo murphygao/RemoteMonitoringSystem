@@ -18,6 +18,7 @@ namespace RMS.Agent.Watchdog
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public static void Main() 
         {
+            System.Threading.Thread.Sleep(100);
             Process currentProcess = Process.GetCurrentProcess();
             var runningProcess = (from process in Process.GetProcesses()
                                   where

@@ -211,7 +211,7 @@
 
                                     <footer>
                                         <button type="submit" class="btn btn-primary" style="float: left;" ID="btnSubmit" onclick="update();">Submit</button>
-                                        <button type="button" class="btn btn-default" style="float: left;" onclick="window.location='ClientList.aspx';">
+                                        <button type="button" class="btn btn-default" style="float: left;" onclick="window.history.go(-1); return false;">
                                             Back
                                         </button>
                                         <input type="hidden" id="id1" />
@@ -289,7 +289,7 @@
                         "dataType": 'json',
                         "contentType": "application/json; charset=utf-8",
                         "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/ExistingClientCode/",
-                        "data": "{'clientCode' : '" + value + "'}",
+                        "data": "{'clientCode' : '" + value + "', 'dt' : " + dateFormat(new Date(), "yyyymmddHHMMss") +"}",
                         success: function(ret) {
 
                             if ($('#currentClientCode').val() == value && $('#m').val() == 'e') return true;
@@ -427,7 +427,7 @@
                     "dataType": 'json',
                     "contentType": "application/json; charset=utf-8",
                     "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/GetClient/",
-                    "data": "{'id' : " + <%=Request["id1"]%> + "}",
+                    "data": "{'id' : " + <%=Request["id1"]%> + ", 'dt' : " + dateFormat(new Date(), "yyyymmddHHMMss") + "}",
                     "success": function(ret) {
 
                         if (ret.status == "1") {
@@ -468,31 +468,60 @@
 
                         } else if (ret.status == "-1") {
 
-                            $.smallBox({
-                                title: "Access Denied!",
-                                content: "<i class='fa fa-clock-o'></i> <i>No access rights to complete this operation.</i>",
-                                color: "#C46A69",
-                                iconSmall: "fa fa-times fa-2x fadeInRight animated",
-                                timeout: 4000
-                            });
+                            try {
+                                $.smallBox({
+                                    title: "Access Denied!",
+                                    content: "<i class='fa fa-clock-o'></i> <i>No access rights to complete this operation.</i>",
+                                    color: "#C46A69",
+                                    iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                    timeout: 4000
+                                });
 
+                            } catch (e) {
+                                alert("No access rights to complete this operation.");
+                            }
                         } else if (ret.status == "0") {
-                            $.smallBox({
-                                title: "Get Object Failed",
-                                content: "<i class='fa fa-clock-o'></i> <i>Failed to complete this operation.</i>",
-                                color: "#C46A69",
-                                iconSmall: "fa fa-times fa-2x fadeInRight animated",
-                                timeout: 4000
-                            });
+                            try {
+                                $.smallBox({
+                                    title: "Get Object Failed",
+                                    content: "<i class='fa fa-clock-o'></i> <i>Failed to complete this operation.</i>",
+                                    color: "#C46A69",
+                                    iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                    timeout: 4000
+                                });
 
+                            } catch (e) {
+                                alert("Failed to complete this operation.");
+                            }
                         }
 
                     },
 
                 });
 
+            } else {
+                try {
+                    $.smallBox({
+                        title: "Get Client Failed",
+                        content: "<i class='fa fa-clock-o'></i> <i>Failed to complete this operation.</i>",
+                        color: "#C46A69",
+                        iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                        timeout: 4000
+                    });
+
+                } catch (e) {
+                    alert("Failed to complete this operation.");
+                }
+
+                setTimeout(function () {
+                    window.location.href = 'ClientList.aspx';
+                }, 3000);
+
             }
 
+            $("#btnSubmit").on("click", function (event) {
+                event.preventDefault(); // will work!
+            });
 
         });
         // Initial Data
@@ -513,8 +542,6 @@
 
         function update() {
 
-            event.preventDefault();
-
             if (!$('#smartForm').valid()) return;
 
             tmpObj = function () {
@@ -532,7 +559,7 @@
                 this.effectiveDate = $('#txtEffectiveDate').val();
                 this.expiredDate = $('#txtExpiredDate').val();
                 this.state = $('#ddlState').val();
-
+                this.dt = dateFormat(new Date(), "yyyymmddHHMMss");
 
                 //(int? id, string m, string clientCode, int? clientTypeID
                 //, int? referenceClientID, bool? activeList, bool? status
@@ -551,13 +578,18 @@
                 "success": function (ret) {
 
                     if (ret.status == "1") {
-                        $.smallBox({
-                            title: "Update Complete",
-                            content: "<i class='fa fa-clock-o'></i> <i>This operation is complete.</i>",
-                            color: "#659265",
-                            iconSmall: "fa fa-check fa-2x fadeInRight animated",
-                            timeout: 2000
-                        });
+                        try {
+                            $.smallBox({
+                                title: "Update Complete",
+                                content: "<i class='fa fa-clock-o'></i> <i>This operation is complete.</i>",
+                                color: "#659265",
+                                iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                                timeout: 2000
+                            });
+
+                        } catch (e) {
+                            alert("This operation is complete.");
+                        }
 
                         setTimeout(function () {
                             window.location.href = 'ClientList.aspx';
@@ -565,23 +597,31 @@
 
                     } else if (ret.status == "-1") {
 
-                        $.smallBox({
-                            title: "Update Failed!",
-                            content: "<i class='fa fa-clock-o'></i> <i>" + ret.error + "</i>",
-                            color: "#C46A69",
-                            iconSmall: "fa fa-times fa-2x fadeInRight animated",
-                            timeout: 4000
-                        });
+                        try {
+                            $.smallBox({
+                                title: "Update Failed!",
+                                content: "<i class='fa fa-clock-o'></i> <i>" + ret.error + "</i>",
+                                color: "#C46A69",
+                                iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                timeout: 4000
+                            });
 
+                        } catch (e) {
+                            alert(ret.error);
+                        }
                     } else if (ret.status == "0") {
-                        $.smallBox({
-                            title: "Update Failed",
-                            content: "<i class='fa fa-clock-o'></i> <i>" + ret.error + "</i>",
-                            color: "#C46A69",
-                            iconSmall: "fa fa-times fa-2x fadeInRight animated",
-                            timeout: 4000
-                        });
+                        try {
+                            $.smallBox({
+                                title: "Update Failed",
+                                content: "<i class='fa fa-clock-o'></i> <i>" + ret.error + "</i>",
+                                color: "#C46A69",
+                                iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                timeout: 4000
+                            });
 
+                        } catch (e) {
+                            alert(ret.error);
+                        }
                     }
 
                 },

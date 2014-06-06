@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,6 +58,13 @@ namespace RMS.Monitoring.Core
         {
             try
             {
+                if (Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.DebugLogEnable"] ?? "false"))
+                {
+                    string log = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " Start CheckDeivce";
+                    new RMSDebugLog(log, true);
+                }
+
+
                 List<RmsReportMonitoringRaw> lRmsReportMonitoringRaws = new List<RmsReportMonitoringRaw>();
 
                 var listMonitoringProfileDevices = clientResult.ListMonitoringProfileDevices.OrderBy(o => o.DeviceId);
@@ -87,60 +95,72 @@ namespace RMS.Monitoring.Core
                         {
                             string deviceTypeCode = deviceType.DeviceTypeCode;
 
-
-                            if (deviceTypeCode == Models.DeviceCode.ATMCardReader)
+                            if (Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.DebugLogEnable"] ?? "false"))
                             {
+                                string log = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " Start CheckDeivce - Device Type Code: " + deviceTypeCode;
+                                new RMSDebugLog(log, true);
+                            }
+
+                            try
+                            {
+                                if (deviceTypeCode == Models.DeviceCode.ATMCardReader)
+                                {
                             
 
-                            }
-                            else if (deviceTypeCode == Models.DeviceCode.BarcodeReader)
-                            {
+                                }
+                                else if (deviceTypeCode == Models.DeviceCode.BarcodeReader)
+                                {
 
 
-                            }
-                            else if (deviceTypeCode == Models.DeviceCode.CardDispenser)
-                            {
-                                var ds = new CardDispenserService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
-                                var rmsReportMonitoringRaws = ds.Monitoring();
-                                lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
-                            }
-                            else if (deviceTypeCode == Models.DeviceCode.ElectronicSignaturePad)
-                            {
-                                var ds = new SignaturePadService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
-                                var rmsReportMonitoringRaws = ds.Monitoring();
-                                lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
-                            }
-                            else if (deviceTypeCode == Models.DeviceCode.Keyboard)
-                            {
-                                var ds = new KeyboardService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
-                                var rmsReportMonitoringRaws = ds.Monitoring();
-                                lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
-                            }
-                            else if (deviceTypeCode == Models.DeviceCode.MonitorDisplay)
-                            {
-                                var ds = new MonitorDisplayService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
-                                var rmsReportMonitoringRaws = ds.Monitoring();
-                                lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
-                            }
-                            else if (deviceTypeCode == Models.DeviceCode.SmartcardReader)
-                            {
-                                var ds = new SmartCardReaderService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
-                                var rmsReportMonitoringRaws = ds.Monitoring();
-                                lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
+                                }
+                                else if (deviceTypeCode == Models.DeviceCode.CardDispenser)
+                                {
+                                    var ds = new CardDispenserService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
+                                    var rmsReportMonitoringRaws = ds.Monitoring();
+                                    lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
+                                }
+                                else if (deviceTypeCode == Models.DeviceCode.ElectronicSignaturePad)
+                                {
+                                    var ds = new SignaturePadService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
+                                    var rmsReportMonitoringRaws = ds.Monitoring();
+                                    lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
+                                }
+                                else if (deviceTypeCode == Models.DeviceCode.Keyboard)
+                                {
+                                    var ds = new KeyboardService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
+                                    var rmsReportMonitoringRaws = ds.Monitoring();
+                                    lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
+                                }
+                                else if (deviceTypeCode == Models.DeviceCode.MonitorDisplay)
+                                {
+                                    var ds = new MonitorDisplayService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
+                                    var rmsReportMonitoringRaws = ds.Monitoring();
+                                    lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
+                                }
+                                else if (deviceTypeCode == Models.DeviceCode.SmartcardReader)
+                                {
+                                    var ds = new SmartCardReaderService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
+                                    var rmsReportMonitoringRaws = ds.Monitoring();
+                                    lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
 
-                            }
-                            else if (deviceTypeCode == Models.DeviceCode.ThermalPrinter)
-                            {
-                                var ds = new ThermalPrinterService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
-                                var rmsReportMonitoringRaws = ds.Monitoring();
-                                lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
+                                }
+                                else if (deviceTypeCode == Models.DeviceCode.ThermalPrinter)
+                                {
+                                    var ds = new ThermalPrinterService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
+                                    var rmsReportMonitoringRaws = ds.Monitoring();
+                                    lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
 
+                                }
+                                else if (deviceTypeCode == Models.DeviceCode.WebCamera)
+                                {
+                                    var ds = new WebCameraService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
+                                    var rmsReportMonitoringRaws = ds.Monitoring();
+                                    lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
+                                }
                             }
-                            else if (deviceTypeCode == Models.DeviceCode.WebCamera)
+                            catch (Exception ex)
                             {
-                                var ds = new WebCameraService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
-                                var rmsReportMonitoringRaws = ds.Monitoring();
-                                lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
+                                new RMSAppException(this, "0500", "CheckDevice - Each device failed. " + ex.Message, ex, true);
                             }
 
 

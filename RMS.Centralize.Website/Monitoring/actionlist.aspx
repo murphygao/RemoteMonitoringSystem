@@ -219,7 +219,7 @@
     <!--================================================== -->
 
     <!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
-
+    <%: Scripts.Render("~/bundles/myJs") %>
     <%: Scripts.Render("~/bundles/defaultJs") %>
     <%: Scripts.Render("~/bundles/datatableJs") %>
 
@@ -274,11 +274,12 @@
                     aoData.push({ "name": "txtActionProfile", "value": $('#txtActionProfile').val() });
                     aoData.push({ "name": "txtEmail", "value": $('#txtEmail').val() });
                     aoData.push({ "name": "txtSms", "value": $('#txtSms').val() });
+                    aoData.push({ "name": "dt", "value": dateFormat(new Date(), "yyyymmddHHMMss") });
+
                     Pace.restart();
                     $.ajax({
-                        "type": "GET",
+                        "type": "POST",
                         "dataType": 'json',
-                        "contentType": "application/json; charset=utf-8",
                         "url": sSource,
                         "data": aoData,
                         "success": function (data) {
@@ -435,6 +436,7 @@
         function deleteRow(id) {
             Row = function(id) {
                 this.actionprofileid = id;
+                this.dt = dateFormat(new Date(), "yyyymmddHHMMss");
             };
             var delRow = new Row(id);
 
@@ -452,14 +454,18 @@
                         "data": JSON.stringify(delRow),
                         "success": function (data) {
                             if (data == "-1") {
-                                $.smallBox({
-                                    title: "Access Denied!",
-                                    content: "<i class='fa fa-clock-o'></i> <i>No Access Rights to delete!</i>",
-                                    color: "#C46A69",
-                                    iconSmall: "fa fa-times fa-2x fadeInRight animated",
-                                    timeout: 4000
-                                });
+                                try {
+                                    $.smallBox({
+                                        title: "Access Denied!",
+                                        content: "<i class='fa fa-clock-o'></i> <i>No Access Rights to delete!</i>",
+                                        color: "#C46A69",
+                                        iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                        timeout: 4000
+                                    });
 
+                                } catch (e) {
+                                    alert("No Access Rights to delete!");
+                                }
                             } else if (data == "1") {
                                 var oTable = $('#dt_basic').dataTable();
                                 if (oTable.fnGetData().length == 1)
@@ -467,23 +473,31 @@
                                 else
                                     oTable.fnStandingRedraw(0);
 
-                                $.smallBox({
-                                    title: "Delete Complete",
-                                    content: "<i class='fa fa-clock-o'></i> <i>This operation is complete.</i>",
-                                    color: "#659265",
-                                    iconSmall: "fa fa-check fa-2x fadeInRight animated",
-                                    timeout: 4000
-                                });
+                                try {
+                                    $.smallBox({
+                                        title: "Delete Complete",
+                                        content: "<i class='fa fa-clock-o'></i> <i>This operation is complete.</i>",
+                                        color: "#659265",
+                                        iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                                        timeout: 4000
+                                    });
 
+                                } catch (e) {
+                                    alert("This operation is complete.");
+                                }
                             } else if (data == "0") {
-                                $.smallBox({
-                                    title: "Delete Failed",
-                                    content: "<i class='fa fa-clock-o'></i> <i>Failed to complete this operation.</i>",
-                                    color: "#C46A69",
-                                    iconSmall: "fa fa-times fa-2x fadeInRight animated",
-                                    timeout: 4000
-                                });
+                                try {
+                                    $.smallBox({
+                                        title: "Delete Failed",
+                                        content: "<i class='fa fa-clock-o'></i> <i>Failed to complete this operation.</i>",
+                                        color: "#C46A69",
+                                        iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                        timeout: 4000
+                                    });
 
+                                } catch (e) {
+                                    alert("Failed to complete this operation.");
+                                }
                             }
 
                         },

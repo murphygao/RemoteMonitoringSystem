@@ -58,7 +58,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     errorMessage = result.ErrorMessage
                 };
 
-                return Json(data, JsonRequestBehavior.AllowGet);
+                return Json(data);
 
             }
 
@@ -72,7 +72,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                 };
                 new RMSWebException(this, "0500", "SearchMonitoringReport failed. " + ex.Message, ex, true);
 
-                return Json(data, JsonRequestBehavior.AllowGet);
+                return Json(data);
             }
 
         }
@@ -159,7 +159,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     errorMessage = result.ErrorMessage
                 };
 
-                return Json(data, JsonRequestBehavior.AllowGet);
+                return Json(data);
 
             }
 
@@ -173,7 +173,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                 };
                 new RMSWebException(this, "0500", "SearchClientMonitoring failed. " + ex.Message, ex, true);
 
-                return Json(data, JsonRequestBehavior.AllowGet);
+                return Json(data);
             }
 
         }
@@ -270,7 +270,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                         isSuccess = result.IsSuccess,
                         errorMessage = result.ErrorMessage
                     };
-                    return Json(data, JsonRequestBehavior.AllowGet);
+                    return Json(data);
                 }
 
 
@@ -281,7 +281,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     errorMessage = "Client Not Found"
                 };
 
-                return Json(data2, JsonRequestBehavior.AllowGet);
+                return Json(data2);
 
 
 
@@ -296,7 +296,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                 };
                 new RMSWebException(this, "0500", "GetCurrentDeviceStatus failed. " + ex.Message, ex, true);
 
-                return Json(data, JsonRequestBehavior.AllowGet);
+                return Json(data);
             }
 
         }
@@ -313,7 +313,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     errorMessage = "ID cannot be null."
                 };
 
-                return Json(idError, JsonRequestBehavior.AllowGet);
+                return Json(idError);
 
             }
             try
@@ -327,7 +327,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     errorMessage = actionRequest.ErrorMessage
                 };
 
-                return Json(ret, JsonRequestBehavior.AllowGet);
+                return Json(ret);
             }
             catch (Exception ex)
             {
@@ -339,7 +339,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                 };
                 new RMSWebException(this, "0500", "ResendAction failed. " + ex.Message, ex, true);
 
-                return Json(exError, JsonRequestBehavior.AllowGet);
+                return Json(exError);
             }
         }
 

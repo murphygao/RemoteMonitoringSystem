@@ -227,6 +227,7 @@
 
     <!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
 
+    <%: Scripts.Render("~/bundles/myJs") %>
     <%: Scripts.Render("~/bundles/defaultJs") %>
     <%: Scripts.Render("~/bundles/datatableJs") %>
 
@@ -282,12 +283,12 @@
                 "fnServerData": function (sSource, aoData, fnCallback) {
                     aoData.push({ "name": "ddlMessageGroupID", "value": $('#ddlMessageGroupID').val() });
                     aoData.push({ "name": "txtMessage", "value": $('#txtMessage').val() });
-                    aoData.push({ "name": "ddlActiveStatus", "value": $('#ddlActiveStatus').val() });
+                    aoData.push({ "name": "ddlActiveStatus", "value": $('#ddlActiveStatus').val() }); 
+                    aoData.push({ "name": "dt", "value": dateFormat(new Date(), "yyyymmddHHMMss") });
                     Pace.restart();
                     $.ajax({
-                        "type": "GET",
+                        "type": "POST",
                         "dataType": 'json',
-                        "contentType": "application/json; charset=utf-8",
                         "url": sSource,
                         "data": aoData,
                         "success": function (data) {
@@ -465,6 +466,7 @@
                 "type": "POST",
                 "dataType": 'json',
                 "contentType": "application/json; charset=utf-8",
+                "data" : dateFormat(new Date(), "yyyymmddHHMMss"),
                 "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/MessageAction/InitDataForMeesageAction/",
                 "success": function (data) {
                     $('#ddlMessageGroupID').append(unescape(data.messageGroup));
@@ -485,6 +487,7 @@
 
             Row = function (id) {
                 this.id = id;
+                this.dt = dateFormat(new Date(), "yyyymmddHHMMss");
             };
             var deleteRow = new Row(id);
 

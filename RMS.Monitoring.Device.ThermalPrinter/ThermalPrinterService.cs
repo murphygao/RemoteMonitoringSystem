@@ -21,8 +21,8 @@ namespace RMS.Monitoring.Device.ThermalPrinter
                 this.clientResult = clientResult;
 
                 if (brand.ToLower() == "custom") _device = new CUSTOM(model, deviceManagerName, deviceManagerID);
-
-                throw new Exception("Brand Not Found. brand=" + brand);
+                else
+                    throw new Exception("Brand Not Found. brand=" + brand);
 
             }
             catch (Exception ex)

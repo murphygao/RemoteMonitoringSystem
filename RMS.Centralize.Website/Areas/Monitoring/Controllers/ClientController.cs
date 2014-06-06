@@ -48,7 +48,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     errorMessage = searchResult.ErrorMessage
                 };
 
-                return Json(data, JsonRequestBehavior.AllowGet);
+                return Json(data);
 
             }
             catch (Exception ex)
@@ -61,7 +61,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
                 new RMSWebException(this, "0500", "Search failed. " + ex.Message, ex, true);
 
-                return Json(data, JsonRequestBehavior.AllowGet);
+                return Json(data);
             }
         }
 
@@ -79,7 +79,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     errorMessage = searchResult.ErrorMessage
                 };
 
-                return Json(data, JsonRequestBehavior.AllowGet);
+                return Json(data);
 
             }
             catch (Exception ex)
@@ -91,7 +91,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                 };
                 new RMSWebException(this, "0500", "ExistingClientCode failed. " + ex.Message, ex, true);
 
-                return Json(data, JsonRequestBehavior.AllowGet);
+                return Json(data);
             }
         }
 
@@ -109,7 +109,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     errorMessage = searchResult.ErrorMessage
                 };
 
-                return Json(data, JsonRequestBehavior.AllowGet);
+                return Json(data);
 
             }
             catch (Exception ex)
@@ -121,7 +121,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                 };
                 new RMSWebException(this, "0500", "GetClient failed. " + ex.Message, ex, true);
 
-                return Json(data, JsonRequestBehavior.AllowGet);
+                return Json(data);
             }
         }
 
