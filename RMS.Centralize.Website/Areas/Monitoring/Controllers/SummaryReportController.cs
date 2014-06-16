@@ -186,9 +186,19 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
             try
             {
+                if (clientID == null)
+                {
+                    var ret = new
+                    {
+                        isSuccess = false,
+                        errorMessage = "Client ID cannot be null."
+                    };
+                    return Json(ret);
+                }
+
                 var serviceClient = new RMS.Centralize.WebSite.Proxy.ClientService().clientService;
                 var clientResult = serviceClient.GetClient(GetClientBy.ClientID, clientID, null, null, true, false);
-                if (clientResult != null && clientResult.IsSuccess)
+                if (clientResult != null && clientResult.IsSuccess && clientID != null)
                 {
                     var service = new RMS.Centralize.WebSite.Proxy.SummaryReportService().summaryReportService;
                     var result = service.SearchSummaryMonitoring(param, null, null, null, null

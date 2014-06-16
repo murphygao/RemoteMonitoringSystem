@@ -115,7 +115,7 @@ namespace RMS.Monitoring.Core
                                 }
                                 else if (deviceTypeCode == Models.DeviceCode.CardDispenser)
                                 {
-                                    var ds = new CardDispenserService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
+                                    var ds = new CardDispenserService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, mpd.BooleanValue ?? false, mpd.ComPort, cr);
                                     var rmsReportMonitoringRaws = ds.Monitoring();
                                     lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
                                 }

@@ -264,7 +264,7 @@
 
         <!-- END MAIN CONTENT -->
         
-        <script data-pace-options='{ "restartOnRequestAfter": false, "ajax":true }' src="<%= HttpContext.Current.Request.ApplicationPath %>/js/plugin/pace/pace.js"></script>
+        <script data-pace-options='{ "restartOnRequestAfter": false, "ajax":true}' src="<%= HttpContext.Current.Request.ApplicationPath %>/js/plugin/pace/pace.js"></script>
 
     </div>
 

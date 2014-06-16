@@ -63,7 +63,17 @@ namespace RMS.Centralize.WebService.BSL
 
         private void ManualSending(List<RmsReportSummaryMonitoring> lRmsReportSummaryMonitorings, bool updateLastAction = false)
         {
-            if (lRmsReportSummaryMonitorings == null || lRmsReportSummaryMonitorings.Count == 0) return;
+
+            new RMSDebugLog("Start ManualSending ", true);
+
+            if (lRmsReportSummaryMonitorings == null || lRmsReportSummaryMonitorings.Count == 0)
+            {
+                new RMSWebException("lRmsReportSummaryMonitorings cannot be zero or null. ", true);
+                return;
+            }
+
+            new RMSDebugLog("Start ManualSending: " + lRmsReportSummaryMonitorings.Count, true);
+
 
             int activeClients;
             try
@@ -106,6 +116,7 @@ namespace RMS.Centralize.WebService.BSL
 
 
                         #region //EMAIL SECTION
+                        new RMSDebugLog("Start ManualSending - Prepare Email ", true);
 
                         //เตรียมว่าจะต้องส่ง Email ไปหาใครบ้าง
                         string mEmails = string.Empty;
@@ -125,6 +136,7 @@ namespace RMS.Centralize.WebService.BSL
                         var splitEmail = mEmails.Split(new string[] {";"}, StringSplitOptions.RemoveEmptyEntries);
 
                         //เตรียมข้อมูล
+
                         foreach (string email in splitEmail)
                         {
                             ActionInfo info = new ActionInfo();
@@ -138,14 +150,7 @@ namespace RMS.Centralize.WebService.BSL
                             info.MessageDateTime = monitoring.MessageDateTime;
                             info.DeviceCode = monitoring.DeviceCode;
                             info.DeviceDescription = monitoring.DeviceDescription;
-                            if (!string.IsNullOrEmpty(monitoring.MessageRemark))
-                            {
-                                if (!string.IsNullOrEmpty(info.DeviceDescription))
-                                {
-                                    info.DeviceDescription += " - ";
-                                }
-                                info.DeviceDescription += monitoring.MessageRemark;
-                            }
+                            info.MessageRemark = monitoring.MessageRemark;
 
                             info.SummaryMonitoringReportID = monitoring.Id;
 
@@ -160,6 +165,8 @@ namespace RMS.Centralize.WebService.BSL
                         #endregion
 
                         #region //SMS SECTION
+
+                        new RMSDebugLog("Start ManualSending - Prepare SMS ", true);
 
                         string mSMSs = string.Empty;
                         if (clientMessageAction.OverwritenAction == true)
@@ -188,15 +195,7 @@ namespace RMS.Centralize.WebService.BSL
                             info.MessageDateTime = monitoring.MessageDateTime;
                             info.DeviceCode = monitoring.DeviceCode;
                             info.DeviceDescription = monitoring.DeviceDescription;
-                            if (!string.IsNullOrEmpty(monitoring.MessageRemark))
-                            {
-                                if (!string.IsNullOrEmpty(info.DeviceDescription))
-                                {
-                                    info.DeviceDescription += " - ";
-                                }
-                                info.DeviceDescription += monitoring.MessageRemark;
-                            }
-
+                            info.MessageRemark = monitoring.MessageRemark;
                             info.SummaryMonitoringReportID = monitoring.Id;
 
                             lSMSs.Add(info);
@@ -232,6 +231,7 @@ namespace RMS.Centralize.WebService.BSL
                     }
 
                     #region Action Process
+                    new RMSDebugLog("Start ManualSending - Action Process ", true);
 
                     var rmsSystemConfigs = db.RmsSystemConfigs;
                     var config = rmsSystemConfigs.First(c => c.Name == "ActionGateway");
@@ -249,6 +249,7 @@ namespace RMS.Centralize.WebService.BSL
 
 
                     #region // Prepare Email Body
+                    new RMSDebugLog("Start ManualSending - Prepare Email Body ", true);
 
                     config = rmsSystemConfigs.First(c => c.Name == "EmailSubject");
                     string emailSubject = "Monitoring : พบข้อผิดพลาด ::clientcode::";
@@ -299,6 +300,7 @@ namespace RMS.Centralize.WebService.BSL
                                 .Replace("::summaryerror::", tableOfErrors);
 
                         // Call Send Mail Here
+                        new RMSDebugLog("Start ManualSending - Call Send Mail ", true);
 
                         if (!Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.ActionModeTest"]))
                         {
@@ -328,6 +330,8 @@ namespace RMS.Centralize.WebService.BSL
                             // Testing
                             try
                             {
+                                new RMSDebugLog("Start ManualSending Testing Mode - Email ", true);
+
                                 string fileName = DateTime.Now.ToString("yyyyMMddTHHmmssff", new CultureInfo("en-AU")) + "." + to + ".txt";
                                 if (!File.Exists(destinationPath + fileName))
                                     File.Create(destinationPath + fileName).Close();
@@ -339,8 +343,9 @@ namespace RMS.Centralize.WebService.BSL
 
                                 AddLogActionSend("Email", emailFrom, to, tBody, true, "Testing Mode");
                             }
-                            catch
+                            catch (Exception ex)
                             {
+                                new RMSDebugLog("Start ManualSending Testing Mode - Email - Error " + ex.Message, true);
                             }
                             System.Threading.Thread.Sleep(100);
                         }
@@ -350,6 +355,7 @@ namespace RMS.Centralize.WebService.BSL
                     #endregion
 
                     #region // Prepare SMS Body
+                    new RMSDebugLog("Start ManualSending - Prepare SMS Body ", true);
 
                     config = rmsSystemConfigs.First(c => c.Name == "SMSSender");
                     string smsSender = "SKS Monitoring";
@@ -375,6 +381,7 @@ namespace RMS.Centralize.WebService.BSL
                                 .Replace("::devicedescription::", string.IsNullOrEmpty(actionInfo.DeviceDescription)? 
                                     actionInfo.DeviceCode : actionInfo.DeviceDescription)
                                 .Replace("::locationname::", actionInfo.LocationName)
+                                .Replace("::messageremark::", actionInfo.MessageRemark)
                                 .Replace("::locationcode::", actionInfo.LocationCode)
                                 .Replace("::devicecode::", actionInfo.DeviceCode)
                                 .Replace("::messagedatetime::", actionInfo.MessageDateTime == null ? 
@@ -383,6 +390,8 @@ namespace RMS.Centralize.WebService.BSL
 
                             if (!string.IsNullOrEmpty(actionInfo.To))
                                 actionInfo.To = actionInfo.To.Replace("-", "").Replace(" ", "");
+
+                            new RMSDebugLog("Start ManualSending - Call Send SMS ", true);
 
                             if (!Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.ActionModeTest"]))
                             {
@@ -412,6 +421,8 @@ namespace RMS.Centralize.WebService.BSL
                                 // Testing
                                 try
                                 {
+                                    new RMSDebugLog("Start ManualSending Testing Mode - SMS ", true);
+                                    
                                     string fileName = DateTime.Now.ToString("yyyyMMddTHHmmssff", new CultureInfo("en-AU")) + "." + actionInfo.To + ".txt";
                                     if (!File.Exists(destinationPath + fileName))
                                         File.Create(destinationPath + fileName).Close();
@@ -423,8 +434,9 @@ namespace RMS.Centralize.WebService.BSL
 
                                     AddLogActionSend("SMS", smsSender, actionInfo.To, tBody, true, "Testing Mode");
                                 }
-                                catch
+                                catch(Exception ex)
                                 {
+                                    new RMSDebugLog("Start ManualSending Testing Mode - SMS - Error " + ex.Message, true);
                                 }
                                 System.Threading.Thread.Sleep(100);
                             }

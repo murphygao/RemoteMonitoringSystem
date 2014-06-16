@@ -49,7 +49,10 @@ namespace RMS.Centralize.Engine.MonitoringEngine
             }
             catch (Exception ex)
             {
-                throw new RMSAppException("Main failed. " + ex.Message, ex, true);
+                new RMSAppException("Main failed. " + ex.Message, ex, true);
+                Console.WriteLine("Engine stopped. Main Application failed. " + ex.Message);
+                Console.WriteLine("Please contact administrator.");
+                Console.Read();
             }
             finally
             {

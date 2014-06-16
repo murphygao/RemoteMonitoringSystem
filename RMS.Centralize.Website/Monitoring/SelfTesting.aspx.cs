@@ -308,7 +308,10 @@ namespace RMS.Centralize.Website.Monitoring
             {
                 if (Textbox2.Text == DateTime.Now.ToString("yyyyMMdd", new CultureInfo("en-AU"))
                     && Textbox3.Text == DateTime.Now.ToString("HH", new CultureInfo("en-AU")))
+                {
+                    GridView1.PageIndex = 0;
                     Functions();
+                }
 
             }
             catch (Exception ex)
@@ -320,17 +323,21 @@ namespace RMS.Centralize.Website.Monitoring
 
         private void Functions()
         {
-            try
+            if (Textbox2.Text == DateTime.Now.ToString("yyyyMMdd", new CultureInfo("en-AU"))
+                && Textbox3.Text == DateTime.Now.ToString("HH", new CultureInfo("en-AU")))
             {
-                var service = new SelfTestingService();
-                DataTable testQuery = service.selfTestingService.TestQuery(Textbox1.Text);
+                try
+                {
+                    var service = new SelfTestingService();
+                    DataTable testQuery = service.selfTestingService.TestQuery(Textbox1.Text);
 
-                GridView1.DataSource = testQuery;
-                GridView1.DataBind();
-            }
-            catch (Exception ex)
-            {
-                throw new RMSWebException(this, "0500", "Calling SP failed. " + ex.Message, ex, false);
+                    GridView1.DataSource = testQuery;
+                    GridView1.DataBind();
+                }
+                catch (Exception ex)
+                {
+                    throw new RMSWebException(this, "0500", "Calling SP failed. " + ex.Message, ex, false);
+                }
             }
         }
 
@@ -346,6 +353,12 @@ namespace RMS.Centralize.Website.Monitoring
             {
                 throw new RMSWebException(this, "0500", "Reset failed. " + ex.Message, ex, true);
             }
+        }
+
+        protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridView1.PageIndex = e.NewPageIndex;
+            Functions();
         }
 
     }

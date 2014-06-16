@@ -39,6 +39,7 @@ namespace RMS.Centralize.DAL
         IDbSet<RmsColorLabel> RmsColorLabels { get; set; } // RMS_ColorLabel
         IDbSet<RmsDevice> RmsDevices { get; set; } // RMS_Device
         IDbSet<RmsDeviceType> RmsDeviceTypes { get; set; } // RMS_DeviceType
+        IDbSet<RmsHoliday> RmsHolidays { get; set; } // RMS_Holiday
         IDbSet<RmsLocation> RmsLocations { get; set; } // RMS_Location
         IDbSet<RmsLogActionSend> RmsLogActionSends { get; set; } // RMS_Log_ActionSend
         IDbSet<RmsLogEvent> RmsLogEvents { get; set; } // RMS_Log_Event
@@ -70,6 +71,7 @@ namespace RMS.Centralize.DAL
         public IDbSet<RmsColorLabel> RmsColorLabels { get; set; } // RMS_ColorLabel
         public IDbSet<RmsDevice> RmsDevices { get; set; } // RMS_Device
         public IDbSet<RmsDeviceType> RmsDeviceTypes { get; set; } // RMS_DeviceType
+        public IDbSet<RmsHoliday> RmsHolidays { get; set; } // RMS_Holiday
         public IDbSet<RmsLocation> RmsLocations { get; set; } // RMS_Location
         public IDbSet<RmsLogActionSend> RmsLogActionSends { get; set; } // RMS_Log_ActionSend
         public IDbSet<RmsLogEvent> RmsLogEvents { get; set; } // RMS_Log_Event
@@ -119,6 +121,7 @@ namespace RMS.Centralize.DAL
             modelBuilder.Configurations.Add(new RmsColorLabelConfiguration());
             modelBuilder.Configurations.Add(new RmsDeviceConfiguration());
             modelBuilder.Configurations.Add(new RmsDeviceTypeConfiguration());
+            modelBuilder.Configurations.Add(new RmsHolidayConfiguration());
             modelBuilder.Configurations.Add(new RmsLocationConfiguration());
             modelBuilder.Configurations.Add(new RmsLogActionSendConfiguration());
             modelBuilder.Configurations.Add(new RmsLogEventConfiguration());
@@ -147,6 +150,7 @@ namespace RMS.Centralize.DAL
             modelBuilder.Configurations.Add(new RmsColorLabelConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsDeviceConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsDeviceTypeConfiguration(schema));
+            modelBuilder.Configurations.Add(new RmsHolidayConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsLocationConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsLogActionSendConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsLogEventConfiguration(schema));
@@ -552,6 +556,18 @@ namespace RMS.Centralize.DAL
         partial void InitializePartial();
     }
 
+    // RMS_Holiday
+    [DataContract]
+    public partial class RmsHoliday
+    {
+        [DataMember(Order = 1, IsRequired = true)]
+        public DateTime HolidayDate { get; set; } // HolidayDate (Primary key)
+
+        [DataMember(Order = 2, IsRequired = false)]
+        public string Remark { get; set; } // Remark
+
+    }
+
     // RMS_Location
     [DataContract]
     public partial class RmsLocation
@@ -565,6 +581,126 @@ namespace RMS.Centralize.DAL
         [DataMember(Order = 3, IsRequired = false)]
         public string LocationName { get; set; } // LocationName
 
+        [DataMember(Order = 4, IsRequired = false)]
+        public bool? MondayEnable { get; set; } // MondayEnable
+
+        [DataMember(Order = 5, IsRequired = false)]
+        public bool? MondayWholeDay { get; set; } // MondayWholeDay
+
+        [DataMember(Order = 6, IsRequired = false)]
+        public DateTime? MondayStart { get; set; } // MondayStart
+
+        [DataMember(Order = 7, IsRequired = false)]
+        public DateTime? MondayEnd { get; set; } // MondayEnd
+
+        [DataMember(Order = 8, IsRequired = false)]
+        public bool? TuesdayEnable { get; set; } // TuesdayEnable
+
+        [DataMember(Order = 9, IsRequired = false)]
+        public bool? TuesdayWholeDay { get; set; } // TuesdayWholeDay
+
+        [DataMember(Order = 10, IsRequired = false)]
+        public DateTime? TuesdayStart { get; set; } // TuesdayStart
+
+        [DataMember(Order = 11, IsRequired = false)]
+        public DateTime? TuesdayEnd { get; set; } // TuesdayEnd
+
+        [DataMember(Order = 12, IsRequired = false)]
+        public bool? WednesdayEnable { get; set; } // WednesdayEnable
+
+        [DataMember(Order = 13, IsRequired = false)]
+        public bool? WednesdayWholeDay { get; set; } // WednesdayWholeDay
+
+        [DataMember(Order = 14, IsRequired = false)]
+        public DateTime? WednesdayStart { get; set; } // WednesdayStart
+
+        [DataMember(Order = 15, IsRequired = false)]
+        public DateTime? WednesdayEnd { get; set; } // WednesdayEnd
+
+        [DataMember(Order = 16, IsRequired = false)]
+        public bool? ThursdayEnable { get; set; } // ThursdayEnable
+
+        [DataMember(Order = 17, IsRequired = false)]
+        public bool? ThursdayWholeDay { get; set; } // ThursdayWholeDay
+
+        [DataMember(Order = 18, IsRequired = false)]
+        public DateTime? ThursdayStart { get; set; } // ThursdayStart
+
+        [DataMember(Order = 19, IsRequired = false)]
+        public DateTime? ThursdayEnd { get; set; } // ThursdayEnd
+
+        [DataMember(Order = 20, IsRequired = false)]
+        public bool? FridayEnable { get; set; } // FridayEnable
+
+        [DataMember(Order = 21, IsRequired = false)]
+        public bool? FridayWholeDay { get; set; } // FridayWholeDay
+
+        [DataMember(Order = 22, IsRequired = false)]
+        public DateTime? FridayStart { get; set; } // FridayStart
+
+        [DataMember(Order = 23, IsRequired = false)]
+        public DateTime? FridayEnd { get; set; } // FridayEnd
+
+        [DataMember(Order = 24, IsRequired = false)]
+        public bool? SaturdayEnable { get; set; } // SaturdayEnable
+
+        [DataMember(Order = 25, IsRequired = false)]
+        public bool? SaturdayWholeDay { get; set; } // SaturdayWholeDay
+
+        [DataMember(Order = 26, IsRequired = false)]
+        public DateTime? SaturdayStart { get; set; } // SaturdayStart
+
+        [DataMember(Order = 27, IsRequired = false)]
+        public DateTime? SaturdayEnd { get; set; } // SaturdayEnd
+
+        [DataMember(Order = 28, IsRequired = false)]
+        public bool? SundayEnable { get; set; } // SundayEnable
+
+        [DataMember(Order = 29, IsRequired = false)]
+        public bool? SundayWholeDay { get; set; } // SundayWholeDay
+
+        [DataMember(Order = 30, IsRequired = false)]
+        public DateTime? SundayStart { get; set; } // SundayStart
+
+        [DataMember(Order = 31, IsRequired = false)]
+        public DateTime? SundayEnd { get; set; } // SundayEnd
+
+        [DataMember(Order = 32, IsRequired = false)]
+        public bool? ActiveList { get; set; } // ActiveList
+
+        [DataMember(Order = 33, IsRequired = false)]
+        public DateTime? CreatedDate { get; set; } // CreatedDate
+
+        [DataMember(Order = 34, IsRequired = false)]
+        public string CreatedBy { get; set; } // CreatedBy
+
+        [DataMember(Order = 35, IsRequired = false)]
+        public DateTime? UpdatedDate { get; set; } // UpdatedDate
+
+        [DataMember(Order = 36, IsRequired = false)]
+        public string UpdatedBy { get; set; } // UpdatedBy
+
+
+        public RmsLocation()
+        {
+            MondayEnable = false;
+            MondayWholeDay = false;
+            TuesdayEnable = false;
+            TuesdayWholeDay = false;
+            WednesdayEnable = false;
+            WednesdayWholeDay = false;
+            ThursdayEnable = false;
+            ThursdayWholeDay = false;
+            FridayEnable = false;
+            FridayWholeDay = false;
+            SaturdayEnable = false;
+            SaturdayWholeDay = false;
+            SundayEnable = false;
+            SundayWholeDay = false;
+            CreatedDate = System.DateTime.Now;
+            InitializePartial();
+        }
+        partial void InitializePartial();
     }
 
     // RMS_Log_ActionSend
@@ -1335,6 +1471,21 @@ namespace RMS.Centralize.DAL
         partial void InitializePartial();
     }
 
+    // RMS_Holiday
+    internal partial class RmsHolidayConfiguration : EntityTypeConfiguration<RmsHoliday>
+    {
+        public RmsHolidayConfiguration(string schema = "dbo")
+        {
+            ToTable(schema + ".RMS_Holiday");
+            HasKey(x => x.HolidayDate);
+
+            Property(x => x.HolidayDate).HasColumnName("HolidayDate").IsRequired();
+            Property(x => x.Remark).HasColumnName("Remark").IsOptional().HasMaxLength(150);
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
     // RMS_Location
     internal partial class RmsLocationConfiguration : EntityTypeConfiguration<RmsLocation>
     {
@@ -1343,9 +1494,42 @@ namespace RMS.Centralize.DAL
             ToTable(schema + ".RMS_Location");
             HasKey(x => x.LocationId);
 
-            Property(x => x.LocationId).HasColumnName("LocationID").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            Property(x => x.LocationId).HasColumnName("LocationID").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(x => x.LocationCode).HasColumnName("LocationCode").IsOptional().HasMaxLength(50);
             Property(x => x.LocationName).HasColumnName("LocationName").IsOptional().HasMaxLength(250);
+            Property(x => x.MondayEnable).HasColumnName("MondayEnable").IsOptional();
+            Property(x => x.MondayWholeDay).HasColumnName("MondayWholeDay").IsOptional();
+            Property(x => x.MondayStart).HasColumnName("MondayStart").IsOptional();
+            Property(x => x.MondayEnd).HasColumnName("MondayEnd").IsOptional();
+            Property(x => x.TuesdayEnable).HasColumnName("TuesdayEnable").IsOptional();
+            Property(x => x.TuesdayWholeDay).HasColumnName("TuesdayWholeDay").IsOptional();
+            Property(x => x.TuesdayStart).HasColumnName("TuesdayStart").IsOptional();
+            Property(x => x.TuesdayEnd).HasColumnName("TuesdayEnd").IsOptional();
+            Property(x => x.WednesdayEnable).HasColumnName("WednesdayEnable").IsOptional();
+            Property(x => x.WednesdayWholeDay).HasColumnName("WednesdayWholeDay").IsOptional();
+            Property(x => x.WednesdayStart).HasColumnName("WednesdayStart").IsOptional();
+            Property(x => x.WednesdayEnd).HasColumnName("WednesdayEnd").IsOptional();
+            Property(x => x.ThursdayEnable).HasColumnName("ThursdayEnable").IsOptional();
+            Property(x => x.ThursdayWholeDay).HasColumnName("ThursdayWholeDay").IsOptional();
+            Property(x => x.ThursdayStart).HasColumnName("ThursdayStart").IsOptional();
+            Property(x => x.ThursdayEnd).HasColumnName("ThursdayEnd").IsOptional();
+            Property(x => x.FridayEnable).HasColumnName("FridayEnable").IsOptional();
+            Property(x => x.FridayWholeDay).HasColumnName("FridayWholeDay").IsOptional();
+            Property(x => x.FridayStart).HasColumnName("FridayStart").IsOptional();
+            Property(x => x.FridayEnd).HasColumnName("FridayEnd").IsOptional();
+            Property(x => x.SaturdayEnable).HasColumnName("SaturdayEnable").IsOptional();
+            Property(x => x.SaturdayWholeDay).HasColumnName("SaturdayWholeDay").IsOptional();
+            Property(x => x.SaturdayStart).HasColumnName("SaturdayStart").IsOptional();
+            Property(x => x.SaturdayEnd).HasColumnName("SaturdayEnd").IsOptional();
+            Property(x => x.SundayEnable).HasColumnName("SundayEnable").IsOptional();
+            Property(x => x.SundayWholeDay).HasColumnName("SundayWholeDay").IsOptional();
+            Property(x => x.SundayStart).HasColumnName("SundayStart").IsOptional();
+            Property(x => x.SundayEnd).HasColumnName("SundayEnd").IsOptional();
+            Property(x => x.ActiveList).HasColumnName("ActiveList").IsOptional();
+            Property(x => x.CreatedDate).HasColumnName("CreatedDate").IsOptional();
+            Property(x => x.CreatedBy).HasColumnName("CreatedBy").IsOptional().HasMaxLength(100);
+            Property(x => x.UpdatedDate).HasColumnName("UpdatedDate").IsOptional();
+            Property(x => x.UpdatedBy).HasColumnName("UpdatedBy").IsOptional().HasMaxLength(100);
             InitializePartial();
         }
         partial void InitializePartial();

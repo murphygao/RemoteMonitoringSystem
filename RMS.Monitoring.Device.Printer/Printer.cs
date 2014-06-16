@@ -28,6 +28,7 @@ namespace RMS.Monitoring.Device.Printer
         /// <param name="printerName">Printer's name is shown in "Devices and Printers"</param>
         /// <param name="useCOMPort">If using COM-USB adapter, useCOMPort is true;</param>
         public Printer(string brand, string model, string deviceManagerName, string deviceManagerID, string printerName, bool useCOMPort)
+            : base(brand, model, deviceManagerName, deviceManagerID)
         {
             this.brand = brand;
             this.model = model;
@@ -48,6 +49,7 @@ namespace RMS.Monitoring.Device.Printer
         /// <param name="useCOMPort">If using COM-USB adapter, useCOMPort is true;</param>
         /// <param name="comPort">COM1, COM2, COM3, COM4, ...</param>
         public Printer(string brand, string model, string deviceManagerName, string deviceManagerID, string printerName, bool useCOMPort, string comPort)
+            : base(brand, model, deviceManagerName, deviceManagerID)
         {
             this.brand = brand;
             this.model = model;

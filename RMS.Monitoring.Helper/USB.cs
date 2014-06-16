@@ -89,29 +89,36 @@ namespace RMS.Monitoring.Helper
             }
             finally
             {
-                if (MyUsbDevice != null)
+                try
                 {
-                    if (MyUsbDevice.IsOpen)
+                    if (MyUsbDevice != null)
                     {
-                        // If this is a "whole" usb device (libusb-win32, linux libusb-1.0)
-                        // it exposes an IUsbDevice interface. If not (WinUSB) the 
-                        // 'wholeUsbDevice' variable will be null indicating this is 
-                        // an interface of a device; it does not require or support 
-                        // configuration and interface selection.
-                        IUsbDevice wholeUsbDevice = MyUsbDevice as IUsbDevice;
-                        if (!ReferenceEquals(wholeUsbDevice, null))
+                        if (MyUsbDevice.IsOpen)
                         {
-                            // Release interface #0.
-                            wholeUsbDevice.ReleaseInterface(0);
+                            // If this is a "whole" usb device (libusb-win32, linux libusb-1.0)
+                            // it exposes an IUsbDevice interface. If not (WinUSB) the 
+                            // 'wholeUsbDevice' variable will be null indicating this is 
+                            // an interface of a device; it does not require or support 
+                            // configuration and interface selection.
+                            IUsbDevice wholeUsbDevice = MyUsbDevice as IUsbDevice;
+                            if (!ReferenceEquals(wholeUsbDevice, null))
+                            {
+                                // Release interface #0.
+                                wholeUsbDevice.ReleaseInterface(0);
+                            }
+
+                            MyUsbDevice.Close();
                         }
+                        MyUsbDevice = null;
 
-                        MyUsbDevice.Close();
+                        // Free usb resources
+                        UsbDevice.Exit();
+
                     }
-                    MyUsbDevice = null;
-
-                    // Free usb resources
-                    UsbDevice.Exit();
-
+                }
+                catch (Exception ex)
+                {
+                    new RMSAppException("WriteAndReadUSB - Closing USB failed. " + ex.Message, ex, true);
                 }
             }
             return null;

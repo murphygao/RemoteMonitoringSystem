@@ -99,12 +99,13 @@
             <asp:Button ID="Button2" runat="server" Text="Reset" OnClick="btnReset_Click" />
             <br />
             <br />
-            <div style="width: 100%; height: 300px; overflow: auto;">
-                <asp:GridView ID="GridView1" runat="server" CellPadding="4" ForeColor="#333333" GridLines="Horizontal" AllowPaging="True" AllowSorting="True" EmptyDataText="No Rows Found" PageSize="50">
+            <div style="width: 100%; height: 1000px; overflow: auto;">
+                <asp:GridView ID="GridView1" runat="server" CellPadding="4" ForeColor="#333333" GridLines="Horizontal" AllowPaging="True" AllowSorting="True" EmptyDataText="No Rows Found" PageSize="25" OnPageIndexChanging="GridView1_PageIndexChanging">
                     <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                     <RowStyle BackColor="#EFF3FB" />
                     <EditRowStyle BackColor="#2461BF" />
                     <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="10"  FirstPageText="First" LastPageText="Last" />
                     <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
                     <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                     <AlternatingRowStyle BackColor="White" />

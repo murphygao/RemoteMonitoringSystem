@@ -290,26 +290,7 @@
                     },
 
                 });
-
-            } else {
-                try {
-                    $.smallBox({
-                        title: "Get Action Profile Failed",
-                        content: "<i class='fa fa-clock-o'></i> <i>Failed to complete this operation.</i>",
-                        color: "#C46A69",
-                        iconSmall: "fa fa-times fa-2x fadeInRight animated",
-                        timeout: 4000
-                    });
-
-                } catch (e) {
-                    alert("Failed to complete this operation.");
-                }
-
-                setTimeout(function() {
-                    window.location.href = 'ActionList.aspx';
-                }, 3000);
-
-            }
+            } 
 
             $("#btnSubmit").on("click", function (event) {
                 event.preventDefault(); // will work!

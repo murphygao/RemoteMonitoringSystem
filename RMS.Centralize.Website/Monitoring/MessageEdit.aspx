@@ -220,6 +220,7 @@
 
 
             pageSetUp();
+            drawBreadCrumb();
 
             // PAGE RELATED SCRIPTS
 

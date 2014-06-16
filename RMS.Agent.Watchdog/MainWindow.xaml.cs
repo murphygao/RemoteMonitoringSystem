@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -53,7 +54,7 @@ namespace RMS.Agent.Watchdog
                 btnStart.IsEnabled = true;
                 btnStop.IsEnabled = false;
 
-                lblAgentFilePath.Content = ConfigurationManager.AppSettings["RMS.AGENT_FILE_PATH"];
+                lblExecPath.Content = Assembly.GetExecutingAssembly().Location;
 
                 ws = new WatchdogService();
 

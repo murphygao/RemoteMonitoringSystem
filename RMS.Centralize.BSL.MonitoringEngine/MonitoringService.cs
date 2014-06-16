@@ -38,10 +38,29 @@ namespace RMS.Centralize.BSL.MonitoringEngine
 
                     var listClients = ListClientWithIPAddress(licenseInfo, out activeClient, true);
 
+                    List<RmsClient> broadcastClient = new List<RmsClient>();
+
+                    foreach (var client in listClients)
+                    {
+                        if (client.UseLocalInfo == true)
+                        {
+                            var location = db.RmsLocations.Find(client.LocationId);
+                            if (location != null)
+                            {
+                                if (CanBroadCast(location))
+                                    broadcastClient.Add(client);
+                            }
+                        }
+                        else
+                        {
+                            broadcastClient.Add(client);
+                        }
+                    }
+
                     // Log into RMS_Log_Monitoring
                     int refID = AddLogMonitoring(activeClient, true, null);
 
-                    foreach (var client in listClients)
+                    foreach (var client in broadcastClient)
                     {
                         BroadcastAliveMessage(client, refID);
                     }
@@ -212,6 +231,128 @@ namespace RMS.Centralize.BSL.MonitoringEngine
             {
                 throw new RMSWebException(this, "0500", "AddLogMonitoringClient failed. " + ex.Message, ex, false);
             }
+        }
+
+        private bool CanBroadCast(RmsLocation location)
+        {
+            try
+            {
+                //ครวจสอบว่า วันและเวลาตอนนี้ ต้อง broadcast หรือไม่
+                DateTime myToday = DateTime.Now;
+
+                if ((int) myToday.DayOfWeek == 1) // Monday
+                {
+                    if (location.MondayEnable == null || location.MondayEnable == false) return false;
+                    if (location.MondayWholeDay == true) return true;
+                    if (location.MondayStart == null || location.MondayEnd == null) return true;
+
+                    int sHH = location.MondayStart.Value.Hour;
+                    int smm = location.MondayStart.Value.Minute;
+                    DateTime startTime = new DateTime(myToday.Year, myToday.Month, myToday.Day, sHH, smm, 0);
+                    int eHH = location.MondayEnd.Value.Hour;
+                    int emm = location.MondayEnd.Value.Minute;
+                    DateTime endTime = new DateTime(myToday.Year, myToday.Month, myToday.Day, eHH, emm, 0);
+                    if (startTime <= myToday && myToday <= endTime) return true;
+                }
+
+                else if ((int) myToday.DayOfWeek == 2) // Tuesday
+                {
+                    if (location.TuesdayEnable == null || location.TuesdayEnable == false) return false;
+                    if (location.TuesdayWholeDay == true) return true;
+                    if (location.TuesdayStart == null || location.TuesdayEnd == null) return true;
+
+                    int sHH = location.TuesdayStart.Value.Hour;
+                    int smm = location.TuesdayStart.Value.Minute;
+                    DateTime startTime = new DateTime(myToday.Year, myToday.Month, myToday.Day, sHH, smm, 0);
+                    int eHH = location.TuesdayEnd.Value.Hour;
+                    int emm = location.TuesdayEnd.Value.Minute;
+                    DateTime endTime = new DateTime(myToday.Year, myToday.Month, myToday.Day, eHH, emm, 0);
+                    if (startTime <= myToday && myToday <= endTime) return true;
+                }
+
+                else if ((int) myToday.DayOfWeek == 3) // Wednesday
+                {
+                    if (location.WednesdayEnable == null || location.WednesdayEnable == false) return false;
+                    if (location.WednesdayWholeDay == true) return true;
+                    if (location.WednesdayStart == null || location.WednesdayEnd == null) return true;
+
+                    int sHH = location.WednesdayStart.Value.Hour;
+                    int smm = location.WednesdayStart.Value.Minute;
+                    DateTime startTime = new DateTime(myToday.Year, myToday.Month, myToday.Day, sHH, smm, 0);
+                    int eHH = location.WednesdayEnd.Value.Hour;
+                    int emm = location.WednesdayEnd.Value.Minute;
+                    DateTime endTime = new DateTime(myToday.Year, myToday.Month, myToday.Day, eHH, emm, 0);
+                    if (startTime <= myToday && myToday <= endTime) return true;
+                }
+
+                else if ((int) myToday.DayOfWeek == 4) // Thursday
+                {
+                    if (location.ThursdayEnable == null || location.ThursdayEnable == false) return false;
+                    if (location.ThursdayWholeDay == true) return true;
+                    if (location.ThursdayStart == null || location.ThursdayEnd == null) return true;
+
+                    int sHH = location.ThursdayStart.Value.Hour;
+                    int smm = location.ThursdayStart.Value.Minute;
+                    DateTime startTime = new DateTime(myToday.Year, myToday.Month, myToday.Day, sHH, smm, 0);
+                    int eHH = location.ThursdayEnd.Value.Hour;
+                    int emm = location.ThursdayEnd.Value.Minute;
+                    DateTime endTime = new DateTime(myToday.Year, myToday.Month, myToday.Day, eHH, emm, 0);
+                    if (startTime <= myToday && myToday <= endTime) return true;
+                }
+
+                else if ((int) myToday.DayOfWeek == 5) // Friday
+                {
+                    if (location.FridayEnable == null || location.FridayEnable == false) return false;
+                    if (location.FridayWholeDay == true) return true;
+                    if (location.FridayStart == null || location.FridayEnd == null) return true;
+
+                    int sHH = location.FridayStart.Value.Hour;
+                    int smm = location.FridayStart.Value.Minute;
+                    DateTime startTime = new DateTime(myToday.Year, myToday.Month, myToday.Day, sHH, smm, 0);
+                    int eHH = location.FridayEnd.Value.Hour;
+                    int emm = location.FridayEnd.Value.Minute;
+                    DateTime endTime = new DateTime(myToday.Year, myToday.Month, myToday.Day, eHH, emm, 0);
+                    if (startTime <= myToday && myToday <= endTime) return true;
+                }
+
+                else if ((int) myToday.DayOfWeek == 6) // Saturday
+                {
+                    if (location.SaturdayEnable == null || location.SaturdayEnable == false) return false;
+                    if (location.SaturdayWholeDay == true) return true;
+                    if (location.SaturdayStart == null || location.SaturdayEnd == null) return true;
+
+                    int sHH = location.SaturdayStart.Value.Hour;
+                    int smm = location.SaturdayStart.Value.Minute;
+                    DateTime startTime = new DateTime(myToday.Year, myToday.Month, myToday.Day, sHH, smm, 0);
+                    int eHH = location.SaturdayEnd.Value.Hour;
+                    int emm = location.SaturdayEnd.Value.Minute;
+                    DateTime endTime = new DateTime(myToday.Year, myToday.Month, myToday.Day, eHH, emm, 0);
+                    if (startTime <= myToday && myToday <= endTime) return true;
+                }
+
+                else if ((int) myToday.DayOfWeek == 7) // Sunday
+                {
+                    if (location.SundayEnable == null || location.SundayEnable == false) return false;
+                    if (location.SundayWholeDay == true) return true;
+                    if (location.SundayStart == null || location.SundayEnd == null) return true;
+
+                    int sHH = location.SundayStart.Value.Hour;
+                    int smm = location.SundayStart.Value.Minute;
+                    DateTime startTime = new DateTime(myToday.Year, myToday.Month, myToday.Day, sHH, smm, 0);
+                    int eHH = location.SundayEnd.Value.Hour;
+                    int emm = location.SundayEnd.Value.Minute;
+                    DateTime endTime = new DateTime(myToday.Year, myToday.Month, myToday.Day, eHH, emm, 0);
+                    if (startTime <= myToday && myToday <= endTime) return true;
+                }
+
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new RMSWebException(this, "0500", "CanBroadCast failed. " + ex.Message, ex, false);
+            }
+
         }
     }
 }

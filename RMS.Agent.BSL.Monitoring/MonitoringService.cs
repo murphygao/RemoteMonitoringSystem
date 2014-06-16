@@ -122,7 +122,7 @@ namespace RMS.Agent.BSL.Monitoring
                     {
                         if (clientResult.Client.State == (int) ClientState.Normal)
                         {
-                            var client = new ClientServiceClient();
+                            var client = new ClientService().clientService;
                             client.SetClientState(clientResult.Client.ClientId, ClientState.Maintenance);
                         }
                         return;
@@ -132,7 +132,7 @@ namespace RMS.Agent.BSL.Monitoring
                     {
                         if (clientResult.Client.State == (int)ClientState.Maintenance)
                         {
-                            var client = new ClientServiceClient();
+                            var client = new ClientService().clientService;
                             client.SetClientState(clientResult.Client.ClientId, ClientState.Normal);
                         }
                     }

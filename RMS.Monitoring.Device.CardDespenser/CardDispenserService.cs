@@ -15,13 +15,13 @@ namespace RMS.Monitoring.Device.CardDespenser
         private CardDispenser _device;
         private ClientResult clientResult;
 
-        public CardDispenserService(string brand, string model, string deviceManagerName, string deviceManagerID, ClientResult clientResult)
+        public CardDispenserService(string brand, string model, string deviceManagerName, string deviceManagerID, bool useCOMPort, string comPort, ClientResult clientResult)
         {
             try
             {
                 this.clientResult = clientResult;
 
-                if (brand.ToLower() == "mutek") _device = new MUTEK(model, deviceManagerName, deviceManagerID);
+                if (brand.ToLower() == "mutek") _device = new MUTEK(model, deviceManagerName, deviceManagerID, useCOMPort, comPort);
                 else
                     throw new Exception("Brand Not Found. brand=" + brand);
 
@@ -44,9 +44,38 @@ namespace RMS.Monitoring.Device.CardDespenser
 
                 int ret = _device.CheckDeviceManager();
 
+                raw.MessageDateTime = DateTime.Now;
+                raw.MonitoringProfileDeviceId = clientResult.ListMonitoringProfileDevices[0].MonitoringProfileDeviceId;
+
                 if (ret == 0)
                 {
                     raw.Message = "OK";
+
+                    if (clientResult.ListMonitoringProfileDevices[0].BooleanValue == true)
+                    {
+                        var cardLevel = _device.CheckCardLevel();
+                        foreach (string s in cardLevel)
+                        {
+                            RmsReportMonitoringRaw cardLevelRaw = new RmsReportMonitoringRaw();
+                            cardLevelRaw.ClientCode = clientResult.Client.ClientCode;
+                            cardLevelRaw.DeviceCode = clientResult.ListDevices[0].DeviceCode;
+                            cardLevelRaw.MessageDateTime = DateTime.Now;
+                            cardLevelRaw.MonitoringProfileDeviceId = clientResult.ListMonitoringProfileDevices[0].MonitoringProfileDeviceId;
+                            if (s.ToLower() == "low_card")
+                            {
+                                cardLevelRaw.Message = "LOW_CARD";
+                            }
+                            else if (s.ToLower() == "end_card")
+                            {
+                                cardLevelRaw.Message = "END_CARD";
+                            }
+
+                            if (!string.IsNullOrEmpty(cardLevelRaw.Message))
+                                lRmsReportMonitoringRaws.Add(cardLevelRaw);
+                        }
+                    }
+
+
                 }
                 else if (ret == -1)
                 {
@@ -57,17 +86,12 @@ namespace RMS.Monitoring.Device.CardDespenser
                     raw.Message = "DEVICE_NOT_READY";
                 }
 
-                raw.MessageDateTime = DateTime.Now;
-                raw.MonitoringProfileDeviceId = clientResult.ListMonitoringProfileDevices[0].MonitoringProfileDeviceId;
 
                 lRmsReportMonitoringRaws.Add(raw);
 
-                // ถ้า BooleanValue เป็น TRUE, สามารถตรวจสอบ ปริมาณการ์ดที่เหลืออยู่ได้
-                if (clientResult.ListMonitoringProfileDevices[0].BooleanValue == true)
-                {
-                    var cardLevel = _device.CheckCardLevel();
-                }
 
+
+                // ถ้า BooleanValue เป็น TRUE, สามารถตรวจสอบ ปริมาณการ์ดที่เหลืออยู่ได้
                 return lRmsReportMonitoringRaws;
             }
             catch (Exception ex)

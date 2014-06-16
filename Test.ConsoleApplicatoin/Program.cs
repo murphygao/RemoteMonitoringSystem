@@ -42,6 +42,9 @@ namespace Test.ConsoleApplication
             Console.WriteLine(pr.CheckPrinterOnline());
             */
 
+
+            int iVid = Int32.Parse("072F", NumberStyles.HexNumber);
+
             do
             {
                 Console.WriteLine();
@@ -394,8 +397,8 @@ namespace Test.ConsoleApplication
             MonitoringProxy.MonitoringServiceClient msc = new MonitoringServiceClient();
             var raw = new RmsReportMonitoringRaw();
             raw.ClientCode = "SKSSGWS01";
-            raw.Message = "CLIENT_ERROR";
-            raw.MessageGroupCode = "B001";
+            raw.Message = "BATCH_COMPLETE";
+            raw.MessageGroupCode = "B011";
             raw.MessageRemark = "Testing Business Message";
             msc.AddBusinessMessage(raw);
         }
