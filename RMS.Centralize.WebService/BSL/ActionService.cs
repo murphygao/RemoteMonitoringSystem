@@ -285,13 +285,36 @@ namespace RMS.Centralize.WebService.BSL
 
                         foreach (var actionInfo in actionInfos)
                         {
-                            if (!writeHeader)
+                            //if (!writeHeader)
+                            //{
+                            //    tableOfErrors += actionInfo.ToPlainTextHeader() + Environment.NewLine;
+                            //    writeHeader = true;
+                            //}
+                            
+                            var masterMessage = rmsMessageMasters.FirstOrDefault(f => f.Message.ToLower() == actionInfo.Message.ToLower());
+                            string tEmail = "กรุณาตรวจสอบ ::devicedescription:: ที่ตู้ ::clientcode:: - ::messageremark::";
+                            if (masterMessage != null)
                             {
-                                tableOfErrors += actionInfo.ToPlainTextHeader() + Environment.NewLine;
-                                writeHeader = true;
+                                if (!string.IsNullOrEmpty(masterMessage.EmailBody))
+                                {
+                                    tEmail = masterMessage.EmailBody;
+                                }
                             }
 
-                            tableOfErrors += actionInfo.ToPlainText() + Environment.NewLine;
+                            tEmail = tEmail.Replace("|", Environment.NewLine)
+                                .Replace("::clientcode::", lRmsReportSummaryMonitorings[0].ClientCode)
+                                .Replace("::devicedescription::", string.IsNullOrEmpty(actionInfo.DeviceDescription)
+                                    ? actionInfo.DeviceCode
+                                    : actionInfo.DeviceDescription)
+                                .Replace("::locationname::", actionInfo.LocationName)
+                                .Replace("::messageremark::", actionInfo.MessageRemark)
+                                .Replace("::locationcode::", actionInfo.LocationCode)
+                                .Replace("::devicecode::", actionInfo.DeviceCode)
+                                .Replace("::messagedatetime::", actionInfo.MessageDateTime == null
+                                    ? DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("en-AU"))
+                                    : actionInfo.MessageDateTime.Value.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("en-AU")));
+
+                            tableOfErrors += tEmail + Environment.NewLine;
                         }
 
                         string tBody =
@@ -364,86 +387,87 @@ namespace RMS.Centralize.WebService.BSL
                         smsSender = config.Value ?? config.DefaultValue;
                     }
 
+
+                    // Send SMS per Message
                     foreach (var actionInfo in lSMSs)
                     {
                         var masterMessage = rmsMessageMasters.FirstOrDefault(f => f.Message.ToLower() == actionInfo.Message.ToLower());
+
+                        string tBody = "กรุณาตรวจสอบ ::devicedescription:: ที่ตู้ ::clientcode:: - ::messageremark::";
                         if (masterMessage != null)
                         {
-
-                            string tBody = masterMessage.SmsBody;
-                            if (string.IsNullOrEmpty(tBody))
+                            if (!string.IsNullOrEmpty(tBody))
                             {
-                                tBody = "พบข้อผิดพลาดของ ::devicedescription:: ที่ตู้ ::clientcode:: กรุณาตรวจสอบ";
+                                tBody = masterMessage.SmsBody;
                             }
-
-                            tBody = tBody.Replace("|", Environment.NewLine)
-                                .Replace("::clientcode::", lRmsReportSummaryMonitorings[0].ClientCode)
-                                .Replace("::devicedescription::", string.IsNullOrEmpty(actionInfo.DeviceDescription)? 
-                                    actionInfo.DeviceCode : actionInfo.DeviceDescription)
-                                .Replace("::locationname::", actionInfo.LocationName)
-                                .Replace("::messageremark::", actionInfo.MessageRemark)
-                                .Replace("::locationcode::", actionInfo.LocationCode)
-                                .Replace("::devicecode::", actionInfo.DeviceCode)
-                                .Replace("::messagedatetime::", actionInfo.MessageDateTime == null ? 
-                                    DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("en-AU")) :
-                                    actionInfo.MessageDateTime.Value.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("en-AU")));
-
-                            if (!string.IsNullOrEmpty(actionInfo.To))
-                                actionInfo.To = actionInfo.To.Replace("-", "").Replace(" ", "");
-
-                            new RMSDebugLog("Start ManualSending - Call Send SMS ", true);
-
-                            if (!Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.ActionModeTest"]))
-                            {
-                                var actionGatewayService = new ActionGateway();
-                                try
-                                {
-                                    var actionResult = actionGatewayService.SendSMS(gateway, actionInfo.To, smsSender, tBody);
-                                    if (actionResult.IsSuccess)
-                                    {
-                                        AddLogActionSend("SMS", smsSender, actionInfo.To, tBody, true, null);
-
-                                    }
-                                    else
-                                    {
-                                        AddLogActionSend("SMS", smsSender, actionInfo.To, tBody, false, actionResult.ErrorMessage);
-                                    }
-
-                                }
-                                catch (Exception ex)
-                                {
-                                    new RMSWebException(this, "0500", "GatewayService.SendSMS failed. " + ex.Message, ex, true);
-                                    AddLogActionSend("SMS", smsSender, actionInfo.To, tBody, false, ex.Message);
-                                }
-                            }
-                            else
-                            {
-                                // Testing
-                                try
-                                {
-                                    new RMSDebugLog("Start ManualSending Testing Mode - SMS ", true);
-                                    
-                                    string fileName = DateTime.Now.ToString("yyyyMMddTHHmmssff", new CultureInfo("en-AU")) + "." + actionInfo.To + ".txt";
-                                    if (!File.Exists(destinationPath + fileName))
-                                        File.Create(destinationPath + fileName).Close();
-
-                                    using (StreamWriter sw = File.AppendText(destinationPath + fileName))
-                                    {
-                                        sw.WriteLine(tBody);
-                                    }
-
-                                    AddLogActionSend("SMS", smsSender, actionInfo.To, tBody, true, "Testing Mode");
-                                }
-                                catch(Exception ex)
-                                {
-                                    new RMSDebugLog("Start ManualSending Testing Mode - SMS - Error " + ex.Message, true);
-                                }
-                                System.Threading.Thread.Sleep(100);
-                            }
-
-
-
                         }
+
+                        tBody = tBody.Replace("|", Environment.NewLine)
+                            .Replace("::clientcode::", lRmsReportSummaryMonitorings[0].ClientCode)
+                            .Replace("::devicedescription::", string.IsNullOrEmpty(actionInfo.DeviceDescription)
+                                ? actionInfo.DeviceCode
+                                : actionInfo.DeviceDescription)
+                            .Replace("::locationname::", actionInfo.LocationName)
+                            .Replace("::messageremark::", actionInfo.MessageRemark)
+                            .Replace("::locationcode::", actionInfo.LocationCode)
+                            .Replace("::devicecode::", actionInfo.DeviceCode)
+                            .Replace("::messagedatetime::", actionInfo.MessageDateTime == null
+                                ? DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("en-AU"))
+                                : actionInfo.MessageDateTime.Value.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("en-AU")));
+
+                        if (!string.IsNullOrEmpty(actionInfo.To))
+                            actionInfo.To = actionInfo.To.Replace("-", "").Replace(" ", "");
+
+                        new RMSDebugLog("Start ManualSending - Call Send SMS ", true);
+
+                        if (!Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.ActionModeTest"]))
+                        {
+                            var actionGatewayService = new ActionGateway();
+                            try
+                            {
+                                var actionResult = actionGatewayService.SendSMS(gateway, actionInfo.To, smsSender, tBody);
+                                if (actionResult.IsSuccess)
+                                {
+                                    AddLogActionSend("SMS", smsSender, actionInfo.To, tBody, true, null);
+
+                                }
+                                else
+                                {
+                                    AddLogActionSend("SMS", smsSender, actionInfo.To, tBody, false, actionResult.ErrorMessage);
+                                }
+
+                            }
+                            catch (Exception ex)
+                            {
+                                new RMSWebException(this, "0500", "GatewayService.SendSMS failed. " + ex.Message, ex, true);
+                                AddLogActionSend("SMS", smsSender, actionInfo.To, tBody, false, ex.Message);
+                            }
+                        }
+                        else
+                        {
+                            // Testing
+                            try
+                            {
+                                new RMSDebugLog("Start ManualSending Testing Mode - SMS ", true);
+
+                                string fileName = DateTime.Now.ToString("yyyyMMddTHHmmssff", new CultureInfo("en-AU")) + "." + actionInfo.To + ".txt";
+                                if (!File.Exists(destinationPath + fileName))
+                                    File.Create(destinationPath + fileName).Close();
+
+                                using (StreamWriter sw = File.AppendText(destinationPath + fileName))
+                                {
+                                    sw.WriteLine(tBody);
+                                }
+
+                                AddLogActionSend("SMS", smsSender, actionInfo.To, tBody, true, "Testing Mode");
+                            }
+                            catch (Exception ex)
+                            {
+                                new RMSDebugLog("Start ManualSending Testing Mode - SMS - Error " + ex.Message, true);
+                            }
+                            System.Threading.Thread.Sleep(100);
+                        }
+
                     }
 
                     #region Mode : SMS Summary (1 SMS contains multi error records)

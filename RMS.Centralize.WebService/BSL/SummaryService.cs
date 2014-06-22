@@ -179,6 +179,10 @@ namespace RMS.Centralize.WebService.BSL
                                 messageID = messageDetail.MessageID;
                                 messageGroupCode = messageDetail.MessageGroupCode;
                             }
+                            else
+                            {
+                                continue;
+                            }
                         }
 
                         #region ถ้า Message เป็น OK

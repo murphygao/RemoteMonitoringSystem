@@ -55,6 +55,7 @@ namespace RMS.Centralize.WebSite.Proxy
                 throw new RMSWebException(this, "0500", "SummaryReportService ctor failed. " + ex.Message, ex, false);
 
             }
+            ServicePointManager.ServerCertificateValidationCallback +=(sender, cert, chain, sslPolicyErrors) => true;
         }
 
 

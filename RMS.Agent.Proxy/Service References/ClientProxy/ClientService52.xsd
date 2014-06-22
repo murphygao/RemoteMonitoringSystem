@@ -106,4 +106,28 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="ListMainAppClient">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListMainAppClientResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="ListMainAppClientResult" nillable="true" type="q9:MainAppClientResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListLocation">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListLocationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="ListLocationResult" nillable="true" type="q10:LocationResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

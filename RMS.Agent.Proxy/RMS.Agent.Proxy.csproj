@@ -86,6 +86,12 @@
     <None Include="Service References\ClientProxy\RMS.Agent.Proxy.ClientProxy.ClientResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ClientProxy\RMS.Agent.Proxy.ClientProxy.LocationResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ClientProxy\RMS.Agent.Proxy.ClientProxy.MainAppClientResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ClientProxy\RMS.Agent.Proxy.ClientProxy.Result.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

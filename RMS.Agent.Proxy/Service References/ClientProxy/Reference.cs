@@ -32,6 +32,8 @@ namespace RMS.Agent.Proxy.ClientProxy {
     [System.Runtime.Serialization.DataContractAttribute(Name="Result", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model")]
     [System.SerializableAttribute()]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Agent.Proxy.ClientProxy.ClientInfoResult))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Agent.Proxy.ClientProxy.MainAppClientResult))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Agent.Proxy.ClientProxy.LocationResult))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Agent.Proxy.ClientProxy.ClientResult))]
     public partial class Result : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -143,6 +145,84 @@ namespace RMS.Agent.Proxy.ClientProxy {
                 if ((object.ReferenceEquals(this.ListClientsField, value) != true)) {
                     this.ListClientsField = value;
                     this.RaisePropertyChanged("ListClients");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int TotalRecords {
+            get {
+                return this.TotalRecordsField;
+            }
+            set {
+                if ((this.TotalRecordsField.Equals(value) != true)) {
+                    this.TotalRecordsField = value;
+                    this.RaisePropertyChanged("TotalRecords");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MainAppClientResult", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService")]
+    [System.SerializableAttribute()]
+    public partial class MainAppClientResult : RMS.Agent.Proxy.ClientProxy.Result {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<RMS.Agent.Proxy.ClientProxy.MainAppClient> ListMainAppClientsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<RMS.Agent.Proxy.ClientProxy.MainAppClient> ListMainAppClients {
+            get {
+                return this.ListMainAppClientsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ListMainAppClientsField, value) != true)) {
+                    this.ListMainAppClientsField = value;
+                    this.RaisePropertyChanged("ListMainAppClients");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="LocationResult", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService")]
+    [System.SerializableAttribute()]
+    public partial class LocationResult : RMS.Agent.Proxy.ClientProxy.Result {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<RMS.Agent.Proxy.ClientProxy.RmsLocation> ListLocationsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RMS.Agent.Proxy.ClientProxy.RmsLocation LocationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TotalRecordsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<RMS.Agent.Proxy.ClientProxy.RmsLocation> ListLocations {
+            get {
+                return this.ListLocationsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ListLocationsField, value) != true)) {
+                    this.ListLocationsField = value;
+                    this.RaisePropertyChanged("ListLocations");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RMS.Agent.Proxy.ClientProxy.RmsLocation Location {
+            get {
+                return this.LocationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LocationField, value) != true)) {
+                    this.LocationField = value;
+                    this.RaisePropertyChanged("Location");
                 }
             }
         }
@@ -1569,6 +1649,687 @@ namespace RMS.Agent.Proxy.ClientProxy {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MainAppClient", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model")]
+    [System.SerializableAttribute()]
+    public partial class MainAppClient : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ClientCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ClientIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ClientNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ClientCode {
+            get {
+                return this.ClientCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ClientCodeField, value) != true)) {
+                    this.ClientCodeField = value;
+                    this.RaisePropertyChanged("ClientCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ClientID {
+            get {
+                return this.ClientIDField;
+            }
+            set {
+                if ((this.ClientIDField.Equals(value) != true)) {
+                    this.ClientIDField = value;
+                    this.RaisePropertyChanged("ClientID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ClientName {
+            get {
+                return this.ClientNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ClientNameField, value) != true)) {
+                    this.ClientNameField = value;
+                    this.RaisePropertyChanged("ClientName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RmsLocation", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL")]
+    [System.SerializableAttribute()]
+    public partial class RmsLocation : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private int LocationIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LocationCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LocationNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> MondayEnableField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> MondayWholeDayField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> MondayStartField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> MondayEndField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> TuesdayEnableField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> TuesdayWholeDayField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> TuesdayStartField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> TuesdayEndField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> WednesdayEnableField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> WednesdayWholeDayField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> WednesdayStartField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> WednesdayEndField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> ThursdayEnableField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> ThursdayWholeDayField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> ThursdayStartField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> ThursdayEndField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> FridayEnableField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> FridayWholeDayField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> FridayStartField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> FridayEndField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> SaturdayEnableField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> SaturdayWholeDayField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> SaturdayStartField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> SaturdayEndField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> SundayEnableField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> SundayWholeDayField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> SundayStartField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> SundayEndField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> ActiveListField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> CreatedDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CreatedByField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> UpdatedDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UpdatedByField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int LocationId {
+            get {
+                return this.LocationIdField;
+            }
+            set {
+                if ((this.LocationIdField.Equals(value) != true)) {
+                    this.LocationIdField = value;
+                    this.RaisePropertyChanged("LocationId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+        public string LocationCode {
+            get {
+                return this.LocationCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LocationCodeField, value) != true)) {
+                    this.LocationCodeField = value;
+                    this.RaisePropertyChanged("LocationCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+        public string LocationName {
+            get {
+                return this.LocationNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LocationNameField, value) != true)) {
+                    this.LocationNameField = value;
+                    this.RaisePropertyChanged("LocationName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+        public System.Nullable<bool> MondayEnable {
+            get {
+                return this.MondayEnableField;
+            }
+            set {
+                if ((this.MondayEnableField.Equals(value) != true)) {
+                    this.MondayEnableField = value;
+                    this.RaisePropertyChanged("MondayEnable");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+        public System.Nullable<bool> MondayWholeDay {
+            get {
+                return this.MondayWholeDayField;
+            }
+            set {
+                if ((this.MondayWholeDayField.Equals(value) != true)) {
+                    this.MondayWholeDayField = value;
+                    this.RaisePropertyChanged("MondayWholeDay");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+        public System.Nullable<System.DateTime> MondayStart {
+            get {
+                return this.MondayStartField;
+            }
+            set {
+                if ((this.MondayStartField.Equals(value) != true)) {
+                    this.MondayStartField = value;
+                    this.RaisePropertyChanged("MondayStart");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+        public System.Nullable<System.DateTime> MondayEnd {
+            get {
+                return this.MondayEndField;
+            }
+            set {
+                if ((this.MondayEndField.Equals(value) != true)) {
+                    this.MondayEndField = value;
+                    this.RaisePropertyChanged("MondayEnd");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+        public System.Nullable<bool> TuesdayEnable {
+            get {
+                return this.TuesdayEnableField;
+            }
+            set {
+                if ((this.TuesdayEnableField.Equals(value) != true)) {
+                    this.TuesdayEnableField = value;
+                    this.RaisePropertyChanged("TuesdayEnable");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+        public System.Nullable<bool> TuesdayWholeDay {
+            get {
+                return this.TuesdayWholeDayField;
+            }
+            set {
+                if ((this.TuesdayWholeDayField.Equals(value) != true)) {
+                    this.TuesdayWholeDayField = value;
+                    this.RaisePropertyChanged("TuesdayWholeDay");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+        public System.Nullable<System.DateTime> TuesdayStart {
+            get {
+                return this.TuesdayStartField;
+            }
+            set {
+                if ((this.TuesdayStartField.Equals(value) != true)) {
+                    this.TuesdayStartField = value;
+                    this.RaisePropertyChanged("TuesdayStart");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+        public System.Nullable<System.DateTime> TuesdayEnd {
+            get {
+                return this.TuesdayEndField;
+            }
+            set {
+                if ((this.TuesdayEndField.Equals(value) != true)) {
+                    this.TuesdayEndField = value;
+                    this.RaisePropertyChanged("TuesdayEnd");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=11)]
+        public System.Nullable<bool> WednesdayEnable {
+            get {
+                return this.WednesdayEnableField;
+            }
+            set {
+                if ((this.WednesdayEnableField.Equals(value) != true)) {
+                    this.WednesdayEnableField = value;
+                    this.RaisePropertyChanged("WednesdayEnable");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=12)]
+        public System.Nullable<bool> WednesdayWholeDay {
+            get {
+                return this.WednesdayWholeDayField;
+            }
+            set {
+                if ((this.WednesdayWholeDayField.Equals(value) != true)) {
+                    this.WednesdayWholeDayField = value;
+                    this.RaisePropertyChanged("WednesdayWholeDay");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=13)]
+        public System.Nullable<System.DateTime> WednesdayStart {
+            get {
+                return this.WednesdayStartField;
+            }
+            set {
+                if ((this.WednesdayStartField.Equals(value) != true)) {
+                    this.WednesdayStartField = value;
+                    this.RaisePropertyChanged("WednesdayStart");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=14)]
+        public System.Nullable<System.DateTime> WednesdayEnd {
+            get {
+                return this.WednesdayEndField;
+            }
+            set {
+                if ((this.WednesdayEndField.Equals(value) != true)) {
+                    this.WednesdayEndField = value;
+                    this.RaisePropertyChanged("WednesdayEnd");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=15)]
+        public System.Nullable<bool> ThursdayEnable {
+            get {
+                return this.ThursdayEnableField;
+            }
+            set {
+                if ((this.ThursdayEnableField.Equals(value) != true)) {
+                    this.ThursdayEnableField = value;
+                    this.RaisePropertyChanged("ThursdayEnable");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=16)]
+        public System.Nullable<bool> ThursdayWholeDay {
+            get {
+                return this.ThursdayWholeDayField;
+            }
+            set {
+                if ((this.ThursdayWholeDayField.Equals(value) != true)) {
+                    this.ThursdayWholeDayField = value;
+                    this.RaisePropertyChanged("ThursdayWholeDay");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=17)]
+        public System.Nullable<System.DateTime> ThursdayStart {
+            get {
+                return this.ThursdayStartField;
+            }
+            set {
+                if ((this.ThursdayStartField.Equals(value) != true)) {
+                    this.ThursdayStartField = value;
+                    this.RaisePropertyChanged("ThursdayStart");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=18)]
+        public System.Nullable<System.DateTime> ThursdayEnd {
+            get {
+                return this.ThursdayEndField;
+            }
+            set {
+                if ((this.ThursdayEndField.Equals(value) != true)) {
+                    this.ThursdayEndField = value;
+                    this.RaisePropertyChanged("ThursdayEnd");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=19)]
+        public System.Nullable<bool> FridayEnable {
+            get {
+                return this.FridayEnableField;
+            }
+            set {
+                if ((this.FridayEnableField.Equals(value) != true)) {
+                    this.FridayEnableField = value;
+                    this.RaisePropertyChanged("FridayEnable");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=20)]
+        public System.Nullable<bool> FridayWholeDay {
+            get {
+                return this.FridayWholeDayField;
+            }
+            set {
+                if ((this.FridayWholeDayField.Equals(value) != true)) {
+                    this.FridayWholeDayField = value;
+                    this.RaisePropertyChanged("FridayWholeDay");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=21)]
+        public System.Nullable<System.DateTime> FridayStart {
+            get {
+                return this.FridayStartField;
+            }
+            set {
+                if ((this.FridayStartField.Equals(value) != true)) {
+                    this.FridayStartField = value;
+                    this.RaisePropertyChanged("FridayStart");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=22)]
+        public System.Nullable<System.DateTime> FridayEnd {
+            get {
+                return this.FridayEndField;
+            }
+            set {
+                if ((this.FridayEndField.Equals(value) != true)) {
+                    this.FridayEndField = value;
+                    this.RaisePropertyChanged("FridayEnd");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=23)]
+        public System.Nullable<bool> SaturdayEnable {
+            get {
+                return this.SaturdayEnableField;
+            }
+            set {
+                if ((this.SaturdayEnableField.Equals(value) != true)) {
+                    this.SaturdayEnableField = value;
+                    this.RaisePropertyChanged("SaturdayEnable");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=24)]
+        public System.Nullable<bool> SaturdayWholeDay {
+            get {
+                return this.SaturdayWholeDayField;
+            }
+            set {
+                if ((this.SaturdayWholeDayField.Equals(value) != true)) {
+                    this.SaturdayWholeDayField = value;
+                    this.RaisePropertyChanged("SaturdayWholeDay");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=25)]
+        public System.Nullable<System.DateTime> SaturdayStart {
+            get {
+                return this.SaturdayStartField;
+            }
+            set {
+                if ((this.SaturdayStartField.Equals(value) != true)) {
+                    this.SaturdayStartField = value;
+                    this.RaisePropertyChanged("SaturdayStart");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=26)]
+        public System.Nullable<System.DateTime> SaturdayEnd {
+            get {
+                return this.SaturdayEndField;
+            }
+            set {
+                if ((this.SaturdayEndField.Equals(value) != true)) {
+                    this.SaturdayEndField = value;
+                    this.RaisePropertyChanged("SaturdayEnd");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=27)]
+        public System.Nullable<bool> SundayEnable {
+            get {
+                return this.SundayEnableField;
+            }
+            set {
+                if ((this.SundayEnableField.Equals(value) != true)) {
+                    this.SundayEnableField = value;
+                    this.RaisePropertyChanged("SundayEnable");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=28)]
+        public System.Nullable<bool> SundayWholeDay {
+            get {
+                return this.SundayWholeDayField;
+            }
+            set {
+                if ((this.SundayWholeDayField.Equals(value) != true)) {
+                    this.SundayWholeDayField = value;
+                    this.RaisePropertyChanged("SundayWholeDay");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=29)]
+        public System.Nullable<System.DateTime> SundayStart {
+            get {
+                return this.SundayStartField;
+            }
+            set {
+                if ((this.SundayStartField.Equals(value) != true)) {
+                    this.SundayStartField = value;
+                    this.RaisePropertyChanged("SundayStart");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=30)]
+        public System.Nullable<System.DateTime> SundayEnd {
+            get {
+                return this.SundayEndField;
+            }
+            set {
+                if ((this.SundayEndField.Equals(value) != true)) {
+                    this.SundayEndField = value;
+                    this.RaisePropertyChanged("SundayEnd");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=31)]
+        public System.Nullable<bool> ActiveList {
+            get {
+                return this.ActiveListField;
+            }
+            set {
+                if ((this.ActiveListField.Equals(value) != true)) {
+                    this.ActiveListField = value;
+                    this.RaisePropertyChanged("ActiveList");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=32)]
+        public System.Nullable<System.DateTime> CreatedDate {
+            get {
+                return this.CreatedDateField;
+            }
+            set {
+                if ((this.CreatedDateField.Equals(value) != true)) {
+                    this.CreatedDateField = value;
+                    this.RaisePropertyChanged("CreatedDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=33)]
+        public string CreatedBy {
+            get {
+                return this.CreatedByField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CreatedByField, value) != true)) {
+                    this.CreatedByField = value;
+                    this.RaisePropertyChanged("CreatedBy");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=34)]
+        public System.Nullable<System.DateTime> UpdatedDate {
+            get {
+                return this.UpdatedDateField;
+            }
+            set {
+                if ((this.UpdatedDateField.Equals(value) != true)) {
+                    this.UpdatedDateField = value;
+                    this.RaisePropertyChanged("UpdatedDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=35)]
+        public string UpdatedBy {
+            get {
+                return this.UpdatedByField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UpdatedByField, value) != true)) {
+                    this.UpdatedByField = value;
+                    this.RaisePropertyChanged("UpdatedBy");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ClientState", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService")]
     public enum ClientState : int {
@@ -1776,6 +2537,18 @@ namespace RMS.Agent.Proxy.ClientProxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/ExistingClientCode", ReplyAction="http://tempuri.org/IClientService/ExistingClientCodeResponse")]
         System.Threading.Tasks.Task<RMS.Agent.Proxy.ClientProxy.ClientResult> ExistingClientCodeAsync(string clientCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/ListMainAppClient", ReplyAction="http://tempuri.org/IClientService/ListMainAppClientResponse")]
+        RMS.Agent.Proxy.ClientProxy.MainAppClientResult ListMainAppClient();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/ListMainAppClient", ReplyAction="http://tempuri.org/IClientService/ListMainAppClientResponse")]
+        System.Threading.Tasks.Task<RMS.Agent.Proxy.ClientProxy.MainAppClientResult> ListMainAppClientAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/ListLocation", ReplyAction="http://tempuri.org/IClientService/ListLocationResponse")]
+        RMS.Agent.Proxy.ClientProxy.LocationResult ListLocation();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/ListLocation", ReplyAction="http://tempuri.org/IClientService/ListLocationResponse")]
+        System.Threading.Tasks.Task<RMS.Agent.Proxy.ClientProxy.LocationResult> ListLocationAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1851,6 +2624,22 @@ namespace RMS.Agent.Proxy.ClientProxy {
         
         public System.Threading.Tasks.Task<RMS.Agent.Proxy.ClientProxy.ClientResult> ExistingClientCodeAsync(string clientCode) {
             return base.Channel.ExistingClientCodeAsync(clientCode);
+        }
+        
+        public RMS.Agent.Proxy.ClientProxy.MainAppClientResult ListMainAppClient() {
+            return base.Channel.ListMainAppClient();
+        }
+        
+        public System.Threading.Tasks.Task<RMS.Agent.Proxy.ClientProxy.MainAppClientResult> ListMainAppClientAsync() {
+            return base.Channel.ListMainAppClientAsync();
+        }
+        
+        public RMS.Agent.Proxy.ClientProxy.LocationResult ListLocation() {
+            return base.Channel.ListLocation();
+        }
+        
+        public System.Threading.Tasks.Task<RMS.Agent.Proxy.ClientProxy.LocationResult> ListLocationAsync() {
+            return base.Channel.ListLocationAsync();
         }
     }
 }

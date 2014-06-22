@@ -20,6 +20,7 @@ using LibUsbDotNet;
 using LibUsbDotNet.Info;
 using LibUsbDotNet.Main;
 using RMS.Centralize.BSL.MonitoringEngine;
+using RMS.Monitoring.Device.DeviceManager;
 using Test.ConsoleApplication.ClientProxy;
 using Test.ConsoleApplication.MonitoringProxy;
 
@@ -56,7 +57,7 @@ namespace Test.ConsoleApplication
                 //TestClientProxy();
                 //CallMonitoringAgent();
                 //LocalIPAddress();
-
+                //testNewCheckDevice();
                 SendBusinessMessage();
 
                 //TestPrinter("Brother MFC-7450 Printer");
@@ -403,7 +404,53 @@ namespace Test.ConsoleApplication
             msc.AddBusinessMessage(raw);
         }
 
+        private static int testNewCheckDevice()
+        {
 
+            string deviceManagerID = @"USB\VID_072F&PID_2223\7";
+            if (!string.IsNullOrEmpty(deviceManagerID))
+            {
+                List<string> miList = new List<string>();
+                miList.Add("&MI_00");
+                miList.Add("&MI_01");
+                miList.Add("&MI_02");
+                miList.Add("&MI_03");
+
+                bool hasMI = false;
+                string oriMI = "";
+                if (deviceManagerID.ToUpper().IndexOf("&MI_0") > -1)
+                {
+                    oriMI = deviceManagerID.Substring(deviceManagerID.ToUpper().IndexOf("&MI_0"), 6);
+                    hasMI = true;
+                }
+
+                foreach (var mi in miList)
+                {
+                    string tmpDeviceManagerID = deviceManagerID;
+                    if (hasMI)
+                    {
+                        tmpDeviceManagerID = tmpDeviceManagerID.Replace(oriMI, mi);
+                    }
+
+                    ManagementObject device = DeviceManagerService.GetPnPDeviceByID(tmpDeviceManagerID);
+                    if (device != null)
+                    {
+                        foreach (PropertyData propertyData in device.Properties)
+                        {
+                            if (propertyData.Name != "ConfigManagerErrorCode") continue;
+
+                            return Convert.ToInt32(propertyData.Value);
+                        }
+                    }
+
+                    if (!hasMI) break;
+                }
+
+                return 0;
+            }
+
+            return -1;
+        }
 
         public static UsbDevice MyUsbDevice;
 

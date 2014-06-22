@@ -188,14 +188,21 @@ namespace RMS.Agent.BSL.Monitoring
                 var cs = new ClientService().clientService;
                 var clientResult = cs.GetClient(GetClientBy.ClientCode, null, clientCode, null, false, false);
 
-                if (clientResult.Client.State == (int) ClientState.Normal && clientState == ClientState.Maintenance)
+                if (clientResult != null)
                 {
-                    cs.SetClientState(clientResult.Client.ClientId, ClientState.Maintenance);
+                    if (clientResult.Client.State == (int) ClientState.Normal && clientState == ClientState.Maintenance)
+                    {
+                        cs.SetClientState(clientResult.Client.ClientId, ClientState.Maintenance);
+                    }
+                        // Normal State
+                    else if (clientResult.Client.State == (int) ClientState.Maintenance && clientState == ClientState.Normal)
+                    {
+                        cs.SetClientState(clientResult.Client.ClientId, ClientState.Normal);
+                    }
                 }
-                // Normal State
-                else if (clientResult.Client.State == (int) ClientState.Maintenance && clientState == ClientState.Normal)
+                else
                 {
-                    cs.SetClientState(clientResult.Client.ClientId, ClientState.Normal);
+                    new RMSAppException(this, "0500", "SetMonitoringState failed. ClientCode=" + clientCode + " not found.", true);
                 }
             }
             catch (Exception ex)

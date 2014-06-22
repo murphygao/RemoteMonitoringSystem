@@ -24,9 +24,12 @@ namespace RMS.Centralize.WebService
         {
             try
             {
+                var ip = GetIP();
+                rawMessage.ClientIpAddress = ip;
+
                 var lRawMessages = new List<RmsReportMonitoringRaw>();
                 lRawMessages.Add(rawMessage);
-                AddMessages(lRawMessages);
+                AddTechnicalMessages(lRawMessages);
             }
             catch (Exception ex)
             {
@@ -35,6 +38,23 @@ namespace RMS.Centralize.WebService
         }
 
         public void AddMessages(List<RmsReportMonitoringRaw> lRawMessages)
+        {
+            try
+            {
+                var ip = GetIP();
+                foreach (var rmsReportMonitoringRaw in lRawMessages)
+                {
+                    rmsReportMonitoringRaw.ClientIpAddress = ip;
+                }
+                AddTechnicalMessages(lRawMessages);
+            }
+            catch (Exception ex)
+            {
+                new RMSWebException(this, "0500", "AddMessages failed. " + ex.Message, ex, true);
+            }
+        }
+
+        private void AddTechnicalMessages(List<RmsReportMonitoringRaw> lRawMessages)
         {
             try
             {
@@ -56,9 +76,10 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
-                new RMSWebException(this, "0500", "AddMessages failed. " + ex.Message, ex, true);
+                new RMSWebException(this, "0500", "AddTechnicalMessages failed. " + ex.Message, ex, false);
             }
         }
+
 
         public void AddBusinessMessage(RmsReportMonitoringRaw rawMessage)
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Management;
 using RMS.Common.Exception;
 using RMS.Monitoring.Device.DeviceManager;
@@ -30,7 +31,7 @@ namespace RMS.Monitoring.Device
 
         public virtual int CheckDeviceManager()
         {
-            try
+             try
             {
                 if (string.IsNullOrEmpty(deviceManagerName) && string.IsNullOrEmpty(deviceManagerID)) return -1;
 
@@ -46,13 +47,15 @@ namespace RMS.Monitoring.Device
 
                             return Convert.ToInt32(propertyData.Value);
                         }
-
-                        return 0;
+                    }
+                    else
+                    {
+                        if (string.IsNullOrEmpty(deviceManagerID)) return -1;
                     }
                 }
+
                 if (!string.IsNullOrEmpty(deviceManagerID))
                 {
-
                     ManagementObject device = DeviceManagerService.GetPnPDeviceByID(deviceManagerID);
                     if (device != null)
                     {
@@ -62,8 +65,10 @@ namespace RMS.Monitoring.Device
 
                             return Convert.ToInt32(propertyData.Value);
                         }
-
-                        return 0;
+                    }
+                    else
+                    {
+                        return -1;
                     }
                 }
 
@@ -71,7 +76,7 @@ namespace RMS.Monitoring.Device
             }
             catch (Exception ex)
             {
-                throw new RMSAppException(this, "0500", "CheckDeviceManager failed. " + ex.Message, ex, false);
+                throw new RMSAppException(this, "0500", "CheckDeviceManager failed. " + ex.Message, ex, true);
             }
         }
     }
