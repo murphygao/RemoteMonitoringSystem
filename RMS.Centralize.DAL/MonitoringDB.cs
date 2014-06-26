@@ -214,6 +214,8 @@ namespace RMS.Centralize.DAL
 
 
         // Reverse navigation
+
+        [DataMember]
         public virtual ICollection<RmsSeverityLevel> RmsSeverityLevels { get; set; } // RMS_SeverityLevel.FK_RMS_SeverityLevel_RMS_ActionProfile
 
         public RmsActionProfile()
@@ -328,7 +330,11 @@ namespace RMS.Centralize.DAL
 
 
         // Reverse navigation
+
+        [DataMember]
         public virtual ICollection<RmsClientMonitoring> RmsClientMonitorings { get; set; } // Many to many mapping
+
+        [DataMember]
         public virtual ICollection<RmsClientSeverityAction> RmsClientSeverityActions { get; set; } // Many to many mapping
 
         // Foreign keys
@@ -436,6 +442,8 @@ namespace RMS.Centralize.DAL
 
 
         // Reverse navigation
+
+        [DataMember]
         public virtual ICollection<RmsClient> RmsClients { get; set; } // RMS_Client.FK_RMS_Client_RMS_ClientType
 
         public RmsClientType()
@@ -464,6 +472,8 @@ namespace RMS.Centralize.DAL
 
 
         // Reverse navigation
+
+        [DataMember]
         public virtual ICollection<RmsSeverityLevel> RmsSeverityLevels { get; set; } // RMS_SeverityLevel.FK_RMS_SeverityLevel_RMS_ColorLabel
 
         public RmsColorLabel()
@@ -513,7 +523,11 @@ namespace RMS.Centralize.DAL
 
 
         // Reverse navigation
+
+        [DataMember]
         public virtual ICollection<RmsMessage> RmsMessages { get; set; } // Many to many mapping
+
+        [DataMember]
         public virtual ICollection<RmsMonitoringProfileDevice> RmsMonitoringProfileDevices { get; set; } // RMS_MonitoringProfileDevice.FK_RMS_MonitoringProfileDevice_RMS_Device
 
         // Foreign keys
@@ -546,6 +560,8 @@ namespace RMS.Centralize.DAL
 
 
         // Reverse navigation
+
+        [DataMember]
         public virtual ICollection<RmsDevice> RmsDevices { get; set; } // RMS_Device.FK_RMS_Device_RMS_DeviceType
 
         public RmsDeviceType()
@@ -881,6 +897,8 @@ namespace RMS.Centralize.DAL
 
 
         // Reverse navigation
+
+        [DataMember]
         public virtual ICollection<RmsDevice> RmsDevices { get; set; } // Many to many mapping
 
         // Foreign keys
@@ -929,6 +947,8 @@ namespace RMS.Centralize.DAL
 
 
         // Reverse navigation
+
+        [DataMember]
         public virtual ICollection<RmsMessage> RmsMessages { get; set; } // RMS_Message.FK_RMS_Message_RMS_MessageGroup
 
         public RmsMessageGroup()
@@ -985,7 +1005,11 @@ namespace RMS.Centralize.DAL
 
 
         // Reverse navigation
+
+        [DataMember]
         public virtual ICollection<RmsClientMonitoring> RmsClientMonitorings { get; set; } // Many to many mapping
+
+        [DataMember]
         public virtual ICollection<RmsMonitoringProfileDevice> RmsMonitoringProfileDevices { get; set; } // RMS_MonitoringProfileDevice.FK_RMS_MonitoringProfileDevice_RMS_MonitoringProfile
 
         public RmsMonitoringProfile()
@@ -1199,7 +1223,11 @@ namespace RMS.Centralize.DAL
 
 
         // Reverse navigation
+
+        [DataMember]
         public virtual ICollection<RmsClientSeverityAction> RmsClientSeverityActions { get; set; } // Many to many mapping
+
+        [DataMember]
         public virtual ICollection<RmsMessage> RmsMessages { get; set; } // RMS_Message.FK_RMS_Message_RMS_SeverityLevel
 
         // Foreign keys

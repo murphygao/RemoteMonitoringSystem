@@ -197,6 +197,9 @@ if(tbl.ReverseNavigationProperty.Count() > 0)
 foreach(string s in tbl.ReverseNavigationProperty.OrderBy(x => x))
 {
 #>
+
+<# if(AddWcfDataAttributes) { #>        [DataMember]
+<# } #>
         <#=s #>
 <# } } #>
 <# if(tbl.HasForeignKey) { #>

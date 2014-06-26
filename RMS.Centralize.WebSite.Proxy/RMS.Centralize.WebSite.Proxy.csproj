@@ -45,8 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientMonitoringService.cs" />
     <Compile Include="ClientService.cs" />
+    <Compile Include="LocationService.cs" />
     <Compile Include="MessageActionService.cs" />
+    <Compile Include="MonitoringProfileService.cs" />
     <Compile Include="MonitoringService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SelfTestingService.cs" />
@@ -56,12 +59,27 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\ClientMonitoringProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\ClientProxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\LocationProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\MessageActionProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\MonitoringProfileProxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -113,6 +131,28 @@
     <None Include="Service References\ActionProfileProxy\RMS.Centralize.WebSite.Proxy.ActionProfileProxy.Result.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ClientMonitoringProxy\ClientMonitoringService.wsdl" />
+    <None Include="Service References\ClientMonitoringProxy\ClientMonitoringService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ClientMonitoringProxy\ClientMonitoringService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ClientMonitoringProxy\ClientMonitoringService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ClientMonitoringProxy\ClientMonitoringService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ClientMonitoringProxy\ClientMonitoringService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ClientMonitoringProxy\RMS.Centralize.WebSite.Proxy.ClientMonitoringProxy.ClientMonitoringResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ClientMonitoringProxy\RMS.Centralize.WebSite.Proxy.ClientMonitoringProxy.Result.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ClientProxy\ClientService1.wsdl" />
     <None Include="Service References\ClientProxy\ClientService5.xsd">
       <SubType>Designer</SubType>
@@ -144,6 +184,28 @@
     <None Include="Service References\ClientProxy\RMS.Centralize.WebSite.Proxy.ClientProxy.Result.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\LocationProxy\LocationService.wsdl" />
+    <None Include="Service References\LocationProxy\LocationService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LocationProxy\LocationService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LocationProxy\LocationService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LocationProxy\LocationService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LocationProxy\LocationService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LocationProxy\RMS.Centralize.WebSite.Proxy.LocationProxy.LocationResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\LocationProxy\RMS.Centralize.WebSite.Proxy.LocationProxy.Result.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\MessageActionProxy\MessageActionService1.wsdl" />
     <None Include="Service References\MessageActionProxy\MessageActionService5.xsd">
       <SubType>Designer</SubType>
@@ -167,6 +229,28 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\MessageActionProxy\RMS.Centralize.WebSite.Proxy.MessageActionProxy.Result.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MonitoringProfileProxy\MonitoringProfileService.wsdl" />
+    <None Include="Service References\MonitoringProfileProxy\MonitoringProfileService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MonitoringProfileProxy\MonitoringProfileService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MonitoringProfileProxy\MonitoringProfileService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MonitoringProfileProxy\MonitoringProfileService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MonitoringProfileProxy\MonitoringProfileService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MonitoringProfileProxy\RMS.Centralize.WebSite.Proxy.MonitoringProfileProxy.MonitoringProfileResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MonitoringProfileProxy\RMS.Centralize.WebSite.Proxy.MonitoringProfileProxy.Result.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\MonitoringProxy\MonitoringService1.wsdl" />
@@ -220,8 +304,11 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ActionProfileProxy\" />
+    <WCFMetadataStorage Include="Service References\ClientMonitoringProxy\" />
     <WCFMetadataStorage Include="Service References\ClientProxy\" />
+    <WCFMetadataStorage Include="Service References\LocationProxy\" />
     <WCFMetadataStorage Include="Service References\MessageActionProxy\" />
+    <WCFMetadataStorage Include="Service References\MonitoringProfileProxy\" />
     <WCFMetadataStorage Include="Service References\MonitoringProxy\" />
     <WCFMetadataStorage Include="Service References\SelfTestingProxy\" />
     <WCFMetadataStorage Include="Service References\SummaryReportProxy\" />
@@ -321,6 +408,51 @@
       <Project>{f8ec98bc-37bb-42fd-9b50-78f928bb08a2}</Project>
       <Name>RMS.Common.Exception</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\LocationProxy\LocationService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\LocationProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\LocationProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\LocationProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ClientMonitoringProxy\ClientMonitoringService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ClientMonitoringProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ClientMonitoringProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ClientMonitoringProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MonitoringProfileProxy\MonitoringProfileService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MonitoringProfileProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MonitoringProfileProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MonitoringProfileProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

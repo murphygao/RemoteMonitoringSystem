@@ -233,14 +233,171 @@
                 <!-- END COL -->
 
             </div>
+            
+            
+            
+            <div class="row" id="divClientMonitoring" style="display: none;">
+
+                <!-- NEW WIDGET START -->
+                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <!-- Widget ID (each widget will need unique ID)-->
+                    <div class="jarviswidget jarviswidget-color-blueDark" id="client-monitoring-1"
+                        data-widget-togglebutton="false"
+                        data-widget-colorbutton="false"
+                        data-widget-editbutton="false"
+                        data-widget-deletebutton="false"
+                        data-widget-fullscreenbutton="false"
+                        data-widget-sortable="false">
+                        <!-- widget options:
+								usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+				
+								data-widget-colorbutton="false"
+								data-widget-editbutton="false"
+								data-widget-togglebutton="false"
+								data-widget-deletebutton="false"
+								data-widget-fullscreenbutton="false"
+								data-widget-custombutton="false"
+								data-widget-collapsed="true"
+								data-widget-sortable="false"
+				
+								-->
+                        <header>
+                            <span class="widget-icon"><i class="fa fa-table"></i></span>
+                            <h2>Client Monitoring Profile</h2>
+                        </header>
+
+                        <!-- widget div-->
+                        <div>
+
+                            <!-- widget edit box -->
+                            <div class="jarviswidget-editbox">
+                                <!-- This area used as dropdown edit box -->
+
+                            </div>
+                            <!-- end widget edit box -->
+
+                            <!-- widget content -->
+                            <div class="widget-body no-padding">
+                                <div class="widget-body-toolbar">
+                                </div>
+
+                                <table id="dt_basic" class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center">#</th>
+                                            <th>Monitoring Profile</th>
+                                            <th>Effective Date</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <!-- end widget content -->
+                        </div>
+                        <!-- end widget div -->
+
+                    </div>
+                    <!-- end widget -->
+
+                </article>
+                <!-- WIDGET END -->
+
+            </div>
+
+            <!-- end row -->
         </section>
+        
+        <div class="row form-horizontal" id="divAddClientMonitoring" style="display: none;">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <a data-toggle="modal" class="btn btn-primary hidden-mobile" href="#myModal">Add New</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+	        <div class="modal-dialog">
+		        <div class="modal-content">
+			        <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					        &times;
+				        </button>
+				        <h4 class="modal-title">
+					        Add New Client Monitoring Profile
+				        </h4>
+			        </div>
+			        <div class="modal-body no-padding">
+
+				        <form id="monitoringprofile-form" class="smart-form">
+
+							        <fieldset>
+								        <section>
+									        <div class="row">
+										        <label class="label col col-3">Monitoring Profile</label>
+										        <div class="col col-9">
+                                                    <label class="select">
+                                                        <select id="ddlMonitoringProfile" name="ddlMonitoringProfile" class="input-sm">
+                                                        </select>
+                                                        <i></i>
+                                                    </label>
+										            <div class="note">
+                                                        <strong>Required Field</strong>
+											        </div>
+									            </div>
+									        </div>
+								        </section>
+
+								        <section>
+									        <div class="row">
+										        <label class="label col col-3">Effective Date</label>
+										        <div class="col col-9">
+                                                    <label class="input">
+                                                        <i class="icon-append fa fa-calendar"></i>
+                                                        <input type="text" class="input-sm" readonly name="txtProfileEffectiveDate" id="txtProfileEffectiveDate" placeholder="Effective Date"/>
+                                                    </label>
+											        <div class="note">
+                                                        <strong>Required Field</strong>
+											        </div>
+										        </div>
+									        </div>
+								        </section>
+
+							        </fieldset>
+							
+							        <footer>
+							            <button type="submit" class="btn btn-primary" ID="btnSubmitMonitoring" onclick="newMonitoring();">Submit</button>
+								        <button type="button" class="btn btn-default" data-dismiss="modal">
+									        Cancel
+								        </button>
+
+							        </footer>
+						        </form>						
+						
+
+			        </div>
+
+		        </div><!-- /.modal-content -->
+	        </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        
+        
+
     </div>
 
 
     <!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
 
-    <%: Scripts.Render("~/bundles/myJs") %>
     <%: Scripts.Render("~/bundles/defaultJs") %>
+    <%: Scripts.Render("~/bundles/datatableJs") %>
+    <%: Scripts.Render("~/bundles/myJs") %>
 
     <!-- JS TOUCH : include this plugin for mobile drag / drop touch events
 		<script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script> -->
@@ -353,6 +510,9 @@
                     ddlLocation: {
                         UseLocalInfo: true
                     },
+                    ddlMonitoringProfile: {
+                        required: true,
+                    },
                 },
                 messages: {
                     txtClientCode: {
@@ -376,12 +536,33 @@
                     ddlLocation: {
                         UseLocalInfo: 'Please select location'
                     },
+                    ddlMonitoringProfile: {
+                        required: 'Please select monitoring profile',
+                    },
                 },
 
                 errorPlacement: function(error, element) {
                     error.insertAfter(element.parent());
                 }
 
+            });
+
+            $('#monitoringprofile-form').validate({
+                // Rules for form validation
+                rules: {
+                    ddlMonitoringProfile: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    ddlMonitoringProfile: {
+                        required: 'Please select monitoring profile',
+                    },
+                },
+
+                errorPlacement: function(error, element) {
+                    error.insertAfter(element.parent());
+                }
             });
 
             $('#txtEffectiveDate').datepicker({
@@ -416,10 +597,25 @@
 
             });
 
+            $('#txtProfileEffectiveDate').datepicker({
+                dateFormat: 'yy-mm-dd',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                maxDate: new Date(2099, 12, 0),
+                changeMonth: true,
+                changeYear: true,
+            });
+
+
+
             $("#txtEffectiveDate").datepicker('setDate', new Date());
             $('#txtExpiredDate').datepicker('option', 'minDate', new Date());
+            $("#txtProfileEffectiveDate").datepicker('setDate', new Date());
 
             if ("<%=Request["m"]%>" == "e" && "<%=Request["id1"]%>" != "") {
+
+                $('#divClientMonitoring').show();
+                $('#divAddClientMonitoring').show();
 
                 Pace.restart();
                 $.ajax({
@@ -498,12 +694,189 @@
                     },
 
                 });
+
+                //Load Client Monitoring Profile Here
+                //...................
+                $('#dt_basic').dataTable({
+                    "sPaginationType": "bootstrap_full",
+                    "bFilter": false,
+                    "bAutoWidth": false,
+                    "bPaginate": false,
+                    "bInfo": true,
+                    "sDom": 'r<"dt-top-row"lf><"dt-wrapper"<"datatable-scroll"t>><"dt-row dt-bottom-row"<"row"<"col-sm-6"i><"col-sm-6 text-right"p>>>',
+                    "bServerSide": false,
+                    "aaSorting": [[2, "desc"]],
+                    "sAjaxSource": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/ListClientMonitoring/",
+                    "fnServerData": function (sSource, aoData, fnCallback) {
+                    aoData.push({ "name": "clientID", "value": <%=Request["id1"]%> });
+                    aoData.push({ "name": "dt", "value": dateFormat(new Date(), "yyyymmddHHMMss") });
+
+                    Pace.restart();
+                    $.ajax({
+                        "type": "POST",
+                        "dataType": 'json',
+                        "url": sSource,
+                        "data": aoData,
+                        "success": function (data) {
+                            fnCallback(data);
+                        }
+                    });
+                },
+                "fnDrawCallback": function ( oSettings ) {
+                    /* Need to redo the counters if filtered or sorted */
+                    if ( oSettings.bSorted || oSettings.bFiltered )
+                    {
+                        for ( var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ )
+                        {
+                            $('td:eq(0)', oSettings.aoData[ oSettings.aiDisplay[i] ].nTr ).html( i+1 );
+                        }
+                    }
+                },
+                "aoColumns": [
+                    {
+                        "mData": null,
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "sWidth": "80",
+                        "sClass": "center"
+                    },
+                    {
+                        "mDataProp": "ProfileName",
+                        "bSearchable": false,
+                        "bSortable": true,
+                        "sWidth": "400"
+                    },
+                    {
+                        "mDataProp": "EffectiveDate",
+                        "bSearchable": false,
+                        "bSortable": true,
+                        "sWidth": "300",
+                        "iDataSort": 3,
+                        "bUseRendered": false,
+                        "fnRender": function (oObj) {
+                            if (oObj.aData["EffectiveDate"] == null) return '';
+                            var date = new Date(parseInt(oObj.aData["EffectiveDate"].substr(6)));
+                            return dateFormat(date, "dd/mm/yyyy");
+                        }
+                    },
+                    {
+                        "mDataProp": "EffectiveDate",
+                        "bSearchable": false,
+                        "bSortable": true,
+                        "bVisible": false,
+                        "bUseRendered": false,
+                        "fnRender": function (oObj) {
+                            if (oObj.aData["EffectiveDate"] == null) return '';
+                            var date = new Date(parseInt(oObj.aData["EffectiveDate"].substr(6)));
+                            return dateFormat(date, "yyymmdd");
+                        }
+                    },
+                    {
+                        "mData": null,
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "fnRender": function (oObj) {
+                            return '<a id="del_item_' + oObj.aData["MonitoringProfileId"] + '" class="btn btn-danger btn-xs" href="javascript:deleteRow(' + oObj.aData["MonitoringProfileId"] + ');"><i class="glyphicon glyphicon-trash"></i></a>';
+                        }
+                    }
+                ],
+
+            });
+
+
+                /* END TABLE TOOLS */
+
+            $.fn.dataTableExt.oApi.fnReloadAjax = function (oSettings, sNewSource, fnCallback, bStandingRedraw) {
+                // DataTables 1.10 compatibility - if 1.10 then versionCheck exists.
+                // 1.10s API has ajax reloading built in, so we use those abilities
+                // directly.
+                if ($.fn.dataTable.versionCheck) {
+                    var api = new $.fn.dataTable.Api(oSettings);
+
+                    if (sNewSource) {
+                        api.ajax.url(sNewSource).load(fnCallback, !bStandingRedraw);
+                    }
+                    else {
+                        api.ajax.reload(fnCallback, !bStandingRedraw);
+                    }
+                    return;
+                }
+
+                if (sNewSource !== undefined && sNewSource !== null) {
+                    oSettings.sAjaxSource = sNewSource;
+                }
+
+                // Server-side processing should just call fnDraw
+                if (oSettings.oFeatures.bServerSide) {
+                    this.fnDraw();
+                    return;
+                }
+
+                this.oApi._fnProcessingDisplay(oSettings, true);
+                var that = this;
+                var iStart = oSettings._iDisplayStart;
+                var aData = [];
+
+                this.oApi._fnServerParams(oSettings, aData);
+
+                oSettings.fnServerData.call(oSettings.oInstance, oSettings.sAjaxSource, aData, function (json) {
+                    /* Clear the old information from the table */
+                    that.oApi._fnClearTable(oSettings);
+
+                    /* Got the data - add it to the table */
+                    var aData = (oSettings.sAjaxDataProp !== "") ?
+                        that.oApi._fnGetObjectDataFn(oSettings.sAjaxDataProp)(json) : json;
+
+                    for (var i = 0 ; i < aData.length ; i++) {
+                        that.oApi._fnAddData(oSettings, aData[i]);
+                    }
+
+                    oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
+
+                    that.fnDraw();
+
+                    if (bStandingRedraw === true) {
+                        oSettings._iDisplayStart = iStart;
+                        that.oApi._fnCalculateEnd(oSettings);
+                        that.fnDraw(false);
+                    }
+
+                    that.oApi._fnProcessingDisplay(oSettings, false);
+
+                    /* Callback user function - for event handlers etc */
+                    if (typeof fnCallback == 'function' && fnCallback !== null) {
+                        fnCallback(oSettings);
+                    }
+                }, oSettings);
+            };
+
+            $.fn.dataTableExt.oApi.fnStandingRedraw = function (oSettings, idx) {
+                if (oSettings.oFeatures.bServerSide === false) {
+                    var before = oSettings._iDisplayStart - idx;
+
+                    oSettings.oApi._fnReDraw(oSettings);
+
+                    // iDisplayStart has been reset to zero - so lets change it back
+                    oSettings._iDisplayStart = before;
+                    oSettings.oApi._fnCalculateEnd(oSettings);
+                }
+                oSettings._iDisplayStart = oSettings._iDisplayStart - (idx * oSettings._iDisplayLength);
+                // draw the 'current' page
+                oSettings.oApi._fnDraw(oSettings);
+            };
+
             } 
 
             $("#btnSubmit").on("click", function (event) {
                 event.preventDefault(); // will work!
             });
 
+
+            $("#btnSubmitMonitoring").on("click", function (event) {
+                event.preventDefault(); // will work!
+            });
+
+            
         });
         // Initial Data
         function initialData() {
@@ -518,8 +891,99 @@
                 },
 
             });
+            loadListMonitoringProfile();
         }
 
+        function loadListMonitoringProfile() {
+            $.ajax({
+                "type": "POST",
+                "dataType": 'json',
+                "contentType": "application/json; charset=utf-8",
+                "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/MonitoringProfile/List/",
+                "data": "{'activeList' : true, 'excludeClientID' :  <%=Request["id1"]%>, 'dt' : " + dateFormat(new Date(), "yyyymmddHHMMss") + "}",
+                "success": function(data) {
+                    $('#ddlMonitoringProfile').append(unescape(data.ddlMonitoringProfile));
+                },
+
+            });
+        }
+
+
+        function newMonitoring() {
+            if (!$('#monitoringprofile-form').valid()) return;
+            tmpObj = function () {
+                this.clientID = $('#id1').val();
+                this.monitoringProfileID = $('#ddlMonitoringProfile').val();
+                this.effectiveDate = $('#txtProfileEffectiveDate').val();
+                this.dt = dateFormat(new Date(), "yyyymmddHHMMss");
+            };
+            var updObj = new tmpObj();
+            Pace.restart();
+
+            $.ajax({
+                "type": "POST",
+                "dataType": 'json',
+                "contentType": "application/json; charset=utf-8",
+                "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/AddClientMonitoring/",
+                "data": JSON.stringify(updObj),
+                "success": function (ret) {
+
+                    if (ret.status == "1") {
+                        try {
+                            $.smallBox({
+                                title: "Update Complete",
+                                content: "<i class='fa fa-clock-o'></i> <i>This operation is complete.</i>",
+                                color: "#659265",
+                                iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                                timeout: 2000
+                            });
+
+                        } catch (e) {
+                            alert("This operation is complete.");
+                        }
+
+                        var oTable = $('#dt_basic').dataTable();
+                        oTable.fnReloadAjax();
+
+                        $('#myModal').modal('toggle');
+                        $('#monitoringprofile-form')[0].reset();
+                        $("#txtProfileEffectiveDate").datepicker('setDate', new Date());
+                        $('#ddlMonitoringProfile').html("");
+                        loadListMonitoringProfile();
+
+                    } else if (ret.status == "-1") {
+
+                        try {
+                            $.smallBox({
+                                title: "Update Failed!",
+                                content: "<i class='fa fa-clock-o'></i> <i>" + ret.error + "</i>",
+                                color: "#C46A69",
+                                iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                timeout: 4000
+                            });
+
+                        } catch (e) {
+                            alert(ret.error);
+                        }
+                    } else if (ret.status == "0") {
+                        try {
+                            $.smallBox({
+                                title: "Update Failed",
+                                content: "<i class='fa fa-clock-o'></i> <i>" + ret.error + "</i>",
+                                color: "#C46A69",
+                                iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                timeout: 4000
+                            });
+
+                        } catch (e) {
+                            alert(ret.error);
+                        }
+                    }
+
+                },
+
+            });
+        }
 
         function update() {
 
@@ -606,6 +1070,82 @@
                     }
 
                 },
+
+            });
+        }
+
+
+        function deleteRow(id) {
+            Row = function (id) {
+                this.clientID = <%=Request["id1"]%>;
+                this.monitoringProfileID = id;
+                this.dt = dateFormat(new Date(), "yyyymmddHHMMss");
+            };
+            var delRow = new Row(id);
+
+            $.SmartMessageBox({
+                title: "Delete Confirmation",
+                content: "Are you sure you want to delete this item?",
+                buttons: '[No][Yes]'
+            }, function (ButtonPressed) {
+                if (ButtonPressed === "Yes") {
+                    $.ajax({
+                        "type": "POST",
+                        "dataType": 'json',
+                        "contentType": "application/json; charset=utf-8",
+                        "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/DeleteClientMonitoring",
+                        "data": JSON.stringify(delRow),
+                        "success": function (data) {
+                            if (data == "-1") {
+                                try {
+                                    $.smallBox({
+                                        title: "Access Denied!",
+                                        content: "<i class='fa fa-clock-o'></i> <i>No Access Rights to delete!</i>",
+                                        color: "#C46A69",
+                                        iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                        timeout: 4000
+                                    });
+
+                                } catch (e) {
+                                    alert("No Access Rights to delete!");
+                                }
+                            } else if (data == "1") {
+                                var oTable = $('#dt_basic').dataTable();
+                                oTable.fnReloadAjax();
+                                $('#ddlMonitoringProfile').html("");
+                                loadListMonitoringProfile();
+
+                                try {
+                                    $.smallBox({
+                                        title: "Delete Complete",
+                                        content: "<i class='fa fa-clock-o'></i> <i>This operation is complete.</i>",
+                                        color: "#659265",
+                                        iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                                        timeout: 4000
+                                    });
+
+                                } catch (e) {
+                                    alert("This operation is complete.");
+                                }
+                            } else if (data == "0") {
+                                try {
+                                    $.smallBox({
+                                        title: "Delete Failed",
+                                        content: "<i class='fa fa-clock-o'></i> <i>Failed to complete this operation.</i>",
+                                        color: "#C46A69",
+                                        iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                        timeout: 4000
+                                    });
+
+                                } catch (e) {
+                                    alert("Failed to complete this operation.");
+                                }
+                            }
+
+                        },
+
+                    });
+                }
 
             });
         }

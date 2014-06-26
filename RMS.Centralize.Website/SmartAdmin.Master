@@ -178,6 +178,9 @@
                         <li>
                             <a href="<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/ClientList.aspx">Client Monitoring</a>
                         </li>
+                        <li>
+                            <a href="<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/LocationList.aspx">Monitoring Location</a>
+                        </li>
                     </ul>
                 </li>
                 <li>

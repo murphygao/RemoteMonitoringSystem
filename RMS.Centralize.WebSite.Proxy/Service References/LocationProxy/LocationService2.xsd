@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/LocationService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" />
+  <xs:complexType name="Result">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsSuccess" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Result" nillable="true" type="tns:Result" />
+  <xs:complexType name="ArrayOfLocationInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="LocationInfo" nillable="true" type="tns:LocationInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLocationInfo" nillable="true" type="tns:ArrayOfLocationInfo" />
+  <xs:complexType name="LocationInfo">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" base="q1:RmsLocation">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="RowNum" nillable="true" type="xs:long" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="LocationInfo" nillable="true" type="tns:LocationInfo" />
+  <xs:complexType name="JQueryDataTableParamModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="iColumns" type="xs:int" />
+      <xs:element minOccurs="0" name="iDisplayLength" type="xs:int" />
+      <xs:element minOccurs="0" name="iDisplayStart" type="xs:int" />
+      <xs:element minOccurs="0" name="iSortColumn" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="iSortingCols" type="xs:int" />
+      <xs:element minOccurs="0" name="sColumns" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="sEcho" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="sSearch" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="JQueryDataTableParamModel" nillable="true" type="tns:JQueryDataTableParamModel" />
+</xs:schema>

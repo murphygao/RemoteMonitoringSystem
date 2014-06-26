@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="887127d3-b182-4d37-8f45-375f7143e2f4" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://esn-nb01/RMS.Centralize.WebService/LocationService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="LocationService.xsd" MetadataType="Schema" ID="21732105-59f6-450f-bb26-381b3b6662c2" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/LocationService.svc?xsd=xsd1" />
+    <MetadataFile FileName="LocationService1.xsd" MetadataType="Schema" ID="b546f8a0-f5fb-41c0-b3af-415b36b02180" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/LocationService.svc?xsd=xsd4" />
+    <MetadataFile FileName="LocationService.disco" MetadataType="Disco" ID="5ae54cb8-4445-4a29-9c2b-c6e5c204bd75" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/LocationService.svc?disco" />
+    <MetadataFile FileName="LocationService.wsdl" MetadataType="Wsdl" ID="66e2bb31-dd95-4910-b591-b9eb1fe8ffe6" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/LocationService.svc?wsdl" />
+    <MetadataFile FileName="LocationService2.xsd" MetadataType="Schema" ID="db3f099a-f7be-4566-95d6-37049c783753" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/LocationService.svc?xsd=xsd3" />
+    <MetadataFile FileName="LocationService3.xsd" MetadataType="Schema" ID="63d9a0ee-eb15-4635-adbb-ddc0922f71b6" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/LocationService.svc?xsd=xsd0" />
+    <MetadataFile FileName="LocationService4.xsd" MetadataType="Schema" ID="df5c776d-d719-4c93-8948-0a3c8832dea7" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/LocationService.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

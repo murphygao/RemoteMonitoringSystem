@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="1adfc9fe-648b-4120-8216-908953307171" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://esn-nb01/RMS.Centralize.WebService/MonitoringProfileService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="MonitoringProfileService.xsd" MetadataType="Schema" ID="41b9bb3a-715c-4a1e-9333-35708016af80" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MonitoringProfileService.svc?xsd=xsd4" />
+    <MetadataFile FileName="MonitoringProfileService1.xsd" MetadataType="Schema" ID="aa94bccf-1e7f-45e7-b4fd-6347b71565e2" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MonitoringProfileService.svc?xsd=xsd1" />
+    <MetadataFile FileName="MonitoringProfileService2.xsd" MetadataType="Schema" ID="5115677d-68b5-4006-aff3-9549f20a4901" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MonitoringProfileService.svc?xsd=xsd2" />
+    <MetadataFile FileName="MonitoringProfileService.wsdl" MetadataType="Wsdl" ID="d9a29156-a45e-41a9-bc4f-54ee8633d5d4" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MonitoringProfileService.svc?wsdl" />
+    <MetadataFile FileName="MonitoringProfileService3.xsd" MetadataType="Schema" ID="1a1c6728-90c5-4306-a408-b399ac0f847c" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MonitoringProfileService.svc?xsd=xsd0" />
+    <MetadataFile FileName="MonitoringProfileService4.xsd" MetadataType="Schema" ID="15a9ec1c-cf33-4ef9-8f1e-0308371179de" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MonitoringProfileService.svc?xsd=xsd3" />
+    <MetadataFile FileName="MonitoringProfileService.disco" MetadataType="Disco" ID="e98c4cda-34e4-4ae5-a967-c5d54f274df0" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MonitoringProfileService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

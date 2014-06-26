@@ -154,6 +154,8 @@
     <Content Include="Monitoring\ClientEdit.aspx" />
     <Content Include="Monitoring\ClientList.aspx" />
     <Content Include="Monitoring\ClientReport.aspx" />
+    <Content Include="Monitoring\LocationEdit.aspx" />
+    <Content Include="Monitoring\LocationList.aspx" />
     <Content Include="Monitoring\MessageAction.aspx" />
     <Content Include="Monitoring\MessageEdit.aspx" />
     <Content Include="Monitoring\MonitoringReport.aspx" />
@@ -938,7 +940,9 @@
     </Compile>
     <Compile Include="Areas\Monitoring\Controllers\ActionProfileController.cs" />
     <Compile Include="Areas\Monitoring\Controllers\ClientController.cs" />
+    <Compile Include="Areas\Monitoring\Controllers\LocationController.cs" />
     <Compile Include="Areas\Monitoring\Controllers\MessageActionController.cs" />
+    <Compile Include="Areas\Monitoring\Controllers\MonitoringProfileController.cs" />
     <Compile Include="Areas\Monitoring\Controllers\SummaryReportController.cs" />
     <Compile Include="Areas\Monitoring\Models\DeviceStatus.cs" />
     <Compile Include="Areas\Monitoring\MonitoringAreaRegistration.cs" />
@@ -980,6 +984,20 @@
     <Compile Include="Monitoring\ClientReport.aspx.designer.cs">
       <DependentUpon>ClientReport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Monitoring\LocationEdit.aspx.cs">
+      <DependentUpon>LocationEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\LocationEdit.aspx.designer.cs">
+      <DependentUpon>LocationEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\LocationList.aspx.cs">
+      <DependentUpon>LocationList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\LocationList.aspx.designer.cs">
+      <DependentUpon>LocationList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Monitoring\MessageAction.aspx.cs">
       <DependentUpon>MessageAction.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1020,7 +1038,9 @@
   <ItemGroup>
     <Folder Include="Areas\Monitoring\Views\ActionProfile\" />
     <Folder Include="Areas\Monitoring\Views\Client\" />
+    <Folder Include="Areas\Monitoring\Views\Location\" />
     <Folder Include="Areas\Monitoring\Views\MessageAction\" />
+    <Folder Include="Areas\Monitoring\Views\MonitoringProfile\" />
     <Folder Include="Areas\Monitoring\Views\Shared\" />
     <Folder Include="Areas\Monitoring\Views\SummaryReport\" />
   </ItemGroup>

@@ -125,6 +125,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             }
         }
 
+        // GET: /Monitoring/Client/UpdateClient/
         public ActionResult UpdateClient(int? id, string m, string clientCode, int? clientTypeID, bool? useLocalInfo, int? referenceClientID, string ipAddress, int? locationID, bool? hasMonitoringAgent, bool? activeList, bool? status, DateTime? effectiveDate, DateTime? expiredDate, int? state)
         {
 
@@ -172,6 +173,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             }
         }
 
+        // GET: /Monitoring/Client/InitDataForEdit/
         public ActionResult InitDataForEdit()
         {
             try
@@ -226,6 +228,108 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             }
         }
 
+
+
+        public ActionResult ListClientMonitoring(JQueryDataTableParamModel param, int? clientID)
+        {
+            if (clientID == null) throw new ArgumentNullException("ClientID");
+
+            try
+            {
+                var service = new RMS.Centralize.WebSite.Proxy.ClientMonitoringService().clientMonitoringService;
+
+                var result = service.ListByClient(clientID.Value);
+
+                var ret = new
+                {
+                    sEcho = param.sEcho,
+                    iTotalRecords = result.TotalRecords,
+                    iTotalDisplayRecords = result.TotalRecords,
+                    aaData = result.ListMonitoringProfileInfos,
+                    isSuccess = result.IsSuccess,
+                    errorMessage = result.ErrorMessage
+                };
+
+                return Json(ret);
+
+            }
+            catch (Exception ex)
+            {
+                var ret = new
+                {
+                    status = -1,
+                    error = ex.Message
+                };
+                new RMSWebException(this, "0500", "Get failed. " + ex.Message, ex, true);
+
+                return Json(ret);
+            }
+        }
+
+        // GET: /Monitoring/Location/Delete/
+        public ActionResult DeleteClientMonitoring(int? clientID, int? monitoringProfileID)
+        {
+
+            if (clientID == null) throw new ArgumentNullException("ClientID");
+            if (monitoringProfileID == null) throw new ArgumentNullException("MonitoringProfileID");
+
+            string ret;
+
+            try
+            {
+                var service = new RMS.Centralize.WebSite.Proxy.ClientMonitoringService().clientMonitoringService;
+
+                var updatedBy = new BasePage().UserName;
+
+                var result = service.Delete(clientID.Value, monitoringProfileID.Value, updatedBy);
+
+                ret = result.IsSuccess ? "1" : "0";
+
+            }
+            catch (Exception ex)
+            {
+                ret = "0";
+                new RMSWebException(this, "0500", "Delete failed. " + ex.Message, ex, true);
+            }
+
+            return Json(ret);
+        }
+
+        public ActionResult AddClientMonitoring(int? clientID, int? monitoringProfileID, DateTime? effectiveDate)
+        {
+            if (clientID == null) throw new ArgumentNullException("ClientID");
+            if (monitoringProfileID == null) throw new ArgumentNullException("MonitoringProfileID");
+            if (effectiveDate == null) throw new ArgumentNullException("EffectiveDate");
+
+            try
+            {
+                var service = new RMS.Centralize.WebSite.Proxy.ClientMonitoringService().clientMonitoringService;
+                var updatedBy = new BasePage().UserName;
+                var result = service.Update(clientID.Value, monitoringProfileID.Value, null, effectiveDate.Value, updatedBy);
+
+                var ret = new
+                {
+                    status = (result.IsSuccess) ? 1 : 0,
+                    error = (result.IsSuccess) ? "" : result.ErrorMessage
+                };
+
+                return Json(ret);
+
+            }
+            catch (Exception ex)
+            {
+                var ret = new
+                {
+                    status = 0,
+                    error = ex.Message
+                };
+
+                new RMSWebException(this, "0500", "UpdateActionProfile failed. " + ex.Message, ex, true);
+
+                return Json(ret);
+            }
+
+        }
 
     }
 }

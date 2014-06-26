@@ -80,6 +80,7 @@
         // Example:
         // if(t.ClassName.StartsWith("Order"))
         //     WriteLine("    [SomeAttribute]");
+
     };
 
     // Writes optional base classes

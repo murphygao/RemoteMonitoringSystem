@@ -417,27 +417,5 @@ namespace RMS.Centralize.WebService.BSL
             }
         }
 
-
-        public List<RmsLocation> ListLocation()
-        {
-            try
-            {
-                using (var db = new MyDbContext())
-                {
-                    db.Configuration.ProxyCreationEnabled = false;
-                    db.Configuration.LazyLoadingEnabled = false;
-
-                    var listOfType = db.RmsLocations;
-
-                    List<RmsLocation> listLocations = new List<RmsLocation>(listOfType.ToList());
-
-                    return listLocations;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new RMSWebException(this, "0500", "ListLocation failed. " + ex.Message, ex, false);
-            }
-        }
     }
 }

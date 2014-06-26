@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/ClientMonitoringService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" />
+  <xs:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/ClientMonitoringService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" />
+  <xs:complexType name="ClientMonitoringResult">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" base="q1:Result">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ListMonitoringProfileInfos" nillable="true" type="q1:ArrayOfClientMonitoringInfo" />
+          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="ListMonitoringProfiles" nillable="true" type="q2:ArrayOfRmsClientMonitoring" />
+          <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="MonitoringProfile" nillable="true" type="q3:RmsClientMonitoring" />
+          <xs:element minOccurs="0" name="MonitoringProfileInfo" nillable="true" type="q1:ClientMonitoringInfo" />
+          <xs:element minOccurs="0" name="TotalRecords" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ClientMonitoringResult" nillable="true" type="tns:ClientMonitoringResult" />
+</xs:schema>

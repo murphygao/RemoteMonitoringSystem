@@ -80,7 +80,7 @@ namespace RMS.Centralize.WebService
                     db.Configuration.ProxyCreationEnabled = false;
                     //db.Configuration.LazyLoadingEnabled = false;
 
-                    var listOfType = db.Database.SqlQuery<RmsActionProfile>("RMS_ListActionProfile " +
+                    var listOfType = db.Database.SqlQuery<RmsActionProfile>("RMS_SearchActionProfile " +
                                                                             "@ActionProfileName, @Email, @Sms, @PageNbr, @PageSize, @FirstRec, @SortCol, @TotalRecords OUTPUT"
                         , parameters);
 

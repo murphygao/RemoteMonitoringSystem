@@ -105,11 +105,11 @@ namespace RMS.Centralize.WebService.BSL
                         SqlParameter p1 = new SqlParameter("ClientID", clientID);
                         parameters[0] = p1;
 
-                        var clientLocation = db.Database.SqlQuery<Location>("RMS_GetLocationByClientID " +
+                        var clientLocation = db.Database.SqlQuery<LocationInfo>("RMS_GetLocationByClientID " +
                                                                                 "@ClientID", parameters).First();
 
                         if (clientLocation != null)
-                            locationID = clientLocation.LocationID;
+                            locationID = clientLocation.LocationId;
                     }
 
                     //var device = db.RmsDevices.FirstOrDefault(d => d.DeviceCode.ToLower() == oDeviceCode.ToLower());

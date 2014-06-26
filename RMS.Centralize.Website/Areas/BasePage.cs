@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Microsoft.Ajax.Utilities;
 
 namespace RMS.Centralize.Website.Areas
 {
@@ -15,6 +16,14 @@ namespace RMS.Centralize.Website.Areas
             //
 
             this.MasterPageFile = HttpContext.Current.Request.ApplicationPath + "/SmartAdmin.Master";
+        }
+
+        public string UserName
+        {
+            get
+            {
+                return (string)Session["__UserName"];
+            }
         }
 
     }

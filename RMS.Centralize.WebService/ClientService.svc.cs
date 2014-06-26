@@ -266,8 +266,8 @@ namespace RMS.Centralize.WebService
         {
             try
             {
-                BSL.ClientService cs = new BSL.ClientService();
-                var listLocation = cs.ListLocation();
+                BSL.LocationService ls = new BSL.LocationService();
+                var listLocation = ls.List();
 
                 var sr = new LocationResult
                 {

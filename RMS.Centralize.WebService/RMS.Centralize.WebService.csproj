@@ -109,9 +109,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ActionProfileService.svc" />
+    <Content Include="ClientMonitoringService.svc" />
     <Content Include="ClientService.svc" />
     <Content Include="index.html" />
+    <Content Include="LocationService.svc" />
     <Content Include="MessageActionService.svc" />
+    <Content Include="MonitoringProfileService.svc" />
     <Content Include="MonitoringService.svc" />
     <Content Include="SelfTestingService.svc" />
     <Content Include="SummaryReportService.svc" />
@@ -126,13 +129,22 @@
     </Compile>
     <Compile Include="BSL\ActionService.cs" />
     <Compile Include="BSL\BaseService.cs" />
+    <Compile Include="BSL\ClientMonitoringService.cs" />
     <Compile Include="BSL\ClientService.cs" />
+    <Compile Include="BSL\LocationService.cs" />
     <Compile Include="BSL\MonitoringEngineService.cs" />
+    <Compile Include="BSL\MonitoringProfileService.cs" />
     <Compile Include="BSL\SelfTestingService.cs" />
     <Compile Include="BSL\SummaryService.cs" />
+    <Compile Include="ClientMonitoringService.svc.cs">
+      <DependentUpon>ClientMonitoringService.svc</DependentUpon>
+    </Compile>
     <Compile Include="ClientService.svc.cs">
       <DependentUpon>ClientService.svc</DependentUpon>
     </Compile>
+    <Compile Include="Interface\IClientMonitoringService.cs" />
+    <Compile Include="Interface\IMonitoringProfileService.cs" />
+    <Compile Include="Interface\ILocationService.cs" />
     <Compile Include="Interface\IMonitoringService.cs" />
     <Compile Include="Interface\IClientService.cs" />
     <Compile Include="Interface\IMessageActionService.cs" />
@@ -140,6 +152,9 @@
     <Compile Include="Interface\ISummaryReportService.cs" />
     <Compile Include="Interface\IWebEngineService.cs" />
     <Compile Include="Interface\ISelfTestingService.cs" />
+    <Compile Include="LocationService.svc.cs">
+      <DependentUpon>LocationService.svc</DependentUpon>
+    </Compile>
     <Compile Include="MessageActionService.svc.cs">
       <DependentUpon>MessageActionService.svc</DependentUpon>
     </Compile>
@@ -147,13 +162,18 @@
     <Compile Include="Model\ClientInfo.cs" />
     <Compile Include="Model\ClientMessageAction.cs" />
     <Compile Include="Model\ClientMessageInfo.cs" />
+    <Compile Include="Model\ClientMonitoringInfo.cs" />
     <Compile Include="Model\JQueryDataTableParamModel.cs" />
-    <Compile Include="Model\Location.cs" />
+    <Compile Include="Model\LocationInfo.cs" />
     <Compile Include="Model\MainAppClient.cs" />
     <Compile Include="Model\MessageDetail.cs" />
+    <Compile Include="Model\MonitoringProfileInfo.cs" />
     <Compile Include="Model\Result.cs" />
     <Compile Include="Model\RmsMessageAction.cs" />
     <Compile Include="Model\SummaryMonitoringReport.cs" />
+    <Compile Include="MonitoringProfileService.svc.cs">
+      <DependentUpon>MonitoringProfileService.svc</DependentUpon>
+    </Compile>
     <Compile Include="MonitoringService.svc.cs">
       <DependentUpon>MonitoringService.svc</DependentUpon>
     </Compile>
