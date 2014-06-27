@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\MonitoringProfileDeviceInfo.cs" />
     <Compile Include="MonitoringService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\AgentTCPProxy\Reference.cs">
@@ -105,6 +106,10 @@
       <Project>{f8ec98bc-37bb-42fd-9b50-78f928bb08a2}</Project>
       <Name>RMS.Common.Exception</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.Helper\RMS.Monitoring.Helper.csproj">
+      <Project>{6FE058E7-F0DA-4450-9D4A-E45C8585F579}</Project>
+      <Name>RMS.Monitoring.Helper</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\AgentTCPProxy\configuration91.svcinfo" />
@@ -118,9 +123,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

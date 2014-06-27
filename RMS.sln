@@ -57,9 +57,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Centralize.BSL.MonitoringEngine", "RMS.Centralize.BSL.MonitoringEngine\RMS.Centralize.BSL.MonitoringEngine.csproj", "{A19CDBE1-0153-4050-9327-CA142FC67B34}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Agent.Proxy", "RMS.Agent.Proxy\RMS.Agent.Proxy.csproj", "{34CC6B3A-D552-480A-B3D1-F94A389C1C86}"
-	ProjectSection(ProjectDependencies) = postProject
-		{55DE9DC6-2ABA-4F31-A456-E0DE6873763C} = {55DE9DC6-2ABA-4F31-A456-E0DE6873763C}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS.Monitoring.Helper", "RMS.Monitoring.Helper\RMS.Monitoring.Helper.csproj", "{6FE058E7-F0DA-4450-9D4A-E45C8585F579}"
 EndProject

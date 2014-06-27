@@ -976,6 +976,12 @@ namespace RMS.Centralize.DAL
         [DataMember(Order = 4, IsRequired = false)]
         public string SmsBody { get; set; } // SMSBody
 
+        [DataMember(Order = 5, IsRequired = false)]
+        public string EmailBodySolved { get; set; } // EmailBodySolved
+
+        [DataMember(Order = 6, IsRequired = false)]
+        public string SmsBodySolved { get; set; } // SMSBodySolved
+
     }
 
     // RMS_MonitoringProfile
@@ -1706,6 +1712,8 @@ namespace RMS.Centralize.DAL
             Property(x => x.Description).HasColumnName("Description").IsOptional().HasMaxLength(500);
             Property(x => x.EmailBody).HasColumnName("EmailBody").IsOptional().HasMaxLength(500);
             Property(x => x.SmsBody).HasColumnName("SMSBody").IsOptional().HasMaxLength(500);
+            Property(x => x.EmailBodySolved).HasColumnName("EmailBodySolved").IsOptional().HasMaxLength(500);
+            Property(x => x.SmsBodySolved).HasColumnName("SMSBodySolved").IsOptional().HasMaxLength(500);
             InitializePartial();
         }
         partial void InitializePartial();

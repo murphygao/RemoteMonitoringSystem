@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Runtime.Serialization.Configuration;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using ESN.LicenseManager.Model;
 using RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy;
+using RMS.Centralize.BSL.MonitoringEngine.Model;
 using RMS.Centralize.DAL;
-using RMS.Centralize.WebService.Proxy.MonitoringProxy;
 using RMS.Common.Exception;
+using RMS.Monitoring.Helper;
 
 
 namespace RMS.Centralize.BSL.MonitoringEngine
@@ -107,13 +105,18 @@ namespace RMS.Centralize.BSL.MonitoringEngine
                     {
                         using (var db = new MyDbContext())
                         {
+                            var rmsSystemConfig = db.RmsSystemConfigs.Find("AgentProcessName");
+                            var agentProcessName = rmsSystemConfig.Value ?? rmsSystemConfig.DefaultValue;
+
                             SqlParameter[] parameters = new SqlParameter[1];
                             SqlParameter p1 = new SqlParameter("ClientID", client.ClientId);
                             parameters[0] = p1;
 
-                            var lists = db.Database.SqlQuery<RmsMonitoringProfileDevice>("RMS_GetMonitoringProfileDeviceByClientID "
+                            var lists = db.Database.SqlQuery<MonitoringProfileDeviceInfo>("RMS_GetMonitoringProfileDeviceByClientID "
                                                                                          + "@ClientID", parameters);
-                            var device = lists.First(f => f.DeviceId == 1 || f.DeviceDescription == "Alive");
+                            var device = lists.First(f => f.DeviceCode == "CLIENT" && f.DeviceTypeCode == Models.DeviceCode.Client 
+                                    && (string.IsNullOrEmpty(f.StringValue) || f.StringValue == agentProcessName));
+                            
                             if (device != null)
                             {
                                 var mp = new Centralize.WebService.Proxy.MonitoringService().monitoringService;

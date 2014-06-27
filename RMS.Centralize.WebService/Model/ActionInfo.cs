@@ -23,6 +23,12 @@ namespace RMS.Centralize.WebService.Model
         public string DeviceDescription { get; set; }
         public long SummaryMonitoringReportID { get; set; }
 
+        /// <summary>
+        /// Error Message,
+        /// Solved Message
+        /// </summary>
+        public MessageType MessageType { get; set; }
+
 
         public string ToPlainTextHeader()
         {
@@ -66,4 +72,11 @@ namespace RMS.Centralize.WebService.Model
 
         }
     }
+
+    public enum MessageType
+    {
+        ErrorMessage,
+        SolvedMessage
+    }
+
 }

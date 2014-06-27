@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Remoting.Proxies;
@@ -48,7 +49,7 @@ namespace RMS.Agent.BSL.Monitoring
             /*
              * 
              * 1. Call Centralize to Get Client & Device Info for Monitoring 
-             * 2. Send Alive Message
+             * 2. Check Application Running
              * 3. Check Maintenance State
              * 4. Check Device Monitoring
              * 
@@ -81,35 +82,80 @@ namespace RMS.Agent.BSL.Monitoring
 
                 #endregion
 
+                List<RmsReportMonitoringRaw> monitoringRaws = new List<RmsReportMonitoringRaw>();
                 MonitoringServiceClient mp = new Proxy.MonitoringService().monitoringService;
 
-                #region 2. Send Alive Message
+                #region 2. Check Application Running
 
-                try
+                foreach (var monitoringClient in rmsMonitoringProfileDevices)
                 {
-                    var rawMessage = new RmsReportMonitoringRaw();
-                    rawMessage.ClientCode = clientResult.Client.ClientCode;
-                    rawMessage.DeviceCode = "CLIENT";
-
-                    rawMessage.Message = "OK";
-                    rawMessage.MessageDateTime = DateTime.Now;
-                    rawMessage.MonitoringProfileDeviceId = monitoringProfileDeviceId;
-
-                    mp.AddMessage(rawMessage);
-
-                    if (Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.DebugLogEnable"] ?? "false"))
+                    // ถ้า device string ไม่มีค่า หรือมีค่าเท่ากับ agent process name แสดงว่า ให้ตรวจสอบ agent ว่ายังทำงานอยู่หรือไม่
+                    if (string.IsNullOrEmpty(monitoringClient.StringValue)
+                        || (!string.IsNullOrEmpty(monitoringClient.StringValue)
+                            &&
+                            monitoringClient.StringValue.ToLower().Trim() ==
+                            ConfigurationManager.AppSettings["RMS.AGENT_PROCESS_NAME"].ToLower().Trim()))
                     {
-                        string log = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " Send Alive Message " +  Helper.Serializer.XML.SerializeObject(rawMessage);
-                        new RMSDebugLog(log, true);
+                        // การที่สามารถทำ process ต่างๆ ได้อยู่ในนี้ แสดงว่า agent ทำงาได้ปกติ
+                        // ให้ทำการส่ง message OK ได้ทันที
+                        try
+                        {
+                            var rawMessage = new RmsReportMonitoringRaw();
+                            rawMessage.ClientCode = clientResult.Client.ClientCode;
+                            rawMessage.DeviceCode = "CLIENT";
+
+                            rawMessage.Message = "OK";
+                            rawMessage.MessageDateTime = DateTime.Now;
+                            rawMessage.MonitoringProfileDeviceId = monitoringClient.MonitoringProfileDeviceId;
+
+                            monitoringRaws.Add(rawMessage);
+                            //mp.AddMessage(rawMessage);
+                        }
+                        catch (Exception ex)
+                        {
+                            new RMSAppException(this, "0500", "Send Alive Message failed. " + ex.Message, ex, true);
+                        }
+
                     }
+                    else // หากเข้า case นี้แสดงว่า ระบบอยากให้ตรวจสอบการทำงานของ application ภายนอก
+                    {
+                        try
+                        {
+                            if (IsProcessRunning(monitoringClient.StringValue.Trim()))
+                            {
+                                var rawMessage = new RmsReportMonitoringRaw();
+                                rawMessage.ClientCode = clientResult.Client.ClientCode;
+                                rawMessage.DeviceCode = "CLIENT";
 
+                                rawMessage.Message = "OK";
+                                rawMessage.MessageDateTime = DateTime.Now;
+                                rawMessage.MonitoringProfileDeviceId = monitoringClient.MonitoringProfileDeviceId;
+
+                                monitoringRaws.Add(rawMessage);
+                            }
+                            else
+                            {
+                                var rawMessage = new RmsReportMonitoringRaw();
+                                rawMessage.ClientCode = clientResult.Client.ClientCode;
+                                rawMessage.DeviceCode = "CLIENT";
+
+                                rawMessage.Message = "APPLICATION_NOT_RUNNING";
+                                rawMessage.MessageDateTime = DateTime.Now;
+                                rawMessage.MonitoringProfileDeviceId = monitoringClient.MonitoringProfileDeviceId;
+
+                                monitoringRaws.Add(rawMessage);
+
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            new RMSAppException(this, "0500", "Check application (" + monitoringClient.StringValue + ") running failed. " + ex.Message,
+                                ex, true);
+                        }
+                    }
                 }
-                catch (Exception ex)
-                {
-                    throw new RMSAppException(this, "0500", "Send Alive Message failed. " + ex.Message, ex, false);
-                }
+
                 #endregion
-
 
                 #region 3. Check Maintenance State
 
@@ -151,7 +197,7 @@ namespace RMS.Agent.BSL.Monitoring
                     var monitoringService = new RMS.Monitoring.Core.MonitoringService();
 
                     // Performance
-                    var monitoringRaws = monitoringService.Monitoring("performance", clientResult);
+                    monitoringRaws.AddRange(monitoringService.Monitoring("performance", clientResult));
 
                     // Device
                     monitoringRaws.AddRange(monitoringService.Monitoring("device", clientResult));
@@ -216,10 +262,10 @@ namespace RMS.Agent.BSL.Monitoring
         {
             try
             {
-                if (ConfigurationManager.AppSettings["CLIENT_CODE"] != clientCode)
+                if (ConfigurationManager.AppSettings["RMS.CLIENT_CODE"] != clientCode)
                 {
                     Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                    configuration.AppSettings.Settings["CLIENT_CODE"].Value = clientCode;
+                    configuration.AppSettings.Settings["RMS.CLIENT_CODE"].Value = clientCode;
                     configuration.Save();
 
                     ConfigurationManager.RefreshSection("appSettings");
@@ -231,5 +277,24 @@ namespace RMS.Agent.BSL.Monitoring
             }
         }
 
+        private bool IsProcessRunning(string sProcessName)
+        {
+            try
+            {
+                Process[] proc = Process.GetProcessesByName(sProcessName);
+                if (proc.Length > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new RMSAppException(this, "0500", "IsProcessRunning failed. " + ex.Message, ex, false);
+            }
+        }
     }
 }

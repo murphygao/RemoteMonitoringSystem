@@ -37,20 +37,20 @@ namespace RMS.Centralize.WebService.BSL
             [EnumMember]
             SummaryTechnicalSending,
             [EnumMember]
-            SummaryHighLevelSending
+            SummaryHighLevelSending,
         }
 
-        public void ActionSend(ActionSendType actionSendType, List<RmsReportSummaryMonitoring> lRmsReportSummaryMonitorings)
+        public void ActionSend(ActionSendType actionSendType, List<RmsReportSummaryMonitoring> lRmsReportSummaryMonitorings, List<RmsReportSummaryMonitoring> lSolvedMonitorings = null)
         {
             try
             {
                 switch (actionSendType)
                 {
-                        case ActionSendType.ManualSending:
-                        ManualSending(lRmsReportSummaryMonitorings);
+                    case ActionSendType.ManualSending:
+                        ManualSending(lRmsReportSummaryMonitorings, lSolvedMonitorings);
                         break;
 
-                        case ActionSendType.SummaryTechnicalSending:
+                    case ActionSendType.SummaryTechnicalSending:
                         TechnicalSending();
                         break;
                 }
@@ -61,18 +61,22 @@ namespace RMS.Centralize.WebService.BSL
             }
         }
 
-        private void ManualSending(List<RmsReportSummaryMonitoring> lRmsReportSummaryMonitorings, bool updateLastAction = false)
+        private void ManualSending(List<RmsReportSummaryMonitoring> lRmsReportSummaryMonitorings, List<RmsReportSummaryMonitoring> lSolvedMonitorings = null)
         {
 
             new RMSDebugLog("Start ManualSending ", true);
 
-            if (lRmsReportSummaryMonitorings == null || lRmsReportSummaryMonitorings.Count == 0)
+            if (lRmsReportSummaryMonitorings == null) lRmsReportSummaryMonitorings = new List<RmsReportSummaryMonitoring>();
+            if (lSolvedMonitorings == null) lSolvedMonitorings = new List<RmsReportSummaryMonitoring>();
+
+            if (lRmsReportSummaryMonitorings.Count == 0 && lSolvedMonitorings.Count == 0)
             {
-                new RMSWebException("lRmsReportSummaryMonitorings cannot be zero or null. ", true);
+                new RMSWebException("Both lRmsReportSummaryMonitorings and lSolvedMonitorings cannot be zero. ", true);
                 return;
             }
 
-            new RMSDebugLog("Start ManualSending: " + lRmsReportSummaryMonitorings.Count, true);
+            new RMSDebugLog("Start ManualSending: lRmsReportSummaryMonitorings.Count = " + lRmsReportSummaryMonitorings.Count, true);
+            new RMSDebugLog("Start ManualSending: lSolvedMonitorings.Count = " + lSolvedMonitorings.Count, true);
 
 
             int activeClients;
@@ -93,8 +97,22 @@ namespace RMS.Centralize.WebService.BSL
 
                     #endregion
 
+                    int? _clientID;
+                    string _clientCode;
+
+                    if (lRmsReportSummaryMonitorings.Count > 0)
+                    {
+                        _clientID = lRmsReportSummaryMonitorings[0].ClientId;
+                        _clientCode = lRmsReportSummaryMonitorings[0].ClientCode;
+                    }
+                    else
+                    {
+                        _clientID = lSolvedMonitorings[0].ClientId;
+                        _clientCode = lSolvedMonitorings[0].ClientCode;
+                    }
+
                     SqlParameter[] parameters = new SqlParameter[1];
-                    SqlParameter p1 = new SqlParameter("ClientID", lRmsReportSummaryMonitorings[0].ClientId);
+                    SqlParameter p1 = new SqlParameter("ClientID", _clientID);
                     parameters[0] = p1;
 
                     var details = db.Database.SqlQuery<ClientMessageAction>("RMS_ListClientMessageAction " +
@@ -102,7 +120,10 @@ namespace RMS.Centralize.WebService.BSL
                     List<ClientMessageAction> lClientMessageActions = new List<ClientMessageAction>(details.ToList());
 
                     // lClientMessageActions ถ้าเป็น 0 แสดงว่า table: RMS_ClientSeverityAction ไม่มีข้อมูลของ Client ID นี้
-                    if (lClientMessageActions.Count == 0) throw new Exception("Defined action not found. Please check table: RMS_ClientSeverityAction for Client code: " + lRmsReportSummaryMonitorings[0].ClientCode);
+                    if (lClientMessageActions.Count == 0) throw new Exception("Defined action not found. Please check table: RMS_ClientSeverityAction for Client ID: " + _clientCode);
+
+
+                    #region Message Type : Error Message
 
                     foreach (var monitoring in lRmsReportSummaryMonitorings)
                     {
@@ -111,11 +132,11 @@ namespace RMS.Centralize.WebService.BSL
                         bool useSMS = false;
 
                         var clientMessageAction = lClientMessageActions.First(cma => cma.MessageID == monitoring1.MessageId);
-                        
+
                         if (clientMessageAction == null) continue;
 
-
                         #region //EMAIL SECTION
+
                         new RMSDebugLog("Start ManualSending - Prepare Email ", true);
 
                         //เตรียมว่าจะต้องส่ง Email ไปหาใครบ้าง
@@ -153,6 +174,8 @@ namespace RMS.Centralize.WebService.BSL
                             info.MessageRemark = monitoring.MessageRemark;
 
                             info.SummaryMonitoringReportID = monitoring.Id;
+
+                            info.MessageType = MessageType.ErrorMessage;
 
                             lEmails.Add(info);
 
@@ -197,6 +220,7 @@ namespace RMS.Centralize.WebService.BSL
                             info.DeviceDescription = monitoring.DeviceDescription;
                             info.MessageRemark = monitoring.MessageRemark;
                             info.SummaryMonitoringReportID = monitoring.Id;
+                            info.MessageType = MessageType.ErrorMessage;
 
                             lSMSs.Add(info);
 
@@ -205,8 +229,6 @@ namespace RMS.Centralize.WebService.BSL
                             if (!distinctSMS.ContainsKey(info.To))
                                 distinctSMS.Add(info.To, info.To);
                         }
-
-
 
                         #endregion
 
@@ -230,7 +252,142 @@ namespace RMS.Centralize.WebService.BSL
                         #endregion
                     }
 
+                    #endregion
+
+                    #region Message Type : Solved Message
+
+                    foreach (var monitoring in lSolvedMonitorings)
+                    {
+                        RmsReportSummaryMonitoring monitoring1 = monitoring;
+                        bool useEmail = false;
+                        bool useSMS = false;
+
+                        var clientMessageAction = lClientMessageActions.First(cma => cma.MessageID == monitoring1.MessageId);
+
+                        if (clientMessageAction == null) continue;
+
+                        #region //EMAIL SECTION
+
+                        new RMSDebugLog("Start ManualSending - Prepare Email ", true);
+
+                        //เตรียมว่าจะต้องส่ง Email ไปหาใครบ้าง
+                        string mEmails = string.Empty;
+
+                        //ตรวจตสอบ flag Overwritten
+                        if (clientMessageAction.OverwritenAction == true)
+                        {
+                            mEmails = clientMessageAction.Email2;
+                        }
+                        else
+                        {
+                            mEmails = clientMessageAction.Email + ";" + clientMessageAction.Email2;
+                        }
+
+                        mEmails = mEmails.Replace(',', ';');
+
+                        var splitEmail = mEmails.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+
+                        //เตรียมข้อมูล
+
+                        foreach (string email in splitEmail)
+                        {
+                            ActionInfo info = new ActionInfo();
+                            info.To = email.ToLower().Trim();
+                            info.ClientCode = monitoring.ClientCode;
+                            info.LevelCode = clientMessageAction.LevelCode;
+                            info.Message = monitoring.Message;
+                            info.LocationCode = clientMessageAction.LocationCode;
+                            info.LocationName = clientMessageAction.LocationName;
+                            info.MessageGroupName = monitoring.MessageGroupName;
+                            info.MessageDateTime = monitoring.MessageDateTime;
+                            info.DeviceCode = monitoring.DeviceCode;
+                            info.DeviceDescription = monitoring.DeviceDescription;
+                            info.MessageRemark = monitoring.MessageRemark;
+
+                            info.SummaryMonitoringReportID = monitoring.Id;
+
+                            info.MessageType = MessageType.SolvedMessage;
+
+                            lEmails.Add(info);
+
+                            useEmail = true;
+
+                            if (!distinctEmail.ContainsKey(info.To))
+                                distinctEmail.Add(info.To, info.To);
+                        }
+
+                        #endregion
+
+                        #region //SMS SECTION
+
+                        new RMSDebugLog("Start ManualSending - Prepare SMS ", true);
+
+                        string mSMSs = string.Empty;
+                        if (clientMessageAction.OverwritenAction == true)
+                        {
+                            mSMSs = clientMessageAction.SMS2;
+                        }
+                        else
+                        {
+                            mSMSs = clientMessageAction.SMS + ";" + clientMessageAction.SMS2;
+                        }
+
+                        mSMSs = mSMSs.Replace(',', ';');
+
+                        var splitSMS = mSMSs.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+
+                        foreach (string SMS in splitSMS)
+                        {
+                            ActionInfo info = new ActionInfo();
+                            info.To = SMS.Trim();
+                            info.ClientCode = monitoring.ClientCode;
+                            info.LevelCode = clientMessageAction.LevelCode;
+                            info.Message = monitoring.Message;
+                            info.LocationCode = clientMessageAction.LocationCode;
+                            info.LocationName = clientMessageAction.LocationName;
+                            info.MessageGroupName = monitoring.MessageGroupName;
+                            info.MessageDateTime = monitoring.MessageDateTime;
+                            info.DeviceCode = monitoring.DeviceCode;
+                            info.DeviceDescription = monitoring.DeviceDescription;
+                            info.MessageRemark = monitoring.MessageRemark;
+                            info.SummaryMonitoringReportID = monitoring.Id;
+                            info.MessageType = MessageType.SolvedMessage;
+
+                            lSMSs.Add(info);
+
+                            useSMS = true;
+
+                            if (!distinctSMS.ContainsKey(info.To))
+                                distinctSMS.Add(info.To, info.To);
+                        }
+
+                        #endregion
+
+                        #region //Update ค่า Last Action
+
+                        if (useEmail || useSMS)
+                        {
+                            string s = "";
+                            if (useEmail)
+                                s = ", Email";
+                            if (useSMS)
+                                s += ", SMS";
+                            s = s.Substring(2);
+
+                            var reportSummaryMonitoring = db.RmsReportSummaryMonitorings.Find(monitoring.Id);
+                            reportSummaryMonitoring.LastActionType = s;
+                            reportSummaryMonitoring.LastActionDateTime = DateTime.Now;
+                            db.SaveChanges();
+                        }
+
+                        #endregion
+                    }
+
+                    #endregion
+
+
                     #region Action Process
+
                     new RMSDebugLog("Start ManualSending - Action Process ", true);
 
                     var rmsSystemConfigs = db.RmsSystemConfigs;
@@ -249,17 +406,18 @@ namespace RMS.Centralize.WebService.BSL
 
 
                     #region // Prepare Email Body
+
                     new RMSDebugLog("Start ManualSending - Prepare Email Body ", true);
 
                     config = rmsSystemConfigs.First(c => c.Name == "EmailSubject");
-                    string emailSubject = "Monitoring : พบข้อผิดพลาด ::clientcode::";
+                    string emailSubject = "RMS Monitoring ของตู้ที่ ::clientcode::";
                     if (config != null)
                     {
                         emailSubject = config.Value ?? config.DefaultValue;
                     }
 
                     config = rmsSystemConfigs.First(c => c.Name == "EmailBody");
-                    string emailBody = "ถึงผู้ดูแล|มีข้อผิดพลาดดังนี้||::summaryerror::||ขอบคุณครับ";
+                    string emailBody = "ถึงผู้ดูแลของตู้ที่ ::clientcode::||รายงานผลการเปลี่ยนสถานะของอุปกรณ์ของตู้ที่ ::clientcode::||::summaryreport::||ขอบคุณครับ";
                     if (config != null)
                     {
                         emailBody = config.Value ?? config.DefaultValue;
@@ -277,10 +435,10 @@ namespace RMS.Centralize.WebService.BSL
                     {
                         string to = keyValuePair.Key;
 
-                        string tSubject = emailSubject.Replace("::clientcode::", lRmsReportSummaryMonitorings[0].ClientCode);
+                        string tSubject = emailSubject.Replace("::clientcode::", _clientCode);
                         var actionInfos = lEmails.Where(l => l.To == to).ToList();
 
-                        string tableOfErrors = Environment.NewLine;
+                        string tableOfSummaryReport = Environment.NewLine;
                         bool writeHeader = false;
 
                         foreach (var actionInfo in actionInfos)
@@ -292,17 +450,31 @@ namespace RMS.Centralize.WebService.BSL
                             //}
                             
                             var masterMessage = rmsMessageMasters.FirstOrDefault(f => f.Message.ToLower() == actionInfo.Message.ToLower());
-                            string tEmail = "กรุณาตรวจสอบ ::devicedescription:: ที่ตู้ ::clientcode:: - ::messageremark::";
+                            string tEmail;
+
+                            if (actionInfo.MessageType == MessageType.ErrorMessage)
+                            {
+                                tEmail = "กรุณาตรวจสอบ ::devicedescription:: ของตู้ที่ ::clientcode:: - ::messageremark::";
+                            }
+                            else
+                            {
+                                tEmail = "::devicedescription:: ของตู้ที่ ::clientcode:: กลับสู่สภาวะปกติ ::messageremark::";
+                            }
+
                             if (masterMessage != null)
                             {
-                                if (!string.IsNullOrEmpty(masterMessage.EmailBody))
+                                if (actionInfo.MessageType == MessageType.ErrorMessage && !string.IsNullOrEmpty(masterMessage.EmailBody))
                                 {
                                     tEmail = masterMessage.EmailBody;
+                                }
+                                else if (actionInfo.MessageType == MessageType.SolvedMessage && !string.IsNullOrEmpty(masterMessage.EmailBodySolved))
+                                {
+                                    tEmail = masterMessage.EmailBodySolved;
                                 }
                             }
 
                             tEmail = tEmail.Replace("|", Environment.NewLine)
-                                .Replace("::clientcode::", lRmsReportSummaryMonitorings[0].ClientCode)
+                                .Replace("::clientcode::", _clientCode)
                                 .Replace("::devicedescription::", string.IsNullOrEmpty(actionInfo.DeviceDescription)
                                     ? actionInfo.DeviceCode
                                     : actionInfo.DeviceDescription)
@@ -314,13 +486,13 @@ namespace RMS.Centralize.WebService.BSL
                                     ? DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("en-AU"))
                                     : actionInfo.MessageDateTime.Value.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("en-AU")));
 
-                            tableOfErrors += tEmail + Environment.NewLine;
+                            tableOfSummaryReport += tEmail + Environment.NewLine;
                         }
 
                         string tBody =
                             emailBody.Replace("|", Environment.NewLine)
-                                .Replace("::clientcode::", lRmsReportSummaryMonitorings[0].ClientCode)
-                                .Replace("::summaryerror::", tableOfErrors);
+                                .Replace("::clientcode::", _clientCode)
+                                .Replace("::summaryreport::", tableOfSummaryReport);
 
                         // Call Send Mail Here
                         new RMSDebugLog("Start ManualSending - Call Send Mail ", true);
@@ -381,7 +553,7 @@ namespace RMS.Centralize.WebService.BSL
                     new RMSDebugLog("Start ManualSending - Prepare SMS Body ", true);
 
                     config = rmsSystemConfigs.First(c => c.Name == "SMSSender");
-                    string smsSender = "SKS Monitoring";
+                    string smsSender = "RMS Monitoring";
                     if (config != null)
                     {
                         smsSender = config.Value ?? config.DefaultValue;
@@ -393,17 +565,31 @@ namespace RMS.Centralize.WebService.BSL
                     {
                         var masterMessage = rmsMessageMasters.FirstOrDefault(f => f.Message.ToLower() == actionInfo.Message.ToLower());
 
-                        string tBody = "กรุณาตรวจสอบ ::devicedescription:: ที่ตู้ ::clientcode:: - ::messageremark::";
+                        string tBody;
+
+                        if (actionInfo.MessageType == MessageType.ErrorMessage)
+                        {
+                            tBody = "กรุณาตรวจสอบ ::devicedescription:: ของตู้ที่ ::clientcode:: - ::messageremark::";
+                        }
+                        else
+                        {
+                            tBody = "::devicedescription:: ของตู้ที่ ::clientcode:: กลับสู่สภาวะปกติ ::messageremark::";
+                        }
+
                         if (masterMessage != null)
                         {
-                            if (!string.IsNullOrEmpty(tBody))
+                            if (actionInfo.MessageType == MessageType.ErrorMessage && !string.IsNullOrEmpty(masterMessage.SmsBody))
                             {
                                 tBody = masterMessage.SmsBody;
+                            }
+                            else if (actionInfo.MessageType == MessageType.SolvedMessage && !string.IsNullOrEmpty(masterMessage.SmsBodySolved))
+                            {
+                                tBody = masterMessage.SmsBodySolved;
                             }
                         }
 
                         tBody = tBody.Replace("|", Environment.NewLine)
-                            .Replace("::clientcode::", lRmsReportSummaryMonitorings[0].ClientCode)
+                            .Replace("::clientcode::", _clientCode)
                             .Replace("::devicedescription::", string.IsNullOrEmpty(actionInfo.DeviceDescription)
                                 ? actionInfo.DeviceCode
                                 : actionInfo.DeviceDescription)
@@ -473,7 +659,7 @@ namespace RMS.Centralize.WebService.BSL
                     #region Mode : SMS Summary (1 SMS contains multi error records)
 
                     //config = rmsSystemConfigs.First(c => c.Name == "SMSBody");
-                    //string smsBody = "RMS พบข้อผิดพลาด ::clientcode:: > ::summaryerror::";
+                    //string smsBody = "RMS พบข้อผิดพลาด ::clientcode:: > ::summaryreport::";
                     //if (config != null)
                     //{
                     //    smsBody = config.Value ?? config.DefaultValue;
@@ -494,7 +680,7 @@ namespace RMS.Centralize.WebService.BSL
                     //    string tBody =
                     //        smsBody.Replace("|", Environment.NewLine)
                     //            .Replace("::clientcode::", lRmsReportSummaryMonitorings[0].ClientCode)
-                    //            .Replace("::summaryerror::", tableOfErrors);
+                    //            .Replace("::summaryreport::", tableOfErrors);
 
                     //    tBody = tBody.Trim();
 

@@ -44,7 +44,7 @@ namespace RMS.Agent.WPF
         private string currentState = string.Empty;
 
         private string maFilePath = ConfigurationManager.AppSettings["RMS.MA_FILE_PATH"];
-        private string clientCode = ConfigurationManager.AppSettings["CLIENT_CODE"];
+        private string clientCode = ConfigurationManager.AppSettings["RMS.CLIENT_CODE"];
 
 
         public MainWindow()

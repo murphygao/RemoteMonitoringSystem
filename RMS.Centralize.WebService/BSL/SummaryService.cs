@@ -86,6 +86,9 @@ namespace RMS.Centralize.WebService.BSL
 
                 List<RmsReportSummaryMonitoring> lPrepareForActions = new List<RmsReportSummaryMonitoring>();
 
+                // List สำหรับเก็บ Message ที่ถูก Solved แล้ว (BAD -> GOOD)
+                List<RmsReportSummaryMonitoring> lSolvedStatus = new List<RmsReportSummaryMonitoring>();
+
                 using (var db = new MyDbContext())
                 {
 
@@ -213,10 +216,11 @@ namespace RMS.Centralize.WebService.BSL
                                     foreach (var summaryMonitoring in monitorings)
                                     {
                                         summaryMonitoring.Status = 0;
+                                        lSolvedStatus.Add(summaryMonitoring);
                                     }
 
-
-                                    // เพิ่ม OK Message
+                                    #region // เพิ่ม OK Message
+                                    
                                     var monitoring = db.RmsReportSummaryMonitorings.Create();
                                     monitoring.RawId = reportMonitoringRaw.Id;
                                     monitoring.ClientId = clientID;
@@ -238,8 +242,9 @@ namespace RMS.Centralize.WebService.BSL
                                     monitoring.SeverityLevelId = null;
                                     monitoring.EventDateTime = DateTime.Now;
 
-                                    db.RmsReportSummaryMonitorings.Add(monitoring);
+                                    #endregion
 
+                                    db.RmsReportSummaryMonitorings.Add(monitoring);
 
                                     db.SaveChanges();
 
@@ -286,12 +291,26 @@ namespace RMS.Centralize.WebService.BSL
                                     // ปรับ Message DEVICE_NOT_FOUND ใน Summary Report ให้เป็น 0
                                     else if (report.Message.ToUpper() == "DEVICE_NOT_FOUND")
                                     {
+                                        // ตรวจสอบดูว่า Message ที่ส่งมาชุดนี้ มี DEVICE_NOT_FOUND อยู่หรือไม่ 
+                                        // ถ้าไม่มีอยู่เลย ก้อให้ปรับ Message ใน DB ที่เป็นข้อความ DEVICE_NOT_FOUND ให้ Status เป็น 0
                                         if (!lRaw.Any(r => r.MonitoringProfileDeviceId == raw.MonitoringProfileDeviceId && r.Message == "DEVICE_NOT_FOUND"))
+                                        {
                                             report.Status = 0;
+
+                                            if (!lSolvedStatus.Exists(e => e.Id == report.Id))
+                                                lSolvedStatus.Add(report);
+                                        }
+
                                     }
 
-                                    if (!lRaw.Any(r => r.MonitoringProfileDeviceId == raw.MonitoringProfileDeviceId && (r.Message == report.Message || r.Message == "DEVICE_NOT_FOUND" || r.Message == "DEVICE_NOT_READY")))
+                                    if (!lRaw.Any(r => r.MonitoringProfileDeviceId == raw.MonitoringProfileDeviceId &&
+                                                (r.Message == report.Message || r.Message == "DEVICE_NOT_FOUND" || r.Message == "DEVICE_NOT_READY")))
+                                    {
                                         report.Status = 0;
+
+                                        if (!lSolvedStatus.Exists(e => e.Id == report.Id) && report.Message.ToUpper() != "OK")
+                                            lSolvedStatus.Add(report);
+                                    }
                                 }
                             }
 
@@ -355,7 +374,6 @@ namespace RMS.Centralize.WebService.BSL
                             }
                             else // ไม่เท่ากับ null หมายถึง พบ message ค้างอยู่ใน table ไม่จำเป็นต้องใส่ข้อมูลเพิ่มแต่อย่างใด
                             {
-
                                 foreach (var summaryMonitoring in reportSummaryMonitoring.Where(sm => sm.Message != "OK"))
                                 {
                                     summaryMonitoring.EventDateTime = DateTime.Now;
@@ -369,12 +387,11 @@ namespace RMS.Centralize.WebService.BSL
 
                 }
 
-                if (lPrepareForActions.Count > 0)
+                if (lPrepareForActions.Count > 0 || lSolvedStatus.Count > 0)
                 {
                     var action = new ActionService();
-                    action.ActionSend(ActionService.ActionSendType.ManualSending, lPrepareForActions);
+                    action.ActionSend(ActionService.ActionSendType.ManualSending, lPrepareForActions, lSolvedStatus);
                 }
-
 
             }
             catch (Exception ex)
