@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="10187ea4-3bba-4061-baa3-9dd56a308909" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://esn-nb01/RMS.Centralize.WebService/SeverityLevelService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="SeverityLevelService.xsd" MetadataType="Schema" ID="07a94145-eccd-4e8d-b3ac-e95161597bec" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/SeverityLevelService.svc?xsd=xsd3" />
+    <MetadataFile FileName="SeverityLevelService1.xsd" MetadataType="Schema" ID="ab372c43-5d33-4d14-bf1a-303ff3b9ba56" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/SeverityLevelService.svc?xsd=xsd0" />
+    <MetadataFile FileName="SeverityLevelService2.xsd" MetadataType="Schema" ID="75f989ff-c46b-4091-a62a-ef15faeedb4c" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/SeverityLevelService.svc?xsd=xsd2" />
+    <MetadataFile FileName="SeverityLevelService3.xsd" MetadataType="Schema" ID="94670988-63e2-4cfe-9879-54a54c30f2e3" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/SeverityLevelService.svc?xsd=xsd1" />
+    <MetadataFile FileName="SeverityLevelService4.xsd" MetadataType="Schema" ID="302808d9-3531-4274-9ba3-297f79dc47ad" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/SeverityLevelService.svc?xsd=xsd4" />
+    <MetadataFile FileName="SeverityLevelService.disco" MetadataType="Disco" ID="90ba9daf-eb02-4b6e-afad-460084d9393b" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/SeverityLevelService.svc?disco" />
+    <MetadataFile FileName="SeverityLevelService.wsdl" MetadataType="Wsdl" ID="df973c69-324b-4be4-865a-9f04687416ac" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/SeverityLevelService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

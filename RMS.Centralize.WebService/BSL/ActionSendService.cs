@@ -19,7 +19,7 @@ using RMS.Common.Exception;
 
 namespace RMS.Centralize.WebService.BSL
 {
-    public class ActionService : BaseService
+    public class ActionSendService : BaseService
     {
         internal string destinationPath = @"c:\monitoring\email\";
 

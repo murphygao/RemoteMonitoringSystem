@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="ab149300-a6fc-41d8-b492-2af7784c6344" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://esn-nb01/RMS.Centralize.WebService/MasterTableService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="MasterTableService.xsd" MetadataType="Schema" ID="4c2ba01e-0430-49ae-96f4-ac99cb5ed131" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MasterTableService.svc?xsd=xsd1" />
+    <MetadataFile FileName="MasterTableService1.xsd" MetadataType="Schema" ID="094c7d4a-62cb-464c-98a5-389c45b7e5c8" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MasterTableService.svc?xsd=xsd0" />
+    <MetadataFile FileName="MasterTableService.wsdl" MetadataType="Wsdl" ID="a12413e4-79ef-4165-a40d-0b512c1fe793" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MasterTableService.svc?wsdl" />
+    <MetadataFile FileName="MasterTableService.disco" MetadataType="Disco" ID="a5e439fe-eeec-45de-bb93-e3eae5a2aac5" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MasterTableService.svc?disco" />
+    <MetadataFile FileName="MasterTableService2.xsd" MetadataType="Schema" ID="d1630b28-b58f-4aa7-864a-250afedc6593" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MasterTableService.svc?xsd=xsd4" />
+    <MetadataFile FileName="MasterTableService3.xsd" MetadataType="Schema" ID="60998752-7819-42bf-86cb-d640b987b3ee" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MasterTableService.svc?xsd=xsd3" />
+    <MetadataFile FileName="MasterTableService4.xsd" MetadataType="Schema" ID="55e9a939-5861-4bff-852c-fd68923a3736" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/MasterTableService.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

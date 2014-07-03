@@ -105,3 +105,9 @@
     overflow-x: auto;
     overflow-y: visible;
 }
+td.right {
+    text-align: right;
+}
+td.nowrap {
+    white-space: nowrap;
+}

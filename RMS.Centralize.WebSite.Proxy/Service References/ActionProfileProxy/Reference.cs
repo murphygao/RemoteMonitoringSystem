@@ -15,163 +15,6 @@ namespace RMS.Centralize.WebSite.Proxy.ActionProfileProxy {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="JQueryDataTableParamModel", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model")]
-    [System.SerializableAttribute()]
-    public partial class JQueryDataTableParamModel : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int iColumnsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int iDisplayLengthField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int iDisplayStartField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string iSortColumnField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int iSortingColsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string sColumnsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string sEchoField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string sSearchField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int iColumns {
-            get {
-                return this.iColumnsField;
-            }
-            set {
-                if ((this.iColumnsField.Equals(value) != true)) {
-                    this.iColumnsField = value;
-                    this.RaisePropertyChanged("iColumns");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int iDisplayLength {
-            get {
-                return this.iDisplayLengthField;
-            }
-            set {
-                if ((this.iDisplayLengthField.Equals(value) != true)) {
-                    this.iDisplayLengthField = value;
-                    this.RaisePropertyChanged("iDisplayLength");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int iDisplayStart {
-            get {
-                return this.iDisplayStartField;
-            }
-            set {
-                if ((this.iDisplayStartField.Equals(value) != true)) {
-                    this.iDisplayStartField = value;
-                    this.RaisePropertyChanged("iDisplayStart");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string iSortColumn {
-            get {
-                return this.iSortColumnField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.iSortColumnField, value) != true)) {
-                    this.iSortColumnField = value;
-                    this.RaisePropertyChanged("iSortColumn");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int iSortingCols {
-            get {
-                return this.iSortingColsField;
-            }
-            set {
-                if ((this.iSortingColsField.Equals(value) != true)) {
-                    this.iSortingColsField = value;
-                    this.RaisePropertyChanged("iSortingCols");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string sColumns {
-            get {
-                return this.sColumnsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.sColumnsField, value) != true)) {
-                    this.sColumnsField = value;
-                    this.RaisePropertyChanged("sColumns");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string sEcho {
-            get {
-                return this.sEchoField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.sEchoField, value) != true)) {
-                    this.sEchoField = value;
-                    this.RaisePropertyChanged("sEcho");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string sSearch {
-            get {
-                return this.sSearchField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.sSearchField, value) != true)) {
-                    this.sSearchField = value;
-                    this.RaisePropertyChanged("sSearch");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Result", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model")]
     [System.SerializableAttribute()]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Centralize.WebSite.Proxy.ActionProfileProxy.ActionProfileResult))]
@@ -553,10 +396,16 @@ namespace RMS.Centralize.WebSite.Proxy.ActionProfileProxy {
         private System.Nullable<bool> ActiveListField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ColorCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<int> DefaultActionProfileIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ColorCodeField;
+        private System.Nullable<bool> ActionRepeatableField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> ActionRepeatIntervalField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> CreatedDateField;
@@ -672,19 +521,6 @@ namespace RMS.Centralize.WebSite.Proxy.ActionProfileProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=7)]
-        public System.Nullable<int> DefaultActionProfileId {
-            get {
-                return this.DefaultActionProfileIdField;
-            }
-            set {
-                if ((this.DefaultActionProfileIdField.Equals(value) != true)) {
-                    this.DefaultActionProfileIdField = value;
-                    this.RaisePropertyChanged("DefaultActionProfileId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=8)]
         public string ColorCode {
             get {
                 return this.ColorCodeField;
@@ -697,7 +533,46 @@ namespace RMS.Centralize.WebSite.Proxy.ActionProfileProxy {
             }
         }
         
+        [System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+        public System.Nullable<int> DefaultActionProfileId {
+            get {
+                return this.DefaultActionProfileIdField;
+            }
+            set {
+                if ((this.DefaultActionProfileIdField.Equals(value) != true)) {
+                    this.DefaultActionProfileIdField = value;
+                    this.RaisePropertyChanged("DefaultActionProfileId");
+                }
+            }
+        }
+        
         [System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+        public System.Nullable<bool> ActionRepeatable {
+            get {
+                return this.ActionRepeatableField;
+            }
+            set {
+                if ((this.ActionRepeatableField.Equals(value) != true)) {
+                    this.ActionRepeatableField = value;
+                    this.RaisePropertyChanged("ActionRepeatable");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+        public System.Nullable<int> ActionRepeatInterval {
+            get {
+                return this.ActionRepeatIntervalField;
+            }
+            set {
+                if ((this.ActionRepeatIntervalField.Equals(value) != true)) {
+                    this.ActionRepeatIntervalField = value;
+                    this.RaisePropertyChanged("ActionRepeatInterval");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=11)]
         public System.Nullable<System.DateTime> CreatedDate {
             get {
                 return this.CreatedDateField;
@@ -710,7 +585,7 @@ namespace RMS.Centralize.WebSite.Proxy.ActionProfileProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=12)]
         public string CreatedBy {
             get {
                 return this.CreatedByField;
@@ -723,7 +598,7 @@ namespace RMS.Centralize.WebSite.Proxy.ActionProfileProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=11)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=13)]
         public System.Nullable<System.DateTime> UpdatedDate {
             get {
                 return this.UpdatedDateField;
@@ -736,7 +611,7 @@ namespace RMS.Centralize.WebSite.Proxy.ActionProfileProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=12)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=14)]
         public string UpdatedBy {
             get {
                 return this.UpdatedByField;
@@ -1606,6 +1481,163 @@ namespace RMS.Centralize.WebSite.Proxy.ActionProfileProxy {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="JQueryDataTableParamModel", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model")]
+    [System.SerializableAttribute()]
+    public partial class JQueryDataTableParamModel : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int iColumnsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int iDisplayLengthField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int iDisplayStartField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string iSortColumnField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int iSortingColsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string sColumnsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string sEchoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string sSearchField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int iColumns {
+            get {
+                return this.iColumnsField;
+            }
+            set {
+                if ((this.iColumnsField.Equals(value) != true)) {
+                    this.iColumnsField = value;
+                    this.RaisePropertyChanged("iColumns");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int iDisplayLength {
+            get {
+                return this.iDisplayLengthField;
+            }
+            set {
+                if ((this.iDisplayLengthField.Equals(value) != true)) {
+                    this.iDisplayLengthField = value;
+                    this.RaisePropertyChanged("iDisplayLength");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int iDisplayStart {
+            get {
+                return this.iDisplayStartField;
+            }
+            set {
+                if ((this.iDisplayStartField.Equals(value) != true)) {
+                    this.iDisplayStartField = value;
+                    this.RaisePropertyChanged("iDisplayStart");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string iSortColumn {
+            get {
+                return this.iSortColumnField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.iSortColumnField, value) != true)) {
+                    this.iSortColumnField = value;
+                    this.RaisePropertyChanged("iSortColumn");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int iSortingCols {
+            get {
+                return this.iSortingColsField;
+            }
+            set {
+                if ((this.iSortingColsField.Equals(value) != true)) {
+                    this.iSortingColsField = value;
+                    this.RaisePropertyChanged("iSortingCols");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string sColumns {
+            get {
+                return this.sColumnsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.sColumnsField, value) != true)) {
+                    this.sColumnsField = value;
+                    this.RaisePropertyChanged("sColumns");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string sEcho {
+            get {
+                return this.sEchoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.sEchoField, value) != true)) {
+                    this.sEchoField = value;
+                    this.RaisePropertyChanged("sEcho");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string sSearch {
+            get {
+                return this.sSearchField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.sSearchField, value) != true)) {
+                    this.sSearchField = value;
+                    this.RaisePropertyChanged("sSearch");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ActionProfileProxy.IActionProfileService")]
     public interface IActionProfileService {
@@ -1615,6 +1647,12 @@ namespace RMS.Centralize.WebSite.Proxy.ActionProfileProxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActionProfileService/TestConnection", ReplyAction="http://tempuri.org/IActionProfileService/TestConnectionResponse")]
         System.Threading.Tasks.Task TestConnectionAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActionProfileService/List", ReplyAction="http://tempuri.org/IActionProfileService/ListResponse")]
+        RMS.Centralize.WebSite.Proxy.ActionProfileProxy.ActionProfileResult List(System.Nullable<bool> activeList);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActionProfileService/List", ReplyAction="http://tempuri.org/IActionProfileService/ListResponse")]
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ActionProfileProxy.ActionProfileResult> ListAsync(System.Nullable<bool> activeList);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IActionProfileService/Search", ReplyAction="http://tempuri.org/IActionProfileService/SearchResponse")]
         RMS.Centralize.WebSite.Proxy.ActionProfileProxy.ActionProfileResult Search(RMS.Centralize.WebSite.Proxy.ActionProfileProxy.JQueryDataTableParamModel param, string txtActionProfile, string txtEmail, string txtSms);
@@ -1674,6 +1712,14 @@ namespace RMS.Centralize.WebSite.Proxy.ActionProfileProxy {
         
         public System.Threading.Tasks.Task TestConnectionAsync() {
             return base.Channel.TestConnectionAsync();
+        }
+        
+        public RMS.Centralize.WebSite.Proxy.ActionProfileProxy.ActionProfileResult List(System.Nullable<bool> activeList) {
+            return base.Channel.List(activeList);
+        }
+        
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ActionProfileProxy.ActionProfileResult> ListAsync(System.Nullable<bool> activeList) {
+            return base.Channel.ListAsync(activeList);
         }
         
         public RMS.Centralize.WebSite.Proxy.ActionProfileProxy.ActionProfileResult Search(RMS.Centralize.WebSite.Proxy.ActionProfileProxy.JQueryDataTableParamModel param, string txtActionProfile, string txtEmail, string txtSms) {

@@ -159,5 +159,39 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             }
         }
 
+        // GET: /Monitoring/ActionProfile/List/
+        public ActionResult List(bool? activeList)
+        {
+            try
+            {
+                var service = new ActionProfileService().actionProfileService;
+
+                var result = service.List(activeList);
+
+                var ret = new
+                {
+                    ddlActionProfiles = result.ListActionProfiles,
+
+                    status = (result.IsSuccess) ? 1 : 0,
+                    errorMessage = result.ErrorMessage
+                };
+
+                return Json(ret);
+
+            }
+            catch (Exception ex)
+            {
+                var ret = new
+                {
+                    status = -1,
+                    error = ex.Message
+                };
+                new RMSWebException(this, "0500", "Get failed. " + ex.Message, ex, true);
+
+                return Json(ret);
+            }
+        }
+
+
     }
 }

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="RmsColorLabel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="RmsSeverityLevels" nillable="true" type="tns:ArrayOfRmsSeverityLevel" />
+      <xs:element name="ColorCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ColorName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ColorTagStart" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ColorTagEnd" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RmsColorLabel" nillable="true" type="tns:RmsColorLabel" />
+  <xs:complexType name="ArrayOfRmsSeverityLevel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RmsSeverityLevel" nillable="true" type="tns:RmsSeverityLevel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRmsSeverityLevel" nillable="true" type="tns:ArrayOfRmsSeverityLevel" />
+  <xs:complexType name="RmsSeverityLevel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="RmsClientSeverityActions" nillable="true" type="tns:ArrayOfRmsClientSeverityAction" />
+      <xs:element minOccurs="0" name="RmsMessages" nillable="true" type="tns:ArrayOfRmsMessage" />
+      <xs:element name="SeverityLevelId" type="xs:int" />
+      <xs:element minOccurs="0" name="LevelCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LevelName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderList" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="ActiveList" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ColorCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DefaultActionProfileId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="ActionRepeatable" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ActionRepeatInterval" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="CreatedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpdatedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="UpdatedBy" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RmsSeverityLevel" nillable="true" type="tns:RmsSeverityLevel" />
+  <xs:complexType name="ArrayOfRmsClientSeverityAction">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RmsClientSeverityAction" nillable="true" type="tns:RmsClientSeverityAction" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRmsClientSeverityAction" nillable="true" type="tns:ArrayOfRmsClientSeverityAction" />
+  <xs:complexType name="RmsClientSeverityAction">
+    <xs:sequence>
+      <xs:element name="ClientId" type="xs:int" />
+      <xs:element name="SeverityLevelId" type="xs:int" />
+      <xs:element minOccurs="0" name="OverwritenAction" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Sms" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CommandLindId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="CreatedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpdatedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="UpdatedBy" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RmsClientSeverityAction" nillable="true" type="tns:RmsClientSeverityAction" />
+  <xs:complexType name="ArrayOfRmsMessage">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RmsMessage" nillable="true" type="tns:RmsMessage" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRmsMessage" nillable="true" type="tns:ArrayOfRmsMessage" />
+  <xs:complexType name="RmsMessage">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="RmsDevices" nillable="true" type="tns:ArrayOfRmsDevice" />
+      <xs:element name="MessageId" type="xs:int" />
+      <xs:element minOccurs="0" name="MessageGroupId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SeverityLevelId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="ReadOnly" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ActiveList" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ActiveStatus" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CreatedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpdatedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="UpdatedBy" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RmsMessage" nillable="true" type="tns:RmsMessage" />
+  <xs:complexType name="ArrayOfRmsDevice">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RmsDevice" nillable="true" type="tns:RmsDevice" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRmsDevice" nillable="true" type="tns:ArrayOfRmsDevice" />
+  <xs:complexType name="RmsDevice">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="RmsMessages" nillable="true" type="tns:ArrayOfRmsMessage" />
+      <xs:element minOccurs="0" name="RmsMonitoringProfileDevices" nillable="true" type="tns:ArrayOfRmsMonitoringProfileDevice" />
+      <xs:element name="DeviceId" type="xs:int" />
+      <xs:element minOccurs="0" name="DeviceTypeId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="DeviceCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Brand" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Model" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StringValue" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ActiveList" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CreatedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpdatedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="UpdatedBy" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RmsDevice" nillable="true" type="tns:RmsDevice" />
+  <xs:complexType name="ArrayOfRmsMonitoringProfileDevice">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RmsMonitoringProfileDevice" nillable="true" type="tns:RmsMonitoringProfileDevice" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRmsMonitoringProfileDevice" nillable="true" type="tns:ArrayOfRmsMonitoringProfileDevice" />
+  <xs:complexType name="RmsMonitoringProfileDevice">
+    <xs:sequence>
+      <xs:element name="MonitoringProfileDeviceId" type="xs:int" />
+      <xs:element minOccurs="0" name="MonitoringProfileId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="DeviceId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="HighThreshold" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="LowThreshold" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ComPort" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BooleanValue" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="StringValue" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DeviceManagerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DeviceManagerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DeviceDescription" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RmsMonitoringProfileDevice" nillable="true" type="tns:RmsMonitoringProfileDevice" />
+  <xs:complexType name="ArrayOfRmsColorLabel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RmsColorLabel" nillable="true" type="tns:RmsColorLabel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRmsColorLabel" nillable="true" type="tns:ArrayOfRmsColorLabel" />
+</xs:schema>

@@ -435,7 +435,7 @@
                             "bSearchable": false,
                             "bSortable": false,
                             "sWidth": "150",
-                            "sClass": "center",
+                            "sClass": "nowrap",
                             "fnRender": function (oObj) {
                                 return '<a id="edit_item_' + oObj.aData["ClientID"] + '" class="btn btn-primary btn-xs" href="javascript:toEditRow(' + oObj.aData["ClientID"] + ')"><i class="glyphicon glyphicon-edit"></i></a>' +
                                     '&nbsp;<a id="del_item_' + oObj.aData["ClientID"] + '" class="btn btn-danger btn-xs" href="#"><i class="glyphicon glyphicon-trash"></i></a>';

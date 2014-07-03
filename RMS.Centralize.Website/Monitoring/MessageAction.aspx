@@ -350,6 +350,7 @@
                         "mData": null,
                         "bSearchable": false,
                         "bSortable": false,
+                        "sClass": "nowrap",
                         "fnRender": function (oObj) {
                             var strLink = '<a id="edit_item_' + oObj.aData["MessageId"] + '" class="btn btn-primary btn-xs" href="javascript:toEditRow(' + oObj.aData["MessageId"] + ');"><i class="glyphicon glyphicon-edit"></i></a>';
                             if (!oObj.aData["ReadOnly"]) {

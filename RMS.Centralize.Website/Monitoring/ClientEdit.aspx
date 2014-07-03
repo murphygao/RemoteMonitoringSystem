@@ -510,9 +510,6 @@
                     ddlLocation: {
                         UseLocalInfo: true
                     },
-                    ddlMonitoringProfile: {
-                        required: true,
-                    },
                 },
                 messages: {
                     txtClientCode: {
@@ -535,9 +532,6 @@
                     },
                     ddlLocation: {
                         UseLocalInfo: 'Please select location'
-                    },
-                    ddlMonitoringProfile: {
-                        required: 'Please select monitoring profile',
                     },
                 },
 
@@ -876,7 +870,6 @@
                 event.preventDefault(); // will work!
             });
 
-            
         });
         // Initial Data
         function initialData() {
@@ -902,7 +895,13 @@
                 "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/MonitoringProfile/List/",
                 "data": "{'activeList' : true, 'excludeClientID' :  <%=Request["id1"]%>, 'dt' : " + dateFormat(new Date(), "yyyymmddHHMMss") + "}",
                 "success": function(data) {
-                    $('#ddlMonitoringProfile').append(unescape(data.ddlMonitoringProfile));
+                    $.each(data.ddlMonitoringProfile, function (index, item) {
+                        $('#ddlMonitoringProfile').append($('<option></option>').val(item.MonitoringProfileId).html(item.ProfileName));
+                    });
+
+                    if (data.ddlMonitoringProfile == null || data.ddlMonitoringProfile.length == 0)
+                        $('#ddlMonitoringProfile').append($('<option></option>').val('').html('No Monitoring Profile Available'));
+
                 },
 
             });
@@ -1150,8 +1149,10 @@
             });
         }
 
+        //Fix Datepicker on Modal Dialog
+        $.fn.modal.Constructor.prototype.enforceFocus = function() {};
+
+
     </script>
-
-
 
 </asp:content>

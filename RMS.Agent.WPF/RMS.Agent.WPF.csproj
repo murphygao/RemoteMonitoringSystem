@@ -37,6 +37,9 @@
     <StartupObject>RMS.Agent.WPF.Window1</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ESN.AutoUpdate">
+      <HintPath>..\Solution Items\ESN\ESN.AutoUpdate.exe</HintPath>
+    </Reference>
     <Reference Include="ESN.Common.Exception">
       <HintPath>..\Solution Items\ESN\ESN.Common.Exception.dll</HintPath>
     </Reference>
@@ -101,6 +104,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Content Include="ESN.AutoUpdate.exe.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Local.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -113,6 +123,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RMS.Agent.BSL.AutoUpate\RMS.Agent.BSL.AutoUpate.csproj">
+      <Project>{47ddfb94-82d2-4bca-8207-a3312f8b2f4e}</Project>
+      <Name>RMS.Agent.BSL.AutoUpate</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RMS.Agent.BSL.Monitoring\RMS.Agent.BSL.Monitoring.csproj">
       <Project>{20cf9b66-1c90-4a26-a143-fd66e29b77db}</Project>
       <Name>RMS.Agent.BSL.Monitoring</Name>
@@ -147,6 +161,11 @@
   <ItemGroup>
     <Folder Include="BSL\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="version.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

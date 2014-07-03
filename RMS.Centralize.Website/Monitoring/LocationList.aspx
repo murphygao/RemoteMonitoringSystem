@@ -264,6 +264,7 @@
                 "sDom": 'r<"dt-top-row"lf><"dt-wrapper"<"datatable-scroll"t>><"dt-row dt-bottom-row"<"row"<"col-sm-6"i><"col-sm-6 text-right"p>>>',
                 "bServerSide": true,
                 "aaSorting": [[1, "asc"]],
+                "iDisplayLength": 50,
                 "sAjaxSource": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Location/Search/",
                 "fnServerData": function (sSource, aoData, fnCallback) {
                     aoData.push({ "name": "txtLocation", "value": $('#txtLocation').val() });
@@ -578,6 +579,7 @@
                         "bSearchable": false,
                         "bSortable": false,
                         "sWidth": "100",
+                        "sClass": "nowrap",
                         "fnRender": function (oObj) {
                             return '<a id="edit_item_' + oObj.aData["LocationId"] + '" class="btn btn-primary btn-xs" href="javascript:toEditRow(' + oObj.aData["LocationId"] + ')"><i class="glyphicon glyphicon-edit"></i></a>' +
                                 '&nbsp;<a id="del_item_' + oObj.aData["LocationId"] + '" class="btn btn-danger btn-xs" href="javascript:deleteRow(' + oObj.aData["LocationId"] + ');"><i class="glyphicon glyphicon-trash"></i></a>';

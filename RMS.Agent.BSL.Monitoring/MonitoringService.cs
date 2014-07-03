@@ -66,7 +66,8 @@ namespace RMS.Agent.BSL.Monitoring
                 int? deviceId = null;
                 int? monitoringProfileDeviceId = null;
 
-                var rmsMonitoringProfileDevices = RMS.Monitoring.Helper.Common.GetRmsMonitoringProfileDevicebyDeviceCode(clientResult, "CLIENT", Models.DeviceCode.Client);
+                var rmsMonitoringProfileDevicebyDeviceCode = RMS.Monitoring.Helper.Common.GetRmsMonitoringProfileDevicebyDeviceCode(clientResult, "CLIENT", Models.DeviceCode.Client);
+                var rmsMonitoringProfileDevices = rmsMonitoringProfileDevicebyDeviceCode;
                 // for CLIENT code, there are only one rmsMonitoringProfileDevices
                 if (rmsMonitoringProfileDevices.Count > 0)
                     monitoringProfileDeviceId = rmsMonitoringProfileDevices[0].MonitoringProfileDeviceId;
@@ -87,15 +88,15 @@ namespace RMS.Agent.BSL.Monitoring
 
                 #region 2. Check Application Running
 
+                bool checkedAgent = false;
                 foreach (var monitoringClient in rmsMonitoringProfileDevices)
                 {
+                    List<string> appNameList = new List<string>(monitoringClient.StringValue.Split('|'));
+
                     // ถ้า device string ไม่มีค่า หรือมีค่าเท่ากับ agent process name แสดงว่า ให้ตรวจสอบ agent ว่ายังทำงานอยู่หรือไม่
-                    if (string.IsNullOrEmpty(monitoringClient.StringValue)
-                        || (!string.IsNullOrEmpty(monitoringClient.StringValue)
-                            &&
-                            monitoringClient.StringValue.ToLower().Trim() ==
-                            ConfigurationManager.AppSettings["RMS.AGENT_PROCESS_NAME"].ToLower().Trim()))
+                    if (!checkedAgent && appNameList.Any(s => string.IsNullOrEmpty(s) || s == ConfigurationManager.AppSettings["RMS.AGENT_PROCESS_NAME"].ToLower().Trim()))
                     {
+                        checkedAgent = true;
                         // การที่สามารถทำ process ต่างๆ ได้อยู่ในนี้ แสดงว่า agent ทำงาได้ปกติ
                         // ให้ทำการส่ง message OK ได้ทันที
                         try
@@ -121,7 +122,7 @@ namespace RMS.Agent.BSL.Monitoring
                     {
                         try
                         {
-                            if (IsProcessRunning(monitoringClient.StringValue.Trim()))
+                            if (appNameList.Any(s => IsProcessRunning(s.Trim())))
                             {
                                 var rawMessage = new RmsReportMonitoringRaw();
                                 rawMessage.ClientCode = clientResult.Client.ClientCode;
@@ -262,13 +263,17 @@ namespace RMS.Agent.BSL.Monitoring
         {
             try
             {
-                if (ConfigurationManager.AppSettings["RMS.CLIENT_CODE"] != clientCode)
-                {
-                    Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                    configuration.AppSettings.Settings["RMS.CLIENT_CODE"].Value = clientCode;
-                    configuration.Save();
+                // Initial Local Configuration
+                Configuration config;
 
-                    ConfigurationManager.RefreshSection("appSettings");
+                ExeConfigurationFileMap configFile = new ExeConfigurationFileMap();
+                configFile.ExeConfigFilename = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\Local.config";
+                config = ConfigurationManager.OpenMappedExeConfiguration(configFile, ConfigurationUserLevel.None);
+
+                if (config.AppSettings.Settings["RMS.CLIENT_CODE"].Value != clientCode)
+                {
+                    config.AppSettings.Settings["RMS.CLIENT_CODE"].Value = clientCode;
+                    config.Save();
                 }
             }
             catch (Exception ex)

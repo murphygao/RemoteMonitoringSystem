@@ -32,8 +32,10 @@
       <xs:element minOccurs="0" name="LevelName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="OrderList" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="ActiveList" nillable="true" type="xs:boolean" />
-      <xs:element minOccurs="0" name="DefaultActionProfileId" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="ColorCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DefaultActionProfileId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="ActionRepeatable" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ActionRepeatInterval" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="CreatedDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UpdatedDate" nillable="true" type="xs:dateTime" />

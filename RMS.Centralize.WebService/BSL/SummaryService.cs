@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Security.AccessControl;
@@ -138,6 +139,9 @@ namespace RMS.Centralize.WebService.BSL
 
                     int? lastMonitoringProfileDeviceId = null;
                     int counterResetToZero = 1;
+
+                    var listLevels = db.RmsSeverityLevels.Include("RmsColorLabel");
+                    List<RmsSeverityLevel> lSeverityLevels = new List<RmsSeverityLevel>(listLevels.ToList());
 
                     foreach (RmsReportMonitoringRaw reportMonitoringRaw in lRaw.OrderBy(o => o.MonitoringProfileDeviceId))
                     {
@@ -377,6 +381,18 @@ namespace RMS.Centralize.WebService.BSL
                                 foreach (var summaryMonitoring in reportSummaryMonitoring.Where(sm => sm.Message != "OK"))
                                 {
                                     summaryMonitoring.EventDateTime = DateTime.Now;
+
+                                    // ตรวจสอบว่า ต้องส่ง message ซ้ำหรือไม่
+                                    // โดยตรวจจาก severity level ว่า repeatable หรือไม่
+                                    var level = lSeverityLevels.Find(s => s.SeverityLevelId == summaryMonitoring.SeverityLevelId);
+                                    if (level != null && level.ActionRepeatable == true && summaryMonitoring.LastActionDateTime != null)
+                                    {
+                                        // ถ้าเวลาปัจจุบัน มากกว่า last action send + interval แสดงว่า ให้ส่ง ซ้ำได้
+                                        if (DateTime.Now > summaryMonitoring.LastActionDateTime.Value.AddMinutes(level.ActionRepeatInterval ?? 0))
+                                        {
+                                            lPrepareForActions.Add(summaryMonitoring);
+                                        }
+                                    }
                                 }
                                 db.SaveChanges();
                             }
@@ -389,8 +405,8 @@ namespace RMS.Centralize.WebService.BSL
 
                 if (lPrepareForActions.Count > 0 || lSolvedStatus.Count > 0)
                 {
-                    var action = new ActionService();
-                    action.ActionSend(ActionService.ActionSendType.ManualSending, lPrepareForActions, lSolvedStatus);
+                    var action = new ActionSendService();
+                    action.ActionSend(ActionSendService.ActionSendType.ManualSending, lPrepareForActions, lSolvedStatus);
                 }
 
             }
@@ -533,8 +549,8 @@ namespace RMS.Centralize.WebService.BSL
 
                 }
 
-                var action = new ActionService();
-                action.ActionSend(ActionService.ActionSendType.ManualSending, lPrepareForActions);
+                var action = new ActionSendService();
+                action.ActionSend(ActionSendService.ActionSendType.ManualSending, lPrepareForActions);
 
             }
             catch (Exception ex)

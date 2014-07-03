@@ -12,7 +12,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 {
     public class LocationController : Controller
     {
-        // GET: /Monitoring/Location/SearchActionList/
+        // GET: /Monitoring/Location/Search/
         public ActionResult Search(JQueryDataTableParamModel param, string txtLocation)
         {
             //JQueryDataTableParamModel param = new JQueryDataTableParamModel();

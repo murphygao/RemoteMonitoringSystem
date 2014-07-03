@@ -22,7 +22,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
                 var result = service.List(activeList);
 
-                List<WebSite.Proxy.ClientMonitoringProxy.ClientMonitoringInfo> listCMs = new List<WebSite.Proxy.ClientMonitoringProxy.ClientMonitoringInfo>();
+                var listCMs = new List<WebSite.Proxy.ClientMonitoringProxy.ClientMonitoringInfo>();
 
                 if (excludeClientID != null)
                 {
@@ -31,22 +31,19 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     listCMs = new List<ClientMonitoringInfo>(listByClient.ListMonitoringProfileInfos.ToList());
                 }
 
-                string ddlProfile = string.Empty;
-
                 if (result.IsSuccess)
                 {
-                    ddlProfile = "<option value=\"\">Please Select</option>";
-                    foreach (var profile in result.ListMonitoringProfiles)
-                    {
-                        if (listCMs.Exists(e => e.MonitoringProfileId == profile.MonitoringProfileId)) continue;
-
-                        ddlProfile += "<option value=\"" + profile.MonitoringProfileId + "\">" + profile.ProfileName + "</option>";
-                    }
+                    var idsToBeRemoved = new HashSet<int>(listCMs.Select(item => item.MonitoringProfileId));
+                    result.ListMonitoringProfiles.RemoveAll(item => idsToBeRemoved.Contains(item.MonitoringProfileId));
+                }
+                else
+                {
+                    throw new Exception(result.ErrorMessage);
                 }
 
                 var ret = new
                 {
-                    ddlMonitoringProfile = ddlProfile,
+                    ddlMonitoringProfile = result.ListMonitoringProfiles,
 
                     status = (result.IsSuccess) ? 1 : 0,
                     errorMessage = result.ErrorMessage

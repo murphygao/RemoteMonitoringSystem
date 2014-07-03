@@ -332,6 +332,7 @@
                         "bSearchable": false,
                         "bSortable": false,
                         "sWidth": "100",
+                        "sClass": "nowrap",
                         "fnRender": function (oObj) {
                             return '<a id="edit_item_' + oObj.aData["ActionProfileId"] + '" class="btn btn-primary btn-xs" href="javascript:toEditRow(' + oObj.aData["ActionProfileId"] + ')"><i class="glyphicon glyphicon-edit"></i></a>' +
                                 '&nbsp;<a id="del_item_' + oObj.aData["ActionProfileId"] + '" class="btn btn-danger btn-xs" href="javascript:deleteRow(' + oObj.aData["ActionProfileId"] + ');"><i class="glyphicon glyphicon-trash"></i></a>';

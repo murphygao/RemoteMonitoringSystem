@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/ActionProfileService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" />
-  <xs:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/ActionProfileService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" />
+  <xs:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/ActionProfileService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" />
+  <xs:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/ActionProfileService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" />
   <xs:element name="TestConnection">
     <xs:complexType>
       <xs:sequence />
@@ -12,10 +12,24 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="List">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="activeList" nillable="true" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="ListResult" nillable="true" type="q1:ActionProfileResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="Search">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" minOccurs="0" name="param" nillable="true" type="q1:JQueryDataTableParamModel" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" minOccurs="0" name="param" nillable="true" type="q2:JQueryDataTableParamModel" />
         <xs:element minOccurs="0" name="txtActionProfile" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="txtEmail" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="txtSms" nillable="true" type="xs:string" />
@@ -25,7 +39,7 @@
   <xs:element name="SearchResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="SearchResult" nillable="true" type="q2:ActionProfileResult" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="SearchResult" nillable="true" type="q3:ActionProfileResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -39,7 +53,7 @@
   <xs:element name="DeleteResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" minOccurs="0" name="DeleteResult" nillable="true" type="q3:Result" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" minOccurs="0" name="DeleteResult" nillable="true" type="q4:Result" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -53,7 +67,7 @@
   <xs:element name="GetResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="GetResult" nillable="true" type="q4:ActionProfileResult" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="GetResult" nillable="true" type="q5:ActionProfileResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -72,7 +86,7 @@
   <xs:element name="UpdateResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" minOccurs="0" name="UpdateResult" nillable="true" type="q5:Result" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" minOccurs="0" name="UpdateResult" nillable="true" type="q6:Result" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

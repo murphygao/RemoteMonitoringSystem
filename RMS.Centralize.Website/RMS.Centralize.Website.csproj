@@ -160,6 +160,8 @@
     <Content Include="Monitoring\MessageEdit.aspx" />
     <Content Include="Monitoring\MonitoringReport.aspx" />
     <Content Include="Monitoring\SelfTesting.aspx" />
+    <Content Include="Monitoring\SeverityLevelEdit.aspx" />
+    <Content Include="Monitoring\SeverityLevelList.aspx" />
     <Content Include="Scripts\jquery-2.1.0.min.map" />
     <Content Include="sound\bigbox.ogg" />
     <Content Include="sound\messagebox.ogg" />
@@ -941,8 +943,10 @@
     <Compile Include="Areas\Monitoring\Controllers\ActionProfileController.cs" />
     <Compile Include="Areas\Monitoring\Controllers\ClientController.cs" />
     <Compile Include="Areas\Monitoring\Controllers\LocationController.cs" />
+    <Compile Include="Areas\Monitoring\Controllers\MasterTableController.cs" />
     <Compile Include="Areas\Monitoring\Controllers\MessageActionController.cs" />
     <Compile Include="Areas\Monitoring\Controllers\MonitoringProfileController.cs" />
+    <Compile Include="Areas\Monitoring\Controllers\SeverityLevelController.cs" />
     <Compile Include="Areas\Monitoring\Controllers\SummaryReportController.cs" />
     <Compile Include="Areas\Monitoring\Models\DeviceStatus.cs" />
     <Compile Include="Areas\Monitoring\MonitoringAreaRegistration.cs" />
@@ -1026,6 +1030,20 @@
     <Compile Include="Monitoring\SelfTesting.aspx.designer.cs">
       <DependentUpon>SelfTesting.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Monitoring\SeverityLevelEdit.aspx.cs">
+      <DependentUpon>SeverityLevelEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\SeverityLevelEdit.aspx.designer.cs">
+      <DependentUpon>SeverityLevelEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\SeverityLevelList.aspx.cs">
+      <DependentUpon>SeverityLevelList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\SeverityLevelList.aspx.designer.cs">
+      <DependentUpon>SeverityLevelList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SmartAdmin.Master.cs">
       <DependentUpon>SmartAdmin.Master</DependentUpon>
@@ -1039,8 +1057,10 @@
     <Folder Include="Areas\Monitoring\Views\ActionProfile\" />
     <Folder Include="Areas\Monitoring\Views\Client\" />
     <Folder Include="Areas\Monitoring\Views\Location\" />
+    <Folder Include="Areas\Monitoring\Views\MasterTable\" />
     <Folder Include="Areas\Monitoring\Views\MessageAction\" />
     <Folder Include="Areas\Monitoring\Views\MonitoringProfile\" />
+    <Folder Include="Areas\Monitoring\Views\SeverityLevel\" />
     <Folder Include="Areas\Monitoring\Views\Shared\" />
     <Folder Include="Areas\Monitoring\Views\SummaryReport\" />
   </ItemGroup>

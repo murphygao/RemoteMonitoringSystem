@@ -7,12 +7,12 @@
         <Button x:Name="btnStop" Content="Stop" HorizontalAlignment="Left" Margin="115,178,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.03,-0.09" Click="btnStop_Click"/>
         <Label Content="Application status:" HorizontalAlignment="Left" Margin="20,146,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblStatus" Content="" HorizontalAlignment="Left" Margin="152,146,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.284,0.021" Width="128"/>
-        <Label Content="Application name:" HorizontalAlignment="Left" Margin="20,34,0,0" VerticalAlignment="Top"/>
-        <Label Content="Description:" HorizontalAlignment="Left" Margin="20,60,0,0" VerticalAlignment="Top"/>
-        <Label Content="Remote Monitoring Agent" HorizontalAlignment="Left" Margin="152,34,0,0" VerticalAlignment="Top" Width="420"/>
-        <Label Content="Monitor computer performances and peripherals" HorizontalAlignment="Left" Margin="152,60,0,0" VerticalAlignment="Top" Width="469"/>
-        <Label Content="Path to executable:" HorizontalAlignment="Left" Margin="20,86,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblExecPath" Content="" HorizontalAlignment="Left" Margin="20,104,0,0" VerticalAlignment="Top" Width="632"/>
+        <Label Content="Application name:" HorizontalAlignment="Left" Margin="20,12,0,0" VerticalAlignment="Top"/>
+        <Label Content="Description:" HorizontalAlignment="Left" Margin="20,38,0,0" VerticalAlignment="Top"/>
+        <Label Content="Remote Monitoring Agent" HorizontalAlignment="Left" Margin="152,12,0,0" VerticalAlignment="Top" Width="420"/>
+        <Label Content="Monitor computer performances and peripherals" HorizontalAlignment="Left" Margin="152,38,0,0" VerticalAlignment="Top" Width="469"/>
+        <Label Content="Path to executable:" HorizontalAlignment="Left" Margin="20,90,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblExecPath" Content="" HorizontalAlignment="Left" Margin="20,108,0,0" VerticalAlignment="Top" Width="632"/>
         <DataGrid x:Name="dgLogs" HorizontalAlignment="Left" Margin="20,255,0,0" Width="620" AutoGenerateColumns="False" Height="257" VerticalAlignment="Top" CanUserAddRows="False" CanUserResizeRows="False" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding EventDateTime, StringFormat=\{0:dd/MM/yy HH:mm:ss\}}" Width="120" ClipboardContentBinding="{x:Null}" Header="Datetime" SortDirection="Descending" CanUserSort="False" CanUserReorder="False" CanUserResize="True"/>
@@ -23,6 +23,8 @@
         </DataGrid>
         <Label Content="Application State:" HorizontalAlignment="Left" Margin="20,224,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblState" Content="" HorizontalAlignment="Left" Margin="152,224,0,0" VerticalAlignment="Top" Width="163"/>
+        <Label Content="Version:" HorizontalAlignment="Left" Margin="20,64,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="txtCurrentVersion" Content="1.000" HorizontalAlignment="Left" Margin="152,64,0,0" VerticalAlignment="Top" Width="469"/>
 
     </Grid>
 </Window>

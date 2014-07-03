@@ -37,7 +37,16 @@ namespace RMS.Agent.Watchdog.BSL
         {
             try
             {
+                if (IsProcessRunning(ConfigurationManager.AppSettings["RMS.AUTO_UPDATE_PROCESS_NAME"])) return false;
+
+                System.Threading.Thread.Sleep(500);
+
                 if (IsProcessRunning(ConfigurationManager.AppSettings["RMS.AGENT_PROCESS_NAME"])) return false;
+
+                System.Threading.Thread.Sleep(500);
+
+                if (IsProcessRunning(ConfigurationManager.AppSettings["RMS.AUTO_UPDATE_PROCESS_NAME"])) return false;
+
                 return true;
             }
             catch (Exception ex)
@@ -73,6 +82,8 @@ namespace RMS.Agent.Watchdog.BSL
                 if (IsProcessRunning(ConfigurationManager.AppSettings["RMS.BIZ_APP_PROCESS_NAME"])) return false;
 
                 if (IsProcessRunning(ConfigurationManager.AppSettings["RMS.OUT_OF_SERVICE_PROCESS_NAME"])) return false;
+
+                if (IsProcessRunning(ConfigurationManager.AppSettings["RMS.AUTO_UPDATE_PROCESS_NAME"])) return false;
 
                 string maFilePath = ConfigurationManager.AppSettings["RMS.MA_FILE_PATH"];
                 if (File.Exists(maFilePath))

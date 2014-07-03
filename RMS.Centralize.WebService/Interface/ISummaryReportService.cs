@@ -26,7 +26,7 @@ namespace RMS.Centralize.WebService
         ClientInfoResult GetClientInfo(int clientID);
 
         [OperationContract]
-        Result ActionRequest(ActionService.ActionSendType actionSendType, long reportID);
+        Result ActionRequest(ActionSendService.ActionSendType actionSendType, long reportID);
 
 
     }

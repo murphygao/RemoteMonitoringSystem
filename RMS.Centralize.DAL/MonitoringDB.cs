@@ -1210,21 +1210,27 @@ namespace RMS.Centralize.DAL
         public bool? ActiveList { get; set; } // ActiveList
 
         [DataMember(Order = 6, IsRequired = false)]
-        public int? DefaultActionProfileId { get; set; } // DefaultActionProfileID
-
-        [DataMember(Order = 7, IsRequired = false)]
         public string ColorCode { get; set; } // ColorCode
 
+        [DataMember(Order = 7, IsRequired = false)]
+        public int? DefaultActionProfileId { get; set; } // DefaultActionProfileID
+
         [DataMember(Order = 8, IsRequired = false)]
-        public DateTime? CreatedDate { get; set; } // CreatedDate
+        public bool? ActionRepeatable { get; set; } // ActionRepeatable
 
         [DataMember(Order = 9, IsRequired = false)]
-        public string CreatedBy { get; set; } // CreatedBy
+        public int? ActionRepeatInterval { get; set; } // ActionRepeatInterval
 
         [DataMember(Order = 10, IsRequired = false)]
-        public DateTime? UpdatedDate { get; set; } // UpdatedDate
+        public DateTime? CreatedDate { get; set; } // CreatedDate
 
         [DataMember(Order = 11, IsRequired = false)]
+        public string CreatedBy { get; set; } // CreatedBy
+
+        [DataMember(Order = 12, IsRequired = false)]
+        public DateTime? UpdatedDate { get; set; } // UpdatedDate
+
+        [DataMember(Order = 13, IsRequired = false)]
         public string UpdatedBy { get; set; } // UpdatedBy
 
 
@@ -1242,6 +1248,8 @@ namespace RMS.Centralize.DAL
 
         public RmsSeverityLevel()
         {
+            ActionRepeatable = false;
+            ActionRepeatInterval = 0;
             CreatedDate = System.DateTime.Now;
             RmsClientSeverityActions = new List<RmsClientSeverityAction>();
             RmsMessages = new List<RmsMessage>();
@@ -1842,16 +1850,18 @@ namespace RMS.Centralize.DAL
             Property(x => x.LevelName).HasColumnName("LevelName").IsOptional().HasMaxLength(50);
             Property(x => x.OrderList).HasColumnName("OrderList").IsOptional();
             Property(x => x.ActiveList).HasColumnName("ActiveList").IsOptional();
-            Property(x => x.DefaultActionProfileId).HasColumnName("DefaultActionProfileID").IsOptional();
             Property(x => x.ColorCode).HasColumnName("ColorCode").IsOptional().HasMaxLength(50);
+            Property(x => x.DefaultActionProfileId).HasColumnName("DefaultActionProfileID").IsOptional();
+            Property(x => x.ActionRepeatable).HasColumnName("ActionRepeatable").IsOptional();
+            Property(x => x.ActionRepeatInterval).HasColumnName("ActionRepeatInterval").IsOptional();
             Property(x => x.CreatedDate).HasColumnName("CreatedDate").IsOptional();
             Property(x => x.CreatedBy).HasColumnName("CreatedBy").IsOptional().HasMaxLength(100);
             Property(x => x.UpdatedDate).HasColumnName("UpdatedDate").IsOptional();
             Property(x => x.UpdatedBy).HasColumnName("UpdatedBy").IsOptional().HasMaxLength(100);
 
             // Foreign keys
-            HasOptional(a => a.RmsActionProfile).WithMany(b => b.RmsSeverityLevels).HasForeignKey(c => c.DefaultActionProfileId); // FK_RMS_SeverityLevel_RMS_ActionProfile
             HasOptional(a => a.RmsColorLabel).WithMany(b => b.RmsSeverityLevels).HasForeignKey(c => c.ColorCode); // FK_RMS_SeverityLevel_RMS_ColorLabel
+            HasOptional(a => a.RmsActionProfile).WithMany(b => b.RmsSeverityLevels).HasForeignKey(c => c.DefaultActionProfileId); // FK_RMS_SeverityLevel_RMS_ActionProfile
             InitializePartial();
         }
         partial void InitializePartial();

@@ -48,6 +48,7 @@
     <Compile Include="ClientMonitoringService.cs" />
     <Compile Include="ClientService.cs" />
     <Compile Include="LocationService.cs" />
+    <Compile Include="MasterTableService.cs" />
     <Compile Include="MessageActionService.cs" />
     <Compile Include="MonitoringProfileService.cs" />
     <Compile Include="MonitoringService.cs" />
@@ -74,6 +75,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\MasterTableProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\MessageActionProxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -94,11 +100,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\SeverityLevelProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\SummaryReportProxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="SeverityLevelService.cs" />
     <Compile Include="SummaryReportService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -206,6 +218,25 @@
     <None Include="Service References\LocationProxy\RMS.Centralize.WebSite.Proxy.LocationProxy.Result.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\MasterTableProxy\MasterTableService.wsdl" />
+    <None Include="Service References\MasterTableProxy\MasterTableService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MasterTableProxy\MasterTableService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MasterTableProxy\MasterTableService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MasterTableProxy\MasterTableService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MasterTableProxy\MasterTableService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MasterTableProxy\RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\MessageActionProxy\MessageActionService1.wsdl" />
     <None Include="Service References\MessageActionProxy\MessageActionService5.xsd">
       <SubType>Designer</SubType>
@@ -273,6 +304,28 @@
     <None Include="Service References\SelfTestingProxy\SelfTestingService21.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\SeverityLevelProxy\RMS.Centralize.WebSite.Proxy.SeverityLevelProxy.Result.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SeverityLevelProxy\RMS.Centralize.WebSite.Proxy.SeverityLevelProxy.SeverityLevelResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SeverityLevelProxy\SeverityLevelService.wsdl" />
+    <None Include="Service References\SeverityLevelProxy\SeverityLevelService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SeverityLevelProxy\SeverityLevelService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SeverityLevelProxy\SeverityLevelService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SeverityLevelProxy\SeverityLevelService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SeverityLevelProxy\SeverityLevelService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\SummaryReportProxy\RMS.Centralize.WebSite.Proxy.SummaryReportProxy.ClientInfoResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -307,10 +360,12 @@
     <WCFMetadataStorage Include="Service References\ClientMonitoringProxy\" />
     <WCFMetadataStorage Include="Service References\ClientProxy\" />
     <WCFMetadataStorage Include="Service References\LocationProxy\" />
+    <WCFMetadataStorage Include="Service References\MasterTableProxy\" />
     <WCFMetadataStorage Include="Service References\MessageActionProxy\" />
     <WCFMetadataStorage Include="Service References\MonitoringProfileProxy\" />
     <WCFMetadataStorage Include="Service References\MonitoringProxy\" />
     <WCFMetadataStorage Include="Service References\SelfTestingProxy\" />
+    <WCFMetadataStorage Include="Service References\SeverityLevelProxy\" />
     <WCFMetadataStorage Include="Service References\SummaryReportProxy\" />
   </ItemGroup>
   <ItemGroup>
@@ -450,6 +505,36 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\MonitoringProfileProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SeverityLevelProxy\SeverityLevelService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SeverityLevelProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SeverityLevelProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SeverityLevelProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MasterTableProxy\MasterTableService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MasterTableProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MasterTableProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MasterTableProxy\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

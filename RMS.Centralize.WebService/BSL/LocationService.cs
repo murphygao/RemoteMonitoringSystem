@@ -10,7 +10,7 @@ using RMS.Common.Exception;
 
 namespace RMS.Centralize.WebService.BSL
 {
-    public class LocationService
+    public class LocationService : BaseService
     {
 
         public List<RmsLocation> List()

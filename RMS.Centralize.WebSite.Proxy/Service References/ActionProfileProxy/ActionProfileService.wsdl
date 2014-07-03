@@ -29,8 +29,8 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/ActionProfileService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/ActionProfileService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/ActionProfileService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" />
-      <xsd:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/ActionProfileService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" />
+      <xsd:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/ActionProfileService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" />
+      <xsd:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/ActionProfileService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" />
       <xsd:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/ActionProfileService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" />
     </xsd:schema>
   </wsdl:types>
@@ -39,6 +39,12 @@
   </wsdl:message>
   <wsdl:message name="IActionProfileService_TestConnection_OutputMessage">
     <wsdl:part name="parameters" element="tns:TestConnectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IActionProfileService_List_InputMessage">
+    <wsdl:part name="parameters" element="tns:List" />
+  </wsdl:message>
+  <wsdl:message name="IActionProfileService_List_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListResponse" />
   </wsdl:message>
   <wsdl:message name="IActionProfileService_Search_InputMessage">
     <wsdl:part name="parameters" element="tns:Search" />
@@ -69,6 +75,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IActionProfileService/TestConnection" message="tns:IActionProfileService_TestConnection_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IActionProfileService/TestConnectionResponse" message="tns:IActionProfileService_TestConnection_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="List">
+      <wsdl:input wsaw:Action="http://tempuri.org/IActionProfileService/List" message="tns:IActionProfileService_List_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IActionProfileService/ListResponse" message="tns:IActionProfileService_List_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="Search">
       <wsdl:input wsaw:Action="http://tempuri.org/IActionProfileService/Search" message="tns:IActionProfileService_Search_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IActionProfileService/SearchResponse" message="tns:IActionProfileService_Search_OutputMessage" />
@@ -90,6 +100,15 @@
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="TestConnection">
       <soap:operation soapAction="http://tempuri.org/IActionProfileService/TestConnection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="List">
+      <soap:operation soapAction="http://tempuri.org/IActionProfileService/List" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -139,6 +158,15 @@
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="TestConnection">
       <soap:operation soapAction="http://tempuri.org/IActionProfileService/TestConnection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="List">
+      <soap:operation soapAction="http://tempuri.org/IActionProfileService/List" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

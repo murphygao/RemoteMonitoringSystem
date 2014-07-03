@@ -3,16 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Remote Monitoring Watchdog" Height="260" Width="670" Icon="pack://application:,,,/Resources/icon.png" Closing="Window_Closing" MinWidth="670" MaxWidth="670" MinHeight="260" MaxHeight="260" WindowState="Minimized">
     <Grid>
-        <Button x:Name="btnStart" Content="Start" HorizontalAlignment="Left" Margin="26,169,0,0" VerticalAlignment="Top" Width="75" Click="btnStart_Click"/>
-        <Button x:Name="btnStop" Content="Stop" HorizontalAlignment="Left" Margin="115,168,0,0" VerticalAlignment="Top" Width="75" Click="btnStop_Click"/>
-        <Label Content="Application name:" HorizontalAlignment="Left" Margin="26,23,0,0" VerticalAlignment="Top"/>
-        <Label Content="Description:" HorizontalAlignment="Left" Margin="26,49,0,0" VerticalAlignment="Top"/>
-        <Label Content="Path to executable:" Margin="26,75,380,0" VerticalAlignment="Top" RenderTransformOrigin="2.625,0.525"/>
-        <Label Content="Remote Monitoring Watchdog" HorizontalAlignment="Left" Margin="172,23,0,0" VerticalAlignment="Top" RenderTransformOrigin="5.053,2.381"/>
-        <Label Content="Recovery application for Monitoring Agent" HorizontalAlignment="Left" Margin="172,49,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblExecPath" Content="&quot;D:\Project\ESN\01 Remote Monitoring System\RMS\RMS.Agent.WPF\bin\Debug\RMS.Agent.WPF.exe&quot;" Margin="26,91,26,0" VerticalAlignment="Top"/>
-        <Label Content="Application status:" HorizontalAlignment="Left" Margin="26,137,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblAppStatus" Content="" HorizontalAlignment="Left" Margin="172,137,0,0" VerticalAlignment="Top" Width="154"/>
+        <Button x:Name="btnStart" Content="Start" HorizontalAlignment="Left" Margin="26,183,0,0" VerticalAlignment="Top" Width="75" Click="btnStart_Click"/>
+        <Button x:Name="btnStop" Content="Stop" HorizontalAlignment="Left" Margin="115,182,0,0" VerticalAlignment="Top" Width="75" Click="btnStop_Click"/>
+        <Label Content="Application name:" HorizontalAlignment="Left" Margin="26,16,0,0" VerticalAlignment="Top"/>
+        <Label Content="Description:" HorizontalAlignment="Left" Margin="26,42,0,0" VerticalAlignment="Top"/>
+        <Label Content="Path to executable:" Margin="26,93,380,0" VerticalAlignment="Top" RenderTransformOrigin="2.625,0.525"/>
+        <Label Content="Remote Monitoring Watchdog" HorizontalAlignment="Left" Margin="172,16,0,0" VerticalAlignment="Top" RenderTransformOrigin="5.053,2.381"/>
+        <Label Content="Recovery application for Monitoring Agent" HorizontalAlignment="Left" Margin="172,42,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblExecPath" Content="&quot;D:\Project\ESN\01 Remote Monitoring System\RMS\RMS.Agent.WPF\bin\Debug\RMS.Agent.WPF.exe&quot;" Margin="26,109,26,0" VerticalAlignment="Top"/>
+        <Label Content="Application status:" HorizontalAlignment="Left" Margin="26,151,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblAppStatus" Content="" HorizontalAlignment="Left" Margin="172,145,0,0" VerticalAlignment="Top" Width="154"/>
+        <Label Content="Version" HorizontalAlignment="Left" Margin="26,68,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="txtCurrentVersion" Content="1.000" HorizontalAlignment="Left" Margin="172,68,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

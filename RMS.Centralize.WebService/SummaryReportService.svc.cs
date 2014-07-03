@@ -261,7 +261,7 @@ namespace RMS.Centralize.WebService
             }
         }
 
-        public Result ActionRequest(ActionService.ActionSendType actionSendType, long reportID)
+        public Result ActionRequest(ActionSendService.ActionSendType actionSendType, long reportID)
         {
             try
             {
@@ -272,8 +272,8 @@ namespace RMS.Centralize.WebService
                     {
                         List<RmsReportSummaryMonitoring> lReports = new List<RmsReportSummaryMonitoring>();
                         lReports.Add(report);
-                        var action = new ActionService();
-                        action.ActionSend(ActionService.ActionSendType.ManualSending, lReports);
+                        var action = new ActionSendService();
+                        action.ActionSend(ActionSendService.ActionSendType.ManualSending, lReports);
                         return new Result
                         {
                             IsSuccess = true

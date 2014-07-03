@@ -18,5 +18,6 @@
         <Button x:Name="btnNumber7" Content="" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="250" Height="200" Margin="0" Opacity="0" Tag="7"/>
         <Button x:Name="btnNumber8" Content="8" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="250" Height="200" Margin="383,0" Opacity="0" Tag="8"/>
         <Button x:Name="btnNumber9" Content="" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="250" Height="200" Margin="0" Opacity="0" Tag="9"/>
+        <Label x:Name="txtCurrentVersion" Content="1.000" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="196" HorizontalContentAlignment="Right" FontSize="22" Height="39" Foreground="#FF333333"/>
     </Grid>
 </Window>

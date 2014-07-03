@@ -9,7 +9,7 @@ using RMS.Common.Exception;
 
 namespace RMS.Centralize.WebService.BSL
 {
-    public class ClientMonitoringService
+    public class ClientMonitoringService : BaseService
     {
         public List<ClientMonitoringInfo> ListByClient(int clientID)
         {

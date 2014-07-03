@@ -17,6 +17,9 @@ namespace RMS.Centralize.WebService
         void TestConnection();
 
         [OperationContract]
+        ActionProfileResult List(bool? activeList);
+
+        [OperationContract]
         ActionProfileResult Search(JQueryDataTableParamModel param, string txtActionProfile, string txtEmail, string txtSms);
 
         [OperationContract]

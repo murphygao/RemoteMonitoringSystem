@@ -11,7 +11,7 @@ using RMS.Common.Exception;
 
 namespace RMS.Centralize.WebService.BSL
 {
-    public class MonitoringProfileService
+    public class MonitoringProfileService : BaseService
     {
         public List<RmsMonitoringProfile> List(bool? activeList)
         {

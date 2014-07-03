@@ -113,10 +113,12 @@
     <Content Include="ClientService.svc" />
     <Content Include="index.html" />
     <Content Include="LocationService.svc" />
+    <Content Include="MasterTableService.svc" />
     <Content Include="MessageActionService.svc" />
     <Content Include="MonitoringProfileService.svc" />
     <Content Include="MonitoringService.svc" />
     <Content Include="SelfTestingService.svc" />
+    <Content Include="SeverityLevelService.svc" />
     <Content Include="SummaryReportService.svc" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -127,14 +129,17 @@
     <Compile Include="ActionProfileService.svc.cs">
       <DependentUpon>ActionProfileService.svc</DependentUpon>
     </Compile>
-    <Compile Include="BSL\ActionService.cs" />
+    <Compile Include="BSL\ActionProfileService.cs" />
+    <Compile Include="BSL\ActionSendService.cs" />
     <Compile Include="BSL\BaseService.cs" />
     <Compile Include="BSL\ClientMonitoringService.cs" />
     <Compile Include="BSL\ClientService.cs" />
     <Compile Include="BSL\LocationService.cs" />
+    <Compile Include="BSL\MasterTableService.cs" />
     <Compile Include="BSL\MonitoringEngineService.cs" />
     <Compile Include="BSL\MonitoringProfileService.cs" />
     <Compile Include="BSL\SelfTestingService.cs" />
+    <Compile Include="BSL\SeverityLevelService.cs" />
     <Compile Include="BSL\SummaryService.cs" />
     <Compile Include="ClientMonitoringService.svc.cs">
       <DependentUpon>ClientMonitoringService.svc</DependentUpon>
@@ -142,6 +147,7 @@
     <Compile Include="ClientService.svc.cs">
       <DependentUpon>ClientService.svc</DependentUpon>
     </Compile>
+    <Compile Include="Interface\IMasterTableService.cs" />
     <Compile Include="Interface\IClientMonitoringService.cs" />
     <Compile Include="Interface\IMonitoringProfileService.cs" />
     <Compile Include="Interface\ILocationService.cs" />
@@ -152,8 +158,12 @@
     <Compile Include="Interface\ISummaryReportService.cs" />
     <Compile Include="Interface\IWebEngineService.cs" />
     <Compile Include="Interface\ISelfTestingService.cs" />
+    <Compile Include="Interface\ISeverityLevelService.cs" />
     <Compile Include="LocationService.svc.cs">
       <DependentUpon>LocationService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="MasterTableService.svc.cs">
+      <DependentUpon>MasterTableService.svc</DependentUpon>
     </Compile>
     <Compile Include="MessageActionService.svc.cs">
       <DependentUpon>MessageActionService.svc</DependentUpon>
@@ -170,6 +180,7 @@
     <Compile Include="Model\MonitoringProfileInfo.cs" />
     <Compile Include="Model\Result.cs" />
     <Compile Include="Model\RmsMessageAction.cs" />
+    <Compile Include="Model\SeverityLevelInfo.cs" />
     <Compile Include="Model\SummaryMonitoringReport.cs" />
     <Compile Include="MonitoringProfileService.svc.cs">
       <DependentUpon>MonitoringProfileService.svc</DependentUpon>
@@ -180,6 +191,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SelfTestingService.svc.cs">
       <DependentUpon>SelfTestingService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="SeverityLevelService.svc.cs">
+      <DependentUpon>SeverityLevelService.svc</DependentUpon>
     </Compile>
     <Compile Include="SummaryReportService.svc.cs">
       <DependentUpon>SummaryReportService.svc</DependentUpon>

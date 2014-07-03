@@ -38,7 +38,7 @@ namespace RMS.Centralize.WebService
                 var sr = new MonitoringProfileResult
                 {
                     IsSuccess = false,
-                    ErrorMessage = "Get errors. " + ex.Message
+                    ErrorMessage = "List errors. " + ex.Message
                 };
                 return sr;
             }

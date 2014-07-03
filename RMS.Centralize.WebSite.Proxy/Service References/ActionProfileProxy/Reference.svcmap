@@ -25,8 +25,8 @@
   </MetadataSources>
   <Metadata>
     <MetadataFile FileName="ActionProfileService.wsdl" MetadataType="Wsdl" ID="1f73ef5f-48a9-4244-ae4d-1a847a901053" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/ActionProfileService.svc?wsdl" />
-    <MetadataFile FileName="ActionProfileService.xsd" MetadataType="Schema" ID="a8cc0998-3f0c-438a-8bda-b1738c7b3f7e" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/ActionProfileService.svc?xsd=xsd2" />
     <MetadataFile FileName="ActionProfileService1.xsd" MetadataType="Schema" ID="58847498-4e79-4aa5-8f2e-b7ff8f90d4e6" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/ActionProfileService.svc?xsd=xsd4" />
+    <MetadataFile FileName="ActionProfileService.xsd" MetadataType="Schema" ID="a8cc0998-3f0c-438a-8bda-b1738c7b3f7e" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/ActionProfileService.svc?xsd=xsd2" />
     <MetadataFile FileName="ActionProfileService2.xsd" MetadataType="Schema" ID="c25a1128-bcbe-4708-b8aa-fcb74721dfbe" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/ActionProfileService.svc?xsd=xsd1" />
     <MetadataFile FileName="ActionProfileService3.xsd" MetadataType="Schema" ID="64faaacc-6118-4c27-b313-6b13c388427b" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/ActionProfileService.svc?xsd=xsd3" />
     <MetadataFile FileName="ActionProfileService.disco" MetadataType="Disco" ID="eb4995ca-ff1f-41ca-a60b-719a57ed08ee" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/ActionProfileService.svc?disco" />

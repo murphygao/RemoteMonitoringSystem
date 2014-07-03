@@ -21,6 +21,33 @@ namespace RMS.Centralize.WebService
             
         }
 
+        public ActionProfileResult List(bool? activeList)
+        {
+            try
+            {
+                BSL.ActionProfileService service = new BSL.ActionProfileService();
+                var lists = service.List(activeList);
+
+                var sr = new ActionProfileResult
+                {
+                    IsSuccess = true,
+                    ListActionProfiles = lists,
+                };
+                return sr;
+            }
+            catch (Exception ex)
+            {
+                new RMSWebException(this, "0500", "List failed. " + ex.Message, ex, true);
+
+                var sr = new ActionProfileResult
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "List errors. " + ex.Message
+                };
+                return sr;
+            }
+        }
+
         public ActionProfileResult Search(JQueryDataTableParamModel param, string txtActionProfile, string txtEmail, string txtSms)
         {
 
