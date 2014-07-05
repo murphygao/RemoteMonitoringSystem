@@ -34,6 +34,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Centralize.WebSite.Proxy.ClientProxy.ClientInfoResult))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Centralize.WebSite.Proxy.ClientProxy.MainAppClientResult))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Centralize.WebSite.Proxy.ClientProxy.LocationResult))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Centralize.WebSite.Proxy.ClientProxy.ClientSeverityActionResult))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult))]
     public partial class Result : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -239,6 +240,77 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
                 if ((object.ReferenceEquals(this.LocationField, value) != true)) {
                     this.LocationField = value;
                     this.RaisePropertyChanged("Location");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int TotalRecords {
+            get {
+                return this.TotalRecordsField;
+            }
+            set {
+                if ((this.TotalRecordsField.Equals(value) != true)) {
+                    this.TotalRecordsField = value;
+                    this.RaisePropertyChanged("TotalRecords");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ClientSeverityActionResult", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService")]
+    [System.SerializableAttribute()]
+    public partial class ClientSeverityActionResult : RMS.Centralize.WebSite.Proxy.ClientProxy.Result {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RMS.Centralize.WebSite.Proxy.ClientProxy.RmsClientSeverityAction ClientSeverityActionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RMS.Centralize.WebSite.Proxy.ClientProxy.ClientSeverityActionInfo InfoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.ClientProxy.ClientSeverityActionInfo> ListClientSeverityActionInfosField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TotalRecordsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RMS.Centralize.WebSite.Proxy.ClientProxy.RmsClientSeverityAction ClientSeverityAction {
+            get {
+                return this.ClientSeverityActionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ClientSeverityActionField, value) != true)) {
+                    this.ClientSeverityActionField = value;
+                    this.RaisePropertyChanged("ClientSeverityAction");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RMS.Centralize.WebSite.Proxy.ClientProxy.ClientSeverityActionInfo Info {
+            get {
+                return this.InfoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InfoField, value) != true)) {
+                    this.InfoField = value;
+                    this.RaisePropertyChanged("Info");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.ClientProxy.ClientSeverityActionInfo> ListClientSeverityActionInfos {
+            get {
+                return this.ListClientSeverityActionInfosField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ListClientSeverityActionInfosField, value) != true)) {
+                    this.ListClientSeverityActionInfosField = value;
+                    this.RaisePropertyChanged("ListClientSeverityActionInfos");
                 }
             }
         }
@@ -2484,147 +2556,9 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="RmsClientMonitoring", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL")]
-    [System.SerializableAttribute()]
-    public partial class RmsClientMonitoring : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        private int ClientIdField;
-        
-        private int MonitoringProfileIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> EffectiveDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> CreatedDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CreatedByField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> UpdatedDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string UpdatedByField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int ClientId {
-            get {
-                return this.ClientIdField;
-            }
-            set {
-                if ((this.ClientIdField.Equals(value) != true)) {
-                    this.ClientIdField = value;
-                    this.RaisePropertyChanged("ClientId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public int MonitoringProfileId {
-            get {
-                return this.MonitoringProfileIdField;
-            }
-            set {
-                if ((this.MonitoringProfileIdField.Equals(value) != true)) {
-                    this.MonitoringProfileIdField = value;
-                    this.RaisePropertyChanged("MonitoringProfileId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=2)]
-        public System.Nullable<System.DateTime> EffectiveDate {
-            get {
-                return this.EffectiveDateField;
-            }
-            set {
-                if ((this.EffectiveDateField.Equals(value) != true)) {
-                    this.EffectiveDateField = value;
-                    this.RaisePropertyChanged("EffectiveDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=3)]
-        public System.Nullable<System.DateTime> CreatedDate {
-            get {
-                return this.CreatedDateField;
-            }
-            set {
-                if ((this.CreatedDateField.Equals(value) != true)) {
-                    this.CreatedDateField = value;
-                    this.RaisePropertyChanged("CreatedDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=4)]
-        public string CreatedBy {
-            get {
-                return this.CreatedByField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CreatedByField, value) != true)) {
-                    this.CreatedByField = value;
-                    this.RaisePropertyChanged("CreatedBy");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=5)]
-        public System.Nullable<System.DateTime> UpdatedDate {
-            get {
-                return this.UpdatedDateField;
-            }
-            set {
-                if ((this.UpdatedDateField.Equals(value) != true)) {
-                    this.UpdatedDateField = value;
-                    this.RaisePropertyChanged("UpdatedDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Order=6)]
-        public string UpdatedBy {
-            get {
-                return this.UpdatedByField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UpdatedByField, value) != true)) {
-                    this.UpdatedByField = value;
-                    this.RaisePropertyChanged("UpdatedBy");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="RmsClientSeverityAction", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL")]
     [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Centralize.WebSite.Proxy.ClientProxy.ClientSeverityActionInfo))]
     public partial class RmsClientSeverityAction : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -2786,6 +2720,200 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+        public string UpdatedBy {
+            get {
+                return this.UpdatedByField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UpdatedByField, value) != true)) {
+                    this.UpdatedByField = value;
+                    this.RaisePropertyChanged("UpdatedBy");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ClientSeverityActionInfo", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model")]
+    [System.SerializableAttribute()]
+    public partial class ClientSeverityActionInfo : RMS.Centralize.WebSite.Proxy.ClientProxy.RmsClientSeverityAction {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LevelCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LevelNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> RowNumField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LevelCode {
+            get {
+                return this.LevelCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LevelCodeField, value) != true)) {
+                    this.LevelCodeField = value;
+                    this.RaisePropertyChanged("LevelCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LevelName {
+            get {
+                return this.LevelNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LevelNameField, value) != true)) {
+                    this.LevelNameField = value;
+                    this.RaisePropertyChanged("LevelName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> RowNum {
+            get {
+                return this.RowNumField;
+            }
+            set {
+                if ((this.RowNumField.Equals(value) != true)) {
+                    this.RowNumField = value;
+                    this.RaisePropertyChanged("RowNum");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RmsClientMonitoring", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL")]
+    [System.SerializableAttribute()]
+    public partial class RmsClientMonitoring : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private int ClientIdField;
+        
+        private int MonitoringProfileIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> EffectiveDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> CreatedDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CreatedByField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> UpdatedDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UpdatedByField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int MonitoringProfileId {
+            get {
+                return this.MonitoringProfileIdField;
+            }
+            set {
+                if ((this.MonitoringProfileIdField.Equals(value) != true)) {
+                    this.MonitoringProfileIdField = value;
+                    this.RaisePropertyChanged("MonitoringProfileId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+        public System.Nullable<System.DateTime> EffectiveDate {
+            get {
+                return this.EffectiveDateField;
+            }
+            set {
+                if ((this.EffectiveDateField.Equals(value) != true)) {
+                    this.EffectiveDateField = value;
+                    this.RaisePropertyChanged("EffectiveDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+        public System.Nullable<System.DateTime> CreatedDate {
+            get {
+                return this.CreatedDateField;
+            }
+            set {
+                if ((this.CreatedDateField.Equals(value) != true)) {
+                    this.CreatedDateField = value;
+                    this.RaisePropertyChanged("CreatedDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+        public string CreatedBy {
+            get {
+                return this.CreatedByField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CreatedByField, value) != true)) {
+                    this.CreatedByField = value;
+                    this.RaisePropertyChanged("CreatedBy");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+        public System.Nullable<System.DateTime> UpdatedDate {
+            get {
+                return this.UpdatedDateField;
+            }
+            set {
+                if ((this.UpdatedDateField.Equals(value) != true)) {
+                    this.UpdatedDateField = value;
+                    this.RaisePropertyChanged("UpdatedDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=6)]
         public string UpdatedBy {
             get {
                 return this.UpdatedByField;
@@ -3225,10 +3353,10 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.ClientInfoResult> SearchAsync(RMS.Centralize.WebSite.Proxy.ClientProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> asOfDate, System.Nullable<int> clientTypeID, string clientCode, System.Nullable<bool> clientStatus, string ipAddress);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/Update", ReplyAction="http://tempuri.org/IClientService/UpdateResponse")]
-        RMS.Centralize.WebSite.Proxy.ClientProxy.Result Update(System.Nullable<int> id, string m, string clientCode, System.Nullable<int> clientTypeID, System.Nullable<bool> useLocalInfo, System.Nullable<int> referenceClientID, string ipAddress, System.Nullable<int> locationID, System.Nullable<bool> hasMonitoringAgent, System.Nullable<bool> activeList, System.Nullable<bool> status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, System.Nullable<int> state);
+        RMS.Centralize.WebSite.Proxy.ClientProxy.Result Update(System.Nullable<int> id, string m, string clientCode, System.Nullable<int> clientTypeID, System.Nullable<bool> useLocalInfo, System.Nullable<int> referenceClientID, string ipAddress, System.Nullable<int> locationID, System.Nullable<bool> hasMonitoringAgent, System.Nullable<bool> activeList, System.Nullable<bool> status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, System.Nullable<int> state, string updatedBy);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/Update", ReplyAction="http://tempuri.org/IClientService/UpdateResponse")]
-        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.Result> UpdateAsync(System.Nullable<int> id, string m, string clientCode, System.Nullable<int> clientTypeID, System.Nullable<bool> useLocalInfo, System.Nullable<int> referenceClientID, string ipAddress, System.Nullable<int> locationID, System.Nullable<bool> hasMonitoringAgent, System.Nullable<bool> activeList, System.Nullable<bool> status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, System.Nullable<int> state);
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.Result> UpdateAsync(System.Nullable<int> id, string m, string clientCode, System.Nullable<int> clientTypeID, System.Nullable<bool> useLocalInfo, System.Nullable<int> referenceClientID, string ipAddress, System.Nullable<int> locationID, System.Nullable<bool> hasMonitoringAgent, System.Nullable<bool> activeList, System.Nullable<bool> status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, System.Nullable<int> state, string updatedBy);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/ExistingClientCode", ReplyAction="http://tempuri.org/IClientService/ExistingClientCodeResponse")]
         RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult ExistingClientCode(string clientCode);
@@ -3247,6 +3375,24 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/ListLocation", ReplyAction="http://tempuri.org/IClientService/ListLocationResponse")]
         System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.LocationResult> ListLocationAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/ListClientSeverityActions", ReplyAction="http://tempuri.org/IClientService/ListClientSeverityActionsResponse")]
+        RMS.Centralize.WebSite.Proxy.ClientProxy.ClientSeverityActionResult ListClientSeverityActions(int clientID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/ListClientSeverityActions", ReplyAction="http://tempuri.org/IClientService/ListClientSeverityActionsResponse")]
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.ClientSeverityActionResult> ListClientSeverityActionsAsync(int clientID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/GetClientSeverityAction", ReplyAction="http://tempuri.org/IClientService/GetClientSeverityActionResponse")]
+        RMS.Centralize.WebSite.Proxy.ClientProxy.ClientSeverityActionResult GetClientSeverityAction(int clientID, int severityLevelID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/GetClientSeverityAction", ReplyAction="http://tempuri.org/IClientService/GetClientSeverityActionResponse")]
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.ClientSeverityActionResult> GetClientSeverityActionAsync(int clientID, int severityLevelID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/UpdateClientSeverityAction", ReplyAction="http://tempuri.org/IClientService/UpdateClientSeverityActionResponse")]
+        RMS.Centralize.WebSite.Proxy.ClientProxy.ClientSeverityActionResult UpdateClientSeverityAction(int clientID, int severityLevelID, bool overwritenAction, string email, string sms, System.Nullable<int> commandLineID, string updatedBy);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/UpdateClientSeverityAction", ReplyAction="http://tempuri.org/IClientService/UpdateClientSeverityActionResponse")]
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.ClientSeverityActionResult> UpdateClientSeverityActionAsync(int clientID, int severityLevelID, bool overwritenAction, string email, string sms, System.Nullable<int> commandLineID, string updatedBy);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -3308,12 +3454,12 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             return base.Channel.SearchAsync(param, asOfDate, clientTypeID, clientCode, clientStatus, ipAddress);
         }
         
-        public RMS.Centralize.WebSite.Proxy.ClientProxy.Result Update(System.Nullable<int> id, string m, string clientCode, System.Nullable<int> clientTypeID, System.Nullable<bool> useLocalInfo, System.Nullable<int> referenceClientID, string ipAddress, System.Nullable<int> locationID, System.Nullable<bool> hasMonitoringAgent, System.Nullable<bool> activeList, System.Nullable<bool> status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, System.Nullable<int> state) {
-            return base.Channel.Update(id, m, clientCode, clientTypeID, useLocalInfo, referenceClientID, ipAddress, locationID, hasMonitoringAgent, activeList, status, effectiveDate, expiredDate, state);
+        public RMS.Centralize.WebSite.Proxy.ClientProxy.Result Update(System.Nullable<int> id, string m, string clientCode, System.Nullable<int> clientTypeID, System.Nullable<bool> useLocalInfo, System.Nullable<int> referenceClientID, string ipAddress, System.Nullable<int> locationID, System.Nullable<bool> hasMonitoringAgent, System.Nullable<bool> activeList, System.Nullable<bool> status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, System.Nullable<int> state, string updatedBy) {
+            return base.Channel.Update(id, m, clientCode, clientTypeID, useLocalInfo, referenceClientID, ipAddress, locationID, hasMonitoringAgent, activeList, status, effectiveDate, expiredDate, state, updatedBy);
         }
         
-        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.Result> UpdateAsync(System.Nullable<int> id, string m, string clientCode, System.Nullable<int> clientTypeID, System.Nullable<bool> useLocalInfo, System.Nullable<int> referenceClientID, string ipAddress, System.Nullable<int> locationID, System.Nullable<bool> hasMonitoringAgent, System.Nullable<bool> activeList, System.Nullable<bool> status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, System.Nullable<int> state) {
-            return base.Channel.UpdateAsync(id, m, clientCode, clientTypeID, useLocalInfo, referenceClientID, ipAddress, locationID, hasMonitoringAgent, activeList, status, effectiveDate, expiredDate, state);
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.Result> UpdateAsync(System.Nullable<int> id, string m, string clientCode, System.Nullable<int> clientTypeID, System.Nullable<bool> useLocalInfo, System.Nullable<int> referenceClientID, string ipAddress, System.Nullable<int> locationID, System.Nullable<bool> hasMonitoringAgent, System.Nullable<bool> activeList, System.Nullable<bool> status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, System.Nullable<int> state, string updatedBy) {
+            return base.Channel.UpdateAsync(id, m, clientCode, clientTypeID, useLocalInfo, referenceClientID, ipAddress, locationID, hasMonitoringAgent, activeList, status, effectiveDate, expiredDate, state, updatedBy);
         }
         
         public RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult ExistingClientCode(string clientCode) {
@@ -3338,6 +3484,30 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         
         public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.LocationResult> ListLocationAsync() {
             return base.Channel.ListLocationAsync();
+        }
+        
+        public RMS.Centralize.WebSite.Proxy.ClientProxy.ClientSeverityActionResult ListClientSeverityActions(int clientID) {
+            return base.Channel.ListClientSeverityActions(clientID);
+        }
+        
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.ClientSeverityActionResult> ListClientSeverityActionsAsync(int clientID) {
+            return base.Channel.ListClientSeverityActionsAsync(clientID);
+        }
+        
+        public RMS.Centralize.WebSite.Proxy.ClientProxy.ClientSeverityActionResult GetClientSeverityAction(int clientID, int severityLevelID) {
+            return base.Channel.GetClientSeverityAction(clientID, severityLevelID);
+        }
+        
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.ClientSeverityActionResult> GetClientSeverityActionAsync(int clientID, int severityLevelID) {
+            return base.Channel.GetClientSeverityActionAsync(clientID, severityLevelID);
+        }
+        
+        public RMS.Centralize.WebSite.Proxy.ClientProxy.ClientSeverityActionResult UpdateClientSeverityAction(int clientID, int severityLevelID, bool overwritenAction, string email, string sms, System.Nullable<int> commandLineID, string updatedBy) {
+            return base.Channel.UpdateClientSeverityAction(clientID, severityLevelID, overwritenAction, email, sms, commandLineID, updatedBy);
+        }
+        
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.ClientSeverityActionResult> UpdateClientSeverityActionAsync(int clientID, int severityLevelID, bool overwritenAction, string email, string sms, System.Nullable<int> commandLineID, string updatedBy) {
+            return base.Channel.UpdateClientSeverityActionAsync(clientID, severityLevelID, overwritenAction, email, sms, commandLineID, updatedBy);
         }
     }
 }

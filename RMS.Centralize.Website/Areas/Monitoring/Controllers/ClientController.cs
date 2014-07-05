@@ -148,8 +148,10 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
             try
             {
+                var updatedBy = new BasePage().UserName;
+
                 var apClient = new ClientService().clientService;
-                var result = apClient.Update(id, m, clientCode, clientTypeID, useLocalInfo, referenceClientID, ipAddress, locationID, hasMonitoringAgent, activeList, status, effectiveDate, expiredDate, state);
+                var result = apClient.Update(id, m, clientCode, clientTypeID, useLocalInfo, referenceClientID, ipAddress, locationID, hasMonitoringAgent, activeList, status, effectiveDate, expiredDate, state, updatedBy);
 
                 var ret = new
                 {
@@ -230,13 +232,15 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
 
 
+        #region Client Monitoring
+
         public ActionResult ListClientMonitoring(JQueryDataTableParamModel param, int? clientID)
         {
             if (clientID == null) throw new ArgumentNullException("ClientID");
 
             try
             {
-                var service = new RMS.Centralize.WebSite.Proxy.ClientMonitoringService().clientMonitoringService;
+                var service = new ClientMonitoringService().clientMonitoringService;
 
                 var result = service.ListByClient(clientID.Value);
 
@@ -260,7 +264,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     status = -1,
                     error = ex.Message
                 };
-                new RMSWebException(this, "0500", "Get failed. " + ex.Message, ex, true);
+                new RMSWebException(this, "0500", "ListClientMonitoring failed. " + ex.Message, ex, true);
 
                 return Json(ret);
             }
@@ -277,7 +281,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
             try
             {
-                var service = new RMS.Centralize.WebSite.Proxy.ClientMonitoringService().clientMonitoringService;
+                var service = new ClientMonitoringService().clientMonitoringService;
 
                 var updatedBy = new BasePage().UserName;
 
@@ -289,7 +293,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             catch (Exception ex)
             {
                 ret = "0";
-                new RMSWebException(this, "0500", "Delete failed. " + ex.Message, ex, true);
+                new RMSWebException(this, "0500", "DeleteClientMonitoring failed. " + ex.Message, ex, true);
             }
 
             return Json(ret);
@@ -303,7 +307,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
             try
             {
-                var service = new RMS.Centralize.WebSite.Proxy.ClientMonitoringService().clientMonitoringService;
+                var service = new ClientMonitoringService().clientMonitoringService;
                 var updatedBy = new BasePage().UserName;
                 var result = service.Update(clientID.Value, monitoringProfileID.Value, null, effectiveDate.Value, updatedBy);
 
@@ -324,7 +328,118 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     error = ex.Message
                 };
 
-                new RMSWebException(this, "0500", "UpdateActionProfile failed. " + ex.Message, ex, true);
+                new RMSWebException(this, "0500", "AddClientMonitoring failed. " + ex.Message, ex, true);
+
+                return Json(ret);
+            }
+
+        }
+
+
+        #endregion
+
+        public ActionResult ListClientSeverityAction(JQueryDataTableParamModel param, int? clientID)
+        {
+            if (clientID == null) throw new ArgumentNullException("ClientID");
+
+            try
+            {
+                var service = new ClientService().clientService;
+
+                var result = service.ListClientSeverityActions(clientID.Value);
+
+                var ret = new
+                {
+                    sEcho = param.sEcho,
+                    iTotalRecords = result.TotalRecords,
+                    iTotalDisplayRecords = result.TotalRecords,
+                    aaData = result.ListClientSeverityActionInfos,
+                    isSuccess = result.IsSuccess,
+                    errorMessage = result.ErrorMessage
+                };
+
+                return Json(ret);
+
+            }
+            catch (Exception ex)
+            {
+                var ret = new
+                {
+                    status = -1,
+                    error = ex.Message
+                };
+                new RMSWebException(this, "0500", "ListClientSeverityAction failed. " + ex.Message, ex, true);
+
+                return Json(ret);
+            }
+        }
+
+        public ActionResult UpdateClientSeverityAction(int? clientID, int? severityLevelID, bool? overwritenAction, string email, string sms, int? commandLineID)
+        {
+            try
+            {
+                if (clientID == null) throw new ArgumentNullException("ClientID");
+                if (severityLevelID == null) throw new ArgumentNullException("SeverityLevelID");
+                if (overwritenAction == null) throw new ArgumentNullException("OverwritenAction");
+
+                var service = new ClientService().clientService;
+                var updatedBy = new BasePage().UserName;
+                var result = service.UpdateClientSeverityAction(clientID.Value, severityLevelID.Value, overwritenAction.Value, email, sms, commandLineID, updatedBy);
+
+                var ret = new
+                {
+                    status = (result.IsSuccess) ? 1 : 0,
+                    error = (result.IsSuccess) ? "" : result.ErrorMessage
+                };
+
+                return Json(ret);
+
+            }
+            catch (Exception ex)
+            {
+                var ret = new
+                {
+                    status = 0,
+                    error = ex.Message
+                };
+
+                new RMSWebException(this, "0500", "UpdateClientSeverityAction failed. " + ex.Message, ex, true);
+
+                return Json(ret);
+            }
+
+        }
+
+        public ActionResult GetClientSeverityAction(int? clientID, int? severityLevelID)
+        {
+            if (clientID == null) throw new ArgumentNullException("ClientID");
+            if (severityLevelID == null) throw new ArgumentNullException("SeverityLevelID");
+
+            try
+            {
+                var service = new ClientService().clientService;
+
+                var result = service.GetClientSeverityAction(clientID.Value, severityLevelID.Value);
+
+
+                var ret = new
+                {
+                    status = (result.IsSuccess) ? 1 : 0,
+                    ClientID = result.Info.ClientId,
+                    SeverityLevelID = result.Info.SeverityLevelId,
+                    data = JsonConvert.SerializeObject(result.Info, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })
+                };
+                return Json(ret);
+
+            }
+            catch (Exception ex)
+            {
+                var ret = new
+                {
+                    status = -1,
+                    error = ex.Message
+                };
+                new RMSWebException(this, "0500", "GetClientSeverityAction failed. " + ex.Message, ex, true);
 
                 return Json(ret);
             }

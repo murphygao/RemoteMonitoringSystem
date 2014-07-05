@@ -1,7 +1,7 @@
 ﻿<Window x:Class="RMS.Agent.Watchdog.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Remote Monitoring Watchdog" Height="260" Width="670" Icon="pack://application:,,,/Resources/icon.png" Closing="Window_Closing" MinWidth="670" MaxWidth="670" MinHeight="260" MaxHeight="260" WindowState="Minimized">
+        Title="Watchdog - Remote Monitoring" Height="260" Width="670" Icon="pack://application:,,,/Resources/icon.png" Closing="Window_Closing" MinWidth="670" MaxWidth="670" MinHeight="260" MaxHeight="260" WindowState="Minimized">
     <Grid>
         <Button x:Name="btnStart" Content="Start" HorizontalAlignment="Left" Margin="26,183,0,0" VerticalAlignment="Top" Width="75" Click="btnStart_Click"/>
         <Button x:Name="btnStop" Content="Stop" HorizontalAlignment="Left" Margin="115,182,0,0" VerticalAlignment="Top" Width="75" Click="btnStop_Click"/>

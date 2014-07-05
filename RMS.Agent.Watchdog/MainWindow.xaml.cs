@@ -48,6 +48,7 @@ namespace RMS.Agent.Watchdog
         public const string updateInfoError = "Error in retrieving UpdateMe information";
 
         public decimal currentVerionOnClient = 0;
+        public decimal updateToVersion = 0;
 
         public string downloadURL = ConfigurationManager.AppSettings["RMS.AutoUpdate.DownloadURL"];
         public string versionFileNameOnServer = ConfigurationManager.AppSettings["RMS.AutoUpdate.VersionFileNameOnServer"];
@@ -163,53 +164,102 @@ namespace RMS.Agent.Watchdog
 
         private void StartAutoUpdateProcess()
         {
-            LoadLocalAutoUpdateInfo();
-            Update.updateMe(updaterPrefix, applicationStartupPath + @"\");
-            UnpackCommandline();
+            try
+            {
+                LoadLocalAutoUpdateInfo();
+                Update.updateMe(updaterPrefix, applicationStartupPath + @"\");
+                UnpackCommandline();
 
-            if (!skipUpdate)
-                CheckforUpdate();
-
+                if (!skipUpdate)
+                    CheckforUpdate();
+            }
+            catch (Exception ex)
+            {
+                new RMSAppException(this, "0500", "StartAutoUpdateProcess failed. " + ex.Message, ex, true);
+            }
         }
 
         private void UnpackCommandline()
         {
-            bool commandPresent = false;
-            string tempStr = "";
-
-            foreach (string arg in Environment.GetCommandLineArgs())
+            try
             {
-                if (!commandPresent)
+                bool commandPresent = false;
+                string tempStr = "";
+
+                string updateVersion = string.Empty;
+                bool? isComplete = null;
+                string errorMessage = string.Empty;
+
+                List<string> listArg = new List<string>(Environment.GetCommandLineArgs());
+
+                foreach (string arg in Environment.GetCommandLineArgs())
                 {
-                    commandPresent = arg.Trim().StartsWith("/");
+                    if (!commandPresent)
+                    {
+                        commandPresent = arg.Trim().StartsWith("/");
+                    }
+
+                    if (commandPresent)
+                    {
+                        tempStr += arg;
+                    }
+
+
+
+                }
+                for (int i = 0; i < listArg.Count; i++)
+                {
+
+                    if (listArg[i].ToLower().Trim() == "/skipupdate") skipUpdate = true;
+                    if (listArg[i].ToLower().Trim() == "/updated" && string.IsNullOrEmpty(errorMessage)) isComplete = true;
+                    if (listArg[i].ToLower().Trim() == "/updateversion")
+                    {
+                        updateVersion = listArg[i + 1];
+                        decimal.TryParse(updateVersion, out updateToVersion);
+
+                    }
+                    if (listArg[i].ToLower().Trim() == "/error")
+                    {
+                        errorMessage = listArg[i + 1];
+                        isComplete = false;
+                    }
+
                 }
 
-                if (commandPresent)
+                string strUpdateVersion = string.IsNullOrEmpty(updateVersion) ? "" : " (" + updateVersion + ")";
+
+                if (isComplete == true)
                 {
-                    tempStr += arg;
+
+                    if (currentVerionOnClient == updateToVersion)
+                    {
+                        AddAutoUpdateLog(updateVersion, isComplete.Value, errorMessage);
+                    }
+                    else
+                    {
+                        string err = "Update Version (" + updateVersion + ") and Current Version (" + currentVerionOnClient + ") must be the same. version.txt in Update File is not correct. Please contact administrator.";
+
+                        skipUpdate = true;
+
+                        AddAutoUpdateLog(updateVersion, false, err);
+
+                    }
+
                 }
+                else if (isComplete == false)
+                {
+                    AddAutoUpdateLog(updateVersion, isComplete.Value, errorMessage);
+                }
+
             }
-
-            if (commandPresent)
+            catch (Exception ex)
             {
-                if (tempStr.Remove(0, 2) == "updated")
-                {
-                    //ถ้าเข้ามาในนี้ได้แสดงว่า update สำเร็จ?
-                }
-
-                if (tempStr.IndexOf("skipupdate") > -1)
-                {
-                    skipUpdate = true;
-                }
-
+                new RMSAppException(this, "0500", "CheckforUpdate failed. " + ex.Message, ex, true);
             }
-
-
         }
 
         private void LoadLocalAutoUpdateInfo()
         {
-
             var path = System.Reflection.Assembly.GetEntryAssembly().Location;
             processToEnd = System.IO.Path.GetFileNameWithoutExtension(path);
             postProcess = applicationStartupPath + @"\" + processToEnd + ".exe";
@@ -229,46 +279,49 @@ namespace RMS.Agent.Watchdog
         private void CheckforUpdate()
         {
 
-            info = Update.getUpdateInfo(downloadURL, versionFileNameOnServer, applicationStartupPath + @"\", 1);
-
-            if (info == null)
+            try
             {
+                info = Update.getUpdateInfo(downloadURL, versionFileNameOnServer, applicationStartupPath + @"\", 1);
 
-                //Update_bttn.Visible = false;
-                //updateResult.Text = updateInfoError;
-                //updateResult.Visible = true;
-
-            }
-            else
-            {
-                //ตรวจสอบ version ถ้าบน server ใหม่กว่า แสดงว่าสามารถ update ได้
-                if (decimal.Parse(info[1]) > currentVerionOnClient)
-                {
-
-                    if (URLExists(info[3] + info[4]))
-                    {
-                        UpdateNow();
-                    }
-                    //Update_bttn.Visible = true;
-                    //updateResult.Visible = false;
-
-                }
-                else //ตรวตสอบพบว่า version บน server ไม่ได้ใหม่กว่า ไม่ต้อง update แต่อย่างใด
+                if (info == null)
                 {
 
                     //Update_bttn.Visible = false;
+                    //updateResult.Text = updateInfoError;
                     //updateResult.Visible = true;
-                    //updateResult.Text = updateCurrent;
 
                 }
+                else
+                {
+                    //ตรวจสอบ version ถ้าบน server ใหม่กว่า แสดงว่าสามารถ update ได้
+                    if (decimal.Parse(info[1]) > currentVerionOnClient)
+                    {
 
+                        if (URLExists(info[3] + info[4]))
+                        {
+                            UpdateNow(info[1]);
+                        }
+                        else
+                        {
+                        }
+                        //Update_bttn.Visible = true;
+                        //updateResult.Visible = false;
+
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                new RMSAppException(this, "0500", "CheckforUpdate failed. " + ex.Message, ex, true);
             }
 
         }
 
-        private void UpdateNow()
+        private void UpdateNow(string updateVersion = "")
         {
-            Update.installUpdateRestart(info[3], info[4], "\"" + applicationStartupPath + "\\", processToEnd, postProcess, "updated", updater);
+            Update.installUpdateRestart(info[3], info[4], "\"" + applicationStartupPath + "\\", processToEnd, postProcess, "updated", updater, updateVersion);
             Close();
         }
 
@@ -291,6 +344,23 @@ namespace RMS.Agent.Watchdog
             }
 
             return result;
+        }
+
+        private void AddAutoUpdateLog(string updateVersion, bool isComplete, string errorMessage)
+        {
+            try
+            {
+                var path = System.Reflection.Assembly.GetEntryAssembly().Location;
+                var appName = System.IO.Path.GetFileNameWithoutExtension(path);
+
+                var service = new RMS.Agent.BSL.AutoUpate.AutoUpdateService();
+                service.UpdateResult("", appName, currentVerionOnClient.ToString(), updateVersion, isComplete, errorMessage);
+
+            }
+            catch (Exception ex)
+            {
+                new RMSAppException(this, "0500", "AddAutoUpdateLog failed. " + ex.Message, ex, true);
+            }
         }
 
         #endregion

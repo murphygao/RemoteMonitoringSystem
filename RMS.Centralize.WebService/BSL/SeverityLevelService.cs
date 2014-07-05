@@ -142,6 +142,9 @@ namespace RMS.Centralize.WebService.BSL
             {
                 using (var db = new MyDbContext())
                 {
+                    db.Configuration.ProxyCreationEnabled = false;
+                    db.Configuration.LazyLoadingEnabled = false;
+
                     var level = db.RmsSeverityLevels.Find(id);
                     if (level == null) throw new Exception("SeverityLevel (" + id + ") Not Found");
 
@@ -173,6 +176,9 @@ namespace RMS.Centralize.WebService.BSL
             {
                 using (var db = new MyDbContext())
                 {
+                    db.Configuration.ProxyCreationEnabled = false;
+                    db.Configuration.LazyLoadingEnabled = false;
+
                     using (var ts = db.Database.BeginTransaction())
                     {
                         //RMS_SeverityLevel

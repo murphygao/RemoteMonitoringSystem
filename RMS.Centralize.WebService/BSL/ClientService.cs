@@ -134,17 +134,17 @@ namespace RMS.Centralize.WebService.BSL
         }
 
         public int Updateclient(int? id, string m, string clientCode, int? clientTypeID, bool? useLocalInfo, int? referenceClientID, string ipAddress, int? locationID, bool? hasMonitoringAgent, bool? activeList, bool? status, DateTime? effectiveDate, DateTime? expiredDate,
-            int? state)
+            int? state, string updatedBy)
         {
             try
             {
                 if (string.IsNullOrEmpty(m))
                 {
-                    return Add(clientCode, clientTypeID, useLocalInfo, referenceClientID, ipAddress, locationID, hasMonitoringAgent, activeList, status, effectiveDate, expiredDate, state);
+                    return Add(clientCode, clientTypeID, useLocalInfo, referenceClientID, ipAddress, locationID, hasMonitoringAgent, activeList, status, effectiveDate, expiredDate, state, updatedBy);
                 }
                 else if (m == "e" && id != null)
                 {
-                    return Update(id, clientCode, clientTypeID, useLocalInfo, referenceClientID, ipAddress, locationID, hasMonitoringAgent, activeList, status, effectiveDate, expiredDate, state);
+                    return Update(id, clientCode, clientTypeID, useLocalInfo, referenceClientID, ipAddress, locationID, hasMonitoringAgent, activeList, status, effectiveDate, expiredDate, state, updatedBy);
                 }
                 return 0;
             }
@@ -244,7 +244,8 @@ namespace RMS.Centralize.WebService.BSL
             }
         }
 
-        private int Add(string clientCode, int? clientTypeID, bool? useLocalInfo, int? referenceClientID, string ipAddress, int? locationID, bool? hasMonitoringAgent, bool? activeList, bool? status, DateTime? effectiveDate, DateTime? expiredDate, int? state)
+        private int Add(string clientCode, int? clientTypeID, bool? useLocalInfo, int? referenceClientID, string ipAddress, int? locationID, bool? hasMonitoringAgent, bool? activeList, bool? status
+            , DateTime? effectiveDate, DateTime? expiredDate, int? state, string updatedBy)
         {
             int activeClients;
 
@@ -274,39 +275,61 @@ namespace RMS.Centralize.WebService.BSL
                 }
                 using (var db = new MyDbContext())
                 {
-                    var newClient = db.RmsClients.Create();
-                    newClient.ClientCode = clientCode;
-                    newClient.ClientTypeId = clientTypeID;
-                    if (useLocalInfo == null || useLocalInfo.Value)
+                    using (var ts = db.Database.BeginTransaction())
                     {
-                        newClient.ReferenceClientId = null;
-                        newClient.IpAddress = ipAddress;
-                        newClient.LocationId = locationID;
-                    }
-                    else
-                    {
-                        newClient.ReferenceClientId = referenceClientID;
-                        newClient.IpAddress = null;
-                        newClient.LocationId = null;
-                    }
-
-                    newClient.HasMonitoringAgent = hasMonitoringAgent;
-                    newClient.ActiveList = activeList;
-                    newClient.Enable = status;
-                    newClient.EffectiveDate = effectiveDate;
-                    newClient.ExpiredDate = expiredDate;
-                    newClient.State = 1;
 
 
-                    if (CheckExistingClientCode(clientCode).Count == 0)
-                    {
-                        db.RmsClients.Add(newClient);
-                        db.SaveChanges();
-                        return 1;
-                    }
-                    else
-                    {
-                        return 2;
+                        var newClient = db.RmsClients.Create();
+                        newClient.ClientCode = clientCode;
+                        newClient.ClientTypeId = clientTypeID;
+                        if (useLocalInfo == null || useLocalInfo.Value)
+                        {
+                            newClient.ReferenceClientId = null;
+                            newClient.IpAddress = ipAddress;
+                            newClient.LocationId = locationID;
+                        }
+                        else
+                        {
+                            newClient.ReferenceClientId = referenceClientID;
+                            newClient.IpAddress = null;
+                            newClient.LocationId = null;
+                        }
+
+                        newClient.HasMonitoringAgent = hasMonitoringAgent;
+                        newClient.ActiveList = activeList;
+                        newClient.Enable = status;
+                        newClient.EffectiveDate = effectiveDate;
+                        newClient.ExpiredDate = expiredDate;
+                        newClient.State = 1;
+                        newClient.CreatedBy = updatedBy;
+                        newClient.UpdatedBy = updatedBy;
+
+
+                        if (CheckExistingClientCode(clientCode).Count == 0)
+                        {
+                            db.RmsClients.Add(newClient);
+                            db.SaveChanges();
+
+                            var rmsSeverityLevels = db.RmsSeverityLevels;
+                            foreach (var level in rmsSeverityLevels)
+                            {
+                                var rmsClientSeverityAction = db.RmsClientSeverityActions.Create();
+                                rmsClientSeverityAction.ClientId = newClient.ClientId;
+                                rmsClientSeverityAction.SeverityLevelId = level.SeverityLevelId;
+                                rmsClientSeverityAction.CreatedBy = updatedBy;
+                                rmsClientSeverityAction.UpdatedBy = updatedBy;
+
+                                db.RmsClientSeverityActions.Add(rmsClientSeverityAction);
+
+                            }
+
+                            db.SaveChanges();
+                            return 1;
+                        }
+                        else
+                        {
+                            return 2;
+                        }
                     }
                 }
             }
@@ -316,7 +339,8 @@ namespace RMS.Centralize.WebService.BSL
             }
         }
 
-        private int Update(int? id, string clientCode, int? clientTypeID, bool? useLocalInfo, int? referenceClientID, string ipAddress, int? locationID, bool? hasMonitoringAgent, bool? activeList, bool? status, DateTime? effectiveDate, DateTime? expiredDate, int? state)
+        private int Update(int? id, string clientCode, int? clientTypeID, bool? useLocalInfo, int? referenceClientID, string ipAddress, int? locationID, bool? hasMonitoringAgent, bool? activeList, bool? status
+            , DateTime? effectiveDate, DateTime? expiredDate, int? state, string updatedBy)
         {
             int activeClients;
 
@@ -371,6 +395,7 @@ namespace RMS.Centralize.WebService.BSL
                     client.Enable = status;
                     client.EffectiveDate = effectiveDate;
                     client.ExpiredDate = expiredDate;
+                    client.UpdatedBy = updatedBy;
                     if (state != null)
                         client.State = state;
 
@@ -414,6 +439,91 @@ namespace RMS.Centralize.WebService.BSL
             catch (Exception ex)
             {
                 throw new RMSWebException(this, "0500", "ListMainAppClient failed. " + ex.Message, ex, false);
+            }
+        }
+
+
+        public List<ClientSeverityActionInfo> ListClientSeverityActions(int clientID)
+        {
+            try
+            {
+                using (var db = new MyDbContext())
+                {
+                    db.Configuration.ProxyCreationEnabled = false;
+                    db.Configuration.LazyLoadingEnabled = false;
+
+                    var listOfType = db.RmsClientSeverityActions.Include("RmsSeverityLevel").Where(w => w.ClientId == clientID);
+
+                    List<RmsClientSeverityAction> lists = new List<RmsClientSeverityAction>(listOfType.ToList());
+
+                    List<ClientSeverityActionInfo> listResult = new List<ClientSeverityActionInfo>();
+
+                    foreach (var clientSeverityAction in lists)
+                    {
+                        ClientSeverityActionInfo info = new ClientSeverityActionInfo(clientSeverityAction);
+                        listResult.Add(info);
+                    }
+
+                    return listResult;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new RMSWebException(this, "0500", "ListClientSeverityActions failed. " + ex.Message, ex, false);
+            }
+
+        }
+
+        public ClientSeverityActionInfo GetClientSeverityAction(int clientID, int severityLevelID)
+        {
+            try
+            {
+                using (var db = new MyDbContext())
+                {
+                    db.Configuration.ProxyCreationEnabled = false;
+                    db.Configuration.LazyLoadingEnabled = false;
+
+                    var clientAction = db.RmsClientSeverityActions.Include("RmsSeverityLevel").FirstOrDefault(w => w.ClientId == clientID && w.SeverityLevelId == severityLevelID);
+
+                    if (clientAction == null) throw new Exception("ClientSeverityAction (clientID: " + clientID + ", severityLevelID: " + severityLevelID + ") Not Found.");
+
+                    ClientSeverityActionInfo ret = new ClientSeverityActionInfo(clientAction);
+                    return ret;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new RMSWebException(this, "0500", "GetClientSeverityActions failed. " + ex.Message, ex, false);
+            }
+        }
+
+        public RmsClientSeverityAction UpdateClientSeverityAction(int clientID, int severityLevelID, bool overwritenAction, string email, string sms, int? commandLineID, string updatedBy)
+        {
+            try
+            {
+                using (var db = new MyDbContext())
+                {
+                    db.Configuration.ProxyCreationEnabled = false;
+                    db.Configuration.LazyLoadingEnabled = false;
+
+                    var rms = db.RmsClientSeverityActions.Find(clientID, severityLevelID);
+                    if (rms == null) throw new Exception("ClientSeverityAction (clientID: " + clientID + ", severityLevelID: " + severityLevelID + ") Not Found");
+
+                    rms.OverwritenAction = overwritenAction;
+                    rms.Email = string.IsNullOrEmpty(email)? null : email.Trim();
+                    rms.Sms = string.IsNullOrEmpty(sms) ? null : sms.Trim();
+                    rms.CommandLindId = commandLineID;
+                    rms.UpdatedBy = updatedBy;
+                    db.SaveChanges();
+
+                    return rms;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new RMSWebException(this, "0500", "UpdateClientSeverityAction failed. " + ex.Message, ex, true);
             }
         }
 

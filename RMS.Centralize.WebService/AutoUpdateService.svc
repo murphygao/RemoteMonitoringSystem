@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="RMS.Centralize.WebService.AutoUpdateService" CodeBehind="AutoUpdateService.svc.cs" %>

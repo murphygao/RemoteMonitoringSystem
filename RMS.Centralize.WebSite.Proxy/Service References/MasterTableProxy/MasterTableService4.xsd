@@ -8,6 +8,12 @@
         <xs:sequence>
           <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="ColorLabel" nillable="true" type="q2:RmsColorLabel" />
           <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="ListColorLabels" nillable="true" type="q3:ArrayOfRmsColorLabel" />
+          <xs:element minOccurs="0" name="ListMessageMasterInfos" nillable="true" type="q1:ArrayOfMessageMasterInfo" />
+          <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="ListMessageMasters" nillable="true" type="q4:ArrayOfRmsMessageMaster" />
+          <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="ListSystemConfigs" nillable="true" type="q5:ArrayOfRmsSystemConfig" />
+          <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="MessageMaster" nillable="true" type="q6:RmsMessageMaster" />
+          <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="SystemConfig" nillable="true" type="q7:RmsSystemConfig" />
+          <xs:element minOccurs="0" name="TotalRecords" type="xs:int" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

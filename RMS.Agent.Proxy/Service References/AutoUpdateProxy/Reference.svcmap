@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b777cc95-610b-4f1d-a79b-82cb76ba9900" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://esn-nb01/RMS.Centralize.WebService/AutoUpdateService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="AutoUpdateService.xsd" MetadataType="Schema" ID="7c6562ae-d040-46e0-946d-98df0ff75989" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/AutoUpdateService.svc?xsd=xsd0" />
+    <MetadataFile FileName="AutoUpdateService.wsdl" MetadataType="Wsdl" ID="0a1ce95d-505d-47c0-9f3f-2a7927bc3394" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/AutoUpdateService.svc?wsdl" />
+    <MetadataFile FileName="AutoUpdateService1.xsd" MetadataType="Schema" ID="2068c502-3c1d-4c92-a9e3-ceb72486dacf" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/AutoUpdateService.svc?xsd=xsd2" />
+    <MetadataFile FileName="AutoUpdateService.disco" MetadataType="Disco" ID="d1b86291-e832-420e-82f4-29c88876b045" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/AutoUpdateService.svc?disco" />
+    <MetadataFile FileName="AutoUpdateService2.xsd" MetadataType="Schema" ID="c8062555-6113-4af3-8ab4-eaf6206d5444" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/AutoUpdateService.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

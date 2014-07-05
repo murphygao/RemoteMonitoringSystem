@@ -81,4 +81,17 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="LocationResult" nillable="true" type="tns:LocationResult" />
+  <xs:complexType name="ClientSeverityActionResult">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q13="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" base="q13:Result">
+        <xs:sequence>
+          <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="ClientSeverityAction" nillable="true" type="q14:RmsClientSeverityAction" />
+          <xs:element minOccurs="0" name="Info" nillable="true" type="q13:ClientSeverityActionInfo" />
+          <xs:element minOccurs="0" name="ListClientSeverityActionInfos" nillable="true" type="q13:ArrayOfClientSeverityActionInfo" />
+          <xs:element minOccurs="0" name="TotalRecords" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ClientSeverityActionResult" nillable="true" type="tns:ClientSeverityActionResult" />
 </xs:schema>

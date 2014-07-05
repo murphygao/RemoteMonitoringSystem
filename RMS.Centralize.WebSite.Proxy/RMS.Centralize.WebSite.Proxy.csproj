@@ -187,6 +187,9 @@
     <None Include="Service References\ClientProxy\RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ClientProxy\RMS.Centralize.WebSite.Proxy.ClientProxy.ClientSeverityActionResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ClientProxy\RMS.Centralize.WebSite.Proxy.ClientProxy.LocationResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -235,6 +238,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\MasterTableProxy\RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MasterTableProxy\RMS.Centralize.WebSite.Proxy.MasterTableProxy.Result.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\MessageActionProxy\MessageActionService1.wsdl" />

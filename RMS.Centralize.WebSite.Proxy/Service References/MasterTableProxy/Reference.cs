@@ -103,6 +103,24 @@ namespace RMS.Centralize.WebSite.Proxy.MasterTableProxy {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.MasterTableProxy.RmsColorLabel> ListColorLabelsField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.MasterTableProxy.MessageMasterInfo> ListMessageMasterInfosField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.MasterTableProxy.RmsMessageMaster> ListMessageMastersField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.MasterTableProxy.RmsSystemConfig> ListSystemConfigsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RMS.Centralize.WebSite.Proxy.MasterTableProxy.RmsMessageMaster MessageMasterField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private RMS.Centralize.WebSite.Proxy.MasterTableProxy.RmsSystemConfig SystemConfigField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TotalRecordsField;
+        
         [System.Runtime.Serialization.DataMemberAttribute()]
         public RMS.Centralize.WebSite.Proxy.MasterTableProxy.RmsColorLabel ColorLabel {
             get {
@@ -125,6 +143,84 @@ namespace RMS.Centralize.WebSite.Proxy.MasterTableProxy {
                 if ((object.ReferenceEquals(this.ListColorLabelsField, value) != true)) {
                     this.ListColorLabelsField = value;
                     this.RaisePropertyChanged("ListColorLabels");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.MasterTableProxy.MessageMasterInfo> ListMessageMasterInfos {
+            get {
+                return this.ListMessageMasterInfosField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ListMessageMasterInfosField, value) != true)) {
+                    this.ListMessageMasterInfosField = value;
+                    this.RaisePropertyChanged("ListMessageMasterInfos");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.MasterTableProxy.RmsMessageMaster> ListMessageMasters {
+            get {
+                return this.ListMessageMastersField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ListMessageMastersField, value) != true)) {
+                    this.ListMessageMastersField = value;
+                    this.RaisePropertyChanged("ListMessageMasters");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.MasterTableProxy.RmsSystemConfig> ListSystemConfigs {
+            get {
+                return this.ListSystemConfigsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ListSystemConfigsField, value) != true)) {
+                    this.ListSystemConfigsField = value;
+                    this.RaisePropertyChanged("ListSystemConfigs");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RMS.Centralize.WebSite.Proxy.MasterTableProxy.RmsMessageMaster MessageMaster {
+            get {
+                return this.MessageMasterField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MessageMasterField, value) != true)) {
+                    this.MessageMasterField = value;
+                    this.RaisePropertyChanged("MessageMaster");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public RMS.Centralize.WebSite.Proxy.MasterTableProxy.RmsSystemConfig SystemConfig {
+            get {
+                return this.SystemConfigField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SystemConfigField, value) != true)) {
+                    this.SystemConfigField = value;
+                    this.RaisePropertyChanged("SystemConfig");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int TotalRecords {
+            get {
+                return this.TotalRecordsField;
+            }
+            set {
+                if ((this.TotalRecordsField.Equals(value) != true)) {
+                    this.TotalRecordsField = value;
+                    this.RaisePropertyChanged("TotalRecords");
                 }
             }
         }
@@ -234,6 +330,374 @@ namespace RMS.Centralize.WebSite.Proxy.MasterTableProxy {
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RmsMessageMaster", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Centralize.WebSite.Proxy.MasterTableProxy.MessageMasterInfo))]
+    public partial class RmsMessageMaster : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private string MessageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailBodyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SmsBodyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailBodySolvedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SmsBodySolvedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> CreatedDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CreatedByField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> UpdatedDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UpdatedByField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public string Message {
+            get {
+                return this.MessageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MessageField, value) != true)) {
+                    this.MessageField = value;
+                    this.RaisePropertyChanged("Message");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+        public string EmailBody {
+            get {
+                return this.EmailBodyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmailBodyField, value) != true)) {
+                    this.EmailBodyField = value;
+                    this.RaisePropertyChanged("EmailBody");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+        public string SmsBody {
+            get {
+                return this.SmsBodyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SmsBodyField, value) != true)) {
+                    this.SmsBodyField = value;
+                    this.RaisePropertyChanged("SmsBody");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+        public string EmailBodySolved {
+            get {
+                return this.EmailBodySolvedField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmailBodySolvedField, value) != true)) {
+                    this.EmailBodySolvedField = value;
+                    this.RaisePropertyChanged("EmailBodySolved");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+        public string SmsBodySolved {
+            get {
+                return this.SmsBodySolvedField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SmsBodySolvedField, value) != true)) {
+                    this.SmsBodySolvedField = value;
+                    this.RaisePropertyChanged("SmsBodySolved");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+        public System.Nullable<System.DateTime> CreatedDate {
+            get {
+                return this.CreatedDateField;
+            }
+            set {
+                if ((this.CreatedDateField.Equals(value) != true)) {
+                    this.CreatedDateField = value;
+                    this.RaisePropertyChanged("CreatedDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+        public string CreatedBy {
+            get {
+                return this.CreatedByField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CreatedByField, value) != true)) {
+                    this.CreatedByField = value;
+                    this.RaisePropertyChanged("CreatedBy");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+        public System.Nullable<System.DateTime> UpdatedDate {
+            get {
+                return this.UpdatedDateField;
+            }
+            set {
+                if ((this.UpdatedDateField.Equals(value) != true)) {
+                    this.UpdatedDateField = value;
+                    this.RaisePropertyChanged("UpdatedDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+        public string UpdatedBy {
+            get {
+                return this.UpdatedByField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UpdatedByField, value) != true)) {
+                    this.UpdatedByField = value;
+                    this.RaisePropertyChanged("UpdatedBy");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RmsSystemConfig", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL")]
+    [System.SerializableAttribute()]
+    public partial class RmsSystemConfig : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ValueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DefaultValueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> CreatedDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CreatedByField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> UpdatedDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UpdatedByField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Value {
+            get {
+                return this.ValueField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ValueField, value) != true)) {
+                    this.ValueField = value;
+                    this.RaisePropertyChanged("Value");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+        public string DefaultValue {
+            get {
+                return this.DefaultValueField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DefaultValueField, value) != true)) {
+                    this.DefaultValueField = value;
+                    this.RaisePropertyChanged("DefaultValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+        public System.Nullable<System.DateTime> CreatedDate {
+            get {
+                return this.CreatedDateField;
+            }
+            set {
+                if ((this.CreatedDateField.Equals(value) != true)) {
+                    this.CreatedDateField = value;
+                    this.RaisePropertyChanged("CreatedDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+        public string CreatedBy {
+            get {
+                return this.CreatedByField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CreatedByField, value) != true)) {
+                    this.CreatedByField = value;
+                    this.RaisePropertyChanged("CreatedBy");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+        public System.Nullable<System.DateTime> UpdatedDate {
+            get {
+                return this.UpdatedDateField;
+            }
+            set {
+                if ((this.UpdatedDateField.Equals(value) != true)) {
+                    this.UpdatedDateField = value;
+                    this.RaisePropertyChanged("UpdatedDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+        public string UpdatedBy {
+            get {
+                return this.UpdatedByField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UpdatedByField, value) != true)) {
+                    this.UpdatedByField = value;
+                    this.RaisePropertyChanged("UpdatedBy");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MessageMasterInfo", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model")]
+    [System.SerializableAttribute()]
+    public partial class MessageMasterInfo : RMS.Centralize.WebSite.Proxy.MasterTableProxy.RmsMessageMaster {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<long> RowNumField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<long> RowNum {
+            get {
+                return this.RowNumField;
+            }
+            set {
+                if ((this.RowNumField.Equals(value) != true)) {
+                    this.RowNumField = value;
+                    this.RaisePropertyChanged("RowNum");
+                }
             }
         }
     }
@@ -1353,6 +1817,163 @@ namespace RMS.Centralize.WebSite.Proxy.MasterTableProxy {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="JQueryDataTableParamModel", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model")]
+    [System.SerializableAttribute()]
+    public partial class JQueryDataTableParamModel : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int iColumnsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int iDisplayLengthField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int iDisplayStartField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string iSortColumnField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int iSortingColsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string sColumnsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string sEchoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string sSearchField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int iColumns {
+            get {
+                return this.iColumnsField;
+            }
+            set {
+                if ((this.iColumnsField.Equals(value) != true)) {
+                    this.iColumnsField = value;
+                    this.RaisePropertyChanged("iColumns");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int iDisplayLength {
+            get {
+                return this.iDisplayLengthField;
+            }
+            set {
+                if ((this.iDisplayLengthField.Equals(value) != true)) {
+                    this.iDisplayLengthField = value;
+                    this.RaisePropertyChanged("iDisplayLength");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int iDisplayStart {
+            get {
+                return this.iDisplayStartField;
+            }
+            set {
+                if ((this.iDisplayStartField.Equals(value) != true)) {
+                    this.iDisplayStartField = value;
+                    this.RaisePropertyChanged("iDisplayStart");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string iSortColumn {
+            get {
+                return this.iSortColumnField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.iSortColumnField, value) != true)) {
+                    this.iSortColumnField = value;
+                    this.RaisePropertyChanged("iSortColumn");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int iSortingCols {
+            get {
+                return this.iSortingColsField;
+            }
+            set {
+                if ((this.iSortingColsField.Equals(value) != true)) {
+                    this.iSortingColsField = value;
+                    this.RaisePropertyChanged("iSortingCols");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string sColumns {
+            get {
+                return this.sColumnsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.sColumnsField, value) != true)) {
+                    this.sColumnsField = value;
+                    this.RaisePropertyChanged("sColumns");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string sEcho {
+            get {
+                return this.sEchoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.sEchoField, value) != true)) {
+                    this.sEchoField = value;
+                    this.RaisePropertyChanged("sEcho");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string sSearch {
+            get {
+                return this.sSearchField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.sSearchField, value) != true)) {
+                    this.sSearchField = value;
+                    this.RaisePropertyChanged("sSearch");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="MasterTableProxy.IMasterTableService")]
     public interface IMasterTableService {
@@ -1368,6 +1989,54 @@ namespace RMS.Centralize.WebSite.Proxy.MasterTableProxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasterTableService/ListColorLabels", ReplyAction="http://tempuri.org/IMasterTableService/ListColorLabelsResponse")]
         System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult> ListColorLabelsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasterTableService/SearchMessageMaster", ReplyAction="http://tempuri.org/IMasterTableService/SearchMessageMasterResponse")]
+        RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult SearchMessageMaster(RMS.Centralize.WebSite.Proxy.MasterTableProxy.JQueryDataTableParamModel param, string message);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasterTableService/SearchMessageMaster", ReplyAction="http://tempuri.org/IMasterTableService/SearchMessageMasterResponse")]
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult> SearchMessageMasterAsync(RMS.Centralize.WebSite.Proxy.MasterTableProxy.JQueryDataTableParamModel param, string message);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasterTableService/ListMessageMaster", ReplyAction="http://tempuri.org/IMasterTableService/ListMessageMasterResponse")]
+        RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult ListMessageMaster();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasterTableService/ListMessageMaster", ReplyAction="http://tempuri.org/IMasterTableService/ListMessageMasterResponse")]
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult> ListMessageMasterAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasterTableService/GetMessageMaster", ReplyAction="http://tempuri.org/IMasterTableService/GetMessageMasterResponse")]
+        RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult GetMessageMaster(string message);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasterTableService/GetMessageMaster", ReplyAction="http://tempuri.org/IMasterTableService/GetMessageMasterResponse")]
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult> GetMessageMasterAsync(string message);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasterTableService/UpdateMessageMaster", ReplyAction="http://tempuri.org/IMasterTableService/UpdateMessageMasterResponse")]
+        RMS.Centralize.WebSite.Proxy.MasterTableProxy.Result UpdateMessageMaster(string id, string m, string message, string description, string emailBody, string smsBody, string emailBodySolved, string smsBodySolved, string updatedBy);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasterTableService/UpdateMessageMaster", ReplyAction="http://tempuri.org/IMasterTableService/UpdateMessageMasterResponse")]
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MasterTableProxy.Result> UpdateMessageMasterAsync(string id, string m, string message, string description, string emailBody, string smsBody, string emailBodySolved, string smsBodySolved, string updatedBy);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasterTableService/DeleteMessageMaster", ReplyAction="http://tempuri.org/IMasterTableService/DeleteMessageMasterResponse")]
+        RMS.Centralize.WebSite.Proxy.MasterTableProxy.Result DeleteMessageMaster(string message, string updatedBy);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasterTableService/DeleteMessageMaster", ReplyAction="http://tempuri.org/IMasterTableService/DeleteMessageMasterResponse")]
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MasterTableProxy.Result> DeleteMessageMasterAsync(string message, string updatedBy);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasterTableService/ListSystemConfig", ReplyAction="http://tempuri.org/IMasterTableService/ListSystemConfigResponse")]
+        RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult ListSystemConfig();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasterTableService/ListSystemConfig", ReplyAction="http://tempuri.org/IMasterTableService/ListSystemConfigResponse")]
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult> ListSystemConfigAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasterTableService/GetSystemConfig", ReplyAction="http://tempuri.org/IMasterTableService/GetSystemConfigResponse")]
+        RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult GetSystemConfig(string name);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasterTableService/GetSystemConfig", ReplyAction="http://tempuri.org/IMasterTableService/GetSystemConfigResponse")]
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult> GetSystemConfigAsync(string name);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasterTableService/UpdateSystemConfig", ReplyAction="http://tempuri.org/IMasterTableService/UpdateSystemConfigResponse")]
+        RMS.Centralize.WebSite.Proxy.MasterTableProxy.Result UpdateSystemConfig(string name, string value, string defaultValue, string description, string updatedBy);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasterTableService/UpdateSystemConfig", ReplyAction="http://tempuri.org/IMasterTableService/UpdateSystemConfigResponse")]
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MasterTableProxy.Result> UpdateSystemConfigAsync(string name, string value, string defaultValue, string description, string updatedBy);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1411,6 +2080,70 @@ namespace RMS.Centralize.WebSite.Proxy.MasterTableProxy {
         
         public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult> ListColorLabelsAsync() {
             return base.Channel.ListColorLabelsAsync();
+        }
+        
+        public RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult SearchMessageMaster(RMS.Centralize.WebSite.Proxy.MasterTableProxy.JQueryDataTableParamModel param, string message) {
+            return base.Channel.SearchMessageMaster(param, message);
+        }
+        
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult> SearchMessageMasterAsync(RMS.Centralize.WebSite.Proxy.MasterTableProxy.JQueryDataTableParamModel param, string message) {
+            return base.Channel.SearchMessageMasterAsync(param, message);
+        }
+        
+        public RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult ListMessageMaster() {
+            return base.Channel.ListMessageMaster();
+        }
+        
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult> ListMessageMasterAsync() {
+            return base.Channel.ListMessageMasterAsync();
+        }
+        
+        public RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult GetMessageMaster(string message) {
+            return base.Channel.GetMessageMaster(message);
+        }
+        
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult> GetMessageMasterAsync(string message) {
+            return base.Channel.GetMessageMasterAsync(message);
+        }
+        
+        public RMS.Centralize.WebSite.Proxy.MasterTableProxy.Result UpdateMessageMaster(string id, string m, string message, string description, string emailBody, string smsBody, string emailBodySolved, string smsBodySolved, string updatedBy) {
+            return base.Channel.UpdateMessageMaster(id, m, message, description, emailBody, smsBody, emailBodySolved, smsBodySolved, updatedBy);
+        }
+        
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MasterTableProxy.Result> UpdateMessageMasterAsync(string id, string m, string message, string description, string emailBody, string smsBody, string emailBodySolved, string smsBodySolved, string updatedBy) {
+            return base.Channel.UpdateMessageMasterAsync(id, m, message, description, emailBody, smsBody, emailBodySolved, smsBodySolved, updatedBy);
+        }
+        
+        public RMS.Centralize.WebSite.Proxy.MasterTableProxy.Result DeleteMessageMaster(string message, string updatedBy) {
+            return base.Channel.DeleteMessageMaster(message, updatedBy);
+        }
+        
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MasterTableProxy.Result> DeleteMessageMasterAsync(string message, string updatedBy) {
+            return base.Channel.DeleteMessageMasterAsync(message, updatedBy);
+        }
+        
+        public RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult ListSystemConfig() {
+            return base.Channel.ListSystemConfig();
+        }
+        
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult> ListSystemConfigAsync() {
+            return base.Channel.ListSystemConfigAsync();
+        }
+        
+        public RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult GetSystemConfig(string name) {
+            return base.Channel.GetSystemConfig(name);
+        }
+        
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult> GetSystemConfigAsync(string name) {
+            return base.Channel.GetSystemConfigAsync(name);
+        }
+        
+        public RMS.Centralize.WebSite.Proxy.MasterTableProxy.Result UpdateSystemConfig(string name, string value, string defaultValue, string description, string updatedBy) {
+            return base.Channel.UpdateSystemConfig(name, value, defaultValue, description, updatedBy);
+        }
+        
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MasterTableProxy.Result> UpdateSystemConfigAsync(string name, string value, string defaultValue, string description, string updatedBy) {
+            return base.Channel.UpdateSystemConfigAsync(name, value, defaultValue, description, updatedBy);
         }
     }
 }

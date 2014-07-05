@@ -17,14 +17,21 @@ namespace RMS.Centralize.WebService.Model
         }
         public ClientMonitoringInfo(RmsClientMonitoring rmsClientMonitoring)
         {
-            this.MonitoringProfileId = rmsClientMonitoring.MonitoringProfileId;
-            this.ClientId = rmsClientMonitoring.ClientId;
-            this.EffectiveDate = rmsClientMonitoring.EffectiveDate;
-            this.ProfileName = rmsClientMonitoring.RmsMonitoringProfile.ProfileName;
-            this.CreatedBy = rmsClientMonitoring.CreatedBy;
-            this.CreatedDate = rmsClientMonitoring.CreatedDate;
-            this.UpdatedBy = rmsClientMonitoring.UpdatedBy;
-            this.UpdatedDate = rmsClientMonitoring.UpdatedDate;
+            if (rmsClientMonitoring != null)
+            {
+                this.MonitoringProfileId = rmsClientMonitoring.MonitoringProfileId;
+                this.ClientId = rmsClientMonitoring.ClientId;
+                this.EffectiveDate = rmsClientMonitoring.EffectiveDate;
+                this.CreatedBy = rmsClientMonitoring.CreatedBy;
+                this.CreatedDate = rmsClientMonitoring.CreatedDate;
+                this.UpdatedBy = rmsClientMonitoring.UpdatedBy;
+                this.UpdatedDate = rmsClientMonitoring.UpdatedDate;
+
+                if (rmsClientMonitoring.RmsMonitoringProfile != null)
+                {
+                    this.ProfileName = rmsClientMonitoring.RmsMonitoringProfile.ProfileName;
+                }
+            }
         }
     }
 }

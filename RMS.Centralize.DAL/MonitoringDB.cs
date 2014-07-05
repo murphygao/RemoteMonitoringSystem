@@ -42,6 +42,7 @@ namespace RMS.Centralize.DAL
         IDbSet<RmsHoliday> RmsHolidays { get; set; } // RMS_Holiday
         IDbSet<RmsLocation> RmsLocations { get; set; } // RMS_Location
         IDbSet<RmsLogActionSend> RmsLogActionSends { get; set; } // RMS_Log_ActionSend
+        IDbSet<RmsLogAutoUpdate> RmsLogAutoUpdates { get; set; } // RMS_Log_AutoUpdate
         IDbSet<RmsLogEvent> RmsLogEvents { get; set; } // RMS_Log_Event
         IDbSet<RmsLogMonitoring> RmsLogMonitorings { get; set; } // RMS_Log_Monitoring
         IDbSet<RmsLogMonitoringClient> RmsLogMonitoringClients { get; set; } // RMS_Log_MonitoringClient
@@ -74,6 +75,7 @@ namespace RMS.Centralize.DAL
         public IDbSet<RmsHoliday> RmsHolidays { get; set; } // RMS_Holiday
         public IDbSet<RmsLocation> RmsLocations { get; set; } // RMS_Location
         public IDbSet<RmsLogActionSend> RmsLogActionSends { get; set; } // RMS_Log_ActionSend
+        public IDbSet<RmsLogAutoUpdate> RmsLogAutoUpdates { get; set; } // RMS_Log_AutoUpdate
         public IDbSet<RmsLogEvent> RmsLogEvents { get; set; } // RMS_Log_Event
         public IDbSet<RmsLogMonitoring> RmsLogMonitorings { get; set; } // RMS_Log_Monitoring
         public IDbSet<RmsLogMonitoringClient> RmsLogMonitoringClients { get; set; } // RMS_Log_MonitoringClient
@@ -124,6 +126,7 @@ namespace RMS.Centralize.DAL
             modelBuilder.Configurations.Add(new RmsHolidayConfiguration());
             modelBuilder.Configurations.Add(new RmsLocationConfiguration());
             modelBuilder.Configurations.Add(new RmsLogActionSendConfiguration());
+            modelBuilder.Configurations.Add(new RmsLogAutoUpdateConfiguration());
             modelBuilder.Configurations.Add(new RmsLogEventConfiguration());
             modelBuilder.Configurations.Add(new RmsLogMonitoringConfiguration());
             modelBuilder.Configurations.Add(new RmsLogMonitoringClientConfiguration());
@@ -153,6 +156,7 @@ namespace RMS.Centralize.DAL
             modelBuilder.Configurations.Add(new RmsHolidayConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsLocationConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsLogActionSendConfiguration(schema));
+            modelBuilder.Configurations.Add(new RmsLogAutoUpdateConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsLogEventConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsLogMonitoringConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsLogMonitoringClientConfiguration(schema));
@@ -759,6 +763,46 @@ namespace RMS.Centralize.DAL
         partial void InitializePartial();
     }
 
+    // RMS_Log_AutoUpdate
+    [DataContract]
+    public partial class RmsLogAutoUpdate
+    {
+        [DataMember(Order = 1, IsRequired = true)]
+        public int Id { get; set; } // ID (Primary key)
+
+        [DataMember(Order = 2, IsRequired = false)]
+        public string IpAddress { get; set; } // IPAddress
+
+        [DataMember(Order = 3, IsRequired = false)]
+        public string ClientCode { get; set; } // ClientCode
+
+        [DataMember(Order = 4, IsRequired = false)]
+        public string AppName { get; set; } // AppName
+
+        [DataMember(Order = 5, IsRequired = false)]
+        public string CurrentVersion { get; set; } // CurrentVersion
+
+        [DataMember(Order = 6, IsRequired = false)]
+        public string UpdateVersion { get; set; } // UpdateVersion
+
+        [DataMember(Order = 7, IsRequired = false)]
+        public bool? IsComplete { get; set; } // IsComplete
+
+        [DataMember(Order = 8, IsRequired = false)]
+        public string ErrorMessage { get; set; } // ErrorMessage
+
+        [DataMember(Order = 9, IsRequired = false)]
+        public DateTime? CreatedDate { get; set; } // CreatedDate
+
+
+        public RmsLogAutoUpdate()
+        {
+            CreatedDate = System.DateTime.Now;
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
     // RMS_Log_Event
     [DataContract]
     public partial class RmsLogEvent
@@ -982,6 +1026,25 @@ namespace RMS.Centralize.DAL
         [DataMember(Order = 6, IsRequired = false)]
         public string SmsBodySolved { get; set; } // SMSBodySolved
 
+        [DataMember(Order = 7, IsRequired = false)]
+        public DateTime? CreatedDate { get; set; } // CreatedDate
+
+        [DataMember(Order = 8, IsRequired = false)]
+        public string CreatedBy { get; set; } // CreatedBy
+
+        [DataMember(Order = 9, IsRequired = false)]
+        public DateTime? UpdatedDate { get; set; } // UpdatedDate
+
+        [DataMember(Order = 10, IsRequired = false)]
+        public string UpdatedBy { get; set; } // UpdatedBy
+
+
+        public RmsMessageMaster()
+        {
+            CreatedDate = System.DateTime.Now;
+            InitializePartial();
+        }
+        partial void InitializePartial();
     }
 
     // RMS_MonitoringProfile
@@ -1599,6 +1662,28 @@ namespace RMS.Centralize.DAL
         partial void InitializePartial();
     }
 
+    // RMS_Log_AutoUpdate
+    internal partial class RmsLogAutoUpdateConfiguration : EntityTypeConfiguration<RmsLogAutoUpdate>
+    {
+        public RmsLogAutoUpdateConfiguration(string schema = "dbo")
+        {
+            ToTable(schema + ".RMS_Log_AutoUpdate");
+            HasKey(x => x.Id);
+
+            Property(x => x.Id).HasColumnName("ID").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            Property(x => x.IpAddress).HasColumnName("IPAddress").IsOptional().HasMaxLength(50);
+            Property(x => x.ClientCode).HasColumnName("ClientCode").IsOptional().HasMaxLength(50);
+            Property(x => x.AppName).HasColumnName("AppName").IsOptional().HasMaxLength(100);
+            Property(x => x.CurrentVersion).HasColumnName("CurrentVersion").IsOptional().HasMaxLength(10);
+            Property(x => x.UpdateVersion).HasColumnName("UpdateVersion").IsOptional().HasMaxLength(10);
+            Property(x => x.IsComplete).HasColumnName("IsComplete").IsOptional();
+            Property(x => x.ErrorMessage).HasColumnName("ErrorMessage").IsOptional().HasMaxLength(200);
+            Property(x => x.CreatedDate).HasColumnName("CreatedDate").IsOptional();
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
     // RMS_Log_Event
     internal partial class RmsLogEventConfiguration : EntityTypeConfiguration<RmsLogEvent>
     {
@@ -1722,6 +1807,10 @@ namespace RMS.Centralize.DAL
             Property(x => x.SmsBody).HasColumnName("SMSBody").IsOptional().HasMaxLength(500);
             Property(x => x.EmailBodySolved).HasColumnName("EmailBodySolved").IsOptional().HasMaxLength(500);
             Property(x => x.SmsBodySolved).HasColumnName("SMSBodySolved").IsOptional().HasMaxLength(500);
+            Property(x => x.CreatedDate).HasColumnName("CreatedDate").IsOptional();
+            Property(x => x.CreatedBy).HasColumnName("CreatedBy").IsOptional().HasMaxLength(100);
+            Property(x => x.UpdatedDate).HasColumnName("UpdatedDate").IsOptional();
+            Property(x => x.UpdatedBy).HasColumnName("UpdatedBy").IsOptional().HasMaxLength(100);
             InitializePartial();
         }
         partial void InitializePartial();

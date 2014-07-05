@@ -218,8 +218,8 @@ namespace RMS.Centralize.WebService
                     {
                         var actionProfile = db.RmsActionProfiles.Create();
                         actionProfile.ActionProfileName = ActionProfileName;
-                        actionProfile.Email = Email;
-                        actionProfile.Sms = SMS;
+                        actionProfile.Email = string.IsNullOrEmpty(Email)? null : Email.Trim();
+                        actionProfile.Sms = string.IsNullOrEmpty(SMS) ? null : SMS.Trim();
                         actionProfile.ActiveList = ActiveList;
                         db.RmsActionProfiles.Add(actionProfile);
 
@@ -245,8 +245,8 @@ namespace RMS.Centralize.WebService
                     {
                         var actionProfile = db.RmsActionProfiles.Find(id);
                         actionProfile.ActionProfileName = ActionProfileName;
-                        actionProfile.Email = Email;
-                        actionProfile.Sms = SMS;
+                        actionProfile.Email = string.IsNullOrEmpty(Email) ? null : Email.Trim();
+                        actionProfile.Sms = string.IsNullOrEmpty(SMS) ? null : SMS.Trim();
                         actionProfile.ActiveList = ActiveList;
 
                         db.SaveChanges();

@@ -109,6 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ActionProfileService.svc" />
+    <Content Include="AutoUpdateService.svc" />
     <Content Include="ClientMonitoringService.svc" />
     <Content Include="ClientService.svc" />
     <Content Include="index.html" />
@@ -129,8 +130,12 @@
     <Compile Include="ActionProfileService.svc.cs">
       <DependentUpon>ActionProfileService.svc</DependentUpon>
     </Compile>
+    <Compile Include="AutoUpdateService.svc.cs">
+      <DependentUpon>AutoUpdateService.svc</DependentUpon>
+    </Compile>
     <Compile Include="BSL\ActionProfileService.cs" />
     <Compile Include="BSL\ActionSendService.cs" />
+    <Compile Include="BSL\AutoUpdateService.cs" />
     <Compile Include="BSL\BaseService.cs" />
     <Compile Include="BSL\ClientMonitoringService.cs" />
     <Compile Include="BSL\ClientService.cs" />
@@ -147,6 +152,7 @@
     <Compile Include="ClientService.svc.cs">
       <DependentUpon>ClientService.svc</DependentUpon>
     </Compile>
+    <Compile Include="Interface\IAutoUpdateService.cs" />
     <Compile Include="Interface\IMasterTableService.cs" />
     <Compile Include="Interface\IClientMonitoringService.cs" />
     <Compile Include="Interface\IMonitoringProfileService.cs" />
@@ -173,10 +179,12 @@
     <Compile Include="Model\ClientMessageAction.cs" />
     <Compile Include="Model\ClientMessageInfo.cs" />
     <Compile Include="Model\ClientMonitoringInfo.cs" />
+    <Compile Include="Model\ClientSeverityActionInfo.cs" />
     <Compile Include="Model\JQueryDataTableParamModel.cs" />
     <Compile Include="Model\LocationInfo.cs" />
     <Compile Include="Model\MainAppClient.cs" />
     <Compile Include="Model\MessageDetail.cs" />
+    <Compile Include="Model\MessageMasterInfo.cs" />
     <Compile Include="Model\MonitoringProfileInfo.cs" />
     <Compile Include="Model\Result.cs" />
     <Compile Include="Model\RmsMessageAction.cs" />

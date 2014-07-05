@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="AutoUpdateService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="BasicHttpsBinding_IAutoUpdateService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/AutoUpdateService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/AutoUpdateService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/AutoUpdateService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IAutoUpdateService_TestConnection_InputMessage">
+    <wsdl:part name="parameters" element="tns:TestConnection" />
+  </wsdl:message>
+  <wsdl:message name="IAutoUpdateService_TestConnection_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TestConnectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAutoUpdateService_AddAutoUpdateLog_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddAutoUpdateLog" />
+  </wsdl:message>
+  <wsdl:message name="IAutoUpdateService_AddAutoUpdateLog_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddAutoUpdateLogResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IAutoUpdateService">
+    <wsdl:operation name="TestConnection">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutoUpdateService/TestConnection" message="tns:IAutoUpdateService_TestConnection_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutoUpdateService/TestConnectionResponse" message="tns:IAutoUpdateService_TestConnection_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddAutoUpdateLog">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutoUpdateService/AddAutoUpdateLog" message="tns:IAutoUpdateService_AddAutoUpdateLog_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutoUpdateService/AddAutoUpdateLogResponse" message="tns:IAutoUpdateService_AddAutoUpdateLog_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IAutoUpdateService" type="tns:IAutoUpdateService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="TestConnection">
+      <soap:operation soapAction="http://tempuri.org/IAutoUpdateService/TestConnection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddAutoUpdateLog">
+      <soap:operation soapAction="http://tempuri.org/IAutoUpdateService/AddAutoUpdateLog" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="BasicHttpsBinding_IAutoUpdateService" type="tns:IAutoUpdateService">
+    <wsp:PolicyReference URI="#BasicHttpsBinding_IAutoUpdateService_policy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="TestConnection">
+      <soap:operation soapAction="http://tempuri.org/IAutoUpdateService/TestConnection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddAutoUpdateLog">
+      <soap:operation soapAction="http://tempuri.org/IAutoUpdateService/AddAutoUpdateLog" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AutoUpdateService">
+    <wsdl:port name="BasicHttpBinding_IAutoUpdateService" binding="tns:BasicHttpBinding_IAutoUpdateService">
+      <soap:address location="http://esn-nb01/RMS.Centralize.WebService/AutoUpdateService.svc" />
+    </wsdl:port>
+    <wsdl:port name="BasicHttpsBinding_IAutoUpdateService" binding="tns:BasicHttpsBinding_IAutoUpdateService">
+      <soap:address location="https://esn-nb01/RMS.Centralize.WebService/AutoUpdateService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

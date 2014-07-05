@@ -125,7 +125,7 @@ namespace RMS.Centralize.WebService
             }
         }
 
-        private string GetIP()
+        public static string GetIP()
         {
             try
             {
@@ -139,7 +139,7 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
-                throw new RMSWebException(this, "0500", "GetIP failed. " + ex.Message, ex, false);
+                throw new RMSWebException("GetIP failed. " + ex.Message, ex, false);
             }
         }
     }

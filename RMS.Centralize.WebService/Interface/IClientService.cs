@@ -27,7 +27,7 @@ namespace RMS.Centralize.WebService
 
 
         [OperationContract]
-        Result Update(int? id, string m, string clientCode, int? clientTypeID, bool? useLocalInfo, int? referenceClientID, string ipAddress, int? locationID, bool? hasMonitoringAgent, bool? activeList, bool? status, DateTime? effectiveDate, DateTime? expiredDate, int? state);
+        Result Update(int? id, string m, string clientCode, int? clientTypeID, bool? useLocalInfo, int? referenceClientID, string ipAddress, int? locationID, bool? hasMonitoringAgent, bool? activeList, bool? status, DateTime? effectiveDate, DateTime? expiredDate, int? state, string updatedBy);
 
         [OperationContract]
         ClientResult ExistingClientCode(string clientCode);
@@ -37,6 +37,21 @@ namespace RMS.Centralize.WebService
 
         [OperationContract]
         LocationResult ListLocation();
+
+        [OperationContract]
+        ClientSeverityActionResult ListClientSeverityActions(int clientID);
+
+        [OperationContract]
+        ClientSeverityActionResult GetClientSeverityAction(int clientID, int severityLevelID);
+
+        [OperationContract]
+        ClientSeverityActionResult UpdateClientSeverityAction(int clientID, int severityLevelID, bool overwritenAction, string email, string sms,
+            int? commandLineID, string updatedBy);
+
+
+
+
+
 
     }
 
@@ -116,6 +131,22 @@ namespace RMS.Centralize.WebService
         public List<MainAppClient> ListMainAppClients { get; set; }
  
  
+    }
+
+    public class ClientSeverityActionResult : Result
+    {
+        [DataMember]
+        public int TotalRecords { get; set; }
+
+        [DataMember]
+        public List<ClientSeverityActionInfo> ListClientSeverityActionInfos { get; set; }
+
+        [DataMember]
+        public ClientSeverityActionInfo Info { get; set; }
+
+        [DataMember]
+        public RmsClientSeverityAction ClientSeverityAction { get; set; }
+        
     }
 
     

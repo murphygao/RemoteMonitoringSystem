@@ -82,6 +82,7 @@
         <xs:element minOccurs="0" name="effectiveDate" nillable="true" type="xs:dateTime" />
         <xs:element minOccurs="0" name="expiredDate" nillable="true" type="xs:dateTime" />
         <xs:element minOccurs="0" name="state" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="updatedBy" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -127,6 +128,55 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="ListLocationResult" nillable="true" type="q10:LocationResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListClientSeverityActions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="clientID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListClientSeverityActionsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="ListClientSeverityActionsResult" nillable="true" type="q11:ClientSeverityActionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetClientSeverityAction">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="clientID" type="xs:int" />
+        <xs:element minOccurs="0" name="severityLevelID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetClientSeverityActionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="GetClientSeverityActionResult" nillable="true" type="q12:ClientSeverityActionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateClientSeverityAction">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="clientID" type="xs:int" />
+        <xs:element minOccurs="0" name="severityLevelID" type="xs:int" />
+        <xs:element minOccurs="0" name="overwritenAction" type="xs:boolean" />
+        <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="sms" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="commandLineID" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="updatedBy" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateClientSeverityActionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="UpdateClientSeverityActionResult" nillable="true" type="q13:ClientSeverityActionResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

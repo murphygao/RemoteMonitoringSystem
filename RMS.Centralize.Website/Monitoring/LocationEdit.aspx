@@ -339,6 +339,9 @@
 
     <!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
 
+    <script type="text/javascript">
+        var appPath = '<%=Request.ApplicationPath%>';
+    </script>
     <%: Scripts.Render("~/bundles/defaultJs") %>
     <%: Scripts.Render("~/bundles/myJs") %>
 

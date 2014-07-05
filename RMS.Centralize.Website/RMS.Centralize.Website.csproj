@@ -158,10 +158,14 @@
     <Content Include="Monitoring\LocationList.aspx" />
     <Content Include="Monitoring\MessageAction.aspx" />
     <Content Include="Monitoring\MessageEdit.aspx" />
+    <Content Include="Monitoring\MessageMasterEdit.aspx" />
+    <Content Include="Monitoring\MessageMasterList.aspx" />
     <Content Include="Monitoring\MonitoringReport.aspx" />
     <Content Include="Monitoring\SelfTesting.aspx" />
     <Content Include="Monitoring\SeverityLevelEdit.aspx" />
     <Content Include="Monitoring\SeverityLevelList.aspx" />
+    <Content Include="Monitoring\SystemConfigEdit.aspx" />
+    <Content Include="Monitoring\SystemConfigList.aspx" />
     <Content Include="Scripts\jquery-2.1.0.min.map" />
     <Content Include="sound\bigbox.ogg" />
     <Content Include="sound\messagebox.ogg" />
@@ -1016,6 +1020,20 @@
     <Compile Include="Monitoring\MessageEdit.aspx.designer.cs">
       <DependentUpon>MessageEdit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Monitoring\MessageMasterEdit.aspx.cs">
+      <DependentUpon>MessageMasterEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\MessageMasterEdit.aspx.designer.cs">
+      <DependentUpon>MessageMasterEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\MessageMasterList.aspx.cs">
+      <DependentUpon>MessageMasterList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\MessageMasterList.aspx.designer.cs">
+      <DependentUpon>MessageMasterList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Monitoring\MonitoringReport.aspx.cs">
       <DependentUpon>MonitoringReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1043,6 +1061,20 @@
     </Compile>
     <Compile Include="Monitoring\SeverityLevelList.aspx.designer.cs">
       <DependentUpon>SeverityLevelList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\SystemConfigEdit.aspx.cs">
+      <DependentUpon>SystemConfigEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\SystemConfigEdit.aspx.designer.cs">
+      <DependentUpon>SystemConfigEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\SystemConfigList.aspx.cs">
+      <DependentUpon>SystemConfigList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\SystemConfigList.aspx.designer.cs">
+      <DependentUpon>SystemConfigList.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SmartAdmin.Master.cs">

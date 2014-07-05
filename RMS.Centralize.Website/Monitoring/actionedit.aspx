@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SmartAdmin.Master" AutoEventWireup="true" CodeBehind="ActionEdit.aspx.cs" Inherits="RMS.Centralize.Website.Monitoring.ActionEdit" %>
+﻿<%@ Page Title="" Language="C#" AutoEventWireup="true" CodeBehind="ActionEdit.aspx.cs" Inherits="RMS.Centralize.Website.Monitoring.ActionEdit" %>
 
 <%@ Import Namespace="System.Web.Optimization" %>
 
@@ -168,9 +168,12 @@
 
 
     <!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
+    <script type="text/javascript">
+        var appPath = '<%=Request.ApplicationPath%>';
+    </script>
 
-    <%: Scripts.Render("~/bundles/myJs") %>
     <%: Scripts.Render("~/bundles/defaultJs") %>
+    <%: Scripts.Render("~/bundles/myJs") %>
 
     <!-- JS TOUCH : include this plugin for mobile drag / drop touch events
 		<script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script> -->
@@ -215,19 +218,41 @@
                 rules: {
                     txtActionProfileName: {
                         required: true
-                    }
+                    },
+                    txtEmail: {
+                        regex: /^\s*(([A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)\s*[;,]{0,1}\s*)+$/
+                    },
+                    txtSMS: {
+                        regex: /^(\d{3}[\s.-]?\d{3}[\s.-]?\d{4}\s*[;,]{0,1}\s*)+$/
+                    },
+
                 },
                 messages: {
                     txtActionProfileName: {
                         required: 'Please enter action profile name'
-                    }
+                    },
+                    txtEmail: {
+                        regex: 'Please check email format.'
+                    },
+                    txtSMS: {
+                    regex: 'Please check phone number format.'
                 },
+            },
 
                 errorPlacement: function (error, element) {
                     error.insertAfter(element.parent());
                 }
 
             });
+
+            $.validator.addMethod(
+                    "regex",
+                    function (value, element, regexp) {
+                        var re = new RegExp(regexp);
+                        return this.optional(element) || re.test(value);
+                    },
+                    "Please check your input."
+            );
 
             if ("<%=Request["m"]%>" == "e" && "<%=Request["id1"]%>" != "") {
 

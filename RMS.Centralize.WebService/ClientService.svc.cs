@@ -157,12 +157,12 @@ namespace RMS.Centralize.WebService
             }
         }
 
-        public Result Update(int? id, string m, string clientCode, int? clientTypeID, bool? useLocalInfo, int? referenceClientID, string ipAddress, int? locationID, bool? hasMonitoringAgent, bool? activeList, bool? status, DateTime? effectiveDate, DateTime? expiredDate, int? state)
+        public Result Update(int? id, string m, string clientCode, int? clientTypeID, bool? useLocalInfo, int? referenceClientID, string ipAddress, int? locationID, bool? hasMonitoringAgent, bool? activeList, bool? status, DateTime? effectiveDate, DateTime? expiredDate, int? state, string updatedBy)
         {
             try
             {
                 var cs = new BSL.ClientService();
-                int result = cs.Updateclient(id, m, clientCode, clientTypeID, useLocalInfo, referenceClientID, ipAddress, locationID, hasMonitoringAgent, activeList, status, effectiveDate, expiredDate, state);
+                int result = cs.Updateclient(id, m, clientCode, clientTypeID, useLocalInfo, referenceClientID, ipAddress, locationID, hasMonitoringAgent, activeList, status, effectiveDate, expiredDate, state, updatedBy);
 
                 if (result == 1) // Complete
                 {
@@ -289,5 +289,88 @@ namespace RMS.Centralize.WebService
             }
         }
 
+        public ClientSeverityActionResult ListClientSeverityActions(int clientID)
+        {
+            try
+            {
+                BSL.ClientService service = new BSL.ClientService();
+                var lists = service.ListClientSeverityActions(clientID);
+
+                var sr = new ClientSeverityActionResult
+                {
+                    IsSuccess = true,
+                    ListClientSeverityActionInfos = lists,
+                    TotalRecords = lists.Count
+                };
+                return sr;
+            }
+            catch (Exception ex)
+            {
+                new RMSWebException(this, "0500", "ListClientSeverityActions failed. " + ex.Message, ex, true);
+
+                var sr = new ClientSeverityActionResult
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "List errors. " + ex.Message
+                };
+                return sr;
+            }
+
+        }
+
+        public ClientSeverityActionResult GetClientSeverityAction(int clientID, int severityLevelID)
+        {
+            try
+            {
+                BSL.ClientService service = new BSL.ClientService();
+                var info = service.GetClientSeverityAction(clientID, severityLevelID);
+
+                var sr = new ClientSeverityActionResult
+                {
+                    IsSuccess = true,
+                    Info = info,
+                };
+                return sr;
+            }
+            catch (Exception ex)
+            {
+                new RMSWebException(this, "0500", "GetClientSeverityAction failed. " + ex.Message, ex, true);
+
+                var sr = new ClientSeverityActionResult
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "List errors. " + ex.Message
+                };
+                return sr;
+            }
+        }
+
+        public ClientSeverityActionResult UpdateClientSeverityAction(int clientID, int severityLevelID, bool overwritenAction, string email, string sms, int? commandLineID,
+            string updatedBy)
+        {
+            try
+            {
+                BSL.ClientService service = new BSL.ClientService();
+                var rms = service.UpdateClientSeverityAction(clientID, severityLevelID, overwritenAction, email, sms, commandLineID,  updatedBy);
+
+                var sr = new ClientSeverityActionResult
+                {
+                    IsSuccess = true,
+                    ClientSeverityAction = rms,
+                };
+                return sr;
+            }
+            catch (Exception ex)
+            {
+                new RMSWebException(this, "0500", "UpdateClientSeverityAction failed. " + ex.Message, ex, true);
+
+                var sr = new ClientSeverityActionResult
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "List errors. " + ex.Message
+                };
+                return sr;
+            }
+        }
     }
 }

@@ -45,9 +45,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoUpdateService.cs" />
     <Compile Include="ClientService.cs" />
     <Compile Include="MonitoringService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\AutoUpdateProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\ClientProxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -64,6 +70,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Service References\AutoUpdateProxy\AutoUpdateService.wsdl" />
+    <None Include="Service References\AutoUpdateProxy\AutoUpdateService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AutoUpdateProxy\AutoUpdateService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AutoUpdateProxy\AutoUpdateService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AutoUpdateProxy\RMS.Agent.Proxy.AutoUpdateProxy.Result.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ClientProxy\ClientService1.wsdl" />
     <None Include="Service References\ClientProxy\ClientService5.xsd">
       <SubType>Designer</SubType>
@@ -97,6 +116,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\AutoUpdateProxy\" />
     <WCFMetadataStorage Include="Service References\ClientProxy\" />
     <WCFMetadataStorage Include="Service References\MonitoringProxy\" />
   </ItemGroup>
@@ -145,6 +165,21 @@
       <Project>{F8EC98BC-37BB-42FD-9B50-78F928BB08A2}</Project>
       <Name>RMS.Common.Exception</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AutoUpdateProxy\AutoUpdateService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AutoUpdateProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AutoUpdateProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AutoUpdateProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

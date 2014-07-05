@@ -217,11 +217,13 @@
     </div>
 
     <!--================================================== -->
-
+    <script type="text/javascript">
+        var appPath = '<%=Request.ApplicationPath%>';
+    </script>
     <!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
-    <%: Scripts.Render("~/bundles/myJs") %>
     <%: Scripts.Render("~/bundles/defaultJs") %>
     <%: Scripts.Render("~/bundles/datatableJs") %>
+    <%: Scripts.Render("~/bundles/myJs") %>
 
     <!-- JS TOUCH : include this plugin for mobile drag / drop touch events
 		<script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script> -->

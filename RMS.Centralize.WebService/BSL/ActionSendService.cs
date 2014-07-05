@@ -439,7 +439,7 @@ namespace RMS.Centralize.WebService.BSL
                         var actionInfos = lEmails.Where(l => l.To == to).ToList();
 
                         string tableOfSummaryReport = Environment.NewLine;
-                        bool writeHeader = false;
+                        //bool writeHeader = false;
 
                         foreach (var actionInfo in actionInfos)
                         {

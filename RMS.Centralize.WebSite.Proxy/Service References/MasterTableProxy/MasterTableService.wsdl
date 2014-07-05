@@ -46,6 +46,54 @@
   <wsdl:message name="IMasterTableService_ListColorLabels_OutputMessage">
     <wsdl:part name="parameters" element="tns:ListColorLabelsResponse" />
   </wsdl:message>
+  <wsdl:message name="IMasterTableService_SearchMessageMaster_InputMessage">
+    <wsdl:part name="parameters" element="tns:SearchMessageMaster" />
+  </wsdl:message>
+  <wsdl:message name="IMasterTableService_SearchMessageMaster_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SearchMessageMasterResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMasterTableService_ListMessageMaster_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListMessageMaster" />
+  </wsdl:message>
+  <wsdl:message name="IMasterTableService_ListMessageMaster_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListMessageMasterResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMasterTableService_GetMessageMaster_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMessageMaster" />
+  </wsdl:message>
+  <wsdl:message name="IMasterTableService_GetMessageMaster_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMessageMasterResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMasterTableService_UpdateMessageMaster_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateMessageMaster" />
+  </wsdl:message>
+  <wsdl:message name="IMasterTableService_UpdateMessageMaster_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateMessageMasterResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMasterTableService_DeleteMessageMaster_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteMessageMaster" />
+  </wsdl:message>
+  <wsdl:message name="IMasterTableService_DeleteMessageMaster_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteMessageMasterResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMasterTableService_ListSystemConfig_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListSystemConfig" />
+  </wsdl:message>
+  <wsdl:message name="IMasterTableService_ListSystemConfig_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListSystemConfigResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMasterTableService_GetSystemConfig_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSystemConfig" />
+  </wsdl:message>
+  <wsdl:message name="IMasterTableService_GetSystemConfig_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSystemConfigResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMasterTableService_UpdateSystemConfig_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateSystemConfig" />
+  </wsdl:message>
+  <wsdl:message name="IMasterTableService_UpdateSystemConfig_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateSystemConfigResponse" />
+  </wsdl:message>
   <wsdl:portType name="IMasterTableService">
     <wsdl:operation name="TestConnection">
       <wsdl:input wsaw:Action="http://tempuri.org/IMasterTableService/TestConnection" message="tns:IMasterTableService_TestConnection_InputMessage" />
@@ -54,6 +102,38 @@
     <wsdl:operation name="ListColorLabels">
       <wsdl:input wsaw:Action="http://tempuri.org/IMasterTableService/ListColorLabels" message="tns:IMasterTableService_ListColorLabels_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMasterTableService/ListColorLabelsResponse" message="tns:IMasterTableService_ListColorLabels_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchMessageMaster">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMasterTableService/SearchMessageMaster" message="tns:IMasterTableService_SearchMessageMaster_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMasterTableService/SearchMessageMasterResponse" message="tns:IMasterTableService_SearchMessageMaster_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListMessageMaster">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMasterTableService/ListMessageMaster" message="tns:IMasterTableService_ListMessageMaster_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMasterTableService/ListMessageMasterResponse" message="tns:IMasterTableService_ListMessageMaster_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMessageMaster">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMasterTableService/GetMessageMaster" message="tns:IMasterTableService_GetMessageMaster_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMasterTableService/GetMessageMasterResponse" message="tns:IMasterTableService_GetMessageMaster_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateMessageMaster">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMasterTableService/UpdateMessageMaster" message="tns:IMasterTableService_UpdateMessageMaster_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMasterTableService/UpdateMessageMasterResponse" message="tns:IMasterTableService_UpdateMessageMaster_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteMessageMaster">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMasterTableService/DeleteMessageMaster" message="tns:IMasterTableService_DeleteMessageMaster_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMasterTableService/DeleteMessageMasterResponse" message="tns:IMasterTableService_DeleteMessageMaster_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListSystemConfig">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMasterTableService/ListSystemConfig" message="tns:IMasterTableService_ListSystemConfig_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMasterTableService/ListSystemConfigResponse" message="tns:IMasterTableService_ListSystemConfig_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSystemConfig">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMasterTableService/GetSystemConfig" message="tns:IMasterTableService_GetSystemConfig_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMasterTableService/GetSystemConfigResponse" message="tns:IMasterTableService_GetSystemConfig_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSystemConfig">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMasterTableService/UpdateSystemConfig" message="tns:IMasterTableService_UpdateSystemConfig_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMasterTableService/UpdateSystemConfigResponse" message="tns:IMasterTableService_UpdateSystemConfig_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IMasterTableService" type="tns:IMasterTableService">
@@ -76,6 +156,78 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SearchMessageMaster">
+      <soap:operation soapAction="http://tempuri.org/IMasterTableService/SearchMessageMaster" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListMessageMaster">
+      <soap:operation soapAction="http://tempuri.org/IMasterTableService/ListMessageMaster" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMessageMaster">
+      <soap:operation soapAction="http://tempuri.org/IMasterTableService/GetMessageMaster" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateMessageMaster">
+      <soap:operation soapAction="http://tempuri.org/IMasterTableService/UpdateMessageMaster" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteMessageMaster">
+      <soap:operation soapAction="http://tempuri.org/IMasterTableService/DeleteMessageMaster" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListSystemConfig">
+      <soap:operation soapAction="http://tempuri.org/IMasterTableService/ListSystemConfig" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSystemConfig">
+      <soap:operation soapAction="http://tempuri.org/IMasterTableService/GetSystemConfig" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSystemConfig">
+      <soap:operation soapAction="http://tempuri.org/IMasterTableService/UpdateSystemConfig" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="BasicHttpsBinding_IMasterTableService" type="tns:IMasterTableService">
     <wsp:PolicyReference URI="#BasicHttpsBinding_IMasterTableService_policy" />
@@ -91,6 +243,78 @@
     </wsdl:operation>
     <wsdl:operation name="ListColorLabels">
       <soap:operation soapAction="http://tempuri.org/IMasterTableService/ListColorLabels" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchMessageMaster">
+      <soap:operation soapAction="http://tempuri.org/IMasterTableService/SearchMessageMaster" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListMessageMaster">
+      <soap:operation soapAction="http://tempuri.org/IMasterTableService/ListMessageMaster" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMessageMaster">
+      <soap:operation soapAction="http://tempuri.org/IMasterTableService/GetMessageMaster" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateMessageMaster">
+      <soap:operation soapAction="http://tempuri.org/IMasterTableService/UpdateMessageMaster" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteMessageMaster">
+      <soap:operation soapAction="http://tempuri.org/IMasterTableService/DeleteMessageMaster" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListSystemConfig">
+      <soap:operation soapAction="http://tempuri.org/IMasterTableService/ListSystemConfig" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSystemConfig">
+      <soap:operation soapAction="http://tempuri.org/IMasterTableService/GetSystemConfig" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSystemConfig">
+      <soap:operation soapAction="http://tempuri.org/IMasterTableService/UpdateSystemConfig" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

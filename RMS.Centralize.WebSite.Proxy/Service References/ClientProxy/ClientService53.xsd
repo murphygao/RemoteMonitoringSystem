@@ -83,4 +83,22 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="LocationInfo" nillable="true" type="tns:LocationInfo" />
+  <xs:complexType name="ClientSeverityActionInfo">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" base="q2:RmsClientSeverityAction">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="LevelCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LevelName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RowNum" nillable="true" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ClientSeverityActionInfo" nillable="true" type="tns:ClientSeverityActionInfo" />
+  <xs:complexType name="ArrayOfClientSeverityActionInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ClientSeverityActionInfo" nillable="true" type="tns:ClientSeverityActionInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfClientSeverityActionInfo" nillable="true" type="tns:ArrayOfClientSeverityActionInfo" />
 </xs:schema>

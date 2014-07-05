@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RMS.Common.Exception;
 
 namespace RMS.Agent.BSL.AutoUpate
 {
@@ -41,6 +42,21 @@ namespace RMS.Agent.BSL.AutoUpate
         private void UpdateOthers()
         {
             
+
+        }
+
+        public void UpdateResult(string clientCode, string appName, string currentVersion, string updateVersion, bool isComplete, string errorMessage)
+        {
+            try
+            {
+                var service = new RMS.Agent.Proxy.AutoUpdateService().autoUpdateService;
+                service.AddAutoUpdateLog(clientCode, appName, currentVersion, updateVersion, isComplete, errorMessage);
+
+            }
+            catch (Exception ex)
+            {
+                throw new RMSAppException(this, "0500", "AddAutoUpdateLog failed. " + ex.Message, ex, false);
+            }
 
         }
     }

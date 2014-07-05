@@ -170,19 +170,25 @@
                             <a href="<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/MonitoringReport.aspx">Monitoring Report</a>
                         </li>
                         <li>
-                            <a href="<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/MessageAction.aspx">Message Action</a>
-                        </li>
-                        <li>
                             <a href="<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/ActionList.aspx">Action Profile</a>
                         </li>
                         <li>
                             <a href="<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/ClientList.aspx">Client Monitoring</a>
                         </li>
                         <li>
-                            <a href="<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/SeverityLevelList.aspx">Severity Level</a>
+                            <a href="<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/MessageAction.aspx">Message Action</a>
+                        </li>
+                        <li>
+                            <a href="<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/MessageMasterList.aspx">Message Master</a>
                         </li>
                         <li>
                             <a href="<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/LocationList.aspx">Monitoring Location</a>
+                        </li>
+                        <li>
+                            <a href="<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/SeverityLevelList.aspx">Severity Level</a>
+                        </li>
+                        <li>
+                            <a href="<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/SystemConfigList.aspx">System Configuration</a>
                         </li>
                     </ul>
                 </li>

@@ -82,6 +82,7 @@
         <xs:element minOccurs="0" name="effectiveDate" nillable="true" type="xs:dateTime" />
         <xs:element minOccurs="0" name="expiredDate" nillable="true" type="xs:dateTime" />
         <xs:element minOccurs="0" name="state" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="updatedBy" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

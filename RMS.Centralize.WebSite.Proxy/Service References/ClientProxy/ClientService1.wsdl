@@ -82,6 +82,24 @@
   <wsdl:message name="IClientService_ListLocation_OutputMessage">
     <wsdl:part name="parameters" element="tns:ListLocationResponse" />
   </wsdl:message>
+  <wsdl:message name="IClientService_ListClientSeverityActions_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListClientSeverityActions" />
+  </wsdl:message>
+  <wsdl:message name="IClientService_ListClientSeverityActions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListClientSeverityActionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IClientService_GetClientSeverityAction_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetClientSeverityAction" />
+  </wsdl:message>
+  <wsdl:message name="IClientService_GetClientSeverityAction_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetClientSeverityActionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IClientService_UpdateClientSeverityAction_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateClientSeverityAction" />
+  </wsdl:message>
+  <wsdl:message name="IClientService_UpdateClientSeverityAction_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateClientSeverityActionResponse" />
+  </wsdl:message>
   <wsdl:portType name="IClientService">
     <wsdl:operation name="TestConnection">
       <wsdl:input wsaw:Action="http://tempuri.org/IClientService/TestConnection" message="tns:IClientService_TestConnection_InputMessage" />
@@ -114,6 +132,18 @@
     <wsdl:operation name="ListLocation">
       <wsdl:input wsaw:Action="http://tempuri.org/IClientService/ListLocation" message="tns:IClientService_ListLocation_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IClientService/ListLocationResponse" message="tns:IClientService_ListLocation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListClientSeverityActions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientService/ListClientSeverityActions" message="tns:IClientService_ListClientSeverityActions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientService/ListClientSeverityActionsResponse" message="tns:IClientService_ListClientSeverityActions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetClientSeverityAction">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientService/GetClientSeverityAction" message="tns:IClientService_GetClientSeverityAction_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientService/GetClientSeverityActionResponse" message="tns:IClientService_GetClientSeverityAction_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateClientSeverityAction">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientService/UpdateClientSeverityAction" message="tns:IClientService_UpdateClientSeverityAction_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientService/UpdateClientSeverityActionResponse" message="tns:IClientService_UpdateClientSeverityAction_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IClientService" type="tns:IClientService">
@@ -190,6 +220,33 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ListClientSeverityActions">
+      <soap:operation soapAction="http://tempuri.org/IClientService/ListClientSeverityActions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClientSeverityAction">
+      <soap:operation soapAction="http://tempuri.org/IClientService/GetClientSeverityAction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateClientSeverityAction">
+      <soap:operation soapAction="http://tempuri.org/IClientService/UpdateClientSeverityAction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="BasicHttpsBinding_IClientService" type="tns:IClientService">
     <wsp:PolicyReference URI="#BasicHttpsBinding_IClientService_policy" />
@@ -259,6 +316,33 @@
     </wsdl:operation>
     <wsdl:operation name="ListLocation">
       <soap:operation soapAction="http://tempuri.org/IClientService/ListLocation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListClientSeverityActions">
+      <soap:operation soapAction="http://tempuri.org/IClientService/ListClientSeverityActions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClientSeverityAction">
+      <soap:operation soapAction="http://tempuri.org/IClientService/GetClientSeverityAction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateClientSeverityAction">
+      <soap:operation soapAction="http://tempuri.org/IClientService/UpdateClientSeverityAction" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

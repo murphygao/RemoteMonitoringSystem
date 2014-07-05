@@ -83,8 +83,9 @@ namespace RMS.Agent.BSL.AutoUpate
         /// <param name="postProcess">Name of the process to restart</param>
         /// <param name="startupCommand">Command line to be passed to the process to restart</param>
         /// <param name="updater"></param>
+        /// <param name="updateVersion"></param>
         /// <returns>Void</returns>
-        public static void installUpdateRestart(string downloadsURL, string filename, string destinationFolder, string processToEnd, string postProcess, string startupCommand, string updater)
+        public static void installUpdateRestart(string downloadsURL, string filename, string destinationFolder, string processToEnd, string postProcess, string startupCommand, string updater, string updateVersion = "")
         {
 
             string cmdLn = "";
@@ -94,7 +95,8 @@ namespace RMS.Agent.BSL.AutoUpate
             cmdLn += "|destinationFolder|" + destinationFolder;
             cmdLn += "|processToEnd|" + processToEnd;
             cmdLn += "|postProcess|" + postProcess;
-            cmdLn += "|command|" + @" / " + startupCommand;
+            cmdLn += "|command|" + @" /" + startupCommand;
+            cmdLn += "|updateVersion|" + updateVersion;
 
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.FileName = updater;

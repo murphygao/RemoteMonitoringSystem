@@ -66,7 +66,7 @@ namespace RMS.Centralize.WebService.BSL
             }
             catch (Exception ex)
             {
-                throw new RMSWebException(this, "0500", "List failed. " + ex.Message, ex, false);
+                throw new RMSWebException(this, "0500", "Get failed. " + ex.Message, ex, false);
             }
         }
 

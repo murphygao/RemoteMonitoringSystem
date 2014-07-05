@@ -132,4 +132,44 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfRmsColorLabel" nillable="true" type="tns:ArrayOfRmsColorLabel" />
+  <xs:complexType name="RmsMessageMaster">
+    <xs:sequence>
+      <xs:element name="Message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EmailBody" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SmsBody" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EmailBodySolved" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SmsBodySolved" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreatedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpdatedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="UpdatedBy" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RmsMessageMaster" nillable="true" type="tns:RmsMessageMaster" />
+  <xs:complexType name="ArrayOfRmsMessageMaster">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RmsMessageMaster" nillable="true" type="tns:RmsMessageMaster" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRmsMessageMaster" nillable="true" type="tns:ArrayOfRmsMessageMaster" />
+  <xs:complexType name="ArrayOfRmsSystemConfig">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RmsSystemConfig" nillable="true" type="tns:RmsSystemConfig" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRmsSystemConfig" nillable="true" type="tns:ArrayOfRmsSystemConfig" />
+  <xs:complexType name="RmsSystemConfig">
+    <xs:sequence>
+      <xs:element name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DefaultValue" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreatedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpdatedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="UpdatedBy" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RmsSystemConfig" nillable="true" type="tns:RmsSystemConfig" />
 </xs:schema>

@@ -200,7 +200,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     status = -1,
                     error = ex.Message
                 };
-                new RMSWebException(this, "0500", "Get failed. " + ex.Message, ex, true);
+                new RMSWebException(this, "0500", "List failed. " + ex.Message, ex, true);
 
                 return Json(ret);
             }
