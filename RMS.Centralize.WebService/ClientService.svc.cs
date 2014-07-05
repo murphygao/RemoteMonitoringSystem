@@ -206,6 +206,32 @@ namespace RMS.Centralize.WebService
             
         }
 
+        public Result Delete(int id, string updatedBy)
+        {
+            try
+            {
+                var service = new BSL.ClientService();
+                var ret = service.Delete(id, updatedBy);
+
+                var sr = new Result
+                {
+                    IsSuccess = ret
+                };
+                return sr;
+            }
+            catch (Exception ex)
+            {
+                new RMSWebException(this, "0500", "Delete failed. " + ex.Message, ex, true);
+
+                var sr = new Result
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "Delete errors. " + ex.Message
+                };
+                return sr;
+            }
+        }
+
         public ClientResult ExistingClientCode(string clientCode)
         {
             try

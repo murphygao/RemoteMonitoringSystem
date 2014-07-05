@@ -3358,6 +3358,12 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/Update", ReplyAction="http://tempuri.org/IClientService/UpdateResponse")]
         System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.Result> UpdateAsync(System.Nullable<int> id, string m, string clientCode, System.Nullable<int> clientTypeID, System.Nullable<bool> useLocalInfo, System.Nullable<int> referenceClientID, string ipAddress, System.Nullable<int> locationID, System.Nullable<bool> hasMonitoringAgent, System.Nullable<bool> activeList, System.Nullable<bool> status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, System.Nullable<int> state, string updatedBy);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/Delete", ReplyAction="http://tempuri.org/IClientService/DeleteResponse")]
+        RMS.Centralize.WebSite.Proxy.ClientProxy.Result Delete(int id, string updatedBy);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/Delete", ReplyAction="http://tempuri.org/IClientService/DeleteResponse")]
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.Result> DeleteAsync(int id, string updatedBy);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/ExistingClientCode", ReplyAction="http://tempuri.org/IClientService/ExistingClientCodeResponse")]
         RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult ExistingClientCode(string clientCode);
         
@@ -3460,6 +3466,14 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         
         public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.Result> UpdateAsync(System.Nullable<int> id, string m, string clientCode, System.Nullable<int> clientTypeID, System.Nullable<bool> useLocalInfo, System.Nullable<int> referenceClientID, string ipAddress, System.Nullable<int> locationID, System.Nullable<bool> hasMonitoringAgent, System.Nullable<bool> activeList, System.Nullable<bool> status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, System.Nullable<int> state, string updatedBy) {
             return base.Channel.UpdateAsync(id, m, clientCode, clientTypeID, useLocalInfo, referenceClientID, ipAddress, locationID, hasMonitoringAgent, activeList, status, effectiveDate, expiredDate, state, updatedBy);
+        }
+        
+        public RMS.Centralize.WebSite.Proxy.ClientProxy.Result Delete(int id, string updatedBy) {
+            return base.Channel.Delete(id, updatedBy);
+        }
+        
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.Result> DeleteAsync(int id, string updatedBy) {
+            return base.Channel.DeleteAsync(id, updatedBy);
         }
         
         public RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult ExistingClientCode(string clientCode) {

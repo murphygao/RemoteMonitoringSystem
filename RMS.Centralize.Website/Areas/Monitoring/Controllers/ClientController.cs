@@ -16,8 +16,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
         // GET: /Monitoring/Client/Search/
         public ActionResult Search(JQueryDataTableParamModel param, DateTime? txtAsOfDate, int? dllClientType, string txtClientCode,
-            bool? ddlClientStatus,
-            string txtIPAddress)
+            bool? ddlClientStatus, string txtIPAddress)
         {
             //JQueryDataTableParamModel param = new JQueryDataTableParamModel();
             //param.sEcho = String.IsNullOrEmpty(Context.Request["sEcho"]) ? "0" : Context.Request["sEcho"];
@@ -230,9 +229,38 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             }
         }
 
+        public ActionResult Delete(int? id)
+        {
+
+            if (id == null) throw new ArgumentNullException("ClientID");
+
+            string ret;
+
+            try
+            {
+                var service = new ClientService().clientService;
+
+                var updatedBy = new BasePage().UserName;
+
+                var result = service.Delete(id.Value, updatedBy);
+
+                ret = result.IsSuccess ? "1" : "0";
+
+            }
+            catch (Exception ex)
+            {
+                ret = "0";
+                new RMSWebException(this, "0500", "Delete failed. " + ex.Message, ex, true);
+            }
 
 
-        #region Client Monitoring
+
+            return Json(ret);
+        }
+
+
+
+        #region ClientMonitoring
 
         public ActionResult ListClientMonitoring(JQueryDataTableParamModel param, int? clientID)
         {
@@ -338,6 +366,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
         #endregion
 
+        #region ClientSeverityAction
+
         public ActionResult ListClientSeverityAction(JQueryDataTableParamModel param, int? clientID)
         {
             if (clientID == null) throw new ArgumentNullException("ClientID");
@@ -374,7 +404,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             }
         }
 
-        public ActionResult UpdateClientSeverityAction(int? clientID, int? severityLevelID, bool? overwritenAction, string email, string sms, int? commandLineID)
+        public ActionResult UpdateClientSeverityAction(int? clientID, int? severityLevelID, bool? overwritenAction, string email, string sms,
+            int? commandLineID)
         {
             try
             {
@@ -384,7 +415,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
                 var service = new ClientService().clientService;
                 var updatedBy = new BasePage().UserName;
-                var result = service.UpdateClientSeverityAction(clientID.Value, severityLevelID.Value, overwritenAction.Value, email, sms, commandLineID, updatedBy);
+                var result = service.UpdateClientSeverityAction(clientID.Value, severityLevelID.Value, overwritenAction.Value, email, sms,
+                    commandLineID, updatedBy);
 
                 var ret = new
                 {
@@ -427,7 +459,9 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     status = (result.IsSuccess) ? 1 : 0,
                     ClientID = result.Info.ClientId,
                     SeverityLevelID = result.Info.SeverityLevelId,
-                    data = JsonConvert.SerializeObject(result.Info, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })
+                    data =
+                        JsonConvert.SerializeObject(result.Info, Formatting.Indented,
+                            new JsonSerializerSettings() {ReferenceLoopHandling = ReferenceLoopHandling.Ignore})
                 };
                 return Json(ret);
 
@@ -445,6 +479,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             }
 
         }
+
+        #endregion
 
     }
 }

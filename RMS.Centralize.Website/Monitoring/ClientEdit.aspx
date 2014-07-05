@@ -923,7 +923,7 @@
                     "aaSorting": [[2, "desc"]],
                     "sAjaxSource": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/ListClientMonitoring/",
                     "fnServerData": function (sSource, aoData, fnCallback) {
-                        aoData.push({ "name": "clientID", "value": <%=Request["id1"]%> });
+                        aoData.push({ "name": "clientID", "value": '<%=Request["id1"]%>' });
                         aoData.push({ "name": "dt", "value": dateFormat(new Date(), "yyyymmddHHMMss") });
 
                         Pace.restart();
@@ -1012,7 +1012,7 @@
                         "aaSorting": [[1, "asc"]],
                         "sAjaxSource": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/ListClientSeverityAction/",
                     "fnServerData": function (sSource, aoData, fnCallback) {
-                        aoData.push({ "name": "clientID", "value": <%=Request["id1"]%> });
+                        aoData.push({ "name": "clientID", "value": '<%=Request["id1"]%>' });
                         aoData.push({ "name": "dt", "value": dateFormat(new Date(), "yyyymmddHHMMss") });
 
                         Pace.restart();
@@ -1474,7 +1474,7 @@
 
         function deleteRow(id) {
             Row = function (id) {
-                this.clientID = <%=Request["id1"]%>;
+                this.clientID = '<%=Request["id1"]%>';
                 this.monitoringProfileID = id;
                 this.dt = dateFormat(new Date(), "yyyymmddHHMMss");
             };

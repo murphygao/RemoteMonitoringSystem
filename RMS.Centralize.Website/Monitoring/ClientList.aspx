@@ -441,7 +441,7 @@
                             "sClass": "nowrap",
                             "fnRender": function (oObj) {
                                 return '<a id="edit_item_' + oObj.aData["ClientID"] + '" class="btn btn-primary btn-xs" href="javascript:toEditRow(' + oObj.aData["ClientID"] + ')"><i class="glyphicon glyphicon-edit"></i></a>' +
-                                    '&nbsp;<a id="del_item_' + oObj.aData["ClientID"] + '" class="btn btn-danger btn-xs" href="#"><i class="glyphicon glyphicon-trash"></i></a>';
+                                    '&nbsp;<a id="del_item_' + oObj.aData["ClientID"] + '" class="btn btn-danger btn-xs" href="javascript:deleteRow(' + oObj.aData["ClientID"] + ');"><i class="glyphicon glyphicon-trash"></i></a>';
                             }
                         }
                     ],
@@ -633,6 +633,81 @@
                                 iconSmall: "fa fa-times fa-2x fadeInRight animated",
                                 timeout: 4000
                             });
+
+                        },
+
+                    });
+                }
+
+            });
+        }
+
+        function deleteRow(id) {
+            Row = function (id) {
+                this.id = id;
+                this.dt = dateFormat(new Date(), "yyyymmddHHMMss");
+            };
+            var delRow = new Row(id);
+
+            $.SmartMessageBox({
+                title: "Delete Confirmation",
+                content: "Are you sure you want to delete this item?",
+                buttons: '[No][Yes]'
+            }, function (ButtonPressed) {
+                if (ButtonPressed === "Yes") {
+                    $.ajax({
+                        "type": "POST",
+                        "dataType": 'json',
+                        "contentType": "application/json; charset=utf-8",
+                        "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/Delete",
+                        "data": JSON.stringify(delRow),
+                        "success": function (data) {
+                            if (data == "-1") {
+                                try {
+                                    $.smallBox({
+                                        title: "Access Denied!",
+                                        content: "<i class='fa fa-clock-o'></i> <i>No Access Rights to delete!</i>",
+                                        color: "#C46A69",
+                                        iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                        timeout: 4000
+                                    });
+
+                                } catch (e) {
+                                    alert("No Access Rights to delete!");
+                                }
+                            } else if (data == "1") {
+                                var oTable = $('#dt_basic').dataTable();
+                                if (oTable.fnGetData().length == 1)
+                                    oTable.fnStandingRedraw(1);
+                                else
+                                    oTable.fnStandingRedraw(0);
+
+                                try {
+                                    $.smallBox({
+                                        title: "Delete Complete",
+                                        content: "<i class='fa fa-clock-o'></i> <i>This operation is complete.</i>",
+                                        color: "#659265",
+                                        iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                                        timeout: 4000
+                                    });
+
+                                } catch (e) {
+                                    alert("This operation is complete.");
+                                }
+                            } else if (data == "0") {
+                                try {
+                                    $.smallBox({
+                                        title: "Delete Failed",
+                                        content: "<i class='fa fa-clock-o'></i> <i>Failed to complete this operation.</i>",
+                                        color: "#C46A69",
+                                        iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                        timeout: 4000
+                                    });
+
+                                } catch (e) {
+                                    alert("Failed to complete this operation.");
+                                }
+                            }
 
                         },
 

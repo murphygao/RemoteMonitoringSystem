@@ -30,6 +30,9 @@ namespace RMS.Centralize.WebService
         Result Update(int? id, string m, string clientCode, int? clientTypeID, bool? useLocalInfo, int? referenceClientID, string ipAddress, int? locationID, bool? hasMonitoringAgent, bool? activeList, bool? status, DateTime? effectiveDate, DateTime? expiredDate, int? state, string updatedBy);
 
         [OperationContract]
+        Result Delete(int id, string updatedBy);
+
+        [OperationContract]
         ClientResult ExistingClientCode(string clientCode);
 
         [OperationContract]

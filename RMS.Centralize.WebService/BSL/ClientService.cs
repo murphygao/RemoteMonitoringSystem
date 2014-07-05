@@ -284,12 +284,14 @@ namespace RMS.Centralize.WebService.BSL
                         newClient.ClientTypeId = clientTypeID;
                         if (useLocalInfo == null || useLocalInfo.Value)
                         {
+                            newClient.UseLocalInfo = true;
                             newClient.ReferenceClientId = null;
                             newClient.IpAddress = ipAddress;
                             newClient.LocationId = locationID;
                         }
                         else
                         {
+                            newClient.UseLocalInfo = false;
                             newClient.ReferenceClientId = referenceClientID;
                             newClient.IpAddress = null;
                             newClient.LocationId = null;
@@ -324,6 +326,7 @@ namespace RMS.Centralize.WebService.BSL
                             }
 
                             db.SaveChanges();
+                            ts.Commit();
                             return 1;
                         }
                         else
@@ -418,6 +421,37 @@ namespace RMS.Centralize.WebService.BSL
                 throw new RMSWebException(this, "0500", "Update failed. " + ex.Message, ex, false);
             }
 
+        }
+
+        public bool Delete(int id, string updatedBy)
+        {
+            try
+            {
+                using (var db = new MyDbContext())
+                {
+                    using (var ts = db.Database.BeginTransaction())
+                    {
+
+                        //RMS_ClientSeverityAction
+                        //RMS_ClientMonitoring
+                        //RMS_Client
+                        db.Database.ExecuteSqlCommand("DELETE FROM RMS_ClientSeverityAction WHERE ClientID = {0}; " +
+                                                      "DELETE FROM RMS_ClientMonitoring WHERE ClientID = {0}; " +
+                                                      "DELETE FROM RMS_Client Where ClientID = {0};", id);
+
+                        db.SaveChanges();
+
+                        ts.Commit();
+
+                        return true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new RMSWebException(this, "0500", "DeleteClient (" + id + ") failed. " + ex.Message, ex, true);
+
+            }
         }
 
         public List<MainAppClient> ListMainAppClient()
