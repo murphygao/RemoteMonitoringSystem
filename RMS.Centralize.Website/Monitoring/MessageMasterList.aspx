@@ -275,7 +275,22 @@
                         "url": sSource,
                         "data": aoData,
                         "success": function (data) {
-                            fnCallback(data);
+                            if (data.status == 1) {
+                                fnCallback(data);
+                            } else {
+                                try {
+                                    $.smallBox({
+                                        title: "System Failed",
+                                        content: "<i class='fa fa-clock-o'></i> <i>" + data.error + "</i>",
+                                        color: "#C46A69",
+                                        iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                        timeout: 4000
+                                    });
+
+                                } catch (e) {
+                                    alert(data.error);
+                                }
+                            }
                         }
                     });
                 },
@@ -291,37 +306,55 @@
                         "mDataProp": "Message",
                         "bSearchable": false,
                         "bSortable": true,
-                        "sWidth": "120"
+                        "sWidth": "120",
+                        "fnRender": function (oObj) {
+                            return htmlEscape(oObj.aData["Message"]);
+                        }
                     },
                     {
                         "mDataProp": "Description",
                         "bSearchable": false,
                         "bSortable": false,
-                        "sWidth": "120"
+                        "sWidth": "120",
+                        "fnRender": function (oObj) {
+                            return htmlEscape(oObj.aData["Description"]);
+                        }
                     },
                     {
                         "mDataProp": "EmailBody",
                         "bSearchable": false,
                         "bSortable": false,
                         "sWidth": "150",
+                        "fnRender": function (oObj) {
+                            return htmlEscape(oObj.aData["EmailBody"]);
+                        }
                     },
                     {
                         "mDataProp": "SmsBody",
                         "bSearchable": false,
                         "bSortable": false,
                         "sWidth": "150",
+                        "fnRender": function (oObj) {
+                            return htmlEscape(oObj.aData["SmsBody"]);
+                        }
                     },
                     {
                         "mDataProp": "EmailBodySolved",
                         "bSearchable": false,
                         "bSortable": false,
                         "sWidth": "150",
+                        "fnRender": function (oObj) {
+                            return htmlEscape(oObj.aData["EmailBodySolved"]);
+                        }
                     },
                     {
                         "mDataProp": "SmsBodySolved",
                         "bSearchable": false,
                         "bSortable": false,
                         "sWidth": "150",
+                        "fnRender": function (oObj) {
+                            return htmlEscape(oObj.aData["SmsBodySolved"]);
+                        }
                     },
                     {
                         "mData": null,
@@ -329,6 +362,7 @@
                         "bSortable": false,
                         "sWidth": "80",
                         "sClass": "nowrap",
+                        "bUseRendered": false,
                         "fnRender": function (oObj) {
                             var str = '';
                                 str += '<a id="edit_item_' + oObj.aData["Message"] + '" class="btn btn-primary btn-xs" href="javascript:toEditRow(\'' + oObj.aData["Message"] + '\')"><i class="glyphicon glyphicon-edit"></i></a>';

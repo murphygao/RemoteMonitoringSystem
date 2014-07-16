@@ -40,8 +40,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     iTotalRecords = totalRecords,
                     iTotalDisplayRecords = totalRecords,
                     aaData = searchResult.ListSeverityLevelInfos,
-                    isSuccess = searchResult.IsSuccess,
-                    errorMessage = searchResult.ErrorMessage
+                    status = (searchResult.IsSuccess) ? 1 : 0,
+                    error = searchResult.ErrorMessage
                 };
 
                 return Json(data);
@@ -51,8 +51,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             {
                 var data = new
                 {
-                    isSuccess = false,
-                    errorMessage = ex.Message
+                    status = 0,
+                    error = ex.Message
                 };
 
                 new RMSWebException(this, "0500", "Search failed. " + ex.Message, ex, true);
@@ -187,7 +187,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     ddlMonitoringProfile = result.ListSeverityLevels,
 
                     status = (result.IsSuccess) ? 1 : 0,
-                    errorMessage = result.ErrorMessage
+                    error = result.ErrorMessage
                 };
 
                 return Json(ret);

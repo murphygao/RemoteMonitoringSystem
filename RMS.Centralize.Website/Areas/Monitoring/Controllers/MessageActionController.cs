@@ -26,9 +26,9 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
                 var data = new
                 {
-                    isSuccess = result.IsSuccess,
+                    status = (result.IsSuccess) ? 1 : 0,
                     messageGroup = result.MessageGroup,
-                    errorMessage = result.ErrorMessage
+                    error = result.ErrorMessage
                 };
 
                 return Json(data);
@@ -37,8 +37,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             {
                 var data = new
                 {
-                    isSuccess = false,
-                    errorMessage = ex.Message
+                    status = 0,
+                    error = ex.Message
                 };
                 new RMSWebException(this, "0500", "InitDataForMeesageAction failed. " + ex.Message, ex, true);
 
@@ -76,8 +76,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     iTotalRecords = totalRecords,
                     iTotalDisplayRecords = totalRecords,
                     aaData = result.ListMessageActions,
-                    isSuccess = result.IsSuccess,
-                    errorMessage = result.ErrorMessage
+                    status = (result.IsSuccess) ? 1 : 0,
+                    error = result.ErrorMessage
                 };
 
                 return Json(data);
@@ -89,8 +89,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
                 var data = new
                 {
-                    isSuccess = false,
-                    errorMessage = ex.Message
+                    status = 0,
+                    error = ex.Message
                 };
 
                 return Json(data);
@@ -147,10 +147,10 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
                 var data = new
                 {
-                    isSuccess = result.IsSuccess,
+                    status = (result.IsSuccess) ? 1 : 0,
                     messageGroup = result.MessageGroup,
                     severityLevel = result.SeverityLevel,
-                    errorMessage = result.ErrorMessage
+                    error = result.ErrorMessage
                 };
 
                 return Json(data);
@@ -159,8 +159,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             {
                 var data = new
                 {
-                    isSuccess = false,
-                    errorMessage = ex.Message
+                    status = 0,
+                    error = ex.Message
                 };
                 new RMSWebException(this, "0500", "InitDataForMeesageEdit failed. " + ex.Message, ex, true);
 

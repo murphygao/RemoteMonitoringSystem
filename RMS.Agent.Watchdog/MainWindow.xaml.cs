@@ -156,7 +156,15 @@ namespace RMS.Agent.Watchdog
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            ni.Visible = false;
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Exit Application", System.Windows.MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                ni.Visible = false;
+            }
+            else
+            {
+                e.Cancel = true;
+            }
         }
 
 

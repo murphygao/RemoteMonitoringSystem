@@ -205,6 +205,12 @@ namespace Test.WPFApplication.MonitoringService {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="MonitoringService.IMonitoringService")]
     public interface IMonitoringService {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/TestConnection", ReplyAction="http://tempuri.org/IMonitoringService/TestConnectionResponse")]
+        void TestConnection();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/TestConnection", ReplyAction="http://tempuri.org/IMonitoringService/TestConnectionResponse")]
+        System.Threading.Tasks.Task TestConnectionAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/AddMessage", ReplyAction="http://tempuri.org/IMonitoringService/AddMessageResponse")]
         void AddMessage(Test.WPFApplication.MonitoringService.RmsReportMonitoringRaw rawMessage);
         
@@ -255,6 +261,14 @@ namespace Test.WPFApplication.MonitoringService {
         
         public MonitoringServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public void TestConnection() {
+            base.Channel.TestConnection();
+        }
+        
+        public System.Threading.Tasks.Task TestConnectionAsync() {
+            return base.Channel.TestConnectionAsync();
         }
         
         public void AddMessage(Test.WPFApplication.MonitoringService.RmsReportMonitoringRaw rawMessage) {

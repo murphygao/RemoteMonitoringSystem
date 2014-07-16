@@ -46,8 +46,13 @@ namespace RMS.Centralize.WebSite.Proxy
 
             try
             {
+                if (Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.ByPassSSL"]))
+                    ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+
                 _selfTestingService = new SelfTestingServiceClient();
                 Initialize(urlWebService);
+
+
             }
             catch (Exception ex)
             {

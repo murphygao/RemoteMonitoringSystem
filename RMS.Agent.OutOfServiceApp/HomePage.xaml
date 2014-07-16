@@ -1,0 +1,21 @@
+﻿<Page x:Class="RMS.Agent.OutOfServiceApp.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="768" d:DesignWidth="1024"
+        Title="Out of Service">
+    <Grid>
+        <Button x:Name="btnNumber1" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="250" Height="200" Tag="1" Click="btnNumber1_Click" Opacity="0" Foreground="#00000000"/>
+        <Button x:Name="btnNumber2" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" Width="250" Height="200" Margin="0" Tag="2" Click="btnNumber2_Click" Opacity="0" Foreground="#00000000"/>
+        <Button x:Name="btnNumber3" Content="" HorizontalAlignment="Right" VerticalAlignment="Top" Width="250" Height="200" Margin="0" Tag="3" Click="btnNumber3_Click" Opacity="0" Foreground="#00000000"/>
+        <Button x:Name="btnNumber4" Content="" HorizontalAlignment="Left" VerticalAlignment="Center" Width="250" Height="200" Margin="0" Tag="4" Click="btnNumber4_Click" Opacity="0" Foreground="#00000000"/>
+        <Button x:Name="btnNumber5" Content="" HorizontalAlignment="Center" VerticalAlignment="Center" Width="250" Height="200" Margin="0" Tag="5" Click="btnNumber5_Click" Opacity="0" Foreground="#00000000"/>
+        <Button x:Name="btnNumber6" Content="" HorizontalAlignment="Right" VerticalAlignment="Center" Width="250" Height="200" Margin="0" Tag="6" Click="btnNumber6_Click" Opacity="0" Foreground="#00000000"/>
+        <Button x:Name="btnNumber7" Content="" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="250" Height="200" Margin="0" Tag="7" Click="btnNumber7_Click" Opacity="0" Foreground="#00000000"/>
+        <Button x:Name="btnNumber8" Content="" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="250" Height="200" Margin="383,0" Tag="8" Click="btnNumber8_Click" Opacity="0" Foreground="#00000000"/>
+        <Button x:Name="btnNumber9" Content="" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="250" Height="200" Margin="0" Tag="9" Click="btnNumber9_Click" Opacity="0" Foreground="#00000000"/>
+        <Label x:Name="txtCurrentVersion" Content="" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="196" HorizontalContentAlignment="Right" FontSize="22" Height="39" Foreground="#FF333333" VerticalContentAlignment="Center"/>
+    </Grid>
+</Page>

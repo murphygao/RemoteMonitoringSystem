@@ -17,7 +17,8 @@
         <TextBox x:Name="txtMessage" HorizontalAlignment="Left" Height="23" Margin="131,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Text="CLIENT_ERROR"/>
         <TextBox x:Name="txtMessageRemark" HorizontalAlignment="Left" Height="23" Margin="553,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190"/>
         <TextBox x:Name="txtMonitoringProfileDeviceID" HorizontalAlignment="Left" Height="23" Margin="188,123,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="133"/>
-        <Button x:Name="btnCallAddMessage" Content="Call Add Message" HorizontalAlignment="Left" Margin="14,164,0,0" VerticalAlignment="Top" Width="117" Click="btnCallAddMessage_Click"/>
+        <Button x:Name="btnCallAddMessage" Content="Call Add Tecnical  Message" HorizontalAlignment="Left" Margin="14,164,0,0" VerticalAlignment="Top" Width="149" Click="btnCallAddMessage_Click"/>
+        <Button x:Name="btnCallAddBizMessage" Content="Call Add Biz Message" HorizontalAlignment="Left" Margin="168,164,0,0" VerticalAlignment="Top" Width="149" Click="btnCallAddBizMessage_Click"/>
 
     </Grid>
 </Window>

@@ -25,10 +25,12 @@ namespace RMS.Centralize.Website.Monitoring
                 if (queryString == "foodforthought")
                 {
                     Panel1.Visible = true;
+                    Panel2.Visible = false;
                 }
                 else
                 {
                     Panel1.Visible = false;
+                    Panel2.Visible = true;
                 }
             }
         }
@@ -79,6 +81,26 @@ namespace RMS.Centralize.Website.Monitoring
                 if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_SelfTestingService"]))
                 {
                     ret += "<br/>AppSettings[\"RMS.WebServicURL_SelfTestingService\"] not found or empty.";
+                }
+                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_LocationService"]))
+                {
+                    ret += "<br/>AppSettings[\"RMS.WebServicURL_LocationService\"] not found or empty.";
+                }
+                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_ClientMonitoringService"]))
+                {
+                    ret += "<br/>AppSettings[\"RMS.WebServicURL_ClientMonitoringService\"] not found or empty.";
+                }
+                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_MonitoringProfileService"]))
+                {
+                    ret += "<br/>AppSettings[\"RMS.WebServicURL_MonitoringProfileService\"] not found or empty.";
+                }
+                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_SeverityLevelService"]))
+                {
+                    ret += "<br/>AppSettings[\"RMS.WebServicURL_SeverityLevelService\"] not found or empty.";
+                }
+                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_MasterTableService"]))
+                {
+                    ret += "<br/>AppSettings[\"RMS.WebServicURL_MasterTableService\"] not found or empty.";
                 }
 
                 if (ret == "")

@@ -45,3 +45,14 @@ function post_to_url(path, params, method) {
     document.body.appendChild(form);
     form.submit();
 }
+
+function htmlEscape(str) {
+
+    if (str == null) return null;
+    return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+}

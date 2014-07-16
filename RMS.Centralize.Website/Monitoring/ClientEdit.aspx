@@ -933,7 +933,22 @@
                             "url": sSource,
                             "data": aoData,
                             "success": function (data) {
-                                fnCallback(data);
+                                if (data.status == 1) {
+                                    fnCallback(data);
+                                } else {
+                                    try {
+                                        $.smallBox({
+                                            title: "System Failed",
+                                            content: "<i class='fa fa-clock-o'></i> <i>" + data.error + "</i>",
+                                            color: "#C46A69",
+                                            iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                            timeout: 4000
+                                        });
+
+                                    } catch (e) {
+                                        alert(data.error);
+                                    }
+                                }
                             }
                         });
                     },
@@ -959,7 +974,10 @@
                             "mDataProp": "ProfileName",
                             "bSearchable": false,
                             "bSortable": true,
-                            "sWidth": "400"
+                            "sWidth": "400",
+                            "fnRender": function (oObj) {
+                                return htmlEscape(oObj.aData["ProfileName"]);
+                            }
                         },
                         {
                             "mDataProp": "EffectiveDate",
@@ -1022,7 +1040,22 @@
                             "url": sSource,
                             "data": aoData,
                             "success": function (data) {
-                                fnCallback(data);
+                                if (data.status == 1) {
+                                    fnCallback(data);
+                                } else {
+                                    try {
+                                        $.smallBox({
+                                            title: "System Failed",
+                                            content: "<i class='fa fa-clock-o'></i> <i>" + data.error + "</i>",
+                                            color: "#C46A69",
+                                            iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                            timeout: 4000
+                                        });
+
+                                    } catch (e) {
+                                        alert(data.error);
+                                    }
+                                }
                             }
                         });
                     },
@@ -1048,13 +1081,19 @@
                             "mDataProp": "LevelCode",
                             "bSearchable": false,
                             "bSortable": true,
-                            "sWidth": "200"
+                            "sWidth": "200",
+                            "fnRender": function (oObj) {
+                                return htmlEscape(oObj.aData["LevelCode"]);
+                            }
                         },
                         {
                             "mDataProp": "LevelName",
                             "bSearchable": false,
                             "bSortable": true,
-                            "sWidth": "200"
+                            "sWidth": "200",
+                            "fnRender": function (oObj) {
+                                return htmlEscape(oObj.aData["LevelName"]);
+                            }
                         },
                         {
                             "mDataProp": "OverwritenAction",
@@ -1074,13 +1113,19 @@
                             "mDataProp": "Email",
                             "bSearchable": false,
                             "bSortable": false,
-                            "sWidth": "350"
+                            "sWidth": "350",
+                            "fnRender": function (oObj) {
+                                return htmlEscape(oObj.aData["Email"]);
+                            }
                         },
                         {
                             "mDataProp": "Sms",
                             "bSearchable": false,
                             "bSortable": false,
-                            "sWidth": "350"
+                            "sWidth": "350",
+                            "fnRender": function (oObj) {
+                                return htmlEscape(oObj.aData["Sms"]);
+                            }
                         },
                         {
                             "mData": null,

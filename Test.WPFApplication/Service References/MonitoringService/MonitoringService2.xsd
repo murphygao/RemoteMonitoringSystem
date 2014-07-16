@@ -1,50 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost/RMS.Centralize.WebService/MonitoringService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" />
-  <xs:element name="AddMessage">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="rawMessage" nillable="true" type="q1:RmsReportMonitoringRaw" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="AddMessageResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="AddMessages">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="lRawMessages" nillable="true" type="q2:ArrayOfRmsReportMonitoringRaw" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="AddMessagesResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="AddBusinessMessage">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="rawMessage" nillable="true" type="q3:RmsReportMonitoringRaw" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="AddBusinessMessageResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="StartMonitoringEngine">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="StartMonitoringEngineResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="RmsReportMonitoringRaw">
+    <xs:sequence>
+      <xs:element name="Id" type="xs:long" />
+      <xs:element minOccurs="0" name="ClientCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ClientIpAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DeviceCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MessageGroupCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MessageDateTime" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="MessageRemark" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MonitoringProfileDeviceId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="CreatedDate" nillable="true" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RmsReportMonitoringRaw" nillable="true" type="tns:RmsReportMonitoringRaw" />
+  <xs:complexType name="ArrayOfRmsReportMonitoringRaw">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RmsReportMonitoringRaw" nillable="true" type="tns:RmsReportMonitoringRaw" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRmsReportMonitoringRaw" nillable="true" type="tns:ArrayOfRmsReportMonitoringRaw" />
 </xs:schema>

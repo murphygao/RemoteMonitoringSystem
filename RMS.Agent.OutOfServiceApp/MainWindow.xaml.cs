@@ -28,9 +28,7 @@ namespace RMS.Agent.OutOfServiceApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private int countDown = 1;
-        private string keyInValue = "";
-        private string password = "7319";
+
         bool cursorVisible = Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.CursorVisible"] ?? "false");
 
         public static string applicationStartupPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
@@ -52,20 +50,19 @@ namespace RMS.Agent.OutOfServiceApp
 
         public static List<string> info = new List<string>();
 
+        private delegate void btnTransparentDelegate(object sender);
+
+        private btnTransparentDelegate doBtnTransparent;
+
+        private double btnOpticalOnPressed = 0.1;
+
+
         public MainWindow()
         {
             try
             {
                 InitializeComponent();
 
-                string keyFilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\key.txt";
-
-                if (File.Exists(keyFilePath))
-                {
-                    password = File.ReadAllText(keyFilePath).Trim();
-                }
-
-                keyInValue = keyInValue.PadLeft(password.Length, '0');
 
                 if (cursorVisible)
                 {
@@ -87,50 +84,16 @@ namespace RMS.Agent.OutOfServiceApp
             }
         }
 
-
-
-        private void btnMenu_Click(object sender, RoutedEventArgs e)
-        {
-            //lblCount.Content = countDown;
-            if (countDown-- <= 0)
-            {
-                OOSService service = new OOSService();
-                if (service.PrepareForClosing())
-                    Application.Current.Shutdown();
-            }
-        }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.btnNumber1.Click += new System.Windows.RoutedEventHandler(this.btnNumber_Click);
-            this.btnNumber2.Click += new System.Windows.RoutedEventHandler(this.btnNumber_Click);
-            this.btnNumber3.Click += new System.Windows.RoutedEventHandler(this.btnNumber_Click);
-            this.btnNumber4.Click += new System.Windows.RoutedEventHandler(this.btnNumber_Click);
-            this.btnNumber5.Click += new System.Windows.RoutedEventHandler(this.btnNumber_Click);
-            this.btnNumber6.Click += new System.Windows.RoutedEventHandler(this.btnNumber_Click);
-            this.btnNumber7.Click += new System.Windows.RoutedEventHandler(this.btnNumber_Click);
-            this.btnNumber8.Click += new System.Windows.RoutedEventHandler(this.btnNumber_Click);
-            this.btnNumber9.Click += new System.Windows.RoutedEventHandler(this.btnNumber_Click);
+            mainFrame.MinHeight = this.Height;
+            mainFrame.MinWidth = this.Width;
 
-        }
+            mainFrame.MaxHeight = this.Height;
+            mainFrame.MaxWidth = this.Width;
 
-        public void btnNumber_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            try
-            {
-                keyInValue += (sender as Button).Tag.ToString();
-                keyInValue = keyInValue.Substring(1);
-                if (keyInValue == password)
-                {
-                    OOSService service = new OOSService();
-                    if (service.PrepareForClosing())
-                        Application.Current.Shutdown();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new RMSAppException(this, "0500", "btnNumber_Click failed. " + ex.Message, ex, true);
-            }
+
+            mainFrame.Navigate(new HomePage());
         }
 
         #region Auto Update Methods
@@ -145,6 +108,12 @@ namespace RMS.Agent.OutOfServiceApp
 
                 if (!skipUpdate)
                     CheckforUpdate();
+
+                Dispatcher.Invoke(() =>
+                {
+                    txtCurrentVersion.Content = currentVerionOnClient;
+                });
+
             }
             catch (Exception ex)
             {
@@ -254,6 +223,7 @@ namespace RMS.Agent.OutOfServiceApp
 
             try
             {
+
                 info = Update.getUpdateInfo(downloadURL, versionFileNameOnServer, applicationStartupPath + @"\", 1);
 
                 if (info == null)
@@ -337,7 +307,6 @@ namespace RMS.Agent.OutOfServiceApp
         }
 
         #endregion
-
 
     }
 

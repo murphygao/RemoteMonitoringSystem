@@ -38,8 +38,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     iTotalRecords = totalRecords,
                     iTotalDisplayRecords = totalRecords,
                     aaData = searchResult.ListActionProfiles,
-                    isSuccess = searchResult.IsSuccess,
-                    errorMessage = searchResult.ErrorMessage
+                    status = (searchResult.IsSuccess) ? 1 : 0,
+                    error = searchResult.ErrorMessage
                 };
 
                 return Json(data);
@@ -49,8 +49,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             {
                 var data = new
                 {
-                    isSuccess = false,
-                    errorMessage = ex.Message
+                    status = 0,
+                    error = ex.Message
                 };
 
                 new RMSWebException(this, "0500", "SearchActionList failed. " + ex.Message, ex, true);
@@ -173,7 +173,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     ddlActionProfiles = result.ListActionProfiles,
 
                     status = (result.IsSuccess) ? 1 : 0,
-                    errorMessage = result.ErrorMessage
+                    error = result.ErrorMessage
                 };
 
                 return Json(ret);

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.ServiceModel;
+using Amib.Threading;
 using ESN.LicenseManager.Model;
 using RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy;
 using RMS.Centralize.BSL.MonitoringEngine.Model;
@@ -16,8 +18,12 @@ namespace RMS.Centralize.BSL.MonitoringEngine
 {
     public class MonitoringService
     {
+        public SmartThreadPool stp;
+        public static bool isRunning = false ;
+
         public void Start(LicenseInfo licenseInfo)
         {
+            if (isRunning) return;
 
             /*
              * 1. Get all active clients from db
@@ -27,6 +33,8 @@ namespace RMS.Centralize.BSL.MonitoringEngine
             int activeClient = 0;
             try
             {
+                isRunning = true;
+
                 using (var db = new MyDbContext())
                 {
                     #region Prepare Parameters
@@ -58,9 +66,47 @@ namespace RMS.Centralize.BSL.MonitoringEngine
                     // Log into RMS_Log_Monitoring
                     int refID = AddLogMonitoring(activeClient, true, null);
 
+
+                    #region Initial Thread Pool
+
+                    var maxThreadConfig = db.RmsSystemConfigs.Find("MonitoringEngine.MaxThread");
+
+                    int minThread = 1;
+                    int maxThread = 1;
+
+                    if (maxThreadConfig != null)
+                    {
+                        maxThread = Convert.ToInt32(maxThreadConfig.Value ?? maxThreadConfig.DefaultValue);
+
+                        if (maxThread > broadcastClient.Count)
+                        {
+                            maxThread = broadcastClient.Count;
+                        }
+                    }
+
+                    if (broadcastClient.Count > 0)
+                    {
+                        STPStartInfo stpStartInfo = new STPStartInfo();
+                        stpStartInfo.MaxWorkerThreads = maxThread;
+                        stpStartInfo.IdleTimeout = 60*1000;
+                        stpStartInfo.MinWorkerThreads = minThread;
+                        stpStartInfo.PerformanceCounterInstanceName = "RMSCounter";
+                        stpStartInfo.EnableLocalPerformanceCounters = true;
+                        stp = new SmartThreadPool(stpStartInfo);
+                    }
+
+                    #endregion
+
                     foreach (var client in broadcastClient)
                     {
-                        BroadcastAliveMessage(client, refID);
+                        RmsClient _client = client;
+
+                        Amib.Threading.Action broadcastAliveMessage = () =>
+                        {
+                            BroadcastAliveMessage(_client, refID);
+                        };
+
+                        stp.QueueWorkItem(broadcastAliveMessage);
                     }
 
                     #endregion
@@ -75,6 +121,18 @@ namespace RMS.Centralize.BSL.MonitoringEngine
                     AddLogMonitoring(activeClient, false, ex.Message);
                 }
                 throw new RMSWebException(this, "0500", "Start failed. " + ex.Message, ex, false);
+            }
+            finally
+            {
+
+                if (stp != null)
+                {
+                    stp.WaitForIdle();
+                    System.Threading.Thread.Sleep(1000);
+                    if (!stp.IsShuttingdown) stp.Shutdown();
+                    stp.Dispose();
+                }
+                isRunning = false;
             }
         }
 

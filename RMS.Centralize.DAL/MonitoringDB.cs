@@ -1656,7 +1656,7 @@ namespace RMS.Centralize.DAL
             Property(x => x.Body).HasColumnName("Body").IsOptional().HasMaxLength(1000);
             Property(x => x.BodyFull).HasColumnName("BodyFull").IsOptional();
             Property(x => x.IsSucess).HasColumnName("IsSucess").IsOptional();
-            Property(x => x.ErrorMessage).HasColumnName("ErrorMessage").IsOptional().HasMaxLength(100);
+            Property(x => x.ErrorMessage).HasColumnName("ErrorMessage").IsOptional().HasMaxLength(500);
             InitializePartial();
         }
         partial void InitializePartial();

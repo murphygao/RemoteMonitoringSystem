@@ -54,8 +54,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     iTotalRecords = totalRecords,
                     iTotalDisplayRecords = totalRecords,
                     aaData = result.ListSummaryMonitorings,
-                    isSuccess = result.IsSuccess,
-                    errorMessage = result.ErrorMessage
+                    status = (result.IsSuccess) ? 1 : 0,
+                    error = result.ErrorMessage
                 };
 
                 return Json(data);
@@ -67,8 +67,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
                 var data = new
                 {
-                    isSuccess = false,
-                    errorMessage = ex.Message
+                    status = 0,
+                    error = ex.Message
                 };
                 new RMSWebException(this, "0500", "SearchMonitoringReport failed. " + ex.Message, ex, true);
 
@@ -155,8 +155,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     iTotalRecords = totalRecords,
                     iTotalDisplayRecords = totalRecords,
                     aaData = result.ListSummaryMonitorings,
-                    isSuccess = result.IsSuccess,
-                    errorMessage = result.ErrorMessage
+                    status = (result.IsSuccess) ? 1 : 0,
+                    error = result.ErrorMessage
                 };
 
                 return Json(data);
@@ -168,8 +168,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
                 var data = new
                 {
-                    isSuccess = false,
-                    errorMessage = ex.Message
+                    status = 0,
+                    error = ex.Message
                 };
                 new RMSWebException(this, "0500", "SearchClientMonitoring failed. " + ex.Message, ex, true);
 
@@ -190,8 +190,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                 {
                     var ret = new
                     {
-                        isSuccess = false,
-                        errorMessage = "Client ID cannot be null."
+                        status = 0,
+                        error = "Client ID cannot be null."
                     };
                     return Json(ret);
                 }
@@ -277,8 +277,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                         iTotalRecords = totalRecords,
                         iTotalDisplayRecords = totalRecords,
                         aaData = lDeviceStatuses,
-                        isSuccess = result.IsSuccess,
-                        errorMessage = result.ErrorMessage
+                        status = (result.IsSuccess) ? 1 : 0,
+                        error = result.ErrorMessage
                     };
                     return Json(data);
                 }
@@ -287,8 +287,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
                 var data2 = new
                 {
-                    isSuccess = false,
-                    errorMessage = "Client Not Found"
+                    status = 0,
+                    error = "Client Not Found"
                 };
 
                 return Json(data2);
@@ -301,8 +301,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
                 var data = new
                 {
-                    isSuccess = false,
-                    errorMessage = ex.Message
+                    status = 0,
+                    error = ex.Message
                 };
                 new RMSWebException(this, "0500", "GetCurrentDeviceStatus failed. " + ex.Message, ex, true);
 
@@ -319,8 +319,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                 
                 var idError = new
                 {
-                    isSuccess = false,
-                    errorMessage = "ID cannot be null."
+                    status = 0,
+                    error = "ID cannot be null."
                 };
 
                 return Json(idError);
@@ -333,8 +333,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
                 var ret = new
                 {
-                    isSuccess = actionRequest.IsSuccess,
-                    errorMessage = actionRequest.ErrorMessage
+                    status = actionRequest.IsSuccess,
+                    error = actionRequest.ErrorMessage
                 };
 
                 return Json(ret);
@@ -344,8 +344,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
                 var exError = new
                 {
-                    isSuccess = false,
-                    errorMessage = ex.Message
+                    status = 0,
+                    error = ex.Message
                 };
                 new RMSWebException(this, "0500", "ResendAction failed. " + ex.Message, ex, true);
 

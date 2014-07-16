@@ -350,7 +350,22 @@
                             "url": sSource,
                             "data": aoData,
                             "success": function (data) {
-                                fnCallback(data);
+                                if (data.status == 1) {
+                                    fnCallback(data);
+                                } else {
+                                    try {
+                                        $.smallBox({
+                                            title: "System Failed",
+                                            content: "<i class='fa fa-clock-o'></i> <i>" + data.error + "</i>",
+                                            color: "#C46A69",
+                                            iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                            timeout: 4000
+                                        });
+
+                                    } catch (e) {
+                                        alert(data.error);
+                                    }
+                                }
                             }
                         });
                     },
@@ -381,14 +396,20 @@
                             "mDataProp": "ClientCode",
                             "bSearchable": false,
                             "bSortable": true,
-                            "sWidth": "120"
+                            "sWidth": "120",
+                            "fnRender": function (oObj) {
+                                return htmlEscape(oObj.aData["ClientCode"]);
+                            }
                         },
                         {
                             // Location
                             "mDataProp": "Location",
                             "bSearchable": false,
                             "bSortable": true,
-                            "sWidth": "220"
+                            "sWidth": "220",
+                            "fnRender": function (oObj) {
+                                return htmlEscape(oObj.aData["Location"]);
+                            }
                         },
                         {
                             // IP Address
@@ -396,6 +417,9 @@
                             "bSearchable": false,
                             "bSortable": false,
                             "sWidth": "100",
+                            "fnRender": function (oObj) {
+                                return htmlEscape(oObj.aData["ClientIpAddress"]);
+                            }
                         },
                         {
                             //status
@@ -420,6 +444,9 @@
                             "bSearchable": false,
                             "bSortable": false,
                             "sWidth": "120",
+                            "fnRender": function (oObj) {
+                                return htmlEscape(oObj.aData["MessageGroupName"]);
+                            }
                         },
                         {
                             //severity
@@ -438,6 +465,9 @@
                             "bSearchable": false,
                             "bSortable": false,
                             "sWidth": "170",
+                            "fnRender": function (oObj) {
+                                return htmlEscape(oObj.aData["Message"]);
+                            }
                         },
                         {
                             //message detail
@@ -445,6 +475,7 @@
                             "bSearchable": false,
                             "bSortable": false,
                             "sWidth": "200",
+                            "bUseRendered": false,
                             "fnRender": function (oObj) {
                                 var content = '';
                                 if (oObj.aData["DeviceDescription"] != null)
@@ -454,7 +485,7 @@
                                         content = content + ' - ';
                                     content = content + oObj.aData["MessageRemark"];
                                 }
-                                return content;
+                                return htmlEscape(content);
                             }
                         },
                         {

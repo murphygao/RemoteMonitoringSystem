@@ -50,7 +50,7 @@ namespace RMS.Agent.BSL.AutoUpate
             try
             {
                 var service = new RMS.Agent.Proxy.AutoUpdateService().autoUpdateService;
-                service.AddAutoUpdateLog(clientCode, appName, currentVersion, updateVersion, isComplete, errorMessage);
+                service.AddAutoUpdateLogAsync(clientCode, appName, currentVersion, updateVersion, isComplete, errorMessage);
 
             }
             catch (Exception ex)

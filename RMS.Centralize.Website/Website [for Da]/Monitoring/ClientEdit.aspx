@@ -121,17 +121,17 @@
                                             </section>
                                         </div>
 
-                                        <div class="row">
+                                        <div class="row" style="display: none;">
                                             <section class="col col-4">
                                                 <label class="toggle">
-                                                    <input type="checkbox" id="cbxUseLocalInfo">
+                                                    <input type="checkbox" id="cbxUseLocalInfo" checked="checked">
                                                     <i data-swchon-text="ON" data-swchoff-text="OFF"></i><span style="font-size: 13px!important; font-weight: 400!important;">Use Local Info</span></label>
                                             </section>
 
                                         </div>
 
                                         <div class="row">
-                                            <section class="col col-4">
+                                            <section class="col col-8">
                                                     <label class="label">Local Info - IP Address</label>
                                                     <label class="input">
                                                         <input type="text" id="txtIPAddress" name="txtIPAddress" class="input-sm">
@@ -147,7 +147,7 @@
                                                     </label>
                                                 </section>
 
-                                                <section class="col col-4">
+                                                <section class="col col-4" style="display: none;">
                                                 <label class="label">Reference Client</label>
                                                 <label class="select">
                                                     <select id="ddlReferenceClient" name="ddlReferenceClient" class="input-sm">
@@ -233,14 +233,355 @@
                 <!-- END COL -->
 
             </div>
+            
+            
+            
+            <div class="row" id="divClientMonitoring" style="display: none;">
+
+                <!-- NEW WIDGET START -->
+                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <!-- Widget ID (each widget will need unique ID)-->
+                    <div class="jarviswidget jarviswidget-color-blueDark" id="client-monitoring-1"
+                        data-widget-togglebutton="false"
+                        data-widget-colorbutton="false"
+                        data-widget-editbutton="false"
+                        data-widget-deletebutton="false"
+                        data-widget-fullscreenbutton="false"
+                        data-widget-sortable="false">
+                        <!-- widget options:
+								usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+				
+								data-widget-colorbutton="false"
+								data-widget-editbutton="false"
+								data-widget-togglebutton="false"
+								data-widget-deletebutton="false"
+								data-widget-fullscreenbutton="false"
+								data-widget-custombutton="false"
+								data-widget-collapsed="true"
+								data-widget-sortable="false"
+				
+								-->
+                        <header>
+                            <span class="widget-icon"><i class="fa fa-table"></i></span>
+                            <h2>Client Monitoring Profile</h2>
+                        </header>
+
+                        <!-- widget div-->
+                        <div>
+
+                            <!-- widget edit box -->
+                            <div class="jarviswidget-editbox">
+                                <!-- This area used as dropdown edit box -->
+
+                            </div>
+                            <!-- end widget edit box -->
+
+                            <!-- widget content -->
+                            <div class="widget-body no-padding">
+                                <div class="widget-body-toolbar">
+                                </div>
+
+                                <table id="dt_basic" class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center">#</th>
+                                            <th>Monitoring Profile</th>
+                                            <th>Effective Date</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <!-- end widget content -->
+                        </div>
+                        <!-- end widget div -->
+
+                    </div>
+                    <!-- end widget -->
+
+                </article>
+                <!-- WIDGET END -->
+
+            </div>
+
+            <div class="row form-horizontal" id="divAddClientMonitoring" style="display: none;">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <a data-toggle="modal" class="btn btn-primary hidden-mobile" style="margin-top: -20px; margin-bottom: 10px;" href="#myModal">Add New</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row" id="divClientSeverityAction" style="display: none;">
+
+                <!-- NEW WIDGET START -->
+                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <!-- Widget ID (each widget will need unique ID)-->
+                    <div class="jarviswidget jarviswidget-color-blueDark" id="client-severity-1"
+                        data-widget-togglebutton="false"
+                        data-widget-colorbutton="false"
+                        data-widget-editbutton="false"
+                        data-widget-deletebutton="false"
+                        data-widget-fullscreenbutton="false"
+                        data-widget-sortable="false">
+                        <!-- widget options:
+							    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+				
+							    data-widget-colorbutton="false"
+							    data-widget-editbutton="false"
+							    data-widget-togglebutton="false"
+							    data-widget-deletebutton="false"
+							    data-widget-fullscreenbutton="false"
+							    data-widget-custombutton="false"
+							    data-widget-collapsed="true"
+							    data-widget-sortable="false"
+				
+							    -->
+                        <header>
+                            <span class="widget-icon"><i class="fa fa-table"></i></span>
+                            <h2>Client Severity Action</h2>
+                        </header>
+
+                        <!-- widget div-->
+                        <div>
+
+                            <!-- widget edit box -->
+                            <div class="jarviswidget-editbox">
+                                <!-- This area used as dropdown edit box -->
+
+                            </div>
+                            <!-- end widget edit box -->
+
+                            <!-- widget content -->
+                            <div class="widget-body no-padding">
+                                <div class="widget-body-toolbar">
+                                </div>
+
+                                <table id="dt_basic_2" class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center">#</th>
+                                            <th>Severity Level Code</th>
+                                            <th>Severity Level Name</th>
+                                            <th>Overwriten Action</th>
+                                            <th>Email</th>
+                                            <th>SMS</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <!-- end widget content -->
+                        </div>
+                        <!-- end widget div -->
+
+                    </div>
+                    <!-- end widget -->
+
+                </article>
+                <!-- WIDGET END -->
+
+            </div>
+            
+
+          <!-- end row -->
         </section>
+        
+        
+        <!-- Modal -->
+        
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+	        <div class="modal-dialog">
+		        <div class="modal-content">
+			        <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					        &times;
+				        </button>
+				        <h4 class="modal-title">
+					        Add New Client Monitoring Profile
+				        </h4>
+			        </div>
+			        <div class="modal-body no-padding">
+
+				        <form id="monitoringprofile-form" class="smart-form">
+
+							        <fieldset>
+								        <section>
+									        <div class="row">
+										        <label class="label col col-3">Monitoring Profile</label>
+										        <div class="col col-9">
+                                                    <label class="select">
+                                                        <select id="ddlMonitoringProfile" name="ddlMonitoringProfile" class="input-sm">
+                                                        </select>
+                                                        <i></i>
+                                                    </label>
+										            <div class="note">
+                                                        <strong>Required Field</strong>
+											        </div>
+									            </div>
+									        </div>
+								        </section>
+
+								        <section>
+									        <div class="row">
+										        <label class="label col col-3">Effective Date</label>
+										        <div class="col col-9">
+                                                    <label class="input">
+                                                        <i class="icon-append fa fa-calendar"></i>
+                                                        <input type="text" class="input-sm" readonly name="txtProfileEffectiveDate" id="txtProfileEffectiveDate" placeholder="Effective Date"/>
+                                                    </label>
+											        <div class="note">
+                                                        <strong>Required Field</strong>
+											        </div>
+										        </div>
+									        </div>
+								        </section>
+
+							        </fieldset>
+							
+							        <footer>
+							            <button type="submit" class="btn btn-primary" ID="btnSubmitMonitoring" onclick="newMonitoring();">Submit</button>
+								        <button type="button" class="btn btn-default" data-dismiss="modal">
+									        Cancel
+								        </button>
+							        </footer>
+						        </form>						
+						
+
+			        </div>
+
+		        </div><!-- /.modal-content -->
+	        </div><!-- /.modal-dialog -->
+        </div>
+        
+        <div class="modal fade" id="myModalAction" tabindex="-1" role="dialog">
+	        <div class="modal-dialog">
+		        <div class="modal-content">
+			        <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					        &times;
+				        </button>
+				        <h4 class="modal-title">
+					        Edit Client Severity Action
+				        </h4>
+			        </div>
+			        <div class="modal-body no-padding">
+
+				        <form id="severityaction-form" class="smart-form">
+
+							        <fieldset>
+							            
+								        <section>
+									        <div class="row">
+                                                <label class="label col col-3">Severity Level Code</label>
+										        <div class="col col-9">
+                                                    <label class="input state-disabled" id="lblLevelCode">
+                                                        <input type="text" id="txtLevelCode" name="txtLevelCode" class="input-sm" disabled="disabled">
+                                                    </label>
+                                                    <div class="note">
+                                                        <strong>Required Field</strong>
+                                                    </div>
+                                                </div>
+									        </div>
+								        </section>
+
+								        <section>
+									        <div class="row">
+                                                <label class="label col col-3">Severity Level Name</label>
+										        <div class="col col-9">
+                                                    <label class="input state-disabled" id="lblLevelName">
+                                                        <input type="text" id="txtLevelName" name="txtLevelName" class="input-sm" disabled="disabled">
+                                                    </label>
+                                                    <div class="note">
+                                                        <strong>Required Field</strong>
+                                                    </div>
+                                                </div>
+									        </div>
+								        </section>
+                                        
+								        <section>
+									        <div class="row">
+										        <div class="label col col-5">
+                                                    <label class="toggle" style="margin-right:20px!important">
+                                                        <input type="checkbox" id="cbxOverwritenAction">
+                                                        <i data-swchon-text="ON" data-swchoff-text="OFF"></i>
+                                                        <span style="font-size: 13px!important; font-weight: 400!important;">Overwriten Action</span>
+                                                    </label>
+                                                </div>
+									        </div>
+								        </section>
+                                        
+                                        <section>
+									        <div class="row">
+                                                <label class="label col col-3">Email</label>
+                                                <div class="col col-9">
+                                                    <label class="textarea">
+                                                        <textarea rows="5" id="txtEmail" name="txtEmail" class="custom-scroll" placeholder="user@sample.com; it@sample.com; vendor@sample.com"></textarea>
+                                                    </label>
+                                                    <div class="note">
+                                                        <strong>Maxlength</strong> is 500 characters.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+
+                                        <section>
+									        <div class="row">
+                                                <label class="label col col-3">SMS</label>
+                                                <div class="col col-9">
+                                                    <label class="textarea">
+                                                        <textarea rows="5" id="txtSMS" name="txtSMS" class="custom-scroll" placeholder="0811111111; 0812222222; 0813333333"></textarea>
+                                                    </label>
+                                                    <div class="note">
+                                                        <strong>Maxlength</strong> is 500 characters.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+
+							        </fieldset>
+							
+							        <footer>
+							            <button type="submit" class="btn btn-primary" ID="btnSubmitAction" onclick="updateAction();">Submit</button>
+								        <button type="button" class="btn btn-default" data-dismiss="modal">
+									        Cancel
+								        </button>
+                                        <input type="hidden" id="hSeverityLevelID" />
+							        </footer>
+						        </form>						
+						
+
+			        </div>
+
+		        </div><!-- /.modal-content -->
+	        </div><!-- /.modal-dialog -->
+        </div>
+
+        <!-- /.modal -->
+
+        
+        
+
     </div>
 
 
     <!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
+    <script type="text/javascript">
+        var appPath = '<%=Request.ApplicationPath%>';
+    </script>
 
-    <%: Scripts.Render("~/bundles/myJs") %>
     <%: Scripts.Render("~/bundles/defaultJs") %>
+    <%: Scripts.Render("~/bundles/datatableJs") %>
+    <%: Scripts.Render("~/bundles/myJs") %>
 
     <!-- JS TOUCH : include this plugin for mobile drag / drop touch events
 		<script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script> -->
@@ -252,6 +593,8 @@
 
         // DO NOT REMOVE : GLOBAL FUNCTIONS!
         initialData();
+
+        
 
         $(document).ready(function() {
 
@@ -283,12 +626,12 @@
 
             var response;
             $.validator.addMethod("uniqueClientCode", function(value, element) {
-                    if (value == $('#currentClientCode').val()) return true;
-                    $.ajax({
-                        "type": "POST",
-                        "dataType": 'json',
-                        "contentType": "application/json; charset=utf-8",
-                        "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/ExistingClientCode/",
+                if (value == $('#currentClientCode').val()) return true;
+                $.ajax({
+                    "type": "POST",
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/ExistingClientCode/",
                         "data": "{'clientCode' : '" + value + "', 'dt' : " + dateFormat(new Date(), "yyyymmddHHMMss") +"}",
                         success: function(ret) {
 
@@ -302,24 +645,24 @@
                             return true;
                         }
                     });
-                    return response;
-                },
+                return response;
+            },
                 "Client code is taken already"
             );
 
             $.validator.addMethod("UseLocalInfo", function(value) {
-                    if (!$('#cbxUseLocalInfo').is(':checked')) return true;
-                    if (value.trim() == '') return false;
-                    return true;
-                },
+                if (!$('#cbxUseLocalInfo').is(':checked')) return true;
+                if (value.trim() == '') return false;
+                return true;
+            },
                 "Please enter IP Address"
             );
 
             $.validator.addMethod("NotUseLocalInfo", function (value) {
-                    if ($('#cbxUseLocalInfo').is(':checked')) return true;
-                    if (value.trim() == '') return false;
-                    return true;
-                },
+                if ($('#cbxUseLocalInfo').is(':checked')) return true;
+                if (value.trim() == '') return false;
+                return true;
+            },
                 "Please enter IP Address"
             );
 
@@ -328,6 +671,16 @@
                 var ip = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$";
                 return value.match(ip);
             }, 'Invalid IP address');
+
+            $.validator.addMethod(
+                    "regex",
+                    function (value, element, regexp) {
+                        var re = new RegExp(regexp);
+                        return this.optional(element) || re.test(value);
+                    },
+                    "Please check your input."
+            );
+
 
             var $checkoutForm = $('#smartForm').validate({
                 // Rules for form validation
@@ -384,6 +737,48 @@
 
             });
 
+            $('#monitoringprofile-form').validate({
+                // Rules for form validation
+                rules: {
+                    ddlMonitoringProfile: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    ddlMonitoringProfile: {
+                        required: 'Please select monitoring profile',
+                    },
+                },
+
+                errorPlacement: function(error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+
+            $('#severityaction-form').validate({
+                // Rules for form validation
+                rules: {
+                    txtEmail: {
+                        regex: /^\s*(([A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)\s*[;,]{0,1}\s*)+$/
+                    },
+                    txtSMS: {
+                        regex: /^(\d{3}[\s.-]?\d{3}[\s.-]?\d{4}\s*[;,]{0,1}\s*)+$/
+                    },
+
+                },
+                messages: {
+                    txtEmail: {
+                        regex: 'Please check email format.'
+                    },
+                    txtSMS: {
+                        regex: 'Please check phone number format.'
+                    },
+                },
+                errorPlacement: function(error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+
             $('#txtEffectiveDate').datepicker({
                 dateFormat: 'yy-mm-dd',
                 prevText: '<i class="fa fa-chevron-left"></i>',
@@ -416,10 +811,26 @@
 
             });
 
+            $('#txtProfileEffectiveDate').datepicker({
+                dateFormat: 'yy-mm-dd',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                maxDate: new Date(2099, 12, 0),
+                changeMonth: true,
+                changeYear: true,
+            });
+
+
+
             $("#txtEffectiveDate").datepicker('setDate', new Date());
             $('#txtExpiredDate').datepicker('option', 'minDate', new Date());
+            $("#txtProfileEffectiveDate").datepicker('setDate', new Date());
 
             if ("<%=Request["m"]%>" == "e" && "<%=Request["id1"]%>" != "") {
+
+                $('#divClientMonitoring').show();
+                $('#divAddClientMonitoring').show();
+                $('#divClientSeverityAction').show();
 
                 Pace.restart();
                 $.ajax({
@@ -499,46 +910,398 @@
 
                 });
 
-            } else {
-                try {
-                    $.smallBox({
-                        title: "Get Client Failed",
-                        content: "<i class='fa fa-clock-o'></i> <i>Failed to complete this operation.</i>",
-                        color: "#C46A69",
-                        iconSmall: "fa fa-times fa-2x fadeInRight animated",
-                        timeout: 4000
-                    });
+                //Load Client Monitoring Profile Here
+                //...................
+                $('#dt_basic').dataTable({
+                    "sPaginationType": "bootstrap_full",
+                    "bFilter": false,
+                    "bAutoWidth": false,
+                    "bPaginate": false,
+                    "bInfo": true,
+                    "sDom": 'r<"dt-top-row"lf><"dt-wrapper"<"datatable-scroll"t>><"dt-row dt-bottom-row"<"row"<"col-sm-6"i><"col-sm-6 text-right"p>>>',
+                    "bServerSide": false,
+                    "aaSorting": [[2, "desc"]],
+                    "sAjaxSource": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/ListClientMonitoring/",
+                    "fnServerData": function (sSource, aoData, fnCallback) {
+                        aoData.push({ "name": "clientID", "value": '<%=Request["id1"]%>' });
+                        aoData.push({ "name": "dt", "value": dateFormat(new Date(), "yyyymmddHHMMss") });
 
-                } catch (e) {
-                    alert("Failed to complete this operation.");
-                }
+                        Pace.restart();
+                        $.ajax({
+                            "type": "POST",
+                            "dataType": 'json',
+                            "url": sSource,
+                            "data": aoData,
+                            "success": function (data) {
+                                fnCallback(data);
+                            }
+                        });
+                    },
+                    "fnDrawCallback": function ( oSettings ) {
+                        /* Need to redo the counters if filtered or sorted */
+                        if ( oSettings.bSorted || oSettings.bFiltered )
+                        {
+                            for ( var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ )
+                            {
+                                $('td:eq(0)', oSettings.aoData[ oSettings.aiDisplay[i] ].nTr ).html( i+1 );
+                            }
+                        }
+                    },
+                    "aoColumns": [
+                        {
+                            "mData": null,
+                            "bSearchable": false,
+                            "bSortable": false,
+                            "sWidth": "80",
+                            "sClass": "center"
+                        },
+                        {
+                            "mDataProp": "ProfileName",
+                            "bSearchable": false,
+                            "bSortable": true,
+                            "sWidth": "400"
+                        },
+                        {
+                            "mDataProp": "EffectiveDate",
+                            "bSearchable": false,
+                            "bSortable": true,
+                            "sWidth": "300",
+                            "iDataSort": 3,
+                            "bUseRendered": false,
+                            "fnRender": function (oObj) {
+                                if (oObj.aData["EffectiveDate"] == null) return '';
+                                var date = new Date(parseInt(oObj.aData["EffectiveDate"].substr(6)));
+                                return dateFormat(date, "dd/mm/yyyy");
+                            }
+                        },
+                        {
+                            "mDataProp": "EffectiveDate",
+                            "bSearchable": false,
+                            "bSortable": true,
+                            "bVisible": false,
+                            "bUseRendered": false,
+                            "fnRender": function (oObj) {
+                                if (oObj.aData["EffectiveDate"] == null) return '';
+                                var date = new Date(parseInt(oObj.aData["EffectiveDate"].substr(6)));
+                                return dateFormat(date, "yyymmdd");
+                            }
+                        },
+                        {
+                            "mData": null,
+                            "bSearchable": false,
+                            "bSortable": false,
+                            "fnRender": function (oObj) {
+                                return '<a id="del_item_' + oObj.aData["MonitoringProfileId"] + '" class="btn btn-danger btn-xs" href="javascript:deleteRow(' + oObj.aData["MonitoringProfileId"] + ');"><i class="glyphicon glyphicon-trash"></i></a>';
+                            }
+                        }
+                    ],
 
-                setTimeout(function () {
-                    window.location.href = 'ClientList.aspx';
-                }, 3000);
+                });
 
-            }
+                //Load List Client Severity Action Here
+                //...................
+                    $('#dt_basic_2').dataTable({
+                        "sPaginationType": "bootstrap_full",
+                        "bFilter": false,
+                        "bAutoWidth": false,
+                        "bPaginate": true,
+                        "iDisplayLength": 25,
+                        "bInfo": true,
+                        "sDom": 'r<"dt-top-row"lf><"dt-wrapper"<"datatable-scroll"t>><"dt-row dt-bottom-row"<"row"<"col-sm-6"i><"col-sm-6 text-right"p>>>',
+                        "bServerSide": false,
+                        "aaSorting": [[1, "asc"]],
+                        "sAjaxSource": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/ListClientSeverityAction/",
+                    "fnServerData": function (sSource, aoData, fnCallback) {
+                        aoData.push({ "name": "clientID", "value": '<%=Request["id1"]%>' });
+                        aoData.push({ "name": "dt", "value": dateFormat(new Date(), "yyyymmddHHMMss") });
+
+                        Pace.restart();
+                        $.ajax({
+                            "type": "POST",
+                            "dataType": 'json',
+                            "url": sSource,
+                            "data": aoData,
+                            "success": function (data) {
+                                fnCallback(data);
+                            }
+                        });
+                    },
+                    "fnDrawCallback": function ( oSettings ) {
+                        /* Need to redo the counters if filtered or sorted */
+                        if ( oSettings.bSorted || oSettings.bFiltered )
+                        {
+                            for ( var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ )
+                            {
+                                $('td:eq(0)', oSettings.aoData[ oSettings.aiDisplay[i] ].nTr ).html( i+1 );
+                            }
+                        }
+                    },
+                    "aoColumns": [
+                        {
+                            "mData": null,
+                            "bSearchable": false,
+                            "bSortable": false,
+                            "sWidth": "80",
+                            "sClass": "center"
+                        },
+                        {
+                            "mDataProp": "LevelCode",
+                            "bSearchable": false,
+                            "bSortable": true,
+                            "sWidth": "200"
+                        },
+                        {
+                            "mDataProp": "LevelName",
+                            "bSearchable": false,
+                            "bSortable": true,
+                            "sWidth": "200"
+                        },
+                        {
+                            "mDataProp": "OverwritenAction",
+                            "bSearchable": false,
+                            "bSortable": false,
+                            "sWidth": "100",
+                            "sClass": "center",
+                            "fnRender": function (oObj) {
+                                if (oObj.aData["OverwritenAction"]) {
+                                    return '<span class="label label-success">Yes</span>';
+                                } else {
+                                    return '<span class="label label-danger">No</span>';
+                                }
+                            }
+                        },
+                        {
+                            "mDataProp": "Email",
+                            "bSearchable": false,
+                            "bSortable": false,
+                            "sWidth": "350"
+                        },
+                        {
+                            "mDataProp": "Sms",
+                            "bSearchable": false,
+                            "bSortable": false,
+                            "sWidth": "350"
+                        },
+                        {
+                            "mData": null,
+                            "bSearchable": false,
+                            "bSortable": false,
+                            "fnRender": function (oObj) {
+                                return '<a data-toggle="modal" class="btn btn-primary btn-xs hidden-mobile" href="#myModalAction" id="edit_item_' + oObj.aData["SeverityLevelId"] + '" onClick="toEditAction(' + oObj.aData["SeverityLevelId"] + '); return true;"><i class="glyphicon glyphicon-edit"></i></a>';
+                            }
+                        }
+                    ],
+
+                });
+                /* END TABLE TOOLS */
+
+                    $.fn.dataTableExt.oApi.fnReloadAjax = function (oSettings, sNewSource, fnCallback, bStandingRedraw) {
+                        // DataTables 1.10 compatibility - if 1.10 then versionCheck exists.
+                        // 1.10s API has ajax reloading built in, so we use those abilities
+                        // directly.
+                        if ($.fn.dataTable.versionCheck) {
+                            var api = new $.fn.dataTable.Api(oSettings);
+
+                            if (sNewSource) {
+                                api.ajax.url(sNewSource).load(fnCallback, !bStandingRedraw);
+                            }
+                            else {
+                                api.ajax.reload(fnCallback, !bStandingRedraw);
+                            }
+                            return;
+                        }
+
+                        if (sNewSource !== undefined && sNewSource !== null) {
+                            oSettings.sAjaxSource = sNewSource;
+                        }
+
+                        // Server-side processing should just call fnDraw
+                        if (oSettings.oFeatures.bServerSide) {
+                            this.fnDraw();
+                            return;
+                        }
+
+                        this.oApi._fnProcessingDisplay(oSettings, true);
+                        var that = this;
+                        var iStart = oSettings._iDisplayStart;
+                        var aData = [];
+
+                        this.oApi._fnServerParams(oSettings, aData);
+
+                        oSettings.fnServerData.call(oSettings.oInstance, oSettings.sAjaxSource, aData, function (json) {
+                            /* Clear the old information from the table */
+                            that.oApi._fnClearTable(oSettings);
+
+                            /* Got the data - add it to the table */
+                            var aData = (oSettings.sAjaxDataProp !== "") ?
+                                that.oApi._fnGetObjectDataFn(oSettings.sAjaxDataProp)(json) : json;
+
+                            for (var i = 0 ; i < aData.length ; i++) {
+                                that.oApi._fnAddData(oSettings, aData[i]);
+                            }
+
+                            oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
+
+                            that.fnDraw();
+
+                            if (bStandingRedraw === true) {
+                                oSettings._iDisplayStart = iStart;
+                                that.oApi._fnCalculateEnd(oSettings);
+                                that.fnDraw(false);
+                            }
+
+                            that.oApi._fnProcessingDisplay(oSettings, false);
+
+                            /* Callback user function - for event handlers etc */
+                            if (typeof fnCallback == 'function' && fnCallback !== null) {
+                                fnCallback(oSettings);
+                            }
+                        }, oSettings);
+                    };
+
+                    $.fn.dataTableExt.oApi.fnStandingRedraw = function (oSettings, idx) {
+                        if (oSettings.oFeatures.bServerSide === false) {
+                            var before = oSettings._iDisplayStart - idx;
+
+                            oSettings.oApi._fnReDraw(oSettings);
+
+                            // iDisplayStart has been reset to zero - so lets change it back
+                            oSettings._iDisplayStart = before;
+                            oSettings.oApi._fnCalculateEnd(oSettings);
+                        }
+                        oSettings._iDisplayStart = oSettings._iDisplayStart - (idx * oSettings._iDisplayLength);
+                        // draw the 'current' page
+                        oSettings.oApi._fnDraw(oSettings);
+                    };
+
+                } 
 
             $("#btnSubmit").on("click", function (event) {
                 event.preventDefault(); // will work!
             });
 
+
+            $("#btnSubmitMonitoring").on("click", function (event) {
+                event.preventDefault(); // will work!
+            });
+
+            $("#btnSubmitAction").on("click", function (event) {
+                event.preventDefault(); // will work!
+            });
+
         });
-        // Initial Data
-        function initialData() {
-            $.ajax({
-                "type": "POST",
-                "dataType": 'json',
-                "contentType": "application/json; charset=utf-8",
-                "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/InitDataForEdit/",
+            // Initial Data
+            function initialData() {
+                $.ajax({
+                    "type": "POST",
+                    "dataType": 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/InitDataForEdit/",
                 "success": function(data) {
                     $('#ddlReferenceClient').append(unescape(data.listMainAppClients));
                     $('#ddlLocation').append(unescape(data.listLocation));
                 },
 
             });
+            loadListMonitoringProfile();
         }
 
+        function loadListMonitoringProfile() {
+            $.ajax({
+                "type": "POST",
+                "dataType": 'json',
+                "contentType": "application/json; charset=utf-8",
+                "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/MonitoringProfile/List/",
+                "data": "{'activeList' : true, 'excludeClientID' :  <%=Request["id1"]%>, 'dt' : " + dateFormat(new Date(), "yyyymmddHHMMss") + "}",
+                "success": function(data) {
+                    $.each(data.ddlMonitoringProfile, function (index, item) {
+                        $('#ddlMonitoringProfile').append($('<option></option>').val(item.MonitoringProfileId).html(item.ProfileName));
+                    });
+
+                    if (data.ddlMonitoringProfile == null || data.ddlMonitoringProfile.length == 0)
+                        $('#ddlMonitoringProfile').append($('<option></option>').val('').html('No Monitoring Profile Available'));
+
+                },
+
+            });
+        }
+
+
+        function newMonitoring() {
+            if (!$('#monitoringprofile-form').valid()) return;
+            tmpObj = function () {
+                this.clientID = $('#id1').val();
+                this.monitoringProfileID = $('#ddlMonitoringProfile').val();
+                this.effectiveDate = $('#txtProfileEffectiveDate').val();
+                this.dt = dateFormat(new Date(), "yyyymmddHHMMss");
+            };
+            var updObj = new tmpObj();
+            Pace.restart();
+
+            $.ajax({
+                "type": "POST",
+                "dataType": 'json',
+                "contentType": "application/json; charset=utf-8",
+                "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/AddClientMonitoring/",
+                "data": JSON.stringify(updObj),
+                "success": function (ret) {
+
+                    if (ret.status == "1") {
+                        try {
+                            $.smallBox({
+                                title: "Update Complete",
+                                content: "<i class='fa fa-clock-o'></i> <i>This operation is complete.</i>",
+                                color: "#659265",
+                                iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                                timeout: 2000
+                            });
+
+                        } catch (e) {
+                            alert("This operation is complete.");
+                        }
+
+                        var oTable = $('#dt_basic').dataTable();
+                        oTable.fnReloadAjax();
+
+                        $('#myModal').modal('toggle');
+                        $('#monitoringprofile-form')[0].reset();
+                        $("#txtProfileEffectiveDate").datepicker('setDate', new Date());
+                        $('#ddlMonitoringProfile').html("");
+                        loadListMonitoringProfile();
+
+                    } else if (ret.status == "-1") {
+
+                        try {
+                            $.smallBox({
+                                title: "Update Failed!",
+                                content: "<i class='fa fa-clock-o'></i> <i>" + ret.error + "</i>",
+                                color: "#C46A69",
+                                iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                timeout: 4000
+                            });
+
+                        } catch (e) {
+                            alert(ret.error);
+                        }
+                    } else if (ret.status == "0") {
+                        try {
+                            $.smallBox({
+                                title: "Update Failed",
+                                content: "<i class='fa fa-clock-o'></i> <i>" + ret.error + "</i>",
+                                color: "#C46A69",
+                                iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                timeout: 4000
+                            });
+
+                        } catch (e) {
+                            alert(ret.error);
+                        }
+                    }
+
+                },
+
+            });
+        }
 
         function update() {
 
@@ -629,8 +1392,225 @@
             });
         }
 
+        function updateAction() {
+
+            if (!$('#severityaction-form').valid()) return;
+
+            tmpObj = function () {
+                this.clientID = $('#id1').val();
+                this.severityLevelID = $('#hSeverityLevelID').val();
+                this.overwritenAction = $('#cbxOverwritenAction').is(':checked');
+                this.email = $('#txtEmail').val();
+                this.sms = $('#txtSMS').val();
+
+                this.dt = dateFormat(new Date(), "yyyymmddHHMMss");
+
+            };
+            var updObj = new tmpObj();
+            Pace.restart();
+
+            $.ajax({
+                "type": "POST",
+                "dataType": 'json',
+                "contentType": "application/json; charset=utf-8",
+                "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/UpdateClientSeverityAction/",
+                "data": JSON.stringify(updObj),
+                "success": function (ret) {
+
+                    if (ret.status == "1") {
+                        try {
+                            $.smallBox({
+                                title: "Update Complete",
+                                content: "<i class='fa fa-clock-o'></i> <i>This operation is complete.</i>",
+                                color: "#659265",
+                                iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                                timeout: 2000
+                            });
+
+                        } catch (e) {
+                            alert("This operation is complete.");
+                        }
+
+                        var oTable = $('#dt_basic_2').dataTable();
+                        oTable.fnReloadAjax();
+
+                        $('#myModalAction').modal('toggle');
+                        $('#severityaction-form')[0].reset();
+
+                    } else if (ret.status == "-1") {
+
+                        try {
+                            $.smallBox({
+                                title: "Update Failed!",
+                                content: "<i class='fa fa-clock-o'></i> <i>" + ret.error + "</i>",
+                                color: "#C46A69",
+                                iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                timeout: 4000
+                            });
+
+                        } catch (e) {
+                            alert(ret.error);
+                        }
+                    } else if (ret.status == "0") {
+                        try {
+                            $.smallBox({
+                                title: "Update Failed",
+                                content: "<i class='fa fa-clock-o'></i> <i>" + ret.error + "</i>",
+                                color: "#C46A69",
+                                iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                timeout: 4000
+                            });
+
+                        } catch (e) {
+                            alert(ret.error);
+                        }
+                    }
+
+                },
+
+            });
+        }
+
+
+        function deleteRow(id) {
+            Row = function (id) {
+                this.clientID = '<%=Request["id1"]%>';
+                this.monitoringProfileID = id;
+                this.dt = dateFormat(new Date(), "yyyymmddHHMMss");
+            };
+            var delRow = new Row(id);
+
+            $.SmartMessageBox({
+                title: "Delete Confirmation",
+                content: "Are you sure you want to delete this item?",
+                buttons: '[No][Yes]'
+            }, function (ButtonPressed) {
+                if (ButtonPressed === "Yes") {
+                    $.ajax({
+                        "type": "POST",
+                        "dataType": 'json',
+                        "contentType": "application/json; charset=utf-8",
+                        "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/DeleteClientMonitoring",
+                        "data": JSON.stringify(delRow),
+                        "success": function (data) {
+                            if (data == "-1") {
+                                try {
+                                    $.smallBox({
+                                        title: "Access Denied!",
+                                        content: "<i class='fa fa-clock-o'></i> <i>No Access Rights to delete!</i>",
+                                        color: "#C46A69",
+                                        iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                        timeout: 4000
+                                    });
+
+                                } catch (e) {
+                                    alert("No Access Rights to delete!");
+                                }
+                            } else if (data == "1") {
+                                var oTable = $('#dt_basic').dataTable();
+                                oTable.fnReloadAjax();
+                                $('#ddlMonitoringProfile').html("");
+                                loadListMonitoringProfile();
+
+                                try {
+                                    $.smallBox({
+                                        title: "Delete Complete",
+                                        content: "<i class='fa fa-clock-o'></i> <i>This operation is complete.</i>",
+                                        color: "#659265",
+                                        iconSmall: "fa fa-check fa-2x fadeInRight animated",
+                                        timeout: 4000
+                                    });
+
+                                } catch (e) {
+                                    alert("This operation is complete.");
+                                }
+                            } else if (data == "0") {
+                                try {
+                                    $.smallBox({
+                                        title: "Delete Failed",
+                                        content: "<i class='fa fa-clock-o'></i> <i>Failed to complete this operation.</i>",
+                                        color: "#C46A69",
+                                        iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                        timeout: 4000
+                                    });
+
+                                } catch (e) {
+                                    alert("Failed to complete this operation.");
+                                }
+                            }
+
+                        },
+
+                    });
+                }
+
+            });
+        }
+
+        //Fix Datepicker on Modal Dialog
+        $.fn.modal.Constructor.prototype.enforceFocus = function() {};
+
+
+        function toEditAction(id) {
+
+            $('#hSeverityLevelID').val();
+
+            $.ajax({
+                "type": "POST",
+                "dataType": 'json',
+                "contentType": "application/json; charset=utf-8",
+                "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/GetClientSeverityAction/",
+                    "data": "{'clientID' :  <%=Request["id1"]%>, 'severityLevelID' : " + id + " , 'dt' : " + dateFormat(new Date(), "yyyymmddHHMMss") + "}",
+                    "success": function(ret) {
+
+                        if (ret.status == "1") {
+
+                            var myData = JSON.parse(ret.data);
+
+                            $('#txtLevelCode').val(myData.LevelCode);
+                            $('#txtLevelName').val(myData.LevelName);
+
+                            $('#cbxOverwritenAction').attr('checked', myData.OverwritenAction);
+
+                            $('#txtEmail').val(myData.Email);
+                            $('#txtSMS').val(myData.Sms);
+
+                            $('#hSeverityLevelID').val(id);
+
+                        } else if (ret.status == "-1") {
+
+                            try {
+                                $.smallBox({
+                                    title: "Access Denied!",
+                                    content: "<i class='fa fa-clock-o'></i> <i>No access rights to complete this operation.</i>",
+                                    color: "#C46A69",
+                                    iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                    timeout: 4000
+                                });
+
+                            } catch (e) {
+                                alert("No access rights to complete this operation.");
+                            }
+                        } else if (ret.status == "0") {
+                            try {
+                                $.smallBox({
+                                    title: "Get Object Failed",
+                                    content: "<i class='fa fa-clock-o'></i> <i>Failed to complete this operation.</i>",
+                                    color: "#C46A69",
+                                    iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                    timeout: 4000
+                                });
+
+                            } catch (e) {
+                                alert("Failed to complete this operation.");
+                            }
+                        }
+
+                    },
+
+            });
+        }
+
     </script>
-
-
 
 </asp:content>

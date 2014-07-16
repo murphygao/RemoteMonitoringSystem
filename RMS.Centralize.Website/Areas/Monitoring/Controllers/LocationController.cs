@@ -40,8 +40,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     iTotalRecords = totalRecords,
                     iTotalDisplayRecords = totalRecords,
                     aaData = searchResult.ListLocationInfos,
-                    isSuccess = searchResult.IsSuccess,
-                    errorMessage = searchResult.ErrorMessage
+                    status = (searchResult.IsSuccess) ? 1 : 0,
+                    error = searchResult.ErrorMessage
                 };
 
                 return Json(data);
@@ -51,8 +51,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             {
                 var data = new
                 {
-                    isSuccess = false,
-                    errorMessage = ex.Message
+                    status = 0,
+                    error = ex.Message
                 };
 
                 new RMSWebException(this, "0500", "Search failed. " + ex.Message, ex, true);

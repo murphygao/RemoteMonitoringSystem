@@ -385,10 +385,15 @@ namespace RMS.Centralize.WebService.BSL
                                     // ตรวจสอบว่า ต้องส่ง message ซ้ำหรือไม่
                                     // โดยตรวจจาก severity level ว่า repeatable หรือไม่
                                     var level = lSeverityLevels.Find(s => s.SeverityLevelId == summaryMonitoring.SeverityLevelId);
-                                    if (level != null && level.ActionRepeatable == true && summaryMonitoring.LastActionDateTime != null)
+                                    if (level != null && level.ActionRepeatable == true)
                                     {
+                                        if (summaryMonitoring.LastActionDateTime == null)
+                                        {
+                                            //case นี้ปกติเป็นไปไม่ได้ ทำเผื่อไว้เท่านั้น
+                                            lPrepareForActions.Add(summaryMonitoring);
+                                        }
                                         // ถ้าเวลาปัจจุบัน มากกว่า last action send + interval แสดงว่า ให้ส่ง ซ้ำได้
-                                        if (DateTime.Now > summaryMonitoring.LastActionDateTime.Value.AddMinutes(level.ActionRepeatInterval ?? 0))
+                                        else if (DateTime.Now > summaryMonitoring.LastActionDateTime.Value.AddMinutes(level.ActionRepeatInterval ?? 0))
                                         {
                                             lPrepareForActions.Add(summaryMonitoring);
                                         }
@@ -412,7 +417,7 @@ namespace RMS.Centralize.WebService.BSL
             }
             catch (Exception ex)
             {
-                throw new RMSWebException(this, "0500", "DoSummaryMonitoring failed. " + ex.Message, ex, false);
+                throw new RMSWebException(this, "0500", "DoSummaryMonitoring failed. " + ex.Message, ex, true);
             }
 
 
@@ -555,7 +560,7 @@ namespace RMS.Centralize.WebService.BSL
             }
             catch (Exception ex)
             {
-                throw new RMSWebException(this, "0500", "DoSummaryMonitoringForBusiness failed. " + ex.Message, ex, false);
+                throw new RMSWebException(this, "0500", "DoSummaryMonitoringForBusiness failed. " + ex.Message, ex, true);
             }
         }
     }

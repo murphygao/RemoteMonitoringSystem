@@ -39,7 +39,7 @@
     </style>
 </head>
 <body>
-
+    <asp:Panel ID="Panel2" runat="server">
     <div>
         <table>
             <tr>
@@ -86,9 +86,8 @@
             </tr>
         </table>
     </div>
-
+    </asp:Panel>
     <asp:Panel ID="Panel1" runat="server">
-        <br />
         <br />
         <form id="form1" runat="server">
             <asp:TextBox ID="Textbox2" runat="server" Width="100px"></asp:TextBox>
@@ -99,8 +98,8 @@
             <asp:Button ID="Button2" runat="server" Text="Reset" OnClick="btnReset_Click" />
             <br />
             <br />
-            <div style="width: 100%; height: 1000px; overflow: auto;">
-                <asp:GridView ID="GridView1" runat="server" CellPadding="4" ForeColor="#333333" GridLines="Horizontal" AllowPaging="True" AllowSorting="True" EmptyDataText="No Rows Found" PageSize="25" OnPageIndexChanging="GridView1_PageIndexChanging">
+            <div style="width: 100%; overflow: auto;">
+                <asp:GridView ID="GridView1" runat="server" CellPadding="4" ForeColor="#333333" GridLines="Horizontal" AllowPaging="True" AllowSorting="True" EmptyDataText="No Rows Found" PageSize="10" OnPageIndexChanging="GridView1_PageIndexChanging">
                     <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                     <RowStyle BackColor="#EFF3FB" />
                     <EditRowStyle BackColor="#2461BF" />

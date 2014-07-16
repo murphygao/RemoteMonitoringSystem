@@ -46,7 +46,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     ddlMonitoringProfile = result.ListMonitoringProfiles,
 
                     status = (result.IsSuccess) ? 1 : 0,
-                    errorMessage = result.ErrorMessage
+                    error = result.ErrorMessage
                 };
 
                 return Json(ret);

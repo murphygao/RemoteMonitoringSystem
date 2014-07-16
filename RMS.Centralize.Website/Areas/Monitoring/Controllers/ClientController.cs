@@ -43,8 +43,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     iTotalRecords = totalRecords,
                     iTotalDisplayRecords = totalRecords,
                     aaData = searchResult.ListClients,
-                    isSuccess = searchResult.IsSuccess,
-                    errorMessage = searchResult.ErrorMessage
+                    status = (searchResult.IsSuccess) ? 1 : 0,
+                    error = searchResult.ErrorMessage
                 };
 
                 return Json(data);
@@ -54,8 +54,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             {
                 var data = new
                 {
-                    isSuccess = false,
-                    errorMessage = ex.Message
+                    status = 0,
+                    error = ex.Message
                 };
 
                 new RMSWebException(this, "0500", "Search failed. " + ex.Message, ex, true);
@@ -74,8 +74,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                 var data = new
                 {
                     aaData = searchResult.TotalRecords,
-                    isSuccess = searchResult.IsSuccess,
-                    errorMessage = searchResult.ErrorMessage
+                    status = (searchResult.IsSuccess) ? 1 : 0,
+                    error = searchResult.ErrorMessage
                 };
 
                 return Json(data);
@@ -85,8 +85,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             {
                 var data = new
                 {
-                    isSuccess = false,
-                    errorMessage = ex.Message
+                    status = 0,
+                    error = ex.Message
                 };
                 new RMSWebException(this, "0500", "ExistingClientCode failed. " + ex.Message, ex, true);
 
@@ -105,7 +105,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                 {
                     data = JsonConvert.SerializeObject(searchResult.Client),
                     status = (searchResult.IsSuccess) ? 1 : 0,
-                    errorMessage = searchResult.ErrorMessage
+                    error = searchResult.ErrorMessage
                 };
 
                 return Json(data);
@@ -116,7 +116,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                 var data = new
                 {
                     status = 0,
-                    errorMessage = ex.Message
+                    error = ex.Message
                 };
                 new RMSWebException(this, "0500", "GetClient failed. " + ex.Message, ex, true);
 
@@ -211,7 +211,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     listMainAppClients = ddlMainAppClient,
                     listLocation = ddlLocation,
                     status = (listResult.IsSuccess) ? 1 : 0,
-                    errorMessage = listResult.ErrorMessage
+                    error = listResult.ErrorMessage
                 };
 
                 return Json(data);
@@ -221,7 +221,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                 var data = new
                 {
                     status = 0,
-                    errorMessage = ex.Message
+                    error = ex.Message
                 };
                 new RMSWebException(this, "0500", "ListMainAppClient failed. " + ex.Message, ex, true);
 
@@ -278,8 +278,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     iTotalRecords = result.TotalRecords,
                     iTotalDisplayRecords = result.TotalRecords,
                     aaData = result.ListMonitoringProfileInfos,
-                    isSuccess = result.IsSuccess,
-                    errorMessage = result.ErrorMessage
+                    status = (result.IsSuccess) ? 1 : 0,
+                    error = result.ErrorMessage
                 };
 
                 return Json(ret);
@@ -384,8 +384,8 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                     iTotalRecords = result.TotalRecords,
                     iTotalDisplayRecords = result.TotalRecords,
                     aaData = result.ListClientSeverityActionInfos,
-                    isSuccess = result.IsSuccess,
-                    errorMessage = result.ErrorMessage
+                    status = (result.IsSuccess) ? 1 : 0,
+                    error = result.ErrorMessage
                 };
 
                 return Json(ret);

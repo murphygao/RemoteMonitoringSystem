@@ -68,6 +68,7 @@ namespace RMS.Agent.BSL.Monitoring
 
                 var rmsMonitoringProfileDevicebyDeviceCode = RMS.Monitoring.Helper.Common.GetRmsMonitoringProfileDevicebyDeviceCode(clientResult, "CLIENT", Models.DeviceCode.Client);
                 var rmsMonitoringProfileDevices = rmsMonitoringProfileDevicebyDeviceCode;
+
                 // for CLIENT code, there are only one rmsMonitoringProfileDevices
                 if (rmsMonitoringProfileDevices.Count > 0)
                     monitoringProfileDeviceId = rmsMonitoringProfileDevices[0].MonitoringProfileDeviceId;
@@ -91,6 +92,8 @@ namespace RMS.Agent.BSL.Monitoring
                 bool checkedAgent = false;
                 foreach (var monitoringClient in rmsMonitoringProfileDevices)
                 {
+                    if (monitoringClient.StringValue == null) monitoringClient.StringValue = string.Empty;
+
                     List<string> appNameList = new List<string>(monitoringClient.StringValue.Split('|'));
 
                     // ถ้า device string ไม่มีค่า หรือมีค่าเท่ากับ agent process name แสดงว่า ให้ตรวจสอบ agent ว่ายังทำงานอยู่หรือไม่

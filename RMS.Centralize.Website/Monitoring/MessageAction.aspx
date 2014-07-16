@@ -295,7 +295,22 @@
                         "url": sSource,
                         "data": aoData,
                         "success": function (data) {
-                            fnCallback(data);
+                            if (data.status == 1) {
+                                fnCallback(data);
+                            } else {
+                                try {
+                                    $.smallBox({
+                                        title: "System Failed",
+                                        content: "<i class='fa fa-clock-o'></i> <i>" + data.error + "</i>",
+                                        color: "#C46A69",
+                                        iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                        timeout: 4000
+                                    });
+
+                                } catch (e) {
+                                    alert(data.error);
+                                }
+                            }
                         }
                     });
                 },
@@ -312,12 +327,18 @@
                         "mDataProp": "MessageGroupName",
                         "bSearchable": false,
                         "bSortable": true,
+                        "fnRender": function (oObj) {
+                            return htmlEscape(oObj.aData["MessageGroupName"]);
+                        }
                     },
                     {
                         // Message
                         "mDataProp": "Message",
                         "bSearchable": false,
                         "bSortable": true,
+                        "fnRender": function (oObj) {
+                            return htmlEscape(oObj.aData["Message"]);
+                        }
                     },
                     {
                         //status
@@ -348,6 +369,9 @@
                         "mDataProp": "ActionProfileName",
                         "bSearchable": false,
                         "bSortable": false,
+                        "fnRender": function (oObj) {
+                            return htmlEscape(oObj.aData["ActionProfileName"]);
+                        }
                     },
                     {
                         "mData": null,

@@ -263,20 +263,29 @@ namespace RMS.Agent.WPF
         {
             try
             {
-                logs.Add(new EventLog { EventDateTime = DateTime.Now, EventType = "Agent", Message = "Application Closing", Detail = "" });
-                dgLogs.ItemsSource = null;
-                dgLogs.ItemsSource = logs;
-
-                ni.Visible = false;
-
-                if (host != null && host.State == CommunicationState.Opened)
-                    host.Close();
-
-                string strResultList = Serializer.XML.SerializeObject(logs);
-                using (TextWriter tw = new StreamWriter(historyFile, false)) // Create & open the file
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Exit Application", System.Windows.MessageBoxButton.YesNo);
+                if (messageBoxResult == MessageBoxResult.Yes)
                 {
-                    tw.Write(strResultList);
-                    tw.Close();
+
+                    logs.Add(new EventLog {EventDateTime = DateTime.Now, EventType = "Agent", Message = "Application Closing", Detail = ""});
+                    dgLogs.ItemsSource = null;
+                    dgLogs.ItemsSource = logs;
+
+                    ni.Visible = false;
+
+                    if (host != null && host.State == CommunicationState.Opened)
+                        host.Close();
+
+                    string strResultList = Serializer.XML.SerializeObject(logs);
+                    using (TextWriter tw = new StreamWriter(historyFile, false)) // Create & open the file
+                    {
+                        tw.Write(strResultList);
+                        tw.Close();
+                    }
+                }
+                else
+                {
+                    e.Cancel = true;
                 }
             }
             catch (Exception ex)

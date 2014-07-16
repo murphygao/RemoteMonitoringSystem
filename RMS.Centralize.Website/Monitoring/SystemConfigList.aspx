@@ -193,8 +193,27 @@
                         "url": sSource,
                         "data": aoData,
                         "success": function (data) {
-                            fnCallback(data);
-                        }
+                            if (data.status == 1) {
+                                fnCallback(data);
+                            } else {
+                                try {
+                                    $.smallBox({
+                                        title: "System Failed",
+                                        content: "<i class='fa fa-clock-o'></i> <i>" + data.error + "</i>",
+                                        color: "#C46A69",
+                                        iconSmall: "fa fa-times fa-2x fadeInRight animated",
+                                        timeout: 4000
+                                    });
+
+                                } catch (e) {
+                                    alert(data.error);
+                                }
+                            }
+
+                        },
+                        "failure": function (data) {
+                            alert(data.error);
+                        },
                     });
                 },
                 "fnDrawCallback": function (oSettings) {
@@ -217,31 +236,44 @@
                         "mDataProp": "Name",
                         "bSearchable": true,
                         "bSortable": true,
-                        "sWidth": "200"
+                        "sWidth": "200",
+                        "fnRender": function (oObj) {
+                            return htmlEscape(oObj.aData["Name"]);
+                        }
                     },
                     {
                         "mDataProp": "Value",
                         "bSearchable": false,
                         "bSortable": false,
-                        "sWidth": "300"
+                        "sWidth": "300",
+                        "fnRender": function (oObj) {
+                            return htmlEscape(oObj.aData["Value"]);
+                        }
                     },
                     {
                         "mDataProp": "DefaultValue",
                         "bSearchable": false,
                         "bSortable": false,
-                        "sWidth": "300"
+                        "sWidth": "300",
+                        "fnRender": function(oObj) {
+                            return htmlEscape(oObj.aData["DefaultValue"]);
+                        }
                     },
                     {
                         "mDataProp": "Description",
                         "bSearchable": false,
                         "bSortable": false,
-                        "sWidth": "400"
+                        "sWidth": "400",
+                        "fnRender": function (oObj) {
+                            return htmlEscape(oObj.aData["Description"]);
+                        }
                     },
                     {
                         "mData": null,
                         "bSearchable": false,
                         "bSortable": false,
                         "sClass": "nowrap",
+                        "bUseRendered": false,
                         "fnRender": function (oObj) {
                             return '<a id="edit_item_' + oObj.aData["Name"] + '" class="btn btn-primary btn-xs" href="javascript:toEditRow(\'' + oObj.aData["Name"] + '\')"><i class="glyphicon glyphicon-edit"></i></a>';
                         }

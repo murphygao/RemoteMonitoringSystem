@@ -42,8 +42,27 @@ namespace Test.WPFApplication
 
             rawMessage.MessageRemark = txtMessageRemark.Text;
 
-            msc.AddBusinessMessage(rawMessage);
+            msc.AddMessage(rawMessage);
 
+        }
+
+        private void btnCallAddBizMessage_Click(object sender, RoutedEventArgs e)
+        {
+            MonitoringServiceClient msc = new MonitoringServiceClient();
+
+            var rawMessage = new RmsReportMonitoringRaw();
+            rawMessage.ClientCode = txtClientCode.Text;
+            rawMessage.DeviceCode = txtDeviceCode.Text;
+            rawMessage.MessageGroupCode = txtMessageGroupCode.Text;
+            rawMessage.Message = txtMessage.Text;
+            rawMessage.MessageDateTime = DateTime.Now;
+
+            if (!string.IsNullOrEmpty(txtMonitoringProfileDeviceID.Text.Trim()))
+                rawMessage.MonitoringProfileDeviceId = Convert.ToInt32(txtMonitoringProfileDeviceID.Text);
+
+            rawMessage.MessageRemark = txtMessageRemark.Text;
+
+            msc.AddBusinessMessage(rawMessage);
         }
 
     }
