@@ -34,7 +34,7 @@ namespace RMS.Agent.OutOfServiceApp
 
         private btnTransparentDelegate doBtnTransparent;
 
-        private double btnOpticalOnPressed = 0.1;
+        private double btnOpticalOnPressed = 0.3;
 
 
         public HomePage()

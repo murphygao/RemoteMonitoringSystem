@@ -261,33 +261,6 @@ namespace RMS.Centralize.WebService
 
         }
 
-        public MainAppClientResult ListMainAppClient()
-        {
-            try
-            {
-                BSL.ClientService cs = new BSL.ClientService();
-                var listMainAppClient = cs.ListMainAppClient();
-
-                var sr = new MainAppClientResult
-                {
-                    IsSuccess = true,
-                    ListMainAppClients = listMainAppClient,
-                };
-                return sr;
-            }
-            catch (Exception ex)
-            {
-                new RMSWebException(this, "0500", "ListMainAppClient failed. " + ex.Message, ex, true);
-
-                var sr = new MainAppClientResult
-                {
-                    IsSuccess = false,
-                    ErrorMessage = "ListMainAppClient errors. " + ex.Message
-                };
-                return sr;
-            }
-        }
-
         public LocationResult ListLocation()
         {
             try

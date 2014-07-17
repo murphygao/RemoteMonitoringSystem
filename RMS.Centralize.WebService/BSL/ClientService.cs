@@ -454,29 +454,6 @@ namespace RMS.Centralize.WebService.BSL
             }
         }
 
-        public List<MainAppClient> ListMainAppClient()
-        {
-            try
-            {
-                using (var db = new MyDbContext())
-                {
-                    db.Configuration.ProxyCreationEnabled = false;
-                    db.Configuration.LazyLoadingEnabled = false;
-
-                    var listOfType = db.Database.SqlQuery<MainAppClient>("RMS_ListMainAppClient");
-
-                    List<MainAppClient> listClients = new List<MainAppClient>(listOfType.ToList());
-
-                    return listClients;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new RMSWebException(this, "0500", "ListMainAppClient failed. " + ex.Message, ex, false);
-            }
-        }
-
-
         public List<ClientSeverityActionInfo> ListClientSeverityActions(int clientID)
         {
             try

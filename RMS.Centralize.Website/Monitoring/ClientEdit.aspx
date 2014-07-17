@@ -762,7 +762,7 @@
                         regex: /^\s*(([A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)\s*[;,]{0,1}\s*)+$/
                     },
                     txtSMS: {
-                        regex: /^(\d{3}[\s.-]?\d{3}[\s.-]?\d{4}\s*[;,]{0,1}\s*)+$/
+                        regex: /^((\d{3}[\s.-]?\d{3}[\s.-]?\d{4}|\d{2}[\s.-]?\d{4}[\s.-]?\d{4})\s*[;,]{0,1}\s*)+$/
                     },
 
                 },
@@ -1243,7 +1243,7 @@
                     "contentType": "application/json; charset=utf-8",
                     "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/Client/InitDataForEdit/",
                 "success": function(data) {
-                    $('#ddlReferenceClient').append(unescape(data.listMainAppClients));
+                    //$('#ddlReferenceClient').append(unescape(data.listMainAppClients));
                     $('#ddlLocation').append(unescape(data.listLocation));
                 },
 

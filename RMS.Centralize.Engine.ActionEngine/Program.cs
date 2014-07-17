@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Net;
-using System.Net.Mime;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -13,11 +12,11 @@ using RMS.Centralize.DAL;
 using RMS.Common.Exception;
 using Timer = System.Timers.Timer;
 
-namespace RMS.Centralize.Engine.MonitoringEngine
+namespace RMS.Centralize.Engine.ActionEngine
 {
     class Program
     {
-        private static string WebMonitoringEngineURL;
+        private static string WebActionEngineURL;
         private static string appGuid;
         private static Timer timer;
         private static int interval;
@@ -35,7 +34,7 @@ namespace RMS.Centralize.Engine.MonitoringEngine
                         Environment.Exit(1);
                     }
 
-                    WebMonitoringEngineURL = ConfigurationManager.AppSettings["WEB_MONITORING_ENGINE_URL"];
+                    WebActionEngineURL = ConfigurationManager.AppSettings["RMS.WEB_ACTION_ENGINE_URL"];
 
                     #region First Start
 
@@ -45,7 +44,7 @@ namespace RMS.Centralize.Engine.MonitoringEngine
                     #endregion
 
                     timer = new Timer();
-                    timer.Interval = 30*1000; // Default
+                    timer.Interval = 30 * 1000; // Default
                     SetInterval();  //set interval of checking here
                     timer.Elapsed += timer_Elapsed;
                     timer.Start();
@@ -71,11 +70,11 @@ namespace RMS.Centralize.Engine.MonitoringEngine
         {
             try
             {
-                int tempInterval = 30;
+                int tempInterval = 3600;
 
                 using (var db = new MyDbContext())
                 {
-                    var config = db.RmsSystemConfigs.Find("MonitoringEngineInterval");
+                    var config = db.RmsSystemConfigs.Find("ActionEngine.Interval");
                     if (config != null)
                     {
                         if (!string.IsNullOrEmpty(config.Value))
@@ -89,9 +88,10 @@ namespace RMS.Centralize.Engine.MonitoringEngine
                     }
                 }
 
-                if (interval != tempInterval){
+                if (interval != tempInterval)
+                {
                     interval = tempInterval;
-                    timer.Interval = interval*1000;
+                    timer.Interval = interval * 1000;
                 }
 
             }
@@ -109,15 +109,15 @@ namespace RMS.Centralize.Engine.MonitoringEngine
                 //WebResponse webResp = webRequest.GetResponse();
 
                 var webpage = new WebDownload();
-                
-                string s = webpage.DownloadString(new Uri(WebMonitoringEngineURL));
-                s = s.Substring(0,s.Length-9).Substring(68);
-                Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : Finished -> " + s);
+
+                string s = webpage.DownloadString(new Uri(WebActionEngineURL));
+                s = s.Substring(0, s.Length - 9).Substring(68);
+                Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : Finished -> " + System.Net.WebUtility.HtmlDecode(s));
             }
             catch (Exception ex)
             {
                 Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : Error -> " + ex.Message);
-                new RMSAppException("CallEngine failed. WebMonitoringEngineURL = " + WebMonitoringEngineURL + ", " + ex.Message, ex, true);
+                new RMSAppException("CallEngine failed. WebActionEngineURL = " + WebActionEngineURL + ", " + ex.Message, ex, true);
             }
         }
 
@@ -162,7 +162,7 @@ namespace RMS.Centralize.Engine.MonitoringEngine
 
         static void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Console.WriteLine( DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : Started");
+            Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : Started");
             CallEngine();
             SetInterval();
         }

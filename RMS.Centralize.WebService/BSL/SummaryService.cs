@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Security.AccessControl;
 using System.ServiceModel.Channels;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
-using System.Web;
 using RMS.Centralize.DAL;
 using RMS.Centralize.WebService.Model;
 using RMS.Common.Exception;
@@ -77,7 +78,7 @@ namespace RMS.Centralize.WebService.BSL
             int? messageID = null;
             string messageGroupCode = string.Empty;
 
-            
+
             try
             {
                 var oClientCode = lRaw[0].ClientCode;
@@ -224,7 +225,7 @@ namespace RMS.Centralize.WebService.BSL
                                     }
 
                                     #region // เพิ่ม OK Message
-                                    
+
                                     var monitoring = db.RmsReportSummaryMonitorings.Create();
                                     monitoring.RawId = reportMonitoringRaw.Id;
                                     monitoring.ClientId = clientID;
@@ -262,7 +263,7 @@ namespace RMS.Centralize.WebService.BSL
                                 db.SaveChanges();
                             }
                         }
-                        
+
                         #endregion
 
                         #region ถ้า Message ไม่ใช่ OK
@@ -277,7 +278,7 @@ namespace RMS.Centralize.WebService.BSL
                                                                                                      && sm.MonitoringProfileDeviceId ==
                                                                                                      raw.MonitoringProfileDeviceId
                                                                                                      && sm.Status == 1);
-                           
+
                             //ค้นหาดูว่ามี OK Message ที่ active หรือไม่
 
                             if (reportSummaryMonitoring.Any() && counterResetToZero > 0)
@@ -563,5 +564,72 @@ namespace RMS.Centralize.WebService.BSL
                 throw new RMSWebException(this, "0500", "DoSummaryMonitoringForBusiness failed. " + ex.Message, ex, true);
             }
         }
+
+        public string DoSummaryStatusAllClients()
+        {
+            DateTime startDateTime = DateTime.Now;
+            string s = string.Empty;
+            try
+            {
+                string SummaryStatusAllClientsTemplateURL = ConfigurationManager.AppSettings["RMS.SummaryStatusAllClientsTemplateURL"];
+
+                var webpage = new WebDownload();
+
+                s = webpage.DownloadString(new Uri(SummaryStatusAllClientsTemplateURL));
+
+                #region Remove Not Neccessary Objects
+
+                if (s.IndexOf("<!--BEGIN-->") >= 0)
+                    s = s.Substring(s.IndexOf("<!--BEGIN-->"));
+
+                if (s.IndexOf("<!--END-->") >= 0)
+                    s = s.Substring(0, s.IndexOf("<!--END-->"));
+
+                #endregion
+
+                var action = new ActionSendService();
+                action.ActionSend(ActionSendService.ActionSendType.SummaryTechnicalSending, s);
+
+
+                using (var db = new MyDbContext())
+                {
+                    var logActionEngine = db.RmsLogActionEngines.Create();
+                    logActionEngine.ActionDateTime = startDateTime;
+                    logActionEngine.BodyFull = s;
+                    logActionEngine.FinishDateTime = DateTime.Now;
+                    logActionEngine.IsSuccess = true;
+
+                    db.RmsLogActionEngines.Add(logActionEngine);
+                    db.SaveChanges();
+                }
+
+                return s;
+            }
+            catch (Exception ex)
+            {
+
+                try
+                {
+                    using (var db = new MyDbContext())
+                    {
+                        var logActionEngine = db.RmsLogActionEngines.Create();
+                        logActionEngine.ActionDateTime = startDateTime;
+                        logActionEngine.BodyFull = (s == string.Empty)? null : s;
+                        logActionEngine.FinishDateTime = DateTime.Now;
+                        logActionEngine.IsSuccess = false;
+                        logActionEngine.ErrorMessage = ex.Message;
+
+                        db.RmsLogActionEngines.Add(logActionEngine);
+                        db.SaveChanges();
+                    }
+                }
+                catch
+                {
+                }
+                throw new RMSWebException(this, "0500", "DoSummaryStatusAllClients failed. " + ex.Message, ex, true);
+            }
+        }
     }
+
+
 }

@@ -156,3 +156,14 @@ $RECYCLE.BIN/
 .DS_Store
 
 /RMS.Centralize.Website/for Da
+/RMS.Agent.OutOfServiceApp/Logs
+/Deploy
+/RMS.Agent.Watchdog/Logs
+/RMS.Agent.WCF/Logs
+/RMS.Agent.WPF/Logs
+/RMS.Centralize.Engine.MonitoringEngine/Logs
+/RMS.Centralize.Engine.ActionEngine/Logs
+/RMS.Centralize.WebService/AutoUpdate
+/RMS.Centralize.WebService/Logs
+/RMS.Centralize.Website/Logs
+/RMS.Centralize.Website/Website [for Da]

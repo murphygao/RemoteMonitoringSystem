@@ -49,9 +49,22 @@ namespace RMS.Centralize.WebService.BSL
                     case ActionSendType.ManualSending:
                         ManualSending(lRmsReportSummaryMonitorings, lSolvedMonitorings);
                         break;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new RMSWebException(this, "0500", "ActionSend failed. " + ex.Message, ex, false);
+            }
+        }
 
+        public void ActionSend(ActionSendType actionSendType, string tableOfResults)
+        {
+            try
+            {
+                switch (actionSendType)
+                {
                     case ActionSendType.SummaryTechnicalSending:
-                        TechnicalSending();
+                        TechnicalSending(tableOfResults);
                         break;
                 }
             }
@@ -734,7 +747,7 @@ namespace RMS.Centralize.WebService.BSL
             }
         }
 
-        private void TechnicalSending()
+        private void TechnicalSending(string tableOfResults)
         {
             int activeClients;
             try
@@ -749,13 +762,108 @@ namespace RMS.Centralize.WebService.BSL
                     #endregion
 
 
-                    var dbRmsReportSummaryMonitorings = db.RmsReportSummaryMonitorings.Where(rsm => rsm.Status == 1);
+                    if (string.IsNullOrEmpty(tableOfResults)) throw new Exception("No Status Report for Sending.");
 
-                    List<RmsReportSummaryMonitoring> lRmsReportSummaryMonitorings =
-                        new List<RmsReportSummaryMonitoring>(dbRmsReportSummaryMonitorings.ToList());
+                    var rmsSystemConfigs = db.RmsSystemConfigs;
 
-                    if (lRmsReportSummaryMonitorings.Count > 0) ManualSending(lRmsReportSummaryMonitorings);
+                    var config = rmsSystemConfigs.FirstOrDefault(c => c.Name == "TechnicalSending.ActionProfileName");
+                    string actionProfileName = "SUMMARY_STATUS_ALL_CLIENTS";
+                    if (config != null)
+                    {
+                        actionProfileName = config.Value ?? config.DefaultValue;
+                    }
 
+                    var rmsActionProfile = db.RmsActionProfiles.FirstOrDefault(a => a.ActionProfileName.ToUpper().Trim() == actionProfileName);
+
+                    if (rmsActionProfile == null) throw new Exception("Action Profile (" + actionProfileName + ") Not Found. ");
+
+                    config = rmsSystemConfigs.FirstOrDefault(c => c.Name == "ActionGateway");
+                    string ActionGatewayName = "";
+                    if (config != null)
+                    {
+                        ActionGatewayName = config.Value ?? config.DefaultValue;
+                    }
+                    else
+                    {
+                        throw new Exception("SystemConfig (ActionGateway) Not Found. ");
+                    }
+
+                    GatewayName gateway;
+                    Enum.TryParse(ActionGatewayName, true, out gateway);
+
+                    config = rmsSystemConfigs.FirstOrDefault(c => c.Name == "TechnicalSending.EmailSubject");
+                    string emailSubject = "RMS Monitoring - Summary Client  Device Status";
+                    if (config != null)
+                    {
+                        emailSubject = config.Value ?? config.DefaultValue;
+                    }
+
+                    config = rmsSystemConfigs.FirstOrDefault(c => c.Name == "TechnicalSending.EmailFrom");
+                    string emailFrom = "rms@hatari.net";
+                    if (config != null)
+                    {
+                        emailFrom = config.Value ?? config.DefaultValue;
+                    }
+
+                    var mEmails = rmsActionProfile.Email;
+                    mEmails = mEmails.Replace(",", ";").Replace(" ", "");
+                    var lEmails = new List<string>(mEmails.Split(new string[] {";"}, StringSplitOptions.RemoveEmptyEntries));
+
+
+                    if (!Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.ActionModeTest"]))
+                    {
+
+                        var actionGatewayService = new ActionGateway();
+                        try
+                        {
+                            var actionResult = actionGatewayService.SendEmail(gateway, emailFrom, lEmails, emailSubject, tableOfResults);
+                            if (actionResult.IsSuccess)
+                            {
+                                AddLogActionSend("Email", emailFrom, rmsActionProfile.Email, tableOfResults, true, null);
+
+                            }
+                            else
+                            {
+                                AddLogActionSend("Email", emailFrom, rmsActionProfile.Email, tableOfResults, false, actionResult.ErrorMessage);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            new RMSWebException(this, "0500", "GatewayService.SendEmail failed. " + ex.Message, ex, true);
+                            AddLogActionSend("Email", emailFrom, rmsActionProfile.Email, tableOfResults, false, ex.Message);
+                        }
+                    }
+                    else
+                    {
+                        // Testing
+                        try
+                        {
+
+                            foreach (string to in lEmails)
+                            {
+
+                                string fileName = DateTime.Now.ToString("yyyyMMddTHHmmssff", new CultureInfo("en-AU")) + "." + to + ".txt";
+                                if (!File.Exists(destinationPath + fileName))
+                                    File.Create(destinationPath + fileName).Close();
+
+                                using (StreamWriter sw = File.AppendText(destinationPath + fileName))
+                                {
+                                    sw.WriteLine("From: " + emailFrom);
+                                    sw.WriteLine("To: " + to);
+                                    sw.WriteLine("Subject: " + emailSubject);
+                                    sw.WriteLine();
+                                    sw.WriteLine(tableOfResults);
+                                }
+
+                                AddLogActionSend("Email", emailFrom, to, tableOfResults, true, "Testing Mode");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+                        System.Threading.Thread.Sleep(100);
+                    }
                 }
             }
             catch (Exception ex)

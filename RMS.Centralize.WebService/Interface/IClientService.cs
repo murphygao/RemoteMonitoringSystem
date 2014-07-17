@@ -36,9 +36,6 @@ namespace RMS.Centralize.WebService
         ClientResult ExistingClientCode(string clientCode);
 
         [OperationContract]
-        MainAppClientResult ListMainAppClient();
-
-        [OperationContract]
         LocationResult ListLocation();
 
         [OperationContract]
@@ -126,14 +123,6 @@ namespace RMS.Centralize.WebService
         [DataMember]
         public int TotalRecords { get; set; }
 
-    }
-
-    public class MainAppClientResult : Result
-    {
-        [DataMember]
-        public List<MainAppClient> ListMainAppClients { get; set; }
- 
- 
     }
 
     public class ClientSeverityActionResult : Result

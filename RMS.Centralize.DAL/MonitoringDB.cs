@@ -41,6 +41,7 @@ namespace RMS.Centralize.DAL
         IDbSet<RmsDeviceType> RmsDeviceTypes { get; set; } // RMS_DeviceType
         IDbSet<RmsHoliday> RmsHolidays { get; set; } // RMS_Holiday
         IDbSet<RmsLocation> RmsLocations { get; set; } // RMS_Location
+        IDbSet<RmsLogActionEngine> RmsLogActionEngines { get; set; } // RMS_Log_ActionEngine
         IDbSet<RmsLogActionSend> RmsLogActionSends { get; set; } // RMS_Log_ActionSend
         IDbSet<RmsLogAutoUpdate> RmsLogAutoUpdates { get; set; } // RMS_Log_AutoUpdate
         IDbSet<RmsLogEvent> RmsLogEvents { get; set; } // RMS_Log_Event
@@ -74,6 +75,7 @@ namespace RMS.Centralize.DAL
         public IDbSet<RmsDeviceType> RmsDeviceTypes { get; set; } // RMS_DeviceType
         public IDbSet<RmsHoliday> RmsHolidays { get; set; } // RMS_Holiday
         public IDbSet<RmsLocation> RmsLocations { get; set; } // RMS_Location
+        public IDbSet<RmsLogActionEngine> RmsLogActionEngines { get; set; } // RMS_Log_ActionEngine
         public IDbSet<RmsLogActionSend> RmsLogActionSends { get; set; } // RMS_Log_ActionSend
         public IDbSet<RmsLogAutoUpdate> RmsLogAutoUpdates { get; set; } // RMS_Log_AutoUpdate
         public IDbSet<RmsLogEvent> RmsLogEvents { get; set; } // RMS_Log_Event
@@ -125,6 +127,7 @@ namespace RMS.Centralize.DAL
             modelBuilder.Configurations.Add(new RmsDeviceTypeConfiguration());
             modelBuilder.Configurations.Add(new RmsHolidayConfiguration());
             modelBuilder.Configurations.Add(new RmsLocationConfiguration());
+            modelBuilder.Configurations.Add(new RmsLogActionEngineConfiguration());
             modelBuilder.Configurations.Add(new RmsLogActionSendConfiguration());
             modelBuilder.Configurations.Add(new RmsLogAutoUpdateConfiguration());
             modelBuilder.Configurations.Add(new RmsLogEventConfiguration());
@@ -155,6 +158,7 @@ namespace RMS.Centralize.DAL
             modelBuilder.Configurations.Add(new RmsDeviceTypeConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsHolidayConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsLocationConfiguration(schema));
+            modelBuilder.Configurations.Add(new RmsLogActionEngineConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsLogActionSendConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsLogAutoUpdateConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsLogEventConfiguration(schema));
@@ -721,6 +725,30 @@ namespace RMS.Centralize.DAL
             InitializePartial();
         }
         partial void InitializePartial();
+    }
+
+    // RMS_Log_ActionEngine
+    [DataContract]
+    public partial class RmsLogActionEngine
+    {
+        [DataMember(Order = 1, IsRequired = true)]
+        public int Id { get; set; } // ID (Primary key)
+
+        [DataMember(Order = 2, IsRequired = false)]
+        public DateTime? ActionDateTime { get; set; } // ActionDateTime
+
+        [DataMember(Order = 3, IsRequired = false)]
+        public string BodyFull { get; set; } // BodyFull
+
+        [DataMember(Order = 4, IsRequired = false)]
+        public DateTime? FinishDateTime { get; set; } // FinishDateTime
+
+        [DataMember(Order = 5, IsRequired = false)]
+        public bool? IsSuccess { get; set; } // IsSuccess
+
+        [DataMember(Order = 6, IsRequired = false)]
+        public string ErrorMessage { get; set; } // ErrorMessage
+
     }
 
     // RMS_Log_ActionSend
@@ -1635,6 +1663,25 @@ namespace RMS.Centralize.DAL
             Property(x => x.CreatedBy).HasColumnName("CreatedBy").IsOptional().HasMaxLength(100);
             Property(x => x.UpdatedDate).HasColumnName("UpdatedDate").IsOptional();
             Property(x => x.UpdatedBy).HasColumnName("UpdatedBy").IsOptional().HasMaxLength(100);
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
+    // RMS_Log_ActionEngine
+    internal partial class RmsLogActionEngineConfiguration : EntityTypeConfiguration<RmsLogActionEngine>
+    {
+        public RmsLogActionEngineConfiguration(string schema = "dbo")
+        {
+            ToTable(schema + ".RMS_Log_ActionEngine");
+            HasKey(x => x.Id);
+
+            Property(x => x.Id).HasColumnName("ID").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            Property(x => x.ActionDateTime).HasColumnName("ActionDateTime").IsOptional();
+            Property(x => x.BodyFull).HasColumnName("BodyFull").IsOptional();
+            Property(x => x.FinishDateTime).HasColumnName("FinishDateTime").IsOptional();
+            Property(x => x.IsSuccess).HasColumnName("IsSuccess").IsOptional();
+            Property(x => x.ErrorMessage).HasColumnName("ErrorMessage").IsOptional().HasMaxLength(500);
             InitializePartial();
         }
         partial void InitializePartial();

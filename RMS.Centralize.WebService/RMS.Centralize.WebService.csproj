@@ -112,6 +112,7 @@
     <Content Include="AutoUpdateService.svc" />
     <Content Include="ClientMonitoringService.svc" />
     <Content Include="ClientService.svc" />
+    <Content Include="Email\SummaryStatusAllClients.aspx" />
     <Content Include="index.html" />
     <Content Include="LocationService.svc" />
     <Content Include="MasterTableService.svc" />
@@ -146,11 +147,21 @@
     <Compile Include="BSL\SelfTestingService.cs" />
     <Compile Include="BSL\SeverityLevelService.cs" />
     <Compile Include="BSL\SummaryService.cs" />
+    <Compile Include="BSL\WebDownload.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ClientMonitoringService.svc.cs">
       <DependentUpon>ClientMonitoringService.svc</DependentUpon>
     </Compile>
     <Compile Include="ClientService.svc.cs">
       <DependentUpon>ClientService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Email\SummaryStatusAllClients.aspx.cs">
+      <DependentUpon>SummaryStatusAllClients.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Email\SummaryStatusAllClients.aspx.designer.cs">
+      <DependentUpon>SummaryStatusAllClients.aspx</DependentUpon>
     </Compile>
     <Compile Include="Interface\IAutoUpdateService.cs" />
     <Compile Include="Interface\IMasterTableService.cs" />
@@ -190,6 +201,7 @@
     <Compile Include="Model\RmsMessageAction.cs" />
     <Compile Include="Model\SeverityLevelInfo.cs" />
     <Compile Include="Model\SummaryMonitoringReport.cs" />
+    <Compile Include="Model\SummaryStatusAllClientsInfo.cs" />
     <Compile Include="MonitoringProfileService.svc.cs">
       <DependentUpon>MonitoringProfileService.svc</DependentUpon>
     </Compile>

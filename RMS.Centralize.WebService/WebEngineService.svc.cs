@@ -34,5 +34,20 @@ namespace RMS.Centralize.WebService
                 return "Failed: " + ex.Message;
             }
         }
+
+        public string StartSummaryStatusAllClients()
+        {
+            try
+            {
+                BSL.SummaryService service = new SummaryService();
+                return service.DoSummaryStatusAllClients();
+            }
+            catch (Exception ex)
+            {
+                new RMSWebException(this, "0500", "StartSummaryStatusAllClients failed. " + ex.Message, ex, true);
+
+                return "Failed: " + ex.Message;
+            }
+        }
     }
 }
