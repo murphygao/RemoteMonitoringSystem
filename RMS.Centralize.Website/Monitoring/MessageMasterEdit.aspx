@@ -97,7 +97,7 @@
                                                     <input type="text" id="txtMessage" name="txtMessage" class="input-sm">
                                                 </label>
                                                 <div class="note">
-                                                    <strong>Required Field</strong>
+                                                    <strong>Required Field</strong>, <strong>Maxlength</strong> is 50 characters.
                                                 </div>
 
                                             </section>
@@ -109,7 +109,9 @@
                                                 <label class="input">
                                                     <input type="text" id="txtDescription" name="txtDescription" class="input-sm">
                                                 </label>
-
+                                                <div class="note">
+                                                    <strong>Maxlength</strong> is 500 characters.
+                                                </div>
                                             </section>
                                         </div>
 
@@ -119,7 +121,9 @@
                                                 <label class="input">
                                                     <input type="text" id="txtEmailBody" name="txtEmailBody" class="input-sm">
                                                 </label>
-
+                                                <div class="note">
+                                                    <strong>Maxlength</strong> is 500 characters.
+                                                </div>
                                             </section>
                                         </div>
 
@@ -129,7 +133,9 @@
                                                 <label class="input">
                                                     <input type="text" id="txtSMSBody" name="txtSMSBody" class="input-sm">
                                                 </label>
-
+                                                <div class="note">
+                                                    <strong>Maxlength</strong> is 500 characters.
+                                                </div>
                                             </section>
                                         </div>
 
@@ -139,7 +145,9 @@
                                                 <label class="input">
                                                     <input type="text" id="txtEmailBodySolved" name="txtEmailBodySolved" class="input-sm">
                                                 </label>
-
+                                                <div class="note">
+                                                    <strong>Maxlength</strong> is 500 characters.
+                                                </div>
                                             </section>
                                         </div>
 
@@ -149,7 +157,9 @@
                                                 <label class="input">
                                                     <input type="text" id="txtSMSBodySolved" name="txtSMSBodySolved" class="input-sm">
                                                 </label>
-
+                                                <div class="note">
+                                                    <strong>Maxlength</strong> is 500 characters.
+                                                </div>
                                             </section>
                                         </div>
  
@@ -233,13 +243,46 @@
                 // Rules for form validation
                 rules: {
                     txtMessage: {
-                        required: true
+                        required: true,
+                        maxlength: 50
+                    },
+                    txtDescription: {
+                        maxlength: 500
+                    },
+                    txtEmailBody: {
+                        maxlength: 500
+                    },
+                    txtSMSBody: {
+                        maxlength: 500
+                    },
+                    txtEmailBodySolved: {
+                        maxlength: 500
+                    },
+                    txtSMSBodySolved: {
+                        maxlength: 500
                     },
                 },
                 messages: {
                     txtMessage: {
-                        required: 'Please enter message'
+                        required: 'Please enter message',
+                        maxlength: 'The field MaxLength is 50.'
                     },
+                    txtDescription: {
+                        maxlength: 'The field MaxLength is 500.'
+                    },
+                    txtEmailBody: {
+                        maxlength: 'The field MaxLength is 500.'
+                    },
+                    txtSMSBody: {
+                        maxlength: 'The field MaxLength is 500.'
+                    },
+                    txtEmailBodySolved: {
+                        maxlength: 'The field MaxLength is 500.'
+                    },
+                    txtSMSBodySolved: {
+                        maxlength: 'The field MaxLength is 500.'
+                    },
+
                 },
 
                 errorPlacement: function (error, element) {

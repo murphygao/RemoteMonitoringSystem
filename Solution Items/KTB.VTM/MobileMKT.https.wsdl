@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 (http://www.altova.com) by Lag (MiZE) -->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://new.webservice.namespace" targetNamespace="http://new.webservice.namespace">
+	<wsdl:types>
+		<xs:schema targetNamespace="http://new.webservice.namespace" elementFormDefault="qualified">
+			<xs:simpleType name="ChannelIDType">
+				<xs:restriction base="xs:integer"/>
+			</xs:simpleType>
+			<xs:simpleType name="ReferenceNo_Type">
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="20"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="SecretFlag_Type">
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="1"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="ResendFlag_Type">
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="1"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="MsgFromToType">
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="11"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="Content_Type">
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+			<xs:simpleType name="Lang_Type">
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="1"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="PriorityNo_Type">
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="1"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="RespDetail_Type">
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="1024"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="RespMsg_Type">
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="1024"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="RespCode_Type">
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="7"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="ScheduleTime_Type">
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="12"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="Name_Type">
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="10"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="SmsList_Type">
+				<xs:sequence>
+					<xs:element name="msg_from" type="tns:MsgFromToType" minOccurs="0"/>
+					<xs:element name="msg_to" type="tns:MsgFromToType"/>
+					<xs:element name="content" type="tns:Content_Type"/>
+					<xs:element name="lang" type="tns:Lang_Type" minOccurs="0"/>
+					<xs:element name="priority_no" type="tns:PriorityNo_Type" minOccurs="0"/>
+					<xs:element name="schedule_time" type="tns:ScheduleTime_Type" minOccurs="0"/>
+					<xs:element name="sender_name" type="tns:Name_Type" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="sendSMS_Req">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="channel_id" type="tns:ChannelIDType"/>
+						<xs:element name="reference_no" type="tns:ReferenceNo_Type"/>
+						<xs:element name="secret_flag" type="tns:SecretFlag_Type"/>
+						<xs:element name="resend_flag" type="tns:ResendFlag_Type"/>
+						<xs:element name="smslist" type="tns:SmsList_Type" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="sendSMS_Resp">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="respCode" type="tns:RespCode_Type"/>
+						<xs:element name="respMsg" type="tns:RespMsg_Type" minOccurs="0"/>
+						<xs:element name="respDetail" type="tns:RespDetail_Type" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="cancelSMS_Req">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="channel_id" type="tns:ChannelIDType"/>
+						<xs:element name="reference_no" type="tns:ReferenceNo_Type"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="cancelSMS_Resp">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="respCode" type="tns:RespCode_Type"/>
+						<xs:element name="respMsg" type="tns:RespMsg_Type" minOccurs="0"/>
+						<xs:element name="respDetail" type="tns:RespDetail_Type" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="sendSMSSoapIn">
+		<wsdl:part name="parameter" element="tns:sendSMS_Req"/>
+	</wsdl:message>
+	<wsdl:message name="sendSMSSoapOut">
+		<wsdl:part name="parameter" element="tns:sendSMS_Resp"/>
+	</wsdl:message>
+	<wsdl:message name="cancelSMSSoapIn">
+		<wsdl:part name="parameter" element="tns:sendSMS_Req"/>
+	</wsdl:message>
+	<wsdl:message name="cancelSMSSoapOut">
+		<wsdl:part name="parameter" element="tns:cancelSMS_Resp"/>
+	</wsdl:message>
+	<wsdl:portType name="MobileMKTAdaptorSoap">
+		<wsdl:operation name="sendSMS">
+			<wsdl:input message="tns:sendSMSSoapIn"/>
+			<wsdl:output message="tns:sendSMSSoapOut"/>
+		</wsdl:operation>
+		<wsdl:operation name="cancelSMS">
+			<wsdl:input message="tns:cancelSMSSoapIn"/>
+			<wsdl:output message="tns:cancelSMSSoapOut"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="MobileMKTAdaptorSoap" type="tns:MobileMKTAdaptorSoap">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="sendSMS">
+			<soap:operation soapAction="urn:#NewOperation"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="cancelSMS">
+			<soap:operation soapAction="urn:#NewOperation"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="MobileMKTAdaptorSoap">
+		<wsdl:port name="NewPort" binding="tns:MobileMKTAdaptorSoap">
+			<soap:address location="http://localhost/MMUI/SOAP"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

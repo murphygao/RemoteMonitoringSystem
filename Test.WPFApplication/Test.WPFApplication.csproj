@@ -139,6 +139,12 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RMS.Centralize.WebService.Gateway\RMS.Centralize.WebService.Gateway.csproj">
+      <Project>{22541ddd-75fd-403f-a67a-2843fcc2a670}</Project>
+      <Name>RMS.Centralize.WebService.Gateway</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -98,7 +98,7 @@
                                                     <input type="text" name="txtActionProfileName" class="input-sm">
                                                 </label>
                                                 <div class="note">
-                                                    <strong>Required Field</strong>
+                                                    <strong>Required Field</strong>, <strong>Maxlength</strong> is 50 characters.
                                                 </div>
 
                                             </section>
@@ -217,25 +217,32 @@
                 // Rules for form validation
                 rules: {
                     txtActionProfileName: {
-                        required: true
+                        required: true,
+                        maxlength: 50
                     },
                     txtEmail: {
-                        regex: /^\s*(([A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)\s*[;,]{0,1}\s*)+$/
+                        regex: /^\s*(([A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)\s*[;,]{0,1}\s*)+$/,
+                        maxlength: 500
+
                     },
                     txtSMS: {
-                        regex: /^((\d{3}[\s.-]?\d{3}[\s.-]?\d{4}|\d{2}[\s.-]?\d{4}[\s.-]?\d{4})\s*[;,]{0,1}\s*)+$/
+                        regex: /^((\d{3}[\s.-]?\d{3}[\s.-]?\d{4}|\d{2}[\s.-]?\d{4}[\s.-]?\d{4})\s*[;,]{0,1}\s*)+$/,
+                        maxlength: 500
                     },
 
                 },
                 messages: {
                     txtActionProfileName: {
-                        required: 'Please enter action profile name'
+                        required: 'Please enter action profile name',
+                        maxlength: 'The field MaxLength is 50.'
                     },
                     txtEmail: {
-                        regex: 'Please check email format.'
+                        regex: 'Please check email format.',
+                        maxlength: 'The field MaxLength is 500.'
                     },
                     txtSMS: {
-                    regex: 'Please check phone number format.'
+                    regex: 'Please check phone number format.',
+                    maxlength: 'The field MaxLength is 500.'
                 },
             },
 

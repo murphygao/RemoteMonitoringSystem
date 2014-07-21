@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using RMS.Adapter.KTB;
 using RMS.Common.Exception;
 using SKAdapter;
 
@@ -24,6 +25,7 @@ namespace RMS.Centralize.WebService.Gateway
                         return AIS_SKS_Email(from, toList, subject, body);
                         break;
                     case GatewayName.KTB_VTM:
+                        return KTB_VTM_Email(from, toList, subject, body);
                         break;
                 }
 
@@ -47,6 +49,7 @@ namespace RMS.Centralize.WebService.Gateway
                         return AIS_SKS_SMS(mobileNumber, sender, body);
                         break;
                     case GatewayName.KTB_VTM:
+                        return KTB_VTM_SMS(mobileNumber, sender, body);
                         break;
                 }
 
@@ -64,7 +67,7 @@ namespace RMS.Centralize.WebService.Gateway
         {
             try
             {
-                using (AisServiceAdapter sksAdapter = new AisServiceAdapter("-", "-"))
+                using (var adapter = new AisServiceAdapter("-", "-"))
                 {
                     List<MailAddress> lMailAddresses = new List<MailAddress>();
                     foreach (var toEmail in toList)
@@ -72,13 +75,13 @@ namespace RMS.Centralize.WebService.Gateway
                         lMailAddresses.Add(new MailAddress(toEmail));
                     }
 
-                    ServiceAdapterResult result = sksAdapter.SendEmail(new MailAddress(from), lMailAddresses.ToArray(), subject, body);
+                    var result = adapter.SendEmail(new MailAddress(from), lMailAddresses.ToArray(), subject, body);
 
                     return new ActionResult
                     {
                         IsSuccess = result.Success,
                         ErrorCode = result.ErrorCode,
-                        ErrorMessage = result.ErrorCode
+                        ErrorMessage = result.ErrorMessage
                     };
                 }
             }
@@ -100,12 +103,12 @@ namespace RMS.Centralize.WebService.Gateway
         {
             try
             {
-                using (AisServiceAdapter sksAdapter = new AisServiceAdapter("-", "-"))
+                using (var adapter = new AisServiceAdapter("-", "-"))
                 {
 
                     List<MailAddress> lMailAddresses = new List<MailAddress>();
 
-                    ServiceAdapterResult result = sksAdapter.SmsGatewaySend(sender, mobileNumber, body);
+                    var result = adapter.SmsGatewaySend(sender, mobileNumber, body);
 
                     return new ActionResult
                     {
@@ -131,6 +134,80 @@ namespace RMS.Centralize.WebService.Gateway
 
 
         #endregion
+
+        #region KTB Gateway
+
+        private ActionResult KTB_VTM_Email(string from, List<string> toList, string subject, string body)
+        {
+            try
+            {
+                using (var adapter = new VTMAdapter())
+                {
+                    List<MailAddress> lMailAddresses = new List<MailAddress>();
+                    foreach (var toEmail in toList)
+                    {
+                        lMailAddresses.Add(new MailAddress(toEmail));
+                    }
+
+                    var result = adapter.SendEmail(new MailAddress(from), lMailAddresses, subject, body);
+
+                    return new ActionResult
+                    {
+                        IsSuccess = result.IsSuccess,
+                        ErrorCode = result.ErrorCode,
+                        ErrorMessage = result.ErrorMessage
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                new RMSWebException(this, "0500", "KTB_VTM_Email failed. " + ex.Message, ex, true);
+
+                return new ActionResult
+                {
+                    IsSuccess = false,
+                    ErrorCode = "",
+                    ErrorMessage = ex.Message,
+                    InnerException = ex
+                };
+            }
+        }
+
+        private ActionResult KTB_VTM_SMS(string mobileNumber, string sender, string body)
+        {
+            try
+            {
+                using (var adapter = new VTMAdapter())
+                {
+
+                    List<MailAddress> lMailAddresses = new List<MailAddress>();
+
+                    var result = adapter.SendSMS(null, new List<string>() {mobileNumber}, body, sender, "T");
+
+                    return new ActionResult
+                    {
+                        IsSuccess = result.IsSuccess,
+                        ErrorCode = result.ErrorCode,
+                        ErrorMessage = result.ErrorMessage
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                new RMSWebException(this, "0500", "KTB_VTM_SMS failed. " + ex.Message, ex, true);
+
+                return new ActionResult
+                {
+                    IsSuccess = false,
+                    ErrorCode = "",
+                    ErrorMessage = ex.Message,
+                    InnerException = ex
+                };
+            }
+        }
+
+        #endregion
+
     }
 
     public class ActionResult

@@ -97,7 +97,7 @@
                                                     <input type="text" id="txtSeverityLevelCode" name="txtSeverityLevelCode" class="input-sm">
                                                 </label>
                                                 <div class="note">
-                                                    <strong>Required Field</strong>
+                                                    <strong>Required Field</strong>, <strong>Maxlength</strong> is 50 characters.
                                                 </div>
 
                                             </section>
@@ -110,7 +110,7 @@
                                                     <input type="text" id="txtSeverityLevelName" name="txtSeverityLevelName" class="input-sm">
                                                 </label>
                                                 <div class="note">
-                                                    <strong>Required Field</strong>
+                                                    <strong>Required Field</strong>, <strong>Maxlength</strong> is 50 characters.
                                                 </div>
 
                                             </section>
@@ -123,7 +123,7 @@
                                                     <input type="text" id="txtOrderList" name="txtOrderList" class="input-sm" value="1000">
                                                 </label>
                                                 <div class="note">
-                                                    <strong>Required Field, Number Only</strong>
+                                                    <strong>Required Field</strong>, <strong>Number Only</strong>, <strong>Range</strong> Between 1 and 999999
                                                 </div>
 
                                             </section>
@@ -178,7 +178,7 @@
                                                     <input type="text" id="txtActionRepeatInterval" name="txtActionRepeatInterval" class="input-sm" value="60">
                                                 </label>
                                                 <div class="note">
-                                                    <strong>Required Field, Number Only</strong>
+                                                    <strong>Required Field</strong>, <strong>Number Only</strong>, <strong>Range</strong> Between 1 and 9999
                                                 </div>
 
                                             </section>
@@ -268,14 +268,17 @@
                 // Rules for form validation
                 rules: {
                     txtSeverityLevelCode: {
-                        required: true
+                        required: true,
+                        maxlength: 50
                     },
                     txtSeverityLevelName: {
-                        required: true
+                        required: true,
+                        maxlength: 50
                     },
                     txtOrderList: {
                         required: true,
                         number: true,
+                        range: [1, 999999]
                     },
                     ddlColorLabel: {
                         required: true
@@ -286,18 +289,22 @@
                     txtActionRepeatInterval: {
                         required: true,
                         number: true,
+                        range: [1, 9999]
                     },
                 },
                 messages: {
                     txtSeverityLevelCode: {
-                        required: 'Please enter severity level code'
+                        required: 'Please enter severity level code',
+                        maxlength: 'The field MaxLength is 50.'
                     },
                     txtSeverityLevelName: {
-                        required: 'Please enter severity level name'
+                        required: 'Please enter severity level name',
+                        maxlength: 'The field MaxLength is 50.'
                     },
                     txtOrderList: {
                         required: 'Please enter order list',
-                        number: 'Please enter number only'
+                        number: 'Please enter number only',
+                        range: 'The field range between 1 and 999999.'
                     },
                     ddlColorLabel: {
                         required: 'Please select color label',
@@ -307,7 +314,8 @@
                     },
                     txtActionRepeatInterval: {
                         required: 'Please enter order list',
-                        number: 'Please enter number only'
+                        number: 'Please enter number only',
+                        range: 'The field range between 1 and 9999.'
                     },
                 },
 

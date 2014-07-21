@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -39,19 +40,25 @@ namespace RMS.Agent.OutOfServiceApp
 
         public HomePage()
         {
-            InitializeComponent();
-
-            string keyFilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\key.txt";
-
-            if (File.Exists(keyFilePath))
+            try
             {
-                password = File.ReadAllText(keyFilePath).Trim();
+                InitializeComponent();
+
+                string keyFilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\key.txt";
+
+                if (File.Exists(keyFilePath))
+                {
+                    password = File.ReadAllText(keyFilePath).Trim();
+                }
+
+                keyInValue = keyInValue.PadLeft(password.Length, '0');
+
+                doBtnTransparent = new btnTransparentDelegate(MakebtnTranspalent);
             }
-
-            keyInValue = keyInValue.PadLeft(password.Length, '0');
-
-            doBtnTransparent = new btnTransparentDelegate(MakebtnTranspalent);
-
+            catch (Exception ex)
+            {
+                new RMSAppException(this, "0500", "HomePage() failed. " + ex.Message, ex, true);
+            }
         }
 
 
@@ -71,81 +78,151 @@ namespace RMS.Agent.OutOfServiceApp
             }
             catch (Exception ex)
             {
-                throw new RMSAppException(this, "0500", "btnNumber_Click failed. " + ex.Message, ex, true);
+                throw new RMSAppException(this, "0500", "btnNumber_Click failed. " + ex.Message, ex, false);
             }
         }
 
         private void MakebtnTranspalent(object sender)
         {
-            System.Threading.Thread.Sleep(200);
-            Dispatcher.Invoke(() =>
+            try
             {
-                ((Button)sender).Opacity = 0;
-            });
+                Thread.Sleep(200);
+                Dispatcher.Invoke(() =>
+                {
+                    ((Button)sender).Opacity = 0;
+                });
+            }
+            catch (Exception ex)
+            {
+                throw new RMSAppException(this, "0500", "MakebtnTranspalent failed. " + ex.Message, ex, false);
+            }
         }
 
         private void btnNumber1_Click(object sender, RoutedEventArgs e)
         {
-            btnNumber_Click(sender, e);
-            ((Button)sender).Opacity = btnOpticalOnPressed;
-            doBtnTransparent.BeginInvoke(sender, null, null);
+            try
+            {
+                btnNumber_Click(sender, e);
+                ((Button)sender).Opacity = btnOpticalOnPressed;
+                doBtnTransparent.BeginInvoke(sender, null, null);
+            }
+            catch (Exception ex)
+            {
+                new RMSAppException(this, "0500", "btnNumber1_Click failed. " + ex.Message, ex, true);
+            }
         }
 
 
         private void btnNumber2_Click(object sender, RoutedEventArgs e)
         {
-            btnNumber_Click(sender, e);
-            ((Button)sender).Opacity = btnOpticalOnPressed;
-            doBtnTransparent.BeginInvoke(sender, null, null);
+            try
+            {
+                btnNumber_Click(sender, e);
+                ((Button)sender).Opacity = btnOpticalOnPressed;
+                doBtnTransparent.BeginInvoke(sender, null, null);
+            }
+            catch (Exception ex)
+            {
+                new RMSAppException(this, "0500", "btnNumber2_Click failed. " + ex.Message, ex, true);
+            }
         }
 
         private void btnNumber3_Click(object sender, RoutedEventArgs e)
         {
-            btnNumber_Click(sender, e);
-            ((Button)sender).Opacity = btnOpticalOnPressed;
-            doBtnTransparent.BeginInvoke(sender, null, null);
+            try
+            {
+                btnNumber_Click(sender, e);
+                ((Button)sender).Opacity = btnOpticalOnPressed;
+                doBtnTransparent.BeginInvoke(sender, null, null);
+            }
+            catch (Exception ex)
+            {
+                new RMSAppException(this, "0500", "btnNumber3_Click failed. " + ex.Message, ex, true);
+            }
         }
 
         private void btnNumber4_Click(object sender, RoutedEventArgs e)
         {
-            btnNumber_Click(sender, e);
-            ((Button)sender).Opacity = btnOpticalOnPressed;
-            doBtnTransparent.BeginInvoke(sender, null, null);
+            try
+            {
+                btnNumber_Click(sender, e);
+                ((Button)sender).Opacity = btnOpticalOnPressed;
+                doBtnTransparent.BeginInvoke(sender, null, null);
+            }
+            catch (Exception ex)
+            {
+                new RMSAppException(this, "0500", "btnNumber4_Click failed. " + ex.Message, ex, true);
+            }
         }
 
         private void btnNumber5_Click(object sender, RoutedEventArgs e)
         {
-            btnNumber_Click(sender, e);
-            ((Button)sender).Opacity = btnOpticalOnPressed;
-            doBtnTransparent.BeginInvoke(sender, null, null);
+            try
+            {
+                btnNumber_Click(sender, e);
+                ((Button)sender).Opacity = btnOpticalOnPressed;
+                doBtnTransparent.BeginInvoke(sender, null, null);
+            }
+            catch (Exception ex)
+            {
+                new RMSAppException(this, "0500", "btnNumber5_Click failed. " + ex.Message, ex, true);
+            }
         }
 
         private void btnNumber6_Click(object sender, RoutedEventArgs e)
         {
-            btnNumber_Click(sender, e);
-            ((Button)sender).Opacity = btnOpticalOnPressed;
-            doBtnTransparent.BeginInvoke(sender, null, null);
+            try
+            {
+                btnNumber_Click(sender, e);
+                ((Button)sender).Opacity = btnOpticalOnPressed;
+                doBtnTransparent.BeginInvoke(sender, null, null);
+            }
+            catch (Exception ex)
+            {
+                new RMSAppException(this, "0500", "btnNumber6_Click failed. " + ex.Message, ex, true);
+            }
         }
 
         private void btnNumber7_Click(object sender, RoutedEventArgs e)
         {
-            btnNumber_Click(sender, e);
-            ((Button)sender).Opacity = btnOpticalOnPressed;
-            doBtnTransparent.BeginInvoke(sender, null, null);
+            try
+            {
+                btnNumber_Click(sender, e);
+                ((Button)sender).Opacity = btnOpticalOnPressed;
+                doBtnTransparent.BeginInvoke(sender, null, null);
+            }
+            catch (Exception ex)
+            {
+                new RMSAppException(this, "0500", "btnNumber7_Click failed. " + ex.Message, ex, true);
+            }
         }
 
         private void btnNumber8_Click(object sender, RoutedEventArgs e)
         {
-            btnNumber_Click(sender, e);
-            ((Button)sender).Opacity = btnOpticalOnPressed;
-            doBtnTransparent.BeginInvoke(sender, null, null);
+            try
+            {
+                btnNumber_Click(sender, e);
+                ((Button)sender).Opacity = btnOpticalOnPressed;
+                doBtnTransparent.BeginInvoke(sender, null, null);
+            }
+            catch (Exception ex)
+            {
+                new RMSAppException(this, "0500", "btnNumber8_Click failed. " + ex.Message, ex, true);
+            }
         }
 
         private void btnNumber9_Click(object sender, RoutedEventArgs e)
         {
-            btnNumber_Click(sender, e);
-            ((Button)sender).Opacity = btnOpticalOnPressed;
-            doBtnTransparent.BeginInvoke(sender, null, null);
+            try
+            {
+                btnNumber_Click(sender, e);
+                ((Button)sender).Opacity = btnOpticalOnPressed;
+                doBtnTransparent.BeginInvoke(sender, null, null);
+            }
+            catch (Exception ex)
+            {
+                new RMSAppException(this, "0500", "btnNumber9_Click failed. " + ex.Message, ex, true);
+            }
         }
 
 

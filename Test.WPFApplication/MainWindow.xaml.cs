@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RMS.Centralize.WebService.Gateway;
 using Test.WPFApplication.MonitoringService;
 
 namespace Test.WPFApplication
@@ -65,5 +67,79 @@ namespace Test.WPFApplication
             msc.AddBusinessMessage(rawMessage);
         }
 
+        private void btnSendEmail_Click(object sender, RoutedEventArgs e)
+        {
+            //var actionGatewayService = new ActionGateway();
+
+            //var actionResult = actionGatewayService.SendEmail(GatewayName.AIS_SKS, "sks@corp.ais900dev.org", new List<string>() { "setht471@corp.ais900dev.org" }, "HTML Email", txtEmailBody.Text);
+            //if (actionResult.IsSuccess)
+            //{
+            //}
+            //else
+            //{
+            //    MessageBox.Show(actionResult.ErrorMessage);
+            //}
+
+            MessageBox.Show(SendMail(txtEmailBody.Text));
+
+
+        }
+
+        private string SendMail(string content)
+        {
+            try
+            {
+                MailMessage mail = new MailMessage();
+                SmtpClient SmtpServer = new SmtpClient("10.252.160.41");
+
+                mail.From = new MailAddress("sks@corp.ais900dev.org");
+                mail.To.Add("setht471@corp.ais900dev.org");
+                mail.Subject = "HTML Email";
+
+                mail.IsBodyHtml = true;
+
+                mail.Body = content;
+
+                SmtpServer.Port = 25;
+                //SmtpServer.Credentials = new System.Net.NetworkCredential("username", "password");
+                SmtpServer.EnableSsl = false;
+
+                SmtpServer.Send(mail);
+
+                return "Send Complete";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+        private decimal GetAvailableMemory()
+        {
+            System.Diagnostics.PerformanceCounter ramCounter = null;
+
+            try
+            {
+                ramCounter = new System.Diagnostics.PerformanceCounter("Memory", "Available MBytes");
+
+                return Convert.ToDecimal(Math.Round(ramCounter.NextValue(), 0));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return 0;
+            }
+            finally
+            {
+                if (ramCounter != null)
+                    ramCounter.Dispose();
+            }
+
+        }
+
+        private void btnCheckMemory_Click(object sender, RoutedEventArgs e)
+        {
+            var availableMemory = GetAvailableMemory();
+            lblAvailableMemory.Content = availableMemory + " MBytes";
+        }
     }
 }

@@ -14,8 +14,8 @@ namespace RMS.Centralize.WebService.BSL
 {
     public class BaseService
     {
-        private const string Lic1 = "jyh+b+xr3nOcz7emiKx1ujj0sD2xQQLV2CqPj69OyZGYWcw6p9N+I0TVPAltOnMf5/nTOkPgVS6xeAC9WBfMlOMpAa93zvour57nlVATiAOYfNlUFBK6JTG9+6WQW+Yk";
-        private const string companyCode = "AIS";
+        private string Lic1 = "jyh+b+xr3nOcz7emiKx1ujj0sD2xQQLV2CqPj69OyZGYWcw6p9N+I0TVPAltOnMf5/nTOkPgVS6xeAC9WBfMlOMpAa93zvour57nlVATiAOYfNlUFBK6JTG9+6WQW+Yk";
+        private string companyCode = "AIS";
         private const string assemblyName = "ESN.LicenseManager.Model";
         
         public static string Lic2 = "";
@@ -25,7 +25,28 @@ namespace RMS.Centralize.WebService.BSL
 
         public BaseService()
         {
+            InitialData();
             InitialLicense();
+        }
+
+        private void InitialData()
+        {
+            companyCode = ConfigurationManager.AppSettings["RMS.LicenseCompanyCode"];
+            switch (companyCode)
+            {
+                case "AIS":
+                    Lic1 = "jyh+b+xr3nOcz7emiKx1ujj0sD2xQQLV2CqPj69OyZGYWcw6p9N+I0TVPAltOnMf5/nTOkPgVS6xeAC9WBfMlOMpAa93zvour57nlVATiAOYfNlUFBK6JTG9+6WQW+Yk";
+                    break;
+
+                case "KTB":
+                    Lic1 = "SRb7LxTE15utBZh2CexrqKgeUoCR8Dgo4FwQlYraXyi5u9IJlIf3NHaj5u49yXDwWQdcJbVzqburEob6/4kXIoiS+pDBcFCWJV/o670nMCx29jyQN9MacrHdeUCPiEn3";
+                    break;
+
+                default:
+                    new RMSLicenseException("InitialData failed. LicenseCompanyCode (" + companyCode + ") mismatch.", true);
+                    throw new RMSWebException(this, "0500", "InitialData failed. LicenseCompanyCode (" + companyCode + ") mismatch.", true);
+            }
+
         }
 
         private void InitialLicense()

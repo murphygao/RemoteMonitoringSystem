@@ -98,7 +98,7 @@
                                                     <input type="text" id="txtName" name="txtName" class="input-sm" readonly="readonly">
                                                 </label>
                                                 <div class="note">
-                                                    <strong>Required Field</strong>
+                                                    <strong>Required Field</strong>, <strong>Maxlength</strong> is 50 characters.
                                                 </div>
 
                                             </section>
@@ -110,6 +110,9 @@
                                                 <label class="input">
                                                     <input type="text" id="txtValue" name="txtValue" class="input-sm">
                                                 </label>
+                                                <div class="note">
+                                                    <strong>Required Field</strong>, <strong>Maxlength</strong> is 1000 characters.
+                                                </div>
 
                                             </section>
                                         </div>
@@ -120,7 +123,9 @@
                                                 <label class="input state-disabled">
                                                     <input type="text" id="txtDefaultValue" name="txtDefaultValue" class="input-sm" readonly="readonly">
                                                 </label>
-
+                                                <div class="note">
+                                                    <strong>Maxlength</strong> is 1000 characters.
+                                                </div>
                                             </section>
                                         </div>
 
@@ -130,7 +135,9 @@
                                                 <label class="input">
                                                     <input type="text" id="txtDescription" name="txtDescription" class="input-sm">
                                                 </label>
-
+                                                <div class="note">
+                                                    <strong>Maxlength</strong> is 1000 characters.
+                                                </div>
                                             </section>
                                         </div>
 
@@ -214,12 +221,32 @@
                 // Rules for form validation
                 rules: {
                     txtName: {
-                        required: true
+                        required: true,
+                        maxlength: 50
+                    },
+                    txtValue: {
+                        maxlength: 1000
+                    },
+                    txtDefaultValue: {
+                        maxlength: 1000
+                    },
+                    txtDescription: {
+                        maxlength: 1000
                     },
                 },
                 messages: {
                     txtName: {
-                        required: 'Please enter name'
+                        required: 'Please enter name',
+                        maxlength: 'The field MaxLength is 50.'
+                    },
+                    txtValue: {
+                        maxlength: 'The field MaxLength is 1000.'
+                    },
+                    txtDefaultValue: {
+                        maxlength: 'The field MaxLength is 1000.'
+                    },
+                    txtDescription: {
+                        maxlength: 'The field MaxLength is 1000.'
                     },
                 },
 

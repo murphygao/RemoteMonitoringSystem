@@ -98,7 +98,7 @@
                                                     <input type="text" id="txtLocationCode" name="txtLocationCode" class="input-sm">
                                                 </label>
                                                 <div class="note">
-                                                    <strong>Required Field</strong>
+                                                    <strong>Required Field</strong>, <strong>Maxlength</strong> is 50 characters.
                                                 </div>
 
                                             </section>
@@ -111,7 +111,7 @@
                                                     <input type="text" id="txtLocationName" name="txtLocationName" class="input-sm">
                                                 </label>
                                                 <div class="note">
-                                                    <strong>Required Field</strong>
+                                                    <strong>Required Field</strong>, <strong>Maxlength</strong> is 250 characters.
                                                 </div>
 
                                             </section>
@@ -409,17 +409,21 @@
                 rules: {
                     txtLocationCode: {
                         required: true,
+                        maxlength: 50
                     },
                     txtLocationName: {
-                        required: true
+                        required: true,
+                        maxlength: 250
                     },
                 },
                 messages: {
                     txtLocationCode: {
                         required: 'Please enter location code',
+                        maxlength: 'The field MaxLength is 50.'
                     },
                     txtLocationName: {
                         required: 'Please enter location name',
+                        maxlength: 'The field MaxLength is 250.'
                     },
                 },
 

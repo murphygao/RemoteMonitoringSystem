@@ -56,3 +56,11 @@ function htmlEscape(str) {
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;');
 }
+
+window.paceOptions = {
+    ajax: {
+        trackMethods: ['GET', 'POST'],
+        trackWebSockets: true,
+        ignoreURLs: ['arterySignalR', 'browserLink', 'themes.googleusercontent.com', 'fonts.googleapis.com']
+    }
+};

@@ -13,6 +13,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using RMS.Agent.OutOfServiceApp.BSL;
+using RMS.Common.Exception;
 using Path = System.IO.Path;
 
 namespace RMS.Agent.OutOfServiceApp
@@ -27,33 +29,55 @@ namespace RMS.Agent.OutOfServiceApp
 
         public ExitPage()
         {
-            InitializeComponent();
-
-            string keyFilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\password.txt";
-
-            if (File.Exists(keyFilePath))
+            try
             {
-                password = File.ReadAllText(keyFilePath).Trim();
+                InitializeComponent();
+
+                string keyFilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\password.txt";
+
+                if (File.Exists(keyFilePath))
+                {
+                    password = File.ReadAllText(keyFilePath).Trim();
+                }
+
+                txtPassword.Focus();
             }
-
-            txtPassword.Focus();
-
+            catch (Exception ex)
+            {
+                new RMSAppException(this, "0500", "ExitPage() failed. " + ex.Message, ex, true);
+            }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.GoBack();
+            try
+            {
+                this.NavigationService.GoBack();
+            }
+            catch (Exception ex)
+            {
+                new RMSAppException(this, "0500", "btnCancel_Click() failed. " + ex.Message, ex, true);
+            }
         }
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
-            if (txtPassword.Password == password)
+            try
             {
-                Application.Current.Shutdown();
+                if (txtPassword.Password == password)
+                {
+                    OOSService service = new OOSService();
+                    if (service.PrepareForClosing())
+                        Application.Current.Shutdown();
+                }
+                else
+                {
+                    txtPassword.Password = "";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                txtPassword.Password = "";
+                new RMSAppException(this, "0500", "btnOk_Click failed. " + ex.Message, ex, true);
             }
         }
     }

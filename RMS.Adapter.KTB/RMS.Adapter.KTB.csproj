@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{22541DDD-75FD-403F-A67A-2843FCC2A670}</ProjectGuid>
+    <ProjectGuid>{5C081C9D-4EBB-40C5-B58C-3E9A4DF4425B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RMS.Centralize.WebService.Gateway</RootNamespace>
-    <AssemblyName>RMS.Centralize.WebService.Gateway</AssemblyName>
+    <RootNamespace>RMS.Adapter.KTB</RootNamespace>
+    <AssemblyName>RMS.Adapter.KTB</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -20,8 +20,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,12 +33,13 @@
     <Reference Include="ESN.Common.Exception">
       <HintPath>..\Solution Items\ESN\ESN.Common.Exception.dll</HintPath>
     </Reference>
-    <Reference Include="SKAdapter, Version=1.0.5254.24031, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Solution Items\SKS\SKAdapter.dll</HintPath>
+    <Reference Include="ESN.Common.Service">
+      <HintPath>..\Solution Items\ESN\ESN.Common.Service.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,14 +47,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActionGateway.cs" />
+    <Compile Include="KTBMobileMKTAdaptorService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Proxy\SendSMSHTTPSProxy.cs" />
+    <Compile Include="VTMAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RMS.Adapter.KTB\RMS.Adapter.KTB.csproj">
-      <Project>{5c081c9d-4ebb-40c5-b58c-3e9a4df4425b}</Project>
-      <Name>RMS.Adapter.KTB</Name>
-    </ProjectReference>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\RMS.Common.Exception\RMS.Common.Exception.csproj">
       <Project>{F8EC98BC-37BB-42FD-9B50-78F928BB08A2}</Project>
       <Name>RMS.Common.Exception</Name>

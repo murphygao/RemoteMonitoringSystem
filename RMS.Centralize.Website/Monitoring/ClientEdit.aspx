@@ -98,7 +98,7 @@
                                                     <input type="text" id="txtClientCode" name="txtClientCode" class="input-sm">
                                                 </label>
                                                 <div class="note">
-                                                    <strong>Required Field</strong>
+                                                    <strong>Required Field</strong>, <strong>Maxlength</strong> is 50 characters.
                                                 </div>
 
                                             </section>
@@ -137,7 +137,7 @@
                                                         <input type="text" id="txtIPAddress" name="txtIPAddress" class="input-sm">
                                                     </label>
                                                     <div class="note">
-                                                        <strong>Required Field</strong>
+                                                        <strong>Required Field</strong>, <strong>Maxlength</strong> is 50 characters.
                                                     </div>
                                                     <label class="label">Local Info - Location ID</label>
                                                     <label class="select">
@@ -687,7 +687,8 @@
                 rules: {
                     txtClientCode: {
                         required: true,
-                        uniqueClientCode: true
+                        uniqueClientCode: true,
+                        maxlength: 50
                     },
                     ddlReferenceClient: {
                         NotUseLocalInfo: true
@@ -701,7 +702,8 @@
                     },
                     txtIPAddress: {
                         UseLocalInfo: true,
-                        IP4Checker: true
+                        IP4Checker: true,
+                        maxlength: 50
                     },
                     ddlLocation: {
                         UseLocalInfo: true
@@ -710,7 +712,8 @@
                 messages: {
                     txtClientCode: {
                         required: 'Please enter client code',
-                        uniqueClientCode: 'This client code is taken already'
+                        uniqueClientCode: 'This client code is taken already',
+                        maxlength: 'The field MaxLength is 50.'
                     },
                     ddlReferenceClient: {
                         NotUseLocalInfo: 'Please select reference client'
@@ -724,7 +727,8 @@
                     },
                     txtIPAddress: {
                         UseLocalInfo: 'Please enter IP address',
-                        IP4Checker: "Invalid IP address"
+                        IP4Checker: "Invalid IP address",
+                        maxlength: 'The field MaxLength is 50.'
                     },
                     ddlLocation: {
                         UseLocalInfo: 'Please select location'
@@ -759,19 +763,23 @@
                 // Rules for form validation
                 rules: {
                     txtEmail: {
-                        regex: /^\s*(([A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)\s*[;,]{0,1}\s*)+$/
+                        regex: /^\s*(([A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)\s*[;,]{0,1}\s*)+$/,
+                        maxlength: 500
                     },
                     txtSMS: {
-                        regex: /^((\d{3}[\s.-]?\d{3}[\s.-]?\d{4}|\d{2}[\s.-]?\d{4}[\s.-]?\d{4})\s*[;,]{0,1}\s*)+$/
+                        regex: /^((\d{3}[\s.-]?\d{3}[\s.-]?\d{4}|\d{2}[\s.-]?\d{4}[\s.-]?\d{4})\s*[;,]{0,1}\s*)+$/,
+                        maxlength: 500
                     },
 
                 },
                 messages: {
                     txtEmail: {
-                        regex: 'Please check email format.'
+                        regex: 'Please check email format.',
+                        maxlength: 'The field MaxLength is 500.'
                     },
                     txtSMS: {
-                        regex: 'Please check phone number format.'
+                        regex: 'Please check phone number format.',
+                        maxlength: 'The field MaxLength is 500.'
                     },
                 },
                 errorPlacement: function(error, element) {

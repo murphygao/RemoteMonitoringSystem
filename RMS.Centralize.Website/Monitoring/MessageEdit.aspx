@@ -111,7 +111,7 @@
                                                     <input type="text" id="txtMessage" name="txtMessage" class="input-sm">
                                                 </label>
                                                 <div class="note">
-                                                    <strong>Required Field</strong>
+                                                    <strong>Required Field</strong>, <strong>Maxlength</strong> is 50 characters.
                                                 </div>
 
                                             </section>
@@ -231,12 +231,14 @@
                 // Rules for form validation
                 rules: {
                     txtMessage: {
-                        required: true
+                        required: true,
+                        maxlength: 50
                     }
                 },
                 messages: {
                     txtMessage: {
-                        required: 'Please enter message'
+                        required: 'Please enter message',
+                        maxlength: 'The field MaxLength is 50.'
                     }
                 },
 
