@@ -325,6 +325,10 @@ namespace RMS.Centralize.WebService
                 {
                     using (var db = new MyDbContext())
                     {
+                        bool duplicate = db.RmsMessages.Any(x => x.Message == message && x.MessageGroupId == messageGroupID);
+
+                        if (duplicate) throw new Exception("This message group already have the message.");
+
                         var rmsMessage = db.RmsMessages.Create();
                         rmsMessage.MessageGroupId = messageGroupID;
                         rmsMessage.Message = message;
@@ -354,6 +358,11 @@ namespace RMS.Centralize.WebService
                 {
                     using (var db = new MyDbContext())
                     {
+
+                        bool duplicate = db.RmsMessages.Any(x => x.Message == message && x.MessageGroupId == messageGroupID && x.MessageId != id);
+
+                        if (duplicate) throw new Exception("This message group already have the message.");
+
                         var rmsMessage = db.RmsMessages.Find(id);
                         rmsMessage.MessageGroupId = messageGroupID;
                         rmsMessage.Message = message;

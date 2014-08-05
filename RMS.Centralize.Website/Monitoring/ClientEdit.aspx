@@ -637,7 +637,7 @@
 
                             if ($('#currentClientCode').val() == value && $('#m').val() == 'e') return true;
 
-                            if (ret.isSuccess) {
+                            if (ret.status) {
                                 response = (ret.aaData == 0) ? true : false;
                             } else {
                                 response = false;
@@ -1265,7 +1265,7 @@
                 "dataType": 'json',
                 "contentType": "application/json; charset=utf-8",
                 "url": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/MonitoringProfile/List/",
-                "data": "{'activeList' : true, 'excludeClientID' :  <%=Request["id1"]%>, 'dt' : " + dateFormat(new Date(), "yyyymmddHHMMss") + "}",
+                "data": "{'activeList' : true, 'excludeClientID' :  '<%=Request["id1"]%>', 'dt' : " + dateFormat(new Date(), "yyyymmddHHMMss") + "}",
                 "success": function(data) {
                     $.each(data.ddlMonitoringProfile, function (index, item) {
                         $('#ddlMonitoringProfile').append($('<option></option>').val(item.MonitoringProfileId).html(item.ProfileName));

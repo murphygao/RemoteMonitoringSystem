@@ -124,6 +124,9 @@
                                                 <div class="note">
                                                     <strong>Maxlength</strong> is 500 characters.
                                                 </div>
+                                                <div class="note">
+                                                    <strong>Spacial Tag</strong> ::clientcode:: , ::devicecode:: , ::devicedescription:: , ::locationcode:: , ::locationname:: , ::messageremark:: , ::messagedatetime::
+                                                </div>
                                             </section>
                                         </div>
 
@@ -135,6 +138,9 @@
                                                 </label>
                                                 <div class="note">
                                                     <strong>Maxlength</strong> is 500 characters.
+                                                </div>
+                                                <div class="note">
+                                                    <strong>Spacial Tag</strong> ::clientcode:: , ::devicecode:: , ::devicedescription:: , ::locationcode:: , ::locationname:: , ::messageremark:: , ::messagedatetime::
                                                 </div>
                                             </section>
                                         </div>
@@ -148,6 +154,9 @@
                                                 <div class="note">
                                                     <strong>Maxlength</strong> is 500 characters.
                                                 </div>
+                                                <div class="note">
+                                                    <strong>Spacial Tag</strong> ::clientcode:: , ::devicecode:: , ::devicedescription:: , ::locationcode:: , ::locationname:: , ::messageremark:: , ::messagedatetime::
+                                                </div>
                                             </section>
                                         </div>
 
@@ -159,6 +168,9 @@
                                                 </label>
                                                 <div class="note">
                                                     <strong>Maxlength</strong> is 500 characters.
+                                                </div>
+                                                <div class="note">
+                                                    <strong>Spacial Tag</strong> ::clientcode:: , ::devicecode:: , ::devicedescription:: , ::locationcode:: , ::locationname:: , ::messageremark:: , ::messagedatetime::
                                                 </div>
                                             </section>
                                         </div>

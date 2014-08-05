@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RMS.Agent.BSL.Monitoring.Models;
 using RMS.Centralize.WebService.Gateway;
 using Test.WPFApplication.MonitoringService;
 
@@ -141,5 +143,52 @@ namespace Test.WPFApplication
             var availableMemory = GetAvailableMemory();
             lblAvailableMemory.Content = availableMemory + " MBytes";
         }
+
+        private void btnSendEmail1_Click(object sender, RoutedEventArgs e)
+        {
+            ActionGateway gateway = new ActionGateway();
+            var actionResult = gateway.SendEmail(GatewayName.KTB_VTM, txtEmailFrom.Text, new List<string>() {txtEmailTo.Text}, txtEmailSubject.Text, txtEmailBody1.Text);
+            if (actionResult.IsSuccess)
+            {
+                MessageBox.Show("Done");
+            }
+            else
+            {
+                MessageBox.Show("Error: " + actionResult.ErrorMessage);
+            }
+        
+        }
+
+        private void btnSendSMS_Click(object sender, RoutedEventArgs e)
+        {
+            ActionGateway gateway = new ActionGateway();
+            var actionResult = gateway.SendSMS(GatewayName.KTB_VTM, txtSMSTo.Text, txtSMSSender.Text, txtSMSBody.Text);
+            if (actionResult.IsSuccess)
+            {
+                MessageBox.Show("Done");
+            }
+            else
+            {
+                MessageBox.Show("Error: " + actionResult.ErrorMessage);
+            }
+        }
+
+        private void btnSelfTesting_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                RMS.Agent.BSL.Monitoring.MonitoringService ms = new RMS.Agent.BSL.Monitoring.MonitoringService();
+                var deviceStatuses = ms.SelfMonitoring(txtSelfTesting_ClientCode.Text);
+
+                dtgSelfTestingResult.ItemsSource = deviceStatuses;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
+
     }
 }

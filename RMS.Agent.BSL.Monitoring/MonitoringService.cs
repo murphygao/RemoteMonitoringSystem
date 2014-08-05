@@ -6,7 +6,10 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Remoting.Proxies;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+//using RMS.Agent.BSL.Monitoring.Models;
+using RMS.Agent.BSL.Monitoring.Models;
 using RMS.Agent.Entity;
 using RMS.Agent.Proxy;
 using RMS.Agent.Proxy.ClientProxy;
@@ -14,12 +17,15 @@ using RMS.Agent.Proxy.MonitoringProxy;
 using RMS.Common.Exception;
 using RMS.Monitoring.Helper;
 
+
 namespace RMS.Agent.BSL.Monitoring
 {
     public class MonitoringService
     {
         private delegate void ExecuteCommandAsync(string clientCode);
         private delegate void SetMonitoringStateAsync(string clientCode, ClientState clientState);
+
+        private static object _lockClientFile = new object();
 
         private SetMonitoringStateAsync stateAsync;
         public MonitoringService()
@@ -43,7 +49,6 @@ namespace RMS.Agent.BSL.Monitoring
             }
         }
 
-
         private void ExecuteCommand(string clientCode)
         {
             /*
@@ -63,10 +68,37 @@ namespace RMS.Agent.BSL.Monitoring
                 ClientServiceClient cs = new ClientService().clientService;
                 var clientResult = cs.GetClient(GetClientBy.ClientCode, null, clientCode, null, true, true);
 
+                try
+                {
+                    string localStorage = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\LocalStorage";
+                    localStorage = (ConfigurationManager.AppSettings["RMS.LocalStorage"] ?? localStorage);
+                    string localClientFile = localStorage + @"\clientResult.xml";
+
+                    var directoryName = Path.GetDirectoryName(localClientFile);
+                    if (directoryName != null && !Directory.Exists(directoryName))
+                        Directory.CreateDirectory(directoryName);
+
+                    string strResultList = Serializer.XML.SerializeObject(clientResult);
+                    lock (_lockClientFile)
+                    {
+                        using (TextWriter tw = new StreamWriter(localClientFile, false)) // Create & open the file
+                        {
+                            tw.Write(strResultList);
+                            tw.Close();
+                        }
+                        
+                    }
+                }
+                catch (Exception myEx2)
+                {
+                    new RMSAppException(this, "0500", "SelfMonitoring failed. " + myEx2.Message, myEx2, true);
+                }
+
+
                 int? deviceId = null;
                 int? monitoringProfileDeviceId = null;
 
-                var rmsMonitoringProfileDevicebyDeviceCode = RMS.Monitoring.Helper.Common.GetRmsMonitoringProfileDevicebyDeviceCode(clientResult, "CLIENT", Models.DeviceCode.Client);
+                var rmsMonitoringProfileDevicebyDeviceCode = RMS.Monitoring.Helper.Common.GetRmsMonitoringProfileDevicebyDeviceCode(clientResult, "CLIENT", RMS.Monitoring.Helper.Models.DeviceCode.Client);
                 var rmsMonitoringProfileDevices = rmsMonitoringProfileDevicebyDeviceCode;
 
                 // for CLIENT code, there are only one rmsMonitoringProfileDevices
@@ -230,6 +262,166 @@ namespace RMS.Agent.BSL.Monitoring
             }
         }
 
+        public List<DeviceStatus> SelfMonitoring(string clientCode)
+        {
+            /*
+             * 
+             * 1. Call Centralize or Local to Get Client & Device Info for Monitoring 
+             * 2. Check Device Monitoring
+             * 
+             */
+
+            try
+            {
+                #region 1. Call Centralize to Get Client & Device Info for Monitoring
+                string localStorage = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\LocalStorage";
+                localStorage = (ConfigurationManager.AppSettings["RMS.LocalStorage"] ?? localStorage);
+                string localClientFile = localStorage + @"\clientResult.xml";
+                string xmlLocalClient = string.Empty;
+                if (File.Exists(localClientFile))
+                {
+                    lock (_lockClientFile)
+                    {
+                        xmlLocalClient = File.ReadAllText(localClientFile);
+                    }
+                }
+
+                ClientResult clientResult = null;
+
+                try
+                {
+                    if (xmlLocalClient == string.Empty) throw new Exception("Local Client Data Not Found. Try to call server.");
+                    clientResult = Helper.Serializer.XML.DeserializeObject<ClientResult>(xmlLocalClient);
+                }
+                catch (Exception myEx1)
+                {
+                    new RMSAppException(this, "0500", "SelfMonitoring failed. " + myEx1.Message, myEx1, true);
+
+                    Configuration config;
+
+                    ExeConfigurationFileMap configFile = new ExeConfigurationFileMap();
+                    configFile.ExeConfigFilename = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\Local.config";
+                    config = ConfigurationManager.OpenMappedExeConfiguration(configFile, ConfigurationUserLevel.None);
+
+                    if (config.AppSettings.Settings["RMS.CLIENT_CODE"] != null)
+                        clientCode = config.AppSettings.Settings["RMS.CLIENT_CODE"].Value;
+
+
+                    ClientServiceClient cs = new ClientService().clientService;
+                    clientResult = cs.GetClient(GetClientBy.ClientCode, null, clientCode, null, true, true);
+
+                    try
+                    {
+                        var directoryName = Path.GetDirectoryName(localClientFile);
+                        if (directoryName != null && !Directory.Exists(directoryName))
+                            Directory.CreateDirectory(directoryName);
+
+                        string strResultList = Serializer.XML.SerializeObject(clientResult);
+                        lock (_lockClientFile)
+                        {
+                            using (TextWriter tw = new StreamWriter(localClientFile, false)) // Create & open the file
+                            {
+                                tw.Write(strResultList);
+                                tw.Close();
+                            }
+
+                        }
+                    }
+                    catch (Exception myEx2)
+                    {
+                        new RMSAppException(this, "0500", "SelfMonitoring failed. " + myEx2.Message, myEx2, true);
+                    }
+                }
+
+                if (clientResult == null) throw new Exception("Unable to restore clientResult object.");
+
+                int? deviceId = null;
+                int? monitoringProfileDeviceId = null;
+
+                var rmsMonitoringProfileDevicebyDeviceCode = RMS.Monitoring.Helper.Common.GetRmsMonitoringProfileDevicebyDeviceCode(clientResult, "CLIENT", RMS.Monitoring.Helper.Models.DeviceCode.Client);
+                var rmsMonitoringProfileDevices = rmsMonitoringProfileDevicebyDeviceCode;
+
+                // for CLIENT code, there are only one rmsMonitoringProfileDevices
+                if (rmsMonitoringProfileDevices.Count > 0)
+                    monitoringProfileDeviceId = rmsMonitoringProfileDevices[0].MonitoringProfileDeviceId;
+
+                #endregion
+
+                List<RmsReportMonitoringRaw> monitoringRaws = new List<RmsReportMonitoringRaw>();
+
+                #region 2. Check Device Monitoring
+
+                try
+                {
+                    var monitoringService = new RMS.Monitoring.Core.MonitoringService();
+
+                    // Performance
+                    monitoringRaws.AddRange(monitoringService.Monitoring("performance", clientResult));
+
+                    // Device
+                    monitoringRaws.AddRange(monitoringService.Monitoring("device", clientResult));
+
+
+                    //return monitoringRaws;
+                }
+                catch (Exception ex)
+                {
+                    throw new RMSAppException(this, "0500", "Check Local Device Monitoring failed. " + ex.Message, ex, false);
+                }
+
+                #endregion
+
+                List<DeviceStatus> lDeviceStatuses = new List<DeviceStatus>();
+
+                #region Reorder Process
+
+                foreach (var raw in monitoringRaws)
+                {
+                    RmsMonitoringProfileDevice mpd =
+                        clientResult.ListMonitoringProfileDevices.FirstOrDefault(a => a.MonitoringProfileDeviceId == raw.MonitoringProfileDeviceId);
+
+                    if (mpd == null) continue; //Something wrong
+
+                    RmsDevice rd = clientResult.ListDevices.FirstOrDefault(a => a.DeviceId == mpd.DeviceId);
+
+                    if (rd == null) continue; //Something wrong
+
+                    RmsDeviceType rdt = clientResult.ListDeviceType.FirstOrDefault(a => a.DeviceTypeId == rd.DeviceTypeId);
+
+                    if (rdt == null) continue; //Something wrong
+
+                    DeviceStatus ds = new DeviceStatus(rdt.DeviceTypeId, rdt.DeviceType, rdt.DisplayOrder, mpd.DeviceDescription, raw.Message,
+                        raw.MessageRemark, raw.MonitoringProfileDeviceId, raw.MessageDateTime);
+                    
+                    lDeviceStatuses.Add(ds);
+
+                }
+
+                lDeviceStatuses = new List<DeviceStatus>(lDeviceStatuses.OrderBy(o => o.DisplayOrder).ThenBy(o => o.DeviceDescription).ThenBy(o => o.MessageDateTime));
+
+                string deviceName = "";
+                foreach (var deviceStatus in lDeviceStatuses)
+                {
+                    deviceStatus.MonitoringProfileDeviceID = null;
+
+                    if (deviceStatus.DeviceDescription == deviceName)
+                    {
+                        deviceStatus.DeviceDescription = "";
+                        continue;
+                    }
+                    deviceName = deviceStatus.DeviceDescription;
+                }
+
+
+                #endregion
+
+                return lDeviceStatuses;
+            }
+            catch (Exception ex)
+            {
+                throw new RMSAppException(this, "0500", "SelfMonitoring failed. " + ex.Message, ex, true);
+            }
+        }
 
         public void SetMonitoringState(string clientCode, ClientState clientState)
         {

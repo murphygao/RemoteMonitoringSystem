@@ -5,6 +5,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Mime;
 using System.Runtime.InteropServices;
+using System.Security.AccessControl;
+using System.Security.Principal;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,17 +22,24 @@ namespace RMS.Centralize.Engine.MonitoringEngine
         private static string WebMonitoringEngineURL;
         private static string appGuid;
         private static Timer timer;
-        private static int interval;
+        private static int interval = 60;
+        private static Timer refreshConfigTimer;
+        private static int refreshInterval = 60;
 
         static void Main(string[] args)
         {
             try
             {
                 SetAppGUID();
-
-                using (Mutex mutex = new Mutex(false, "Global\\" + appGuid))
+                var sid = new SecurityIdentifier(WellKnownSidType.WorldSid, null);
+                var mutexsecurity = new MutexSecurity();
+                mutexsecurity.AddAccessRule(new MutexAccessRule(sid, MutexRights.FullControl, AccessControlType.Allow));
+                mutexsecurity.AddAccessRule(new MutexAccessRule(sid, MutexRights.ChangePermissions, AccessControlType.Deny));
+                mutexsecurity.AddAccessRule(new MutexAccessRule(sid, MutexRights.Delete, AccessControlType.Deny));
+                bool created;
+                using (Mutex mutex = new Mutex(false, "Global\\" + appGuid, out created, mutexsecurity))
                 {
-                    if (!mutex.WaitOne(0, false))
+                    if (!created)
                     {
                         Environment.Exit(1);
                     }
@@ -45,12 +54,22 @@ namespace RMS.Centralize.Engine.MonitoringEngine
                     #endregion
 
                     timer = new Timer();
-                    timer.Interval = 30*1000; // Default
+                    timer.Interval = interval * 1000; // Default
                     SetInterval();  //set interval of checking here
                     timer.Elapsed += timer_Elapsed;
                     timer.Start();
 
-                    Console.Read();
+                    refreshConfigTimer = new Timer();
+                    refreshConfigTimer.Interval = refreshInterval * 1000;
+                    refreshConfigTimer.Elapsed += refreshConfigTimer_Elapsed;
+                    refreshConfigTimer.Start();
+
+                    SetInterval();
+
+                    while (Console.ReadLine() != "exit")
+                    {
+                        Console.WriteLine("Exit this application, type: exit");
+                    };
                 }
 
             }
@@ -89,10 +108,28 @@ namespace RMS.Centralize.Engine.MonitoringEngine
                     }
                 }
 
-                if (interval != tempInterval){
+                if (tempInterval < 15) tempInterval = 15;
+
+                if (interval != tempInterval)
+                {
                     interval = tempInterval;
-                    timer.Interval = interval*1000;
+                    timer.Interval = interval * 1000;
                 }
+
+                if (interval < refreshInterval)
+                {
+                    refreshInterval = interval;
+                    refreshConfigTimer.Interval = refreshInterval * 1000;
+                }
+                else if (interval > refreshInterval)
+                {
+                    refreshInterval = interval;
+                    if (refreshInterval > 60) refreshInterval = 60;
+
+                    if (refreshConfigTimer != null && refreshConfigTimer.Interval != (refreshInterval * 1000))
+                        refreshConfigTimer.Interval = refreshInterval * 1000;
+                }
+
 
             }
             catch (Exception ex)
@@ -162,9 +199,28 @@ namespace RMS.Centralize.Engine.MonitoringEngine
 
         static void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Console.WriteLine( DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : Started");
-            CallEngine();
-            SetInterval();
+            try
+            {
+                Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : Started");
+                CallEngine();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : timer_Elapsed failed. " + ex.Message);
+                throw new RMSAppException("timer_Elapsed failed. " + ex.Message, ex, true);
+            }
+        }
+        static void refreshConfigTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            try
+            {
+                SetInterval();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : refreshConfigTimer_Elapsed failed. " + ex.Message);
+                throw new RMSAppException("refreshConfigTimer_Elapsed failed. " + ex.Message, ex, true);
+            }
         }
     }
 }

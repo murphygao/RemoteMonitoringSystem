@@ -8,6 +8,7 @@ using System.ServiceModel;
 using System.Text;
 using RMS.Agent.BSL.AutoUpate;
 using RMS.Agent.BSL.Monitoring;
+using RMS.Agent.BSL.Monitoring.Models;
 using RMS.Agent.BSL.RemoteCommand;
 using RMS.Agent.Entity;
 using RMS.Agent.Helper;
@@ -79,9 +80,28 @@ namespace RMS.Agent.WCF
             }
             catch (Exception ex)
             {
+                AddLog("Monitoring", "Monitoring Failed", ex.Message + (ex.InnerException == null? string.Empty : " " + ex.InnerException.Message));
                 throw new RMSAppException(this, "0500", "Monitoring failed. " + ex.Message, ex, true);
             }
         }
+
+        public List<DeviceStatus> SelfMonitoring(string clientCode)
+        {
+            try
+            {
+                AddLog("Self Monitoring", "Monitoring Performances & Peripherals", (string.IsNullOrEmpty(clientCode)? string.Empty : "Client Code: " + clientCode));
+
+                monitoringService = new MonitoringService();
+                return monitoringService.SelfMonitoring(clientCode);
+
+            }
+            catch (Exception ex)
+            {
+                AddLog("Self Monitoring", "SelfMonitoring Failed", ex.Message + (ex.InnerException == null ? string.Empty : " " + ex.InnerException.Message));
+                throw new RMSAppException(this, "0500", "SelfMonitoring failed. " + ex.Message, ex, true);
+            }
+        }
+
 
         private void AddLog(string eventType, string message, string detail)
         {

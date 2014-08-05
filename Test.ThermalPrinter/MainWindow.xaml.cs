@@ -1,23 +1,114 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 using LibUsbDotNet;
 using LibUsbDotNet.Main;
-using RMS.Common.Exception;
 
-namespace RMS.Monitoring.Helper
+namespace Test.ThermalPrinter
 {
-    public class USBCustomThermalPrinter
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                txtResult.Text = "";
+
+                var checkPaperStatus = CheckPaperStatus();
+
+
+                if (checkPaperStatus != null)
+                {
+                    if (checkPaperStatus[0] > 0)
+                    {
+                        txtResult.Text += "LOW_PAPER";
+
+                    }
+
+                    if (checkPaperStatus[1] > 0)
+                    {
+                        if (txtResult.Text != "") txtResult.Text += ", ";
+                        txtResult.Text += "END_PAPER";
+
+                    }
+                }
+
+                if (txtResult.Text == "") txtResult.Text = "Normal";
+            }
+            catch (Exception ex)
+            {
+                txtResult.Text = ex.Message;
+            }
+        }
+
+        private int[] CheckPaperStatus()
+        {
+            try
+            {
+                string sVid = txtVID.Text;
+                int iVid = Int32.Parse(sVid, NumberStyles.HexNumber);
+                string sPid = txtPID.Text;
+                int iPid = Int32.Parse(sPid, NumberStyles.HexNumber);
+
+                byte[] byteArray = new byte[3];
+                byteArray[0] = 0x10;
+                byteArray[1] = 0x04;
+                byteArray[2] = 4;
+
+                byte[] read = USB.WriteAndRead(iVid, iPid, byteArray);
+
+                if (read == null || read.Length == 0)
+                    return new int[] { 500, 500 };
+
+                int[] ret = new int[2] { 0, 0 };
+                var bit2 = (read[0] & (1 << 2)) != 0; // Near End
+                var bit3 = (read[0] & (1 << 3)) != 0; // Near End
+                var bit5 = (read[0] & (1 << 5)) != 0; // Out of Paper
+                var bit6 = (read[0] & (1 << 6)) != 0; // Out of Paper
+
+                if (bit2 || bit3)
+                    ret[0] = 1;
+                if (bit5 || bit6)
+                    ret[1] = 1;
+
+                return ret;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+    }
+    public class USB
     {
 
-        public static byte[] WriteAndRead(int vid,int pid,byte[] byteArrayWritten)
+        public static byte[] WriteAndRead(int vid, int pid, byte[] byteArrayWritten)
         {
             ErrorCode ec = ErrorCode.None;
             UsbDevice MyUsbDevice = null;
             UsbDeviceFinder MyUsbFinder = new UsbDeviceFinder(vid, pid);
-            
+
             try
             {
 
@@ -73,6 +164,9 @@ namespace RMS.Monitoring.Helper
 
                         // Write that output to the console.
                         //Console.Write(Encoding.Default.GetString(readBuffer, 0, bytesRead));
+
+                        reader.ReadFlush();
+
                         return readBuffer;
                     }
 
@@ -83,7 +177,7 @@ namespace RMS.Monitoring.Helper
             }
             catch (Exception ex)
             {
-                throw new RMSAppException("WriteAndRead failed. " + ex.Message, ex, false);
+                throw ex;
                 //Console.WriteLine();
                 //Console.WriteLine((ec != ErrorCode.None ? ec + ":" : String.Empty) + ex.Message);
             }
@@ -107,7 +201,7 @@ namespace RMS.Monitoring.Helper
                                 // Release interface #0.
                                 wholeUsbDevice.ReleaseInterface(0);
                             }
-
+                            
                             MyUsbDevice.Close();
                         }
                         MyUsbDevice = null;
@@ -119,11 +213,12 @@ namespace RMS.Monitoring.Helper
                 }
                 catch (Exception ex)
                 {
-                    new RMSAppException("WriteAndReadUSB - Closing USB failed. " + ex.Message, ex, true);
+                    throw ex;
                 }
             }
             return null;
         }
 
     }
+
 }

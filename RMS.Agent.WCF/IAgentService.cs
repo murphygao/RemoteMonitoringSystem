@@ -24,6 +24,9 @@ namespace RMS.Agent.WCF
 
         [OperationContract]
         Result Monitoring(string clientCode);
+
+        [OperationContract]
+        List<BSL.Monitoring.Models.DeviceStatus> SelfMonitoring(string clientCode);
     }
 
 }

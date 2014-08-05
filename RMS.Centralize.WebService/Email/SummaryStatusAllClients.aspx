@@ -69,7 +69,7 @@
                             </td>
                             <td style="text-align: center; background-color: #eeeeee">
                                 <asp:Label runat="server" ID="Label9"
-                                    Text='<%# (ReferenceEquals(Eval("AgentNotAlive"), "0"))? "Yes" : "No" %>' />
+                                    Text='<%# (Eval("AgentNotAlive").ToString() ==  "0" )? "Yes" : "No" %>' />
                             </td>
                         </tr>
                     </ItemTemplate>
@@ -106,7 +106,7 @@
                             </td>
                             <td style="text-align: center">
                                 <asp:Label runat="server" ID="Label9"
-                                    Text='<%# (ReferenceEquals(Eval("AgentNotAlive"), "0"))? "Yes" : "No" %>' />
+                                    Text='<%# (Eval("AgentNotAlive").ToString() ==  "0" )? "Yes" : "No" %>' />
                             </td>
                         </tr>
                     </AlternatingItemTemplate>

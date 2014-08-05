@@ -627,12 +627,12 @@ namespace RMS.Centralize.WebService.BSL
                                 var actionResult = actionGatewayService.SendSMS(gateway, actionInfo.To, smsSender, tBody);
                                 if (actionResult.IsSuccess)
                                 {
-                                    AddLogActionSend("SMS", smsSender, actionInfo.To, tBody, true, null);
+                                    AddLogActionSend("SMS", smsSender, actionInfo.To, tBody, true, (actionResult.ErrorCode + " " +actionResult.ErrorMessage).Trim());
 
                                 }
                                 else
                                 {
-                                    AddLogActionSend("SMS", smsSender, actionInfo.To, tBody, false, actionResult.ErrorMessage);
+                                    AddLogActionSend("SMS", smsSender, actionInfo.To, tBody, false, (actionResult.ErrorCode + " " + actionResult.ErrorMessage).Trim());
                                 }
 
                             }

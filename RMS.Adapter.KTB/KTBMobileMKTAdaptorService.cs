@@ -45,13 +45,15 @@ namespace RMS.Adapter.KTB
 
             try
             {
+                ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+
                 service = new MobileMKTAdaptorSoapClient();
                 Initialize(urlWebService);
             }
             catch (Exception ex)
             {
                 service = null;
-                throw new RMSWebException(this, "0500", "SeverityLevelService ctor failed. " + ex.Message, ex, false);
+                throw new RMSWebException(this, "0500", "KTBMobileMKTAdaptorService ctor failed. " + ex.Message, ex, false);
             }
         }
 
@@ -73,7 +75,7 @@ namespace RMS.Adapter.KTB
                     if (urlWebService != null)
                         webServicURL = urlWebService;
                     else
-                        webServicURL = ConfigurationManager.AppSettings["RMS.WebServicURL_KTBMobileMKTAdaptor"];
+                        webServicURL = ConfigurationManager.AppSettings["RMS.KTB.SMS.WebServicURL"];
 
 
                     webServiceUserName = ConfigurationManager.AppSettings["WebServiceUserName"];

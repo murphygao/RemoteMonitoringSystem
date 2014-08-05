@@ -43,7 +43,7 @@ namespace RMS.Monitoring.Device.ThermalPrinter
                 byteArray[1] = 0x04;
                 byteArray[2] = 4;
 
-                byte[] read = USB.WriteAndRead(iVid, iPid, byteArray);
+                byte[] read = USBCustomThermalPrinter.WriteAndRead(iVid, iPid, byteArray);
 
                 if (read == null || read.Length == 0)
                     return new int[]{500, 500};

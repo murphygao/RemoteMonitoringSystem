@@ -91,16 +91,17 @@
                                     <dd class="padding-10 margin-bottom-5 bg-color-grayLight"><label id="lblIPAddress"></label></dd>
                                     <dt class="padding-10 margin-bottom-5">Monitoring State</dt>
                                     <dd class="padding-10 margin-bottom-5 bg-color-grayLight"><label id="lblState"></label></dd>
-                                    <dt class="padding-10 margin-bottom-5">Installation Date</dt>
+                                    <dt class="padding-10 margin-bottom-5">Created Date</dt>
                                     <dd class="padding-10 margin-bottom-5 bg-color-grayLight"><label id="lblCreatedDate"></label></dd>
                                     <dt class="padding-10 margin-bottom-5">Last Update</dt>
                                     <dd class="padding-10 margin-bottom-5 bg-color-grayLight"><label id="lblUpdatedDate"></label></dd>
                                     <dt class="padding-10 margin-bottom-5">Device Profile</dt>
                                     <dd class="padding-10 margin-bottom-5 bg-color-grayLight"><label id="lblProfileName"></label></dd>
+                                    <div style="display: none">
                                     <dt class="padding-10 margin-bottom-5">Contact Detail</dt>
                                     <dd class="padding-10 margin-bottom-5 bg-color-grayLight">Tel.: <label id="lblTelephone"></label><br />
                                         Mobile: <label id="lblMobile"></label><br />
-                                        Email: <label id="lblEmail"></label></dd>
+                                        Email: <label id="lblEmail"></label></dd></div>
                                     <dt class="padding-10 margin-bottom-5">&nbsp;</dt>
                                     <dd class="padding-top-10 padding-bottom-10"><button type="button" class="btn btn-default" style="float: left;" onclick="window.history.go(-1); return false;">&nbsp;&nbsp;Back&nbsp;&nbsp;</button></dd>
                                 </dl>
@@ -308,143 +309,21 @@
             /*
             * Summary Device
             */
-            $('#dt_device_status').dataTable({
-                "sPaginationType": "bootstrap_full",
-                "bFilter": false,
-                "bAutoWidth": false,
-                "bPaginate": false,
-                "sDom": 't',
-                "bInfo": false,
-                "bSort": false,
-                "bScrollCollapse": true,
-                "bServerSide": true,
-                "iDisplayLength": 50,
-                "aaSorting": [[ 1, "asc" ]],
-                "sAjaxSource": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/SummaryReport/GetCurrentDeviceStatus/",
-                "fnServerData": function (sSource, aoData, fnCallback) {
-                    aoData.push({ "name": "clientID", "value": <%=Request["id"]%> });
-                    aoData.push({ "name": "dt", "value": dateFormat(new Date(), "yyyymmddHHMMss") });
-                    Pace.restart();
-                        $.ajax({
-                            "type": "POST",
-                            "dataType": 'json',
-                            "url": sSource,
-                            "data": aoData,
-                            "success": function (data) {
-                                if (data.status == 1) {
-                                    fnCallback(data);
-                                } else {
-                                    try {
-                                        $.smallBox({
-                                            title: "System Failed",
-                                            content: "<i class='fa fa-clock-o'></i> <i>" + data.error + "</i>",
-                                            color: "#C46A69",
-                                            iconSmall: "fa fa-times fa-2x fadeInRight animated",
-                                            timeout: 4000
-                                        });
-
-                                    } catch (e) {
-                                        alert(data.error);
-                                    }
-                                }
-                            }
-                        });
-                    },
-                    "aoColumns": [
-                {
-                    // device name
-                    "mDataProp": "DeviceDescription",
-                    "bSearchable": false,
-                    "bSortable": false,
-                    "sWidth": "200",
-                    "sClass": "td-device-status-name width200",
-                    "fnRender": function (oObj) {
-                        return htmlEscape(oObj.aData["DeviceDescription"]);
-                    }
-                },
-                {
-                    // status
-                    "mDataProp": "LevelName",
-                    "bSearchable": false,
-                    "bSortable": false,
-                    "sWidth": "120",
-                    "sClass": "center td-device-status width120",
-                    "fnRender": function(oObj) {
-                        if (oObj.aData["Message"] == "Good") {
-                            return oObj.aData["ColorTagStart"].replace('class=\"','class=\"device-severity-status ') + "Good" + oObj.aData["ColorTagEnd"];
-                        } else {
-                            return oObj.aData["ColorTagStart"].replace('class=\"','class=\"device-severity-status ') + oObj.aData["LevelName"] + oObj.aData["ColorTagEnd"];
-                        }
-                    }
-
-                },
-                {
-                    // message
-                    "mDataProp": "Message",
-                    "bSearchable": false,
-                    "bSortable": false,
-                    "sWidth": "180",
-                    "sClass": "td-device-status width180",
-                    "fnRender": function(oObj) {
-                        if (oObj.aData["Message"] == "Good") {
-                            return "";
-                        } else {
-                            return htmlEscape(oObj.aData["Message"]);
-                        }
-                    }
-
-                },
-                {
-                    // action
-                    "mDataProp": "LastActionType",
-                    "bSearchable": false,
-                    "bSortable": false,
-                    "sClass": "td-device-status width90",
-                    "sWidth": "90",
-                    "fnRender": function(oObj) {
-                        if (oObj.aData["LastActionType"] == "") {
-                            return "";
-                        } else {
-                            return oObj.aData["LastActionType"];
-                        }
-                    }
-                },
-                {
-                    // action date
-                    "mDataProp": "LastActionDateTime",
-                    "bSearchable": false,
-                    "bSortable": false,
-                    "sClass": "td-device-status width150",
-                    "sWidth": "150",
-                    "fnRender": function(oObj) {
-                        if (oObj.aData["LastActionDateTime"] != null) {
-                            var date = new Date(parseInt(oObj.aData["LastActionDateTime"].substr(6)));
-                            return dateFormat(date, "dd/mm/yyyy HH:MM:ss");
-                        }
-                        return "";
-                    }
-
-                },
-                {
-                    // resend
-                    "mData": null,
-                    "bSearchable": false,
-                    "bSortable": false,
-                    "sWidth": "40",
-                    "sClass": "td-device-status width40",
-                    "fnRender": function(oObj) {
-                        if (oObj.aData["Message"] != "") {
-                            return '<a id="btnResend" class="btn btn-xs btn-primary" href="javascript:Resend('+ oObj.aData["ReportID"] +');" style="line-height: inherit!important;"><i class="fa fa-mail-forward"></i></a>';
-                        }
-                        return "";
-                    }
-                }   
-
-                ],
-
-
+            $("#dt_device_status").dataTable({
+                sPaginationType: "bootstrap_full", bFilter: !1, bAutoWidth: !1, bPaginate: !1, sDom: "t", bInfo: !1, bSort: !1, bScrollCollapse: !0, bServerSide: !0, iDisplayLength: 50, aaSorting: [[1, "asc"]], sAjaxSource: "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/SummaryReport/GetCurrentDeviceStatus/", fnServerData: function (a, b, c) {
+                    b.push({ name: "clientID", value: '<%=Request["id"]%>' }); b.push({ name: "dt", value: dateFormat(new Date, "yyyymmddHHMMss") }); Pace.restart(); $.ajax({
+                        type: "POST",
+                        dataType: "json", url: a, data: b, success: function (a) { if (1 == a.status) c(a); else try { $.smallBox({ title: "System Failed", content: "<i class='fa fa-clock-o'></i> <i>" + a.error + "</i>", color: "#C46A69", iconSmall: "fa fa-times fa-2x fadeInRight animated", timeout: 4E3 }) } catch (b) { alert(a.error) } }
+                    })
+                }, aoColumns: [{ mDataProp: "DeviceDescription", bSearchable: !1, bSortable: !1, sWidth: "200", sClass: "td-device-status-name width200", fnRender: function (a) { return htmlEscape(a.aData.DeviceDescription) } }, {
+                    mDataProp: "LevelName", bSearchable: !1,
+                    bSortable: !1, sWidth: "120", sClass: "center td-device-status width120", fnRender: function (a) { return "Good" == a.aData.Message ? a.aData.ColorTagStart.replace('class="', 'class="device-severity-status ') + "Good" + a.aData.ColorTagEnd : a.aData.ColorTagStart.replace('class="', 'class="device-severity-status ') + a.aData.LevelName + a.aData.ColorTagEnd }
+                }, { mDataProp: "Message", bSearchable: !1, bSortable: !1, sWidth: "180", sClass: "td-device-status width180", fnRender: function (a) { return "Good" == a.aData.Message ? "" : htmlEscape(a.aData.Message) } },
+                { mDataProp: "LastActionType", bSearchable: !1, bSortable: !1, sClass: "td-device-status width90", sWidth: "90", fnRender: function (a) { return "" == a.aData.LastActionType ? "" : a.aData.LastActionType } }, { mDataProp: "LastActionDateTime", bSearchable: !1, bSortable: !1, sClass: "td-device-status width150", sWidth: "150", fnRender: function (a) { return null != a.aData.LastActionDateTime ? (a = new Date(parseInt(a.aData.LastActionDateTime.substr(6))), dateFormat(a, "dd/mm/yyyy HH:MM:ss")) : "" } }, {
+                    mData: null, bSearchable: !1, bSortable: !1, sWidth: "40",
+                    sClass: "td-device-status width40", fnRender: function (a) { return "" != a.aData.Message ? '<a id="btnResend" class="btn btn-xs btn-primary" href="javascript:Resend(' + a.aData.ReportID + ');" style="line-height: inherit!important;"><i class="fa fa-mail-forward"></i></a>' : "" }
+                }]
             });
-
             $("#dt_device_status thead").remove();
 
 
@@ -463,7 +342,7 @@
                 "aaSorting": [[ 1, "desc" ]],
                 "sAjaxSource": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/SummaryReport/SearchClientMonitoring/",
                     "fnServerData": function (sSource, aoData, fnCallback) {
-                        aoData.push({ "name": "clientID", "value": <%=Request["id"]%> });
+                        aoData.push({ "name": "clientID", "value": '<%=Request["id"]%>' });
                         aoData.push({ "name": "dt", "value": dateFormat(new Date(), "yyyymmddHHMMss") });
                         Pace.restart();
                         $.ajax({
@@ -569,8 +448,9 @@
                         "bSortable": false,
                         "sWidth": "200",
                         "sClass": "center",
+                        "bUseRendered": false,
                         "fnRender": function(oObj) {
-                            if (oObj.aData["Status"] == '<span class="label label-success">Solved</span>' && oObj.aData["UpdatedDate"] != null) {
+                            if (oObj.aData["Status"] == 0 && oObj.aData["UpdatedDate"] != null) {
                                 var date = new Date(parseInt(oObj.aData["UpdatedDate"].substr(6)));
                                 return dateFormat(date, "dd/mm/yyyy HH:MM:ss");
                             }
@@ -594,7 +474,7 @@
                         "fnRender": function(oObj) {
                             if (oObj.aData["LastActionDateTime"] != null) {
                                 var date = new Date(parseInt(oObj.aData["LastActionDateTime"].substr(6)));
-                                return dateFormat(date, "dd/mm/yyyy HH:mm:ss");
+                                return dateFormat(date, "dd/mm/yyyy HH:MM:ss");
                             }
                             return "";
                         }
@@ -737,12 +617,9 @@
                 "success": function(data) {
                     oTableDS.fnStandingRedraw(0);
 
-                    if (oTable.fnGetData().length == 1)
-                        oTable.fnStandingRedraw(1);
-                    else
-                        oTable.fnStandingRedraw(0);
+                    oTable.fnStandingRedraw(0);
 
-                    if (data.isSuccess) {
+                    if (data.status) {
                         try {
                             $.smallBox({
                                 title: "Resend Complete",

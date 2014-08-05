@@ -159,7 +159,7 @@
 	</wsdl:binding>
 	<wsdl:service name="MobileMKTAdaptorSoap">
 		<wsdl:port name="NewPort" binding="tns:MobileMKTAdaptorSoap">
-			<soap:address location="http://localhost/MMUI/SOAP"/>
+			<soap:address location="https://http://10.2.92.223//MMUI/SOAP"/>
 		</wsdl:port>
 	</wsdl:service>
 </wsdl:definitions>

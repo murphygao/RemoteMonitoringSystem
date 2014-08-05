@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{328F723E-7485-48F7-8A20-66B8BE4D26BC}</ProjectGuid>
+    <ProjectGuid>{B89BCA59-167C-434D-BD8A-09DFEA3644E2}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Test.WPFApplication</RootNamespace>
-    <AssemblyName>Test.WPFApplication</AssemblyName>
+    <RootNamespace>Test.ThermalPrinter</RootNamespace>
+    <AssemblyName>Test.ThermalPrinter</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -34,17 +34,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="LibUsbDotNet, Version=2.2.8.104, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\LibUsbDotNet.2.2.8\lib\LibUsbDotNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -62,11 +57,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Service References\MonitoringService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -104,60 +94,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Service References\MonitoringService\MonitoringService.wsdl" />
-    <None Include="Service References\MonitoringService\MonitoringService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\MonitoringService\MonitoringService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\MonitoringService\MonitoringService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\MonitoringService\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\MonitoringService\MonitoringService.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\MonitoringService\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\MonitoringService\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\MonitoringService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RMS.Adapter.KTB\RMS.Adapter.KTB.csproj">
-      <Project>{5c081c9d-4ebb-40c5-b58c-3e9a4df4425b}</Project>
-      <Name>RMS.Adapter.KTB</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RMS.Agent.BSL.Monitoring\RMS.Agent.BSL.Monitoring.csproj">
-      <Project>{20cf9b66-1c90-4a26-a143-fd66e29b77db}</Project>
-      <Name>RMS.Agent.BSL.Monitoring</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RMS.Agent.Proxy\RMS.Agent.Proxy.csproj">
-      <Project>{34cc6b3a-d552-480a-b3d1-f94a389c1c86}</Project>
-      <Name>RMS.Agent.Proxy</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RMS.Centralize.WebService.Gateway\RMS.Centralize.WebService.Gateway.csproj">
-      <Project>{22541ddd-75fd-403f-a67a-2843fcc2a670}</Project>
-      <Name>RMS.Centralize.WebService.Gateway</Name>
-    </ProjectReference>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

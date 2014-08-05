@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using RMS.Adapter.KTB;
+using RMS.Centralize.DAL;
 using RMS.Common.Exception;
 using SKAdapter;
 
@@ -177,12 +180,34 @@ namespace RMS.Centralize.WebService.Gateway
         {
             try
             {
+                string referenceNo = string.Empty;
+
+                using(var db = new MyDbContext())
+                {
+                    SqlParameter[] parameters = new SqlParameter[1];
+                    SqlParameter p1 = new SqlParameter("ModuleCode", "KTB.VTM.SMS");
+                    parameters[0] = p1;
+
+                    DbRawSqlQuery<string> dbRawSqlQuery = db.Database.SqlQuery<string>("RMS_GetNextRunningNumber " +
+                                                                           "@ModuleCode", parameters);
+
+                    List<string> lReferenceNo = new List<string>(dbRawSqlQuery.ToList());
+
+                    if (lReferenceNo.Count > 0)
+                    {
+                        referenceNo = lReferenceNo[0];
+                    }
+                    else
+                    {
+                        throw new Exception("Cannot Get Next Running Number.");
+                    }
+
+                }
+
                 using (var adapter = new VTMAdapter())
                 {
 
-                    List<MailAddress> lMailAddresses = new List<MailAddress>();
-
-                    var result = adapter.SendSMS(null, new List<string>() {mobileNumber}, body, sender, "T");
+                    var result = adapter.SendSMS(null, new List<string>() {mobileNumber}, body, sender, referenceNo, "T");
 
                     return new ActionResult
                     {

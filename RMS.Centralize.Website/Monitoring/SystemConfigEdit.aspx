@@ -111,7 +111,7 @@
                                                     <input type="text" id="txtValue" name="txtValue" class="input-sm">
                                                 </label>
                                                 <div class="note">
-                                                    <strong>Required Field</strong>, <strong>Maxlength</strong> is 1000 characters.
+                                                    <strong>Maxlength</strong> is 1000 characters.
                                                 </div>
 
                                             </section>

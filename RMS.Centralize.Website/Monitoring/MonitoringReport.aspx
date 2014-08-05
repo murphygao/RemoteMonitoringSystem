@@ -100,7 +100,7 @@
                                         <section class="col col-md-6 col-xs-12">
                                             <label class="select">
                                                 <select id="ddlMessageGroup" name="ddlMessageGroup" multiple style="width: 100%" class="select2 input-sm">
-                                                    <option value="" selected="selected">Select All Message Group</option>
+                                                    <option value="">Select All Message Group</option>
                                                     <optgroup label="Technical Message">
                                                         <option value="1">CPU</option>
                                                         <option value="2">Memory</option>
@@ -152,8 +152,8 @@
                                             <label class="select">
                                                 <select id="ddlMessageStatus" name="ddlMessageStatus" multiple style="width: 100%" class="select2 input-sm">
                                                     <option value="">Select All Status</option>
-                                                    <option value="2" selected="selected">Business Warning</option>
-                                                    <option value="1" selected="selected">Device Issue</option>
+                                                    <option value="2">Business Warning</option>
+                                                    <option value="1">Device Issue</option>
                                                     <option value="0">Device Solved</option>
                                                 </select>
                                                 <i></i>
@@ -164,7 +164,7 @@
                                             <button type="submit" class="btn btn-primary" style="padding: 5px 16px">
                                                 Search
                                             </button>
-                                            <button type="button" class="btn btn-default" style="padding: 5px 16px" onclick="this.form.reset();">
+                                            <button type="button" class="btn btn-default" style="padding: 5px 16px" onclick="this.form.reset();DoResetForm();">
                                                 Reset
                                             </button>
                                         </section>
@@ -259,6 +259,14 @@
                         </div>
                         <!-- end widget div -->
 
+                        <input type="hidden" id="hdStartEventDate"/>
+                        <input type="hidden" id="hdEndEventDate"/>
+                        <input type="hidden" id="hdMessageGroup"/>
+                        <input type="hidden" id="hdClientCode"/>
+                        <input type="hidden" id="hdMessage"/>
+                        <input type="hidden" id="hdLocation"/>
+                        <input type="hidden" id="hdMessageStatus"/>
+                        <input type="hidden" id="hdDt"/>
                     </div>
                     <!-- end widget -->
 
@@ -335,13 +343,13 @@
                 "iDisplayLength": 50,
                 "sAjaxSource": "<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/SummaryReport/SearchMonitoringReport/",
                     "fnServerData": function (sSource, aoData, fnCallback) {
-                        aoData.push({ "name": "txtStartEventDate", "value": $('#txtStartEventDate').val() });
-                        aoData.push({ "name": "txtEndEventDate", "value": $('#txtEndEventDate').val() });
-                        aoData.push({ "name": "ddlMessageGroup", "value": $('#ddlMessageGroup').val() });
-                        aoData.push({ "name": "txtClientCode", "value": $('#txtClientCode').val() });
-                        aoData.push({ "name": "txtMessage", "value": $('#txtMessage').val() });
-                        aoData.push({ "name": "txtLocation", "value": $('#txtLocation').val() });
-                        aoData.push({ "name": "ddlMessageStatus", "value": $('#ddlMessageStatus').val() });
+                        aoData.push({ "name": "txtStartEventDate", "value": $('#hdStartEventDate').val() });
+                        aoData.push({ "name": "txtEndEventDate", "value": $('#hdEndEventDate').val() });
+                        aoData.push({ "name": "ddlMessageGroup", "value": $('#hdMessageGroup').val() });
+                        aoData.push({ "name": "txtClientCode", "value": $('#hdClientCode').val() });
+                        aoData.push({ "name": "txtMessage", "value": $('#hdMessage').val() });
+                        aoData.push({ "name": "txtLocation", "value": $('#hdLocation').val() });
+                        aoData.push({ "name": "ddlMessageStatus", "value": $('#hdMessageStatus').val() });
                         aoData.push({ "name": "dt", "value": dateFormat(new Date(), "yyyymmddHHMMss") });
                         Pace.restart();
                         $.ajax({
@@ -624,6 +632,15 @@
                 /* stop form from submitting normally */
                 event.preventDefault();
 
+                $('#hdStartEventDate').val($('#txtStartEventDate').val());
+                $('#hdEndEventDate').val($('#txtEndEventDate').val());
+                $('#hdMessageGroup').val($('#ddlMessageGroup').val());
+                $('#hdClientCode').val($('#txtClientCode').val());
+                $('#hdMessage').val($('#txtMessage').val());
+                $('#hdLocation').val($('#txtLocation').val());
+                $('#hdMessageStatus').val($('#ddlMessageStatus').val());
+                $('#hdDt').val(dateFormat(new Date(), "yyyymmddHHMMss"));
+
                 var oTable = $('#dt_basic').dataTable();
                 Pace.restart(); oTable.fnDraw();
 
@@ -655,14 +672,57 @@
             }
 
             var $on = false;
+
+            DoResetForm();
+            if ($('#hdDt').val() != "") {
+
+                var arrayMG = $('#hdMessageGroup').val().split(',');
+                $('#ddlMessageGroup').select2("val", arrayMG);
+
+                var arrayMS = $('#hdMessageStatus').val().split(',');
+                $('#ddlMessageStatus').select2("val", arrayMS);
+            }
+
+            $("#ddlMessageGroup").on("change", function (e) {
+                if (e.added.id == '') {
+                    $("#ddlMessageGroup").select2("val", [""]);
+                }
+            });
+            $("#ddlMessageGroup").on("select2-selecting", function (e) {
+
+                if ($("#ddlMessageGroup").val() == '') {
+                    $("#ddlMessageGroup").select2("val", "-1");
+                }
+
+            });
+
+            $("#ddlMessageStatus").on("change", function (e) {
+                if (e.added.id == '') {
+                    $("#ddlMessageStatus").select2("val", [""]);
+                }
+            });
+            $("#ddlMessageStatus").on("select2-selecting", function (e) {
+
+                if ($("#ddlMessageStatus").val() == '') {
+                    $("#ddlMessageStatus").select2("val", "-1");
+                }
+
+            });
         });
 
-            function ViewClientReport(id) {
-                var params = new Array();
-                params["id"] = id;
+        function ViewClientReport(id) {
+            var params = new Array();
+            params["id"] = id;
 
-                post_to_url("ClientReport.aspx", params, null);
-            }
+            post_to_url("ClientReport.aspx", params, null);
+        }
+
+        function DoResetForm() {
+            $('#ddlMessageGroup').select2("val", [""]);
+            $('#ddlMessageStatus').select2("val", ["1", "2"]);
+        }
+
+
 
     </script>
 

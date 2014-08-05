@@ -54,7 +54,7 @@ namespace RMS.Adapter.KTB
         /// <param name="sender">Sender name that appears as from number in mobile phone. Sender name can be text. If it is specified, it’s value will replace value of msg_from at mobile phone.</param>
         /// <param name="lang">This flag define language for SMS. Default value is ‘E’ for English when it is not given. E for English, T for Thai</param>
         /// <returns>Result</returns>
-        public Result SendSMS(string from, List<string> lTo, string body, string sender, string lang = "E")
+        public Result SendSMS(string from, List<string> lTo, string body, string sender, string referenceNo, string lang = "T")
         {
             try
             {
@@ -65,21 +65,18 @@ namespace RMS.Adapter.KTB
                 string channelID = ConfigurationManager.AppSettings["RMS.KTB.SMS.ChannelID"];
                 if (string.IsNullOrEmpty(channelID)) throw new ArgumentNullException("channelID", "Please check Web.config > appSettings > RMS.KTB.SMS.ChannelID ");
 
-                string referenceNo = ConfigurationManager.AppSettings["RMS.KTB.SMS.ReferenceNo"];
-                if (string.IsNullOrEmpty(referenceNo)) throw new ArgumentNullException("referenceNo", "Please check Web.config > appSettings > RMS.KTB.SMS.ReferenceNo ");
-
+                if (string.IsNullOrEmpty(referenceNo)) throw new ArgumentNullException("referenceNo");
 
                 if (string.IsNullOrEmpty(from))
                     from = ConfigurationManager.AppSettings["RMS.KTB.SMS.From"];
-                if (string.IsNullOrEmpty(from)) throw new ArgumentNullException("from", "Please check Web.config > appSettings > RMS.KTB.SMS.From ");
 
                 if (string.IsNullOrEmpty(sender))
                     sender = ConfigurationManager.AppSettings["RMS.KTB.SMS.Sender"];
                 if (string.IsNullOrEmpty(sender)) throw new ArgumentNullException("sender", "Please check Web.config > appSettings > RMS.KTB.SMS.Sender ");
 
-                if (lang != "T" || lang != "E")
+                if (lang != "T" && lang != "E")
                 {
-                    lang = "E";
+                    lang = "T";
                 }
                 
                 sendSMS_Req smsReq = new sendSMS_Req();
@@ -129,7 +126,7 @@ namespace RMS.Adapter.KTB
                         return new Result
                         {
                             IsSuccess = true,
-                            referenceID = smsResp.respDetail
+                            ErrorMessage = referenceNo + ", " + smsResp.respDetail
                         };
                     }
                     else
@@ -138,7 +135,7 @@ namespace RMS.Adapter.KTB
                         {
                             IsSuccess = false,
                             ErrorCode = smsResp.respCode,
-                            ErrorMessage = smsResp.respDetail,
+                            ErrorMessage = referenceNo + ", " + smsResp.respDetail,
                         };
                     }
                 }
@@ -195,7 +192,7 @@ namespace RMS.Adapter.KTB
 
         public string ErrorMessage { get; set; }
 
-        public string referenceID { get; set; }
+        public string Detail { get; set; }
 
     }
 }

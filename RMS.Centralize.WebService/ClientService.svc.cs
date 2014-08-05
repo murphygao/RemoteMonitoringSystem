@@ -47,7 +47,8 @@ namespace RMS.Centralize.WebService
                         List<RmsMonitoringProfileDevice> monitoringProfileDevices = new List<RmsMonitoringProfileDevice>();
                         List<RmsDevice> devices = new List<RmsDevice>();
 
-
+                        sr.MonitoringProfile = monitorngProfile;
+                        sr.ListMonitoringProfileDevices = monitoringProfileDevices;
                         var _client = db.RmsClients.Where(c => c.ClientId == client.ClientId && (!activeClient || (c.Enable == true && c.EffectiveDate <= DateTime.Today && (c.ExpiredDate == null || c.ExpiredDate >= DateTime.Today))))
                             .Include(
                                 i =>

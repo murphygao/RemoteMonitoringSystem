@@ -94,7 +94,7 @@
                                             <section class="col col-8">
                                                 <label class="label">Message Group</label>
                                                 <label class="select">
-                                                    <select id="ddlMessageGroupID" class="input-sm">
+                                                    <select id="ddlMessageGroupID" name="ddlMessageGroupID" class="input-sm">
                                                     </select>
                                                     <i></i>
                                                 </label>
@@ -121,7 +121,7 @@
                                             <section class="col col-8">
                                                 <label class="label">Default Severity Level</label>
                                                 <label class="select">
-                                                    <select id="ddlSeverityLevelID" class="input-sm">
+                                                    <select id="ddlSeverityLevelID" name="ddlSeverityLevelID" class="input-sm">
                                                     </select>
                                                     <i></i>
                                                 </label>
@@ -233,13 +233,25 @@
                     txtMessage: {
                         required: true,
                         maxlength: 50
-                    }
+                    },
+                    ddlMessageGroupID: {
+                        required: true,
+                    },
+                    ddlSeverityLevelID: {
+                        required: true,
+                    },
                 },
                 messages: {
                     txtMessage: {
                         required: 'Please enter message',
                         maxlength: 'The field MaxLength is 50.'
-                    }
+                    },
+                    ddlMessageGroupID: {
+                        required: 'Please select message group',
+                    },
+                    ddlSeverityLevelID: {
+                        required: 'Please select default severity level',
+                    },
                 },
 
                 errorPlacement: function (error, element) {
