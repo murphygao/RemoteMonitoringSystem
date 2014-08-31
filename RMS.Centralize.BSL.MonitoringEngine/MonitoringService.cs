@@ -124,7 +124,6 @@ namespace RMS.Centralize.BSL.MonitoringEngine
             }
             finally
             {
-
                 if (stp != null)
                 {
                     stp.WaitForIdle();
@@ -294,7 +293,7 @@ namespace RMS.Centralize.BSL.MonitoringEngine
             }
         }
 
-        private bool CanBroadCast(RmsLocation location)
+        public bool CanBroadCast(RmsLocation location)
         {
             try
             {

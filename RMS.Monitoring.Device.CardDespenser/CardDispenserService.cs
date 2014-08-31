@@ -47,6 +47,8 @@ namespace RMS.Monitoring.Device.CardDespenser
                 raw.MessageDateTime = DateTime.Now;
                 raw.MonitoringProfileDeviceId = clientResult.ListMonitoringProfileDevices[0].MonitoringProfileDeviceId;
 
+                bool _levelOK = true;
+
                 if (ret == 0)
                 {
                     raw.Message = "OK";
@@ -71,10 +73,12 @@ namespace RMS.Monitoring.Device.CardDespenser
                             }
 
                             if (!string.IsNullOrEmpty(cardLevelRaw.Message))
+                            {
                                 lRmsReportMonitoringRaws.Add(cardLevelRaw);
+                                _levelOK = false;
+                            }
                         }
                     }
-
 
                 }
                 else if (ret == -1)
@@ -86,10 +90,10 @@ namespace RMS.Monitoring.Device.CardDespenser
                     raw.Message = "DEVICE_NOT_READY";
                 }
 
-
-                lRmsReportMonitoringRaws.Add(raw);
-
-
+                if (_levelOK) //ป้องกันการใส่ OK Message ซ้ำลงไป เมื่อพบว่า Card Level ไม่ปกติ
+                {
+                    lRmsReportMonitoringRaws.Add(raw);
+                }
 
                 // ถ้า BooleanValue เป็น TRUE, สามารถตรวจสอบ ปริมาณการ์ดที่เหลืออยู่ได้
                 return lRmsReportMonitoringRaws;

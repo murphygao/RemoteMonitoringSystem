@@ -125,6 +125,10 @@
                                                         <option value="17">General</option>
                                                         <option value="20">SKS Batch</option>
                                                     </optgroup>
+                                                    <optgroup label="Website Message">
+                                                        <option value="21">Uptime</option>
+                                                        <option value="22">Webpage</option>
+                                                    </optgroup>
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -326,7 +330,8 @@
 
             pageSetUp();
             drawBreadCrumb();
-
+            DoResetForm();
+            PresetDataBeforeSubmit();
             /*
          * BASIC
          */
@@ -489,7 +494,7 @@
                                 if (oObj.aData["DeviceDescription"] != null)
                                     content = oObj.aData["DeviceDescription"];
                                 if (oObj.aData["MessageRemark"] != null) {
-                                    if (oObj.aData["DeviceDescription"] != null)
+                                    if (oObj.aData["DeviceDescription"] != null && oObj.aData["DeviceDescription"] != '')
                                         content = content + ' - ';
                                     content = content + oObj.aData["MessageRemark"];
                                 }
@@ -632,14 +637,7 @@
                 /* stop form from submitting normally */
                 event.preventDefault();
 
-                $('#hdStartEventDate').val($('#txtStartEventDate').val());
-                $('#hdEndEventDate').val($('#txtEndEventDate').val());
-                $('#hdMessageGroup').val($('#ddlMessageGroup').val());
-                $('#hdClientCode').val($('#txtClientCode').val());
-                $('#hdMessage').val($('#txtMessage').val());
-                $('#hdLocation').val($('#txtLocation').val());
-                $('#hdMessageStatus').val($('#ddlMessageStatus').val());
-                $('#hdDt').val(dateFormat(new Date(), "yyyymmddHHMMss"));
+                PresetDataBeforeSubmit();
 
                 var oTable = $('#dt_basic').dataTable();
                 Pace.restart(); oTable.fnDraw();
@@ -673,7 +671,6 @@
 
             var $on = false;
 
-            DoResetForm();
             if ($('#hdDt').val() != "") {
 
                 var arrayMG = $('#hdMessageGroup').val().split(',');
@@ -722,7 +719,18 @@
             $('#ddlMessageStatus').select2("val", ["1", "2"]);
         }
 
+        function PresetDataBeforeSubmit() {
+            $('#hdStartEventDate').val($('#txtStartEventDate').val());
+            $('#hdEndEventDate').val($('#txtEndEventDate').val());
+            $('#hdMessageGroup').val($('#ddlMessageGroup').val());
+            $('#hdClientCode').val($('#txtClientCode').val());
+            $('#hdMessage').val($('#txtMessage').val());
+            $('#hdLocation').val($('#txtLocation').val());
+            $('#hdMessageStatus').val($('#ddlMessageStatus').val());
+            $('#hdDt').val(dateFormat(new Date(), "yyyymmddHHMMss"));
 
+
+        }
 
     </script>
 

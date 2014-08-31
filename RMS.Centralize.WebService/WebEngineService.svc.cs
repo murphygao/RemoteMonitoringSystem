@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading;
 using System.Web.Caching;
+using RMS.Centralize.BSL.MonitoringEngine;
 using RMS.Centralize.WebService.BSL;
 using RMS.Common.Exception;
 
@@ -30,6 +31,21 @@ namespace RMS.Centralize.WebService
             catch (Exception ex)
             {
                 new RMSWebException(this, "0500", "StartMonitoringEngine failed. " + ex.Message, ex, true);
+
+                return "Failed: " + ex.Message;
+            }
+        }
+
+        public string StartWebsiteMonitoringEngine()
+        {
+            try
+            {
+                BSL.WebsiteMonitoringEngineService wmes = new WebsiteMonitoringEngineService();
+                return wmes.Start();
+            }
+            catch (Exception ex)
+            {
+                new RMSWebException(this, "0500", "StartWebsiteMonitoringEngine failed. " + ex.Message, ex, true);
 
                 return "Failed: " + ex.Message;
             }

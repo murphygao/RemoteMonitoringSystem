@@ -416,7 +416,7 @@
                             if (oObj.aData["DeviceDescription"] != null)
                                 content = oObj.aData["DeviceDescription"];
                             if (oObj.aData["MessageRemark"] != null) {
-                                if (oObj.aData["DeviceDescription"] != null)
+                                if (oObj.aData["DeviceDescription"] != null && oObj.aData["DeviceDescription"] != '')
                                     content = content + ' - ';
                                  content = content + oObj.aData["MessageRemark"];
                             }

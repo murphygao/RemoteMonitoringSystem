@@ -58,22 +58,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Service References\MonitoringProxy\MonitoringService.wsdl" />
-    <None Include="Service References\MonitoringProxy\MonitoringService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\MonitoringProxy\MonitoringService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\MonitoringProxy\MonitoringService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\MonitoringProxy\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\MonitoringProxy\MonitoringService.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\MonitoringProxy\configuration91.svcinfo" />
@@ -82,6 +69,16 @@
     <None Include="Service References\MonitoringProxy\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Service References\MonitoringProxy\MonitoringService1.wsdl" />
+    <None Include="Service References\MonitoringProxy\MonitoringService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MonitoringProxy\MonitoringService31.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MonitoringProxy\MonitoringService32.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\MonitoringProxy\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -92,6 +89,9 @@
       <Project>{F8EC98BC-37BB-42FD-9B50-78F928BB08A2}</Project>
       <Name>RMS.Common.Exception</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\MonitoringProxy\MonitoringService1.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

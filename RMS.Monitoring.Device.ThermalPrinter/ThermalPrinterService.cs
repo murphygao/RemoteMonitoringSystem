@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,7 +61,47 @@ namespace RMS.Monitoring.Device.ThermalPrinter
                 }
                 else
                 {
-                    int[] arrRet = _device.CheckPaperStatus();
+                    int[] arrRet = null;
+                    try
+                    {
+                        // 25AUG14 Modified by Sethawat Th. 
+                        // ถ้าไม่มี คิว ใน pool สามารถทำการตรวจสอบ printer status ได้
+                        if (_device.CheckPrintQueueStatus(0) == 0)
+                        {
+                            arrRet = _device.CheckPaperStatus();
+                        }
+                        else
+                        {
+                            // กรณีมี คิว อยู่ใน pool
+
+                            int _checkQueueCounter = 0;
+                            
+                            // วนรอไม่เกิน 5 รอบ หรือจนกว่าไม่มีคิวใน print pool
+                            while (_device.CheckPrintQueueStatus(0) > 0 && _checkQueueCounter < 5)
+                            {
+                                System.Threading.Thread.Sleep(1500);
+                                _checkQueueCounter++;
+                            }
+
+                            // ตรวจสอบซ้ำอีกรอบ หากมีคิวนานเกิน 7 วินาที แสดงว่า คิวน่าจะค้างอยู่
+                            if (_device.CheckPrintQueueStatus(7) == _device.CheckPrintQueueStatus(0))
+                            {
+                                arrRet = _device.CheckPaperStatus();
+                            }
+                        }
+
+                        // กรณีที่ได้ผลลัพธ์เป็น 500 ให้ลอง CheckPaperStatus อีกครั้ง
+                        if (arrRet != null && arrRet.Length > 0 && arrRet[0] == 500)
+                        {
+                            System.Threading.Thread.Sleep(1500);
+                            arrRet = _device.CheckPaperStatus();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        new RMSWebException(this, "500", "CheckPaperStatus failed. " + ex.Message, ex, true);
+                    }
+
                     if (arrRet != null)
                     {
                         if (arrRet[0] > 0)
@@ -90,6 +131,19 @@ namespace RMS.Monitoring.Device.ThermalPrinter
 
                             lRmsReportMonitoringRaws.Add(raw);
                         }
+                    }
+                    else
+                    {
+                        RmsReportMonitoringRaw raw = new RmsReportMonitoringRaw();
+                        raw.ClientCode = clientResult.Client.ClientCode;
+                        raw.DeviceCode = clientResult.ListDevices[0].DeviceCode;
+
+                        raw.Message = "DEVICE_NOT_READY";
+
+                        raw.MessageDateTime = DateTime.Now;
+                        raw.MonitoringProfileDeviceId = clientResult.ListMonitoringProfileDevices[0].MonitoringProfileDeviceId;
+
+                        lRmsReportMonitoringRaws.Add(raw);
                     }
 
 

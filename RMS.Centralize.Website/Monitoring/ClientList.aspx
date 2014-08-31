@@ -739,6 +739,13 @@
 
             post_to_url("ClientEdit.aspx", params, null);
         }
+
+        function ViewClientReport(id) {
+            var params = new Array();
+            params["id"] = id;
+
+            post_to_url("ClientReport.aspx", params, null);
+        }
     </script>
 
 </asp:Content>

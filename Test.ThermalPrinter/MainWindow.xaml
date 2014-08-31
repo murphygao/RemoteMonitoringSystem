@@ -3,12 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <Button Content="Check Status" HorizontalAlignment="Left" Margin="26,79,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-        <TextBox x:Name="txtVID" HorizontalAlignment="Left" Height="23" Margin="60,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0DD4"/>
+        <Button Content="Check Thermal Status" HorizontalAlignment="Left" Margin="26,79,0,0" VerticalAlignment="Top" Width="129" Click="Button_Click"/>
+        <TextBox x:Name="txtVID" HorizontalAlignment="Left" Height="23" Margin="60,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0DD4&#x9;"/>
         <Label Content="VID" HorizontalAlignment="Left" Margin="26,36,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtPID" HorizontalAlignment="Left" Height="23" Margin="248,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="01A8"/>
         <Label Content="PID" HorizontalAlignment="Left" Margin="214,36,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtResult" HorizontalAlignment="Left" Height="86" Margin="26,122,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342"/>
+        <Button x:Name="btnCheckA4PrinterStatus" Content="Check A4 Printer Status" HorizontalAlignment="Left" Margin="169,79,0,0" VerticalAlignment="Top" Width="153" Click="btnCheckA4PrinterStatus_Click" IsEnabled="False"/>
 
     </Grid>
 </Window>

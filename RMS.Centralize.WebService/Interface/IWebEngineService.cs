@@ -21,6 +21,10 @@ namespace RMS.Centralize.WebService
         string StartMonitoringEngine();
 
         [OperationContract]
+        [WebGet(UriTemplate = "/StartWebsiteMonitoringEngine/")]
+        string StartWebsiteMonitoringEngine();
+
+        [OperationContract]
         [WebGet(UriTemplate = "/StartSummaryStatusAllClients/")]
         string StartSummaryStatusAllClients();
 

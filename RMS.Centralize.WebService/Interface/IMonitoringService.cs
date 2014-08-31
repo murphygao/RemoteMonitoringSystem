@@ -25,7 +25,13 @@ namespace RMS.Centralize.WebService
         void AddBusinessMessage(RmsReportMonitoringRaw rawMessage);
 
         [OperationContract]
+        void AddWebsiteMessage(List<RmsReportMonitoringRaw> lRawMessages);
+
+        [OperationContract]
         void StartMonitoringEngine();
+
+        [OperationContract]
+        void StartWebsiteMonitoringEngine();
 
     }
 }

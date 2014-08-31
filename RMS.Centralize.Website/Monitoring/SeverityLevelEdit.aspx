@@ -178,7 +178,7 @@
                                                     <input type="text" id="txtActionRepeatInterval" name="txtActionRepeatInterval" class="input-sm" value="60">
                                                 </label>
                                                 <div class="note">
-                                                    <strong>Required Field</strong>, <strong>Number Only</strong>, <strong>Range</strong> Between 1 and 9999
+                                                    <strong>Required Field</strong>, <strong>Number Only</strong>, <strong>Range</strong> Between 0 and 9999
                                                 </div>
 
                                             </section>
@@ -289,7 +289,7 @@
                     txtActionRepeatInterval: {
                         required: true,
                         number: true,
-                        range: [1, 9999]
+                        range: [0, 9999]
                     },
                 },
                 messages: {
@@ -315,7 +315,7 @@
                     txtActionRepeatInterval: {
                         required: 'Please enter order list',
                         number: 'Please enter number only',
-                        range: 'The field range between 1 and 9999.'
+                        range: 'The field range between 0 and 9999.'
                     },
                 },
 

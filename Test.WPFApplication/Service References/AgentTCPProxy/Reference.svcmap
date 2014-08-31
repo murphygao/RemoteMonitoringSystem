@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="580b2c2d-3ff9-4527-a01f-b745477470fe" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="7697666e-e82c-4e2f-a6af-b77ec80c166f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -24,12 +24,12 @@
     <MetadataSource Address="net.tcp://localhost:8081/MyEndpointMex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="f6f55835-f33f-471a-ae6c-ec323cabbdc2" SourceId="1" SourceUrl="net.tcp://localhost:8081/MyEndpointMex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="6d78ea19-e1cb-4098-ae09-3ea00b9f48f4" SourceId="1" SourceUrl="net.tcp://localhost:8081/MyEndpointMex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="289bdf84-75aa-421d-9653-2bd9c7e36574" SourceId="1" SourceUrl="net.tcp://localhost:8081/MyEndpointMex" />
-    <MetadataFile FileName="RMS.Agent.Entity.xsd" MetadataType="Schema" ID="4a8b242b-41fb-401c-a970-14de746b8d62" SourceId="1" SourceUrl="net.tcp://localhost:8081/MyEndpointMex" />
-    <MetadataFile FileName="RMS.Agent.WCF.Model.xsd" MetadataType="Schema" ID="97f3f88e-7edf-4336-9470-5ed76d74aa00" SourceId="1" SourceUrl="net.tcp://localhost:8081/MyEndpointMex" />
-    <MetadataFile FileName="RMS.Agent.BSL.Monitoring.Models.xsd" MetadataType="Schema" ID="8ac083f7-404a-4e75-9fff-05cfa10f1676" SourceId="1" SourceUrl="net.tcp://localhost:8081/MyEndpointMex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="2a7e98d7-f115-4ba5-ad81-0176264466f6" SourceId="1" SourceUrl="net.tcp://localhost:8081/MyEndpointMex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="0b3153c1-7772-4bd3-8bee-d13c8c56251e" SourceId="1" SourceUrl="net.tcp://localhost:8081/MyEndpointMex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="00f87ac6-60d3-4cea-8c7d-c02af9e1b91d" SourceId="1" SourceUrl="net.tcp://localhost:8081/MyEndpointMex" />
+    <MetadataFile FileName="RMS.Agent.Entity.xsd" MetadataType="Schema" ID="d8e8b4bd-1845-42f2-ac56-b14ca72b1c42" SourceId="1" SourceUrl="net.tcp://localhost:8081/MyEndpointMex" />
+    <MetadataFile FileName="RMS.Agent.WCF.Model.xsd" MetadataType="Schema" ID="be93abd2-b9fa-44a7-a89a-3ee5908b2379" SourceId="1" SourceUrl="net.tcp://localhost:8081/MyEndpointMex" />
+    <MetadataFile FileName="RMS.Agent.BSL.Monitoring.Models.xsd" MetadataType="Schema" ID="02157b35-fa65-491f-a44e-bec4c9a7020a" SourceId="1" SourceUrl="net.tcp://localhost:8081/MyEndpointMex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

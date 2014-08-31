@@ -22,6 +22,11 @@ namespace RMS.Centralize.WebService.Model
         public string DeviceCode { get; set; }
         public string DeviceDescription { get; set; }
         public long SummaryMonitoringReportID { get; set; }
+        public string ProtocolName { get; set; }
+        public string HostName { get; set; }
+        public int? PortNumber { get; set; }
+
+
 
         /// <summary>
         /// Error Message,

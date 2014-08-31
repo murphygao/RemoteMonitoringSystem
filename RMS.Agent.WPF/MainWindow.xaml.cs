@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -27,6 +28,7 @@ using RMS.Agent.Proxy.AutoUpdateProxy;
 using RMS.Agent.Proxy.ClientProxy;
 using RMS.Agent.WCF;
 using RMS.Common.Exception;
+using EventLog = RMS.Agent.Model.EventLog;
 using MessageBox = System.Windows.MessageBox;
 using MonitoringService = RMS.Agent.BSL.Monitoring.MonitoringService;
 
@@ -70,6 +72,8 @@ namespace RMS.Agent.WPF
         public string versionFileNameOnServer = ConfigurationManager.AppSettings["RMS.AutoUpdate.VersionFileNameOnServer"];
 
         public static List<string> info = new List<string>();
+
+        private bool watchdogWakeUp = Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.WatchdogWakeUp"] ?? "true");
 
 
         public MainWindow()
@@ -219,7 +223,7 @@ namespace RMS.Agent.WPF
                 //    new WSHttpBinding(), "http://localhost:8080/agent/wsAddress");
 
                 host.AddServiceEndpoint(typeof(RMS.Agent.WCF.IAgentService),
-                    new NetTcpBinding(), netTCP);
+                    new NetTcpBinding(SecurityMode.Transport), netTCP);
                 host.Open();
                 lblStatus.Content = "Started";
             }
@@ -298,6 +302,28 @@ namespace RMS.Agent.WPF
         {
             try
             {
+
+                #region Try to Check Watchdog Process
+
+                if (watchdogWakeUp)
+                {
+                    try
+                    {
+                        string watchdogProcessName = ConfigurationManager.AppSettings["RMS.WatchdogProcessName"] ?? "RMS.Agent.Watchdog";
+                        if (!IsProcessRunning(watchdogProcessName))
+                        {
+                            Process.Start(ConfigurationManager.AppSettings["RMS.WatchdogFilePath"] ??
+                                          @"D:\App\RMS.Agent.Watchdog\RMS.Agent.Watchdog.exe");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        new RMSAppException(this, "500", "Check Watchdog Process failed. " + ex.Message, ex, true);
+                    }
+                }
+
+                #endregion
+                
                 if (File.Exists(maFilePath))
                 {
                     if (currentState == lblState.Content.ToString())
@@ -365,6 +391,22 @@ namespace RMS.Agent.WPF
             catch (Exception ex)
             {
                 new RMSAppException(this, "0500", "dispatcherTimer_Tick failed. " + ex.Message, ex, true);
+            }
+            finally
+            {
+                try
+                {
+                    string strResultList = Serializer.XML.SerializeObject(logs);
+                    using (TextWriter tw = new StreamWriter(historyFile, false)) // Create & open the file
+                    {
+                        tw.Write(strResultList);
+                        tw.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    new RMSAppException(this, "0500", "Saving History Log failed. " + ex.Message, ex, true);
+                }
             }
         }
 
@@ -697,6 +739,27 @@ namespace RMS.Agent.WPF
         }
 
         #endregion
+
+
+        private bool IsProcessRunning(string sProcessName)
+        {
+            try
+            {
+                Process[] proc = Process.GetProcessesByName(sProcessName);
+                if (proc.Length > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new RMSAppException(this, "0500", "IsProcessRunning failed. " + ex.Message, ex, false);
+            }
+        }
 
     }
 }

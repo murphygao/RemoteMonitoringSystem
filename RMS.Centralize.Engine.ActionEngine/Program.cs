@@ -45,6 +45,9 @@ namespace RMS.Centralize.Engine.ActionEngine
 
                     WebActionEngineURL = ConfigurationManager.AppSettings["RMS.WEB_ACTION_ENGINE_URL"];
 
+                    timer = new Timer();
+                    refreshConfigTimer = new Timer();
+
                     #region First Start
 
                     Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : Started");
@@ -52,13 +55,11 @@ namespace RMS.Centralize.Engine.ActionEngine
 
                     #endregion
 
-                    timer = new Timer();
                     timer.Interval = interval * 1000; // Default
                     SetInterval();  //set interval of checking here
                     timer.Elapsed += timer_Elapsed;
                     timer.Start();
 
-                    refreshConfigTimer = new Timer();
                     refreshConfigTimer.Interval = refreshInterval * 1000;
                     refreshConfigTimer.Elapsed += refreshConfigTimer_Elapsed;
                     refreshConfigTimer.Start();

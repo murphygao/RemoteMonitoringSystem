@@ -47,12 +47,34 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="AddWebsiteMessage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="lRawMessages" nillable="true" type="q4:ArrayOfRmsReportMonitoringRaw" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddWebsiteMessageResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="StartMonitoringEngine">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="StartMonitoringEngineResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StartWebsiteMonitoringEngine">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StartWebsiteMonitoringEngineResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

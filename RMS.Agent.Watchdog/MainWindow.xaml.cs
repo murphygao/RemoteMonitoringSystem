@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -22,6 +23,7 @@ using System.Windows.Shapes;
 using RMS.Agent.BSL.AutoUpate;
 using RMS.Agent.Watchdog.BSL;
 using RMS.Common.Exception;
+using TaskScheduler;
 
 namespace RMS.Agent.Watchdog
 {
@@ -92,6 +94,12 @@ namespace RMS.Agent.Watchdog
 
                 System.Threading.Thread.Sleep(10000);
                 btnStart_Click(null, null);
+
+                try
+                {
+                    CreateTaskScheduler();
+                }
+                catch {}
             }
             catch (Exception ex)
             {
@@ -160,6 +168,11 @@ namespace RMS.Agent.Watchdog
             if (messageBoxResult == MessageBoxResult.Yes)
             {
                 ni.Visible = false;
+                try
+                {
+                    RemoveTaskScheduler();
+                }
+                catch{ }
             }
             else
             {
@@ -370,6 +383,131 @@ namespace RMS.Agent.Watchdog
                 new RMSAppException(this, "0500", "AddAutoUpdateLog failed. " + ex.Message, ex, true);
             }
         }
+
+        #endregion
+
+        #region TaskScheduler
+
+        private void CreateTaskScheduler()
+        {
+            string AutoCreateTaskScheduler = ConfigurationManager.AppSettings["RMS.AutoCreateTaskScheduler"] ?? "false";
+            if (!Convert.ToBoolean(AutoCreateTaskScheduler)) return;
+
+            ITaskService taskService = null;
+            ITaskDefinition taskDefinition = null;
+            ITriggerCollection _iTriggerCollection = null;
+            ITrigger _trigger = null;
+            IActionCollection actions = null;
+            IAction action = null;
+            IExecAction execAction = null;
+            ITaskFolder rootFolder = null;
+
+            try
+            {
+                //create task service instance
+                taskService = new TaskScheduler.TaskScheduler();
+                taskService.Connect();
+
+                taskDefinition = taskService.NewTask(0);
+                taskDefinition.Settings.Enabled = true;
+                taskDefinition.Settings.Compatibility = _TASK_COMPATIBILITY.TASK_COMPATIBILITY_V2_1;
+                taskDefinition.RegistrationInfo.Description = "Testing the creation of a scheduled task via VB .NET";
+
+                //create trigger for task creation.
+                _iTriggerCollection = taskDefinition.Triggers;
+                _trigger = _iTriggerCollection.Create(_TASK_TRIGGER_TYPE2.TASK_TRIGGER_DAILY);
+                _trigger.StartBoundary = DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss");
+                //_trigger.EndBoundary = DateTime.Now.AddMinutes(1).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss");
+                _trigger.Repetition.Interval = "PT5M";
+                _trigger.Repetition.Duration = "P1D";
+                _trigger.Enabled = true;
+
+                actions = taskDefinition.Actions;
+                _TASK_ACTION_TYPE actionType = _TASK_ACTION_TYPE.TASK_ACTION_EXEC;
+
+                //create new action
+                action = actions.Create(actionType);
+                execAction = action as IExecAction;
+                execAction.Path = Assembly.GetExecutingAssembly().Location;
+                rootFolder = taskService.GetFolder(@"\");
+
+                //register task.
+                rootFolder.RegisterTaskDefinition(System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location), taskDefinition, (int)_TASK_CREATION.TASK_CREATE_OR_UPDATE, null, null,
+                    _TASK_LOGON_TYPE.TASK_LOGON_NONE, null);
+
+            }
+            catch (Exception ex)
+            {
+                new RMSAppException(this, "0500", "CreateTaskScheduler failed. " + ex.Message, ex, true);
+            }
+            finally
+            {
+                if (rootFolder != null)
+                    Marshal.ReleaseComObject(rootFolder);
+                if (_iTriggerCollection != null)
+                    Marshal.ReleaseComObject(_iTriggerCollection);
+                if (_trigger != null)
+                    Marshal.ReleaseComObject(_trigger);
+                if (actions != null)
+                    Marshal.ReleaseComObject(actions);
+                if (action != null)
+                    Marshal.ReleaseComObject(action);
+                if (taskDefinition != null)
+                    Marshal.ReleaseComObject(taskDefinition);
+                if (taskService != null)
+                    Marshal.ReleaseComObject(taskService);
+
+                taskService = null;
+                taskDefinition = null;
+                _iTriggerCollection = null;
+                _trigger = null;
+                actions = null;
+                action = null;
+                execAction = null;
+                rootFolder = null;
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+
+            }
+        }
+
+        private void RemoveTaskScheduler()
+        {
+            string AutoCreateTaskScheduler = ConfigurationManager.AppSettings["RMS.AutoCreateTaskScheduler"] ?? "false";
+            if (!Convert.ToBoolean(AutoCreateTaskScheduler)) return;
+
+            ITaskService taskService = null;
+            ITaskFolder rootFolder = null;
+
+            try
+            {
+                taskService = new TaskScheduler.TaskScheduler();
+                taskService.Connect();
+
+                rootFolder = taskService.GetFolder(@"\");
+
+                rootFolder.DeleteTask(System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location), 0);
+
+            }
+            catch (Exception ex)
+            {
+                new RMSAppException(this, "0500", "RemoveTaskScheduler failed. " + ex.Message, ex, true);
+            }
+            finally
+            {
+                if (rootFolder != null)
+                    Marshal.ReleaseComObject(rootFolder);
+                if (taskService != null)
+                    Marshal.ReleaseComObject(taskService);
+
+                taskService = null;
+                rootFolder = null;
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+
+        }
+
 
         #endregion
 

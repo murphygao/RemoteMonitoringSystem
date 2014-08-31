@@ -112,6 +112,47 @@ namespace RMS.Centralize.WebService
 
         }
 
+        public void AddWebsiteMessage(List<RmsReportMonitoringRaw> lRawMessages)
+        {
+            try
+            {
+                var ip = GetIP();
+                foreach (var rmsReportMonitoringRaw in lRawMessages)
+                {
+                    rmsReportMonitoringRaw.ClientIpAddress = ip;
+                }
+
+                using (var db = new MyDbContext())
+                {
+                    db.Configuration.AutoDetectChangesEnabled = false;
+
+                    foreach (var rawMessage in lRawMessages)
+                    {
+                        db.RmsReportMonitoringRaws.Add(rawMessage);
+                    }
+
+                    db.SaveChanges();
+                }
+
+                List<RmsReportMonitoringRaw> validateList = new List<RmsReportMonitoringRaw>();
+                foreach (var rawMessage in lRawMessages)
+                {
+                    if (string.IsNullOrEmpty(rawMessage.ClientCode)) continue;
+                    if (string.IsNullOrEmpty(rawMessage.MessageGroupCode)) continue;
+                    if (string.IsNullOrEmpty(rawMessage.Message)) continue;
+                    validateList.Add(rawMessage);
+                }
+
+                var sv = new SummaryService();
+                var caller = new SummaryService.DoSummaryWebsiteMonitoringAsync(sv.DoSummaryWebsiteMonitoring);
+                caller.BeginInvoke(lRawMessages, null, null);
+            }
+            catch (Exception ex)
+            {
+                new RMSWebException(this, "0500", "AddWebsiteMessage failed. " + ex.Message, ex, true);
+            }
+        }
+
         public void StartMonitoringEngine()
         {
             try
@@ -122,6 +163,18 @@ namespace RMS.Centralize.WebService
             catch (Exception ex)
             {
                 new RMSWebException(this, "0500", "StartMonitoringEngine failed. " + ex.Message, ex, true);
+            }
+        }
+
+        public void StartWebsiteMonitoringEngine()
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                new RMSWebException(this, "0500", "StartWebsiteMonitoringEngine failed. " + ex.Message, ex, true);
             }
         }
 

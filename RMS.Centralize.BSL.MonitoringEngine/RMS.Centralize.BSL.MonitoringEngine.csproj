@@ -66,15 +66,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="WebsiteMonitoringService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Service References\AgentTCPProxy\RMS.Agent.BSL.Monitoring.Models.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\AgentTCPProxy\RMS.Agent.Entity.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\AgentTCPProxy\RMS.Agent.WCF.Model.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AgentTCPProxy\RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy.DeviceStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\AgentTCPProxy\RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy.Result.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>

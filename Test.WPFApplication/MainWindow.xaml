@@ -3,20 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="606.142" Width="776.627">
     <Grid>
-        <TabControl Margin="0,0,0,10">
+        <TabControl x:Name="btnWMPing" Margin="0,0,0,10">
             <TabItem Header="Send Message">
                 <Grid>
                     <TextBox x:Name="txtClientCode" HorizontalAlignment="Left" Height="23" Margin="131,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Text="K1404-001"/>
                     <Label Content="Client Code:" HorizontalAlignment="Left" Margin="10,28,0,0" VerticalAlignment="Top"/>
-                    <Label Content="IP Address:" HorizontalAlignment="Left" Margin="411,28,0,0" VerticalAlignment="Top"/>
+                    <Label Content="IP Address:" HorizontalAlignment="Left" Margin="438,28,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="txtIPAddress" HorizontalAlignment="Left" Height="23" Margin="553,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190"/>
                     <Label Content="Device Code:" HorizontalAlignment="Left" Margin="10,59,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Msg Group Code:" HorizontalAlignment="Left" Margin="411,59,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Msg Group Code:" HorizontalAlignment="Left" Margin="438,59,0,0" VerticalAlignment="Top"/>
                     <Label Content="Message:" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Remark" HorizontalAlignment="Left" Margin="411,90,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Remark" HorizontalAlignment="Left" Margin="438,90,0,0" VerticalAlignment="Top"/>
                     <Label Content="MonitoringProfileDeviceID:" HorizontalAlignment="Left" Margin="10,121,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="txtDeviceCode" HorizontalAlignment="Left" Height="23" Margin="131,61,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190"/>
-                    <TextBox x:Name="txtMessageGroupCode" HorizontalAlignment="Left" Height="23" Margin="553,61,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Text="B001"/>
+                    <TextBox x:Name="txtMessageGroupCode" HorizontalAlignment="Left" Height="23" Margin="553,61,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Text="W001"/>
                     <TextBox x:Name="txtMessage" HorizontalAlignment="Left" Height="23" Margin="131,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Text="CLIENT_ERROR"/>
                     <TextBox x:Name="txtMessageRemark" HorizontalAlignment="Left" Height="23" Margin="553,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190"/>
                     <TextBox x:Name="txtMonitoringProfileDeviceID" HorizontalAlignment="Left" Height="23" Margin="188,123,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="133"/>
@@ -26,6 +26,9 @@
                     <Button x:Name="btnSendEmail" Content="Send" HorizontalAlignment="Left" Margin="14,323,0,0" VerticalAlignment="Top" Width="75" Click="btnSendEmail_Click"/>
                     <Button x:Name="btnCheckMemory" Content="Check Memory" HorizontalAlignment="Left" Margin="14,377,0,0" VerticalAlignment="Top" Width="110" Click="btnCheckMemory_Click"/>
                     <Label x:Name="lblAvailableMemory" Content="" HorizontalAlignment="Left" Margin="140,375,0,0" VerticalAlignment="Top" Width="146"/>
+                    <Label Content="WebsiteMonitoringID:" HorizontalAlignment="Left" Margin="438,121,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtWebsiteMonitoringID" HorizontalAlignment="Left" Height="23" Margin="610,123,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="133"/>
+                    <Button x:Name="btnCallAddWebsiteMessage" Content="Call Add Website Message" HorizontalAlignment="Left" Margin="322,164,0,0" VerticalAlignment="Top" Width="149" Click="btnCallAddWebsiteMessage_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="KTB">
@@ -57,6 +60,23 @@
                     <TextBox x:Name="txtSelfTesting_ClientCode" Height="23" TextWrapping="Wrap" Width="120" Margin="24,26,0,0" Text="SKSAQAC01" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     <Button x:Name="btnSelfTesting" Content="Self Testing" Margin="23,63,0,0" Click="btnSelfTesting_Click" HorizontalAlignment="Left" Width="100" Height="27" VerticalAlignment="Top"/>
                     <DataGrid x:Name="dtgSelfTestingResult" Margin="23,115,21,27"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Task Scheduler">
+                <Grid>
+                    <Button x:Name="btnCreateTaskScheduler" Content="Create" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="75" Click="btnCreateTaskScheduler_Click"/>
+                    <Button x:Name="btnRemoveTaskScheduler" Content="Remove" HorizontalAlignment="Left" Margin="104,35,0,0" VerticalAlignment="Top" Width="75" Click="btnRemoveTaskScheduler_Click"/>
+
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Website Monitoring">
+                <Grid>
+                    <Label Content="Host / IP Address" HorizontalAlignment="Left" Margin="30,32,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtWMHostName" HorizontalAlignment="Left" Height="23" Margin="149,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="283"/>
+                    <Button Content="Ping" HorizontalAlignment="Left" Margin="30,82,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+                    <TextBox x:Name="txtWMResult" HorizontalAlignment="Left" Height="336" Margin="30,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="703" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+
                 </Grid>
             </TabItem>
         </TabControl>

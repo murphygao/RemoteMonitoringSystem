@@ -185,6 +185,9 @@ namespace RMS.Centralize.WebService.BSL
                             info.DeviceCode = monitoring.DeviceCode;
                             info.DeviceDescription = monitoring.DeviceDescription;
                             info.MessageRemark = monitoring.MessageRemark;
+                            info.ProtocolName = monitoring.ProtocolName;
+                            info.HostName = monitoring.HostName;
+                            info.PortNumber = monitoring.PortNumber;
 
                             info.SummaryMonitoringReportID = monitoring.Id;
 
@@ -232,6 +235,10 @@ namespace RMS.Centralize.WebService.BSL
                             info.DeviceCode = monitoring.DeviceCode;
                             info.DeviceDescription = monitoring.DeviceDescription;
                             info.MessageRemark = monitoring.MessageRemark;
+                            info.ProtocolName = monitoring.ProtocolName;
+                            info.HostName = monitoring.HostName;
+                            info.PortNumber = monitoring.PortNumber;
+
                             info.SummaryMonitoringReportID = monitoring.Id;
                             info.MessageType = MessageType.ErrorMessage;
 
@@ -316,6 +323,9 @@ namespace RMS.Centralize.WebService.BSL
                             info.DeviceCode = monitoring.DeviceCode;
                             info.DeviceDescription = monitoring.DeviceDescription;
                             info.MessageRemark = monitoring.MessageRemark;
+                            info.ProtocolName = monitoring.ProtocolName;
+                            info.HostName = monitoring.HostName;
+                            info.PortNumber = monitoring.PortNumber;
 
                             info.SummaryMonitoringReportID = monitoring.Id;
 
@@ -365,6 +375,9 @@ namespace RMS.Centralize.WebService.BSL
                             info.MessageRemark = monitoring.MessageRemark;
                             info.SummaryMonitoringReportID = monitoring.Id;
                             info.MessageType = MessageType.SolvedMessage;
+                            info.ProtocolName = monitoring.ProtocolName;
+                            info.HostName = monitoring.HostName;
+                            info.PortNumber = monitoring.PortNumber;
 
                             lSMSs.Add(info);
 
@@ -497,7 +510,10 @@ namespace RMS.Centralize.WebService.BSL
                                 .Replace("::devicecode::", actionInfo.DeviceCode)
                                 .Replace("::messagedatetime::", actionInfo.MessageDateTime == null
                                     ? DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("en-AU"))
-                                    : actionInfo.MessageDateTime.Value.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("en-AU")));
+                                    : actionInfo.MessageDateTime.Value.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("en-AU")))
+                                .Replace("::protocolname::", actionInfo.ProtocolName)
+                                .Replace("::hostname::", actionInfo.HostName)
+                                .Replace("::portnumber::", actionInfo.PortNumber+"");
 
                             tableOfSummaryReport += tEmail + Environment.NewLine;
                         }
@@ -612,7 +628,11 @@ namespace RMS.Centralize.WebService.BSL
                             .Replace("::devicecode::", actionInfo.DeviceCode)
                             .Replace("::messagedatetime::", actionInfo.MessageDateTime == null
                                 ? DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("en-AU"))
-                                : actionInfo.MessageDateTime.Value.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("en-AU")));
+                                : actionInfo.MessageDateTime.Value.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("en-AU")))
+                            .Replace("::protocolname::", actionInfo.ProtocolName)
+                            .Replace("::hostname::", actionInfo.HostName)
+                            .Replace("::portnumber::", actionInfo.PortNumber + "");
+
 
                         if (!string.IsNullOrEmpty(actionInfo.To))
                             actionInfo.To = actionInfo.To.Replace("-", "").Replace(" ", "");

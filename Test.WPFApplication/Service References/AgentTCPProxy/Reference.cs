@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy {
+namespace Test.WPFApplication.AgentTCPProxy {
     using System.Runtime.Serialization;
     using System;
     
@@ -135,163 +135,6 @@ namespace RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="DeviceStatus", Namespace="http://schemas.datacontract.org/2004/07/RMS.Agent.BSL.Monitoring.Models")]
-    [System.SerializableAttribute()]
-    public partial class DeviceStatus : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DeviceDescriptionField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DeviceTypeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int DeviceTypeIDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<int> DisplayOrderField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MessageField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> MessageDateTimeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MessageRemarkField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<int> MonitoringProfileDeviceIDField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DeviceDescription {
-            get {
-                return this.DeviceDescriptionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DeviceDescriptionField, value) != true)) {
-                    this.DeviceDescriptionField = value;
-                    this.RaisePropertyChanged("DeviceDescription");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DeviceType {
-            get {
-                return this.DeviceTypeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DeviceTypeField, value) != true)) {
-                    this.DeviceTypeField = value;
-                    this.RaisePropertyChanged("DeviceType");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int DeviceTypeID {
-            get {
-                return this.DeviceTypeIDField;
-            }
-            set {
-                if ((this.DeviceTypeIDField.Equals(value) != true)) {
-                    this.DeviceTypeIDField = value;
-                    this.RaisePropertyChanged("DeviceTypeID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<int> DisplayOrder {
-            get {
-                return this.DisplayOrderField;
-            }
-            set {
-                if ((this.DisplayOrderField.Equals(value) != true)) {
-                    this.DisplayOrderField = value;
-                    this.RaisePropertyChanged("DisplayOrder");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Message {
-            get {
-                return this.MessageField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MessageField, value) != true)) {
-                    this.MessageField = value;
-                    this.RaisePropertyChanged("Message");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> MessageDateTime {
-            get {
-                return this.MessageDateTimeField;
-            }
-            set {
-                if ((this.MessageDateTimeField.Equals(value) != true)) {
-                    this.MessageDateTimeField = value;
-                    this.RaisePropertyChanged("MessageDateTime");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MessageRemark {
-            get {
-                return this.MessageRemarkField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MessageRemarkField, value) != true)) {
-                    this.MessageRemarkField = value;
-                    this.RaisePropertyChanged("MessageRemark");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<int> MonitoringProfileDeviceID {
-            get {
-                return this.MonitoringProfileDeviceIDField;
-            }
-            set {
-                if ((this.MonitoringProfileDeviceIDField.Equals(value) != true)) {
-                    this.MonitoringProfileDeviceIDField = value;
-                    this.RaisePropertyChanged("MonitoringProfileDeviceID");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="AgentTCPProxy.IAgentService")]
     public interface IAgentService {
@@ -309,31 +152,31 @@ namespace RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy {
         System.Threading.Tasks.Task AutoUpdateAsync(string type);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAgentService/RemoteCommand", ReplyAction="http://tempuri.org/IAgentService/RemoteCommandResponse")]
-        void RemoteCommand([System.ServiceModel.MessageParameterAttribute(Name="remoteCommand")] RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy.RemoteCommand remoteCommand1);
+        void RemoteCommand([System.ServiceModel.MessageParameterAttribute(Name="remoteCommand")] Test.WPFApplication.AgentTCPProxy.RemoteCommand remoteCommand1);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAgentService/RemoteCommand", ReplyAction="http://tempuri.org/IAgentService/RemoteCommandResponse")]
-        System.Threading.Tasks.Task RemoteCommandAsync(RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy.RemoteCommand remoteCommand);
+        System.Threading.Tasks.Task RemoteCommandAsync(Test.WPFApplication.AgentTCPProxy.RemoteCommand remoteCommand);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAgentService/Monitoring", ReplyAction="http://tempuri.org/IAgentService/MonitoringResponse")]
-        RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy.Result Monitoring(string clientCode);
+        Test.WPFApplication.AgentTCPProxy.Result Monitoring(string clientCode);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAgentService/Monitoring", ReplyAction="http://tempuri.org/IAgentService/MonitoringResponse")]
-        System.Threading.Tasks.Task<RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy.Result> MonitoringAsync(string clientCode);
+        System.Threading.Tasks.Task<Test.WPFApplication.AgentTCPProxy.Result> MonitoringAsync(string clientCode);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAgentService/SelfMonitoring", ReplyAction="http://tempuri.org/IAgentService/SelfMonitoringResponse")]
-        System.Collections.Generic.List<RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy.DeviceStatus> SelfMonitoring(string clientCode);
+        System.Collections.Generic.List<RMS.Agent.BSL.Monitoring.Models.DeviceStatus> SelfMonitoring(string clientCode);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAgentService/SelfMonitoring", ReplyAction="http://tempuri.org/IAgentService/SelfMonitoringResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy.DeviceStatus>> SelfMonitoringAsync(string clientCode);
+        System.Threading.Tasks.Task<System.Collections.Generic.List<RMS.Agent.BSL.Monitoring.Models.DeviceStatus>> SelfMonitoringAsync(string clientCode);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IAgentServiceChannel : RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy.IAgentService, System.ServiceModel.IClientChannel {
+    public interface IAgentServiceChannel : Test.WPFApplication.AgentTCPProxy.IAgentService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class AgentServiceClient : System.ServiceModel.ClientBase<RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy.IAgentService>, RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy.IAgentService {
+    public partial class AgentServiceClient : System.ServiceModel.ClientBase<Test.WPFApplication.AgentTCPProxy.IAgentService>, Test.WPFApplication.AgentTCPProxy.IAgentService {
         
         public AgentServiceClient() {
         }
@@ -370,27 +213,27 @@ namespace RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy {
             return base.Channel.AutoUpdateAsync(type);
         }
         
-        public void RemoteCommand(RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy.RemoteCommand remoteCommand1) {
+        public void RemoteCommand(Test.WPFApplication.AgentTCPProxy.RemoteCommand remoteCommand1) {
             base.Channel.RemoteCommand(remoteCommand1);
         }
         
-        public System.Threading.Tasks.Task RemoteCommandAsync(RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy.RemoteCommand remoteCommand) {
+        public System.Threading.Tasks.Task RemoteCommandAsync(Test.WPFApplication.AgentTCPProxy.RemoteCommand remoteCommand) {
             return base.Channel.RemoteCommandAsync(remoteCommand);
         }
         
-        public RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy.Result Monitoring(string clientCode) {
+        public Test.WPFApplication.AgentTCPProxy.Result Monitoring(string clientCode) {
             return base.Channel.Monitoring(clientCode);
         }
         
-        public System.Threading.Tasks.Task<RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy.Result> MonitoringAsync(string clientCode) {
+        public System.Threading.Tasks.Task<Test.WPFApplication.AgentTCPProxy.Result> MonitoringAsync(string clientCode) {
             return base.Channel.MonitoringAsync(clientCode);
         }
         
-        public System.Collections.Generic.List<RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy.DeviceStatus> SelfMonitoring(string clientCode) {
+        public System.Collections.Generic.List<RMS.Agent.BSL.Monitoring.Models.DeviceStatus> SelfMonitoring(string clientCode) {
             return base.Channel.SelfMonitoring(clientCode);
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<RMS.Centralize.BSL.MonitoringEngine.AgentTCPProxy.DeviceStatus>> SelfMonitoringAsync(string clientCode) {
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<RMS.Agent.BSL.Monitoring.Models.DeviceStatus>> SelfMonitoringAsync(string clientCode) {
             return base.Channel.SelfMonitoringAsync(clientCode);
         }
     }

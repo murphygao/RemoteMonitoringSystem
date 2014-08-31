@@ -21,6 +21,15 @@ namespace RMS.Agent.Watchdog.BSL
 
                 if (CanStartOutOfServiceApp())
                     Process.Start(ConfigurationManager.AppSettings["RMS.OUT_OF_SERVICE_FILE_PATH"]);
+
+                if (CanCloseOutOfServiceApp())
+                {
+                    foreach (Process proc in Process.GetProcessesByName(ConfigurationManager.AppSettings["RMS.OUT_OF_SERVICE_PROCESS_NAME"]))
+                    {
+                        proc.Kill();
+                    }
+
+                }
             }
             catch (Exception ex)
             {
@@ -39,11 +48,11 @@ namespace RMS.Agent.Watchdog.BSL
             {
                 if (IsProcessRunning(ConfigurationManager.AppSettings["RMS.AUTO_UPDATE_PROCESS_NAME"])) return false;
 
-                System.Threading.Thread.Sleep(500);
+                System.Threading.Thread.Sleep(200);
 
                 if (IsProcessRunning(ConfigurationManager.AppSettings["RMS.AGENT_PROCESS_NAME"])) return false;
 
-                System.Threading.Thread.Sleep(500);
+                System.Threading.Thread.Sleep(200);
 
                 if (IsProcessRunning(ConfigurationManager.AppSettings["RMS.AUTO_UPDATE_PROCESS_NAME"])) return false;
 
@@ -98,6 +107,20 @@ namespace RMS.Agent.Watchdog.BSL
             catch (Exception ex)
             {
                 throw new RMSAppException(this, "0500", "CanStartOutOfServiceApp failed. " + ex.Message, ex, false);
+            }
+        }
+
+        private bool CanCloseOutOfServiceApp()
+        {
+            try
+            {
+                if (IsProcessRunning(ConfigurationManager.AppSettings["RMS.BIZ_APP_PROCESS_NAME"])) return true;
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new RMSAppException(this, "0500", "CanCloseOutOfServiceApp failed. " + ex.Message, ex, false);
             }
         }
 

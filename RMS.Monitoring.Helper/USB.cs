@@ -45,45 +45,50 @@ namespace RMS.Monitoring.Helper
                 }
 
                 // open read endpoint 1.
-                UsbEndpointReader reader = MyUsbDevice.OpenEndpointReader(ReadEndpointID.Ep01);
-
-                // open write endpoint 1.
-                UsbEndpointWriter writer = MyUsbDevice.OpenEndpointWriter(WriteEndpointID.Ep02);
-
-                // Remove the exepath/startup filename text from the begining of the CommandLine.
-
-                if (byteArrayWritten.Length > 0)
+                using (UsbEndpointReader reader = MyUsbDevice.OpenEndpointReader(ReadEndpointID.Ep01))
                 {
-                    int bytesWritten;
-
-                    ec = writer.Write(byteArrayWritten, 2000, out bytesWritten);
-                    if (ec != ErrorCode.None) throw new Exception(UsbDevice.LastErrorString);
-
-                    byte[] readBuffer = new byte[8];
-                    while (ec == ErrorCode.None)
+                    reader.Reset();
+                    // open write endpoint 1.
+                    using (UsbEndpointWriter writer = MyUsbDevice.OpenEndpointWriter(WriteEndpointID.Ep02))
                     {
-                        int bytesRead;
+                        writer.Reset();
+                        // Remove the exepath/startup filename text from the begining of the CommandLine.
 
-                        // If the device hasn't sent data in the last 100 milliseconds,
-                        // a timeout error (ec = IoTimedOut) will occur. 
-                        ec = reader.Read(readBuffer, 100, out bytesRead);
-                        if (ec != ErrorCode.None) throw new Exception(UsbDevice.LastErrorString);
+                        if (byteArrayWritten.Length > 0)
+                        {
+                            int bytesWritten;
 
-                        if (bytesRead == 0) throw new Exception("No more bytes!");
+                            ec = writer.Write(byteArrayWritten, 2000, out bytesWritten);
+                            if (ec != ErrorCode.None) throw new Exception(UsbDevice.LastErrorString);
 
-                        // Write that output to the console.
-                        //Console.Write(Encoding.Default.GetString(readBuffer, 0, bytesRead));
-                        return readBuffer;
+                            byte[] readBuffer = new byte[8];
+                            while (ec == ErrorCode.None)
+                            {
+                                int bytesRead;
+
+                                // If the device hasn't sent data in the last 100 milliseconds,
+                                // a timeout error (ec = IoTimedOut) will occur. 
+                                ec = reader.Read(readBuffer, 100, out bytesRead);
+                                if (ec != ErrorCode.None) throw new Exception(UsbDevice.LastErrorString);
+
+                                if (bytesRead == 0) throw new Exception("No more bytes!");
+
+                                // Write that output to the console.
+                                //Console.Write(Encoding.Default.GetString(readBuffer, 0, bytesRead));
+                                return readBuffer;
+                            }
+
+                            //Console.WriteLine("\r\nDone!\r\n");
+                        }
+                        else
+                            throw new Exception("Nothing to do.");
+
                     }
-
-                    //Console.WriteLine("\r\nDone!\r\n");
                 }
-                else
-                    throw new Exception("Nothing to do.");
             }
             catch (Exception ex)
             {
-                throw new RMSAppException("WriteAndRead failed. " + ex.Message, ex, false);
+                throw new RMSAppException("WriteAndRead failed. " + ex.Message, ex, true);
                 //Console.WriteLine();
                 //Console.WriteLine((ec != ErrorCode.None ? ec + ":" : String.Empty) + ex.Message);
             }
@@ -103,15 +108,15 @@ namespace RMS.Monitoring.Helper
                             IUsbDevice wholeUsbDevice = MyUsbDevice as IUsbDevice;
                             if (!ReferenceEquals(wholeUsbDevice, null))
                             {
-                                wholeUsbDevice.ResetDevice();
                                 // Release interface #0.
                                 wholeUsbDevice.ReleaseInterface(0);
+                                wholeUsbDevice.ResetDevice();
                             }
 
                             MyUsbDevice.Close();
                         }
                         MyUsbDevice = null;
-
+                        
                         // Free usb resources
                         UsbDevice.Exit();
 
