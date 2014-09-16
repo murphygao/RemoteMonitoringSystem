@@ -365,7 +365,7 @@
                         }
                         setTimeout(function () {
                             window.location.href = 'ActionList.aspx';
-                        }, 1000);
+                        }, 1500);
 
                     } else if (ret.status == "-1") {
                         try {

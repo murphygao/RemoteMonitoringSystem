@@ -143,6 +143,13 @@ namespace RMS.Centralize.BSL.MonitoringEngine
                 string clientEndpiont = ConfigurationManager.AppSettings["RMS.NetTcpBinding_AgentService"];
                 clientEndpiont = clientEndpiont.Replace("client_ip_address", client.IpAddress);
                 asc.Endpoint.Address = new EndpointAddress(clientEndpiont);
+
+                NetTcpBinding myBinding = new NetTcpBinding();
+                myBinding.Security.Mode = SecurityMode.None;
+                myBinding.Security.Transport.ClientCredentialType = TcpClientCredentialType.None;
+                myBinding.OpenTimeout = new TimeSpan(0, 5, 0);
+                asc.Endpoint.Binding = myBinding;
+
                 AddLogMonitoringClient(refID, client.ClientId, client.ClientCode, client.IpAddress, client.State, null);
                 var result = asc.Monitoring(client.ClientCode);
 

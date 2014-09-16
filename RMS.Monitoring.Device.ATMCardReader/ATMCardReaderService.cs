@@ -14,14 +14,13 @@ namespace RMS.Monitoring.Device.ATMCardReader
         private ATMCardReader _device;
         private ClientResult clientResult;
 
-        public ATMCardReaderService(string brand, string model, string deviceManagerName, string deviceManagerID, ClientResult clientResult)
+        public ATMCardReaderService(string brand, string model, string deviceManagerName, string deviceManagerID, bool useCOMPort, string comPort, ClientResult clientResult)
         {
             try
             {
                 this.clientResult = clientResult;
 
-                if (brand.ToLower() == "mutek") _device = new MUTEK(model, deviceManagerName, deviceManagerID);
-
+                if (brand.ToLower() == "mutek") _device = new MUTEK(model, deviceManagerName, deviceManagerID, useCOMPort, comPort);
                 else
                     throw new Exception("Brand Not Found. brand=" + brand);
 

@@ -57,9 +57,21 @@
       <Project>{F8EC98BC-37BB-42FD-9B50-78F928BB08A2}</Project>
       <Name>RMS.Common.Exception</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.Device.ATMCardReader\RMS.Monitoring.Device.ATMCardReader.csproj">
+      <Project>{330cd943-974e-4190-99f8-b17ca700e082}</Project>
+      <Name>RMS.Monitoring.Device.ATMCardReader</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RMS.Monitoring.Device.CardDespenser\RMS.Monitoring.Device.CardDespenser.csproj">
       <Project>{407de06d-39ac-4b2a-8486-e84068a2a3f9}</Project>
       <Name>RMS.Monitoring.Device.CardDespenser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.Device.EncryptedPinPad\RMS.Monitoring.Device.EncryptedPinPad.csproj">
+      <Project>{bcd1e057-c831-4962-9773-f4be28898f01}</Project>
+      <Name>RMS.Monitoring.Device.EncryptedPinPad</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.Device.IDCardScanner\RMS.Monitoring.Device.IDCardScanner.csproj">
+      <Project>{4922e1ad-e255-4537-a2fe-1f55ff172819}</Project>
+      <Name>RMS.Monitoring.Device.IDCardScanner</Name>
     </ProjectReference>
     <ProjectReference Include="..\RMS.Monitoring.Device.Keyboard\RMS.Monitoring.Device.Keyboard.csproj">
       <Project>{4157a758-dcbb-44d3-83fd-8130920f82b1}</Project>

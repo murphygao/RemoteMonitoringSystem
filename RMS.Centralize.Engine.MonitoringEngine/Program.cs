@@ -19,10 +19,16 @@ namespace RMS.Centralize.Engine.MonitoringEngine
 {
     class Program
     {
-        private static string WebMonitoringEngineURL;
         private static string appGuid;
-        private static Timer timer;
-        private static int interval = 60;
+
+        private static string monitoringEngineURL;
+        private static Timer timerME;
+        private static int intervalME = 60;
+
+        private static string websiteMonitoringEngineURL;
+        private static Timer timerWME;
+        private static int intervalWME = 60;
+
         private static Timer refreshConfigTimer;
         private static int refreshInterval = 60;
 
@@ -44,28 +50,53 @@ namespace RMS.Centralize.Engine.MonitoringEngine
                         Environment.Exit(1);
                     }
 
-                    WebMonitoringEngineURL = ConfigurationManager.AppSettings["WEB_MONITORING_ENGINE_URL"];
+                    monitoringEngineURL = ConfigurationManager.AppSettings["RMS.MonitoringWebEngineURL"];
+                    websiteMonitoringEngineURL = ConfigurationManager.AppSettings["RMS.WebsiteMonitoringWebEngineURL"];
 
-                    timer = new Timer();
+                    timerME = new Timer();
+                    timerWME = new Timer();
                     refreshConfigTimer = new Timer();
+
+
+                    
 
                     #region First Start
 
-                    Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : Started");
-                    CallEngine();
+                    Task task1 = Task.Factory.StartNew(() => CallMonitoringEngine());
+
+                    Task task2 = Task.Factory.StartNew(() => CallWebsiteMonitoringEngine());
+                    
+                    Task.WaitAll(task1, task2);
 
                     #endregion
 
-                    timer.Interval = interval * 1000; // Default
-                    SetInterval();  //set interval of checking here
-                    timer.Elapsed += timer_Elapsed;
-                    timer.Start();
+                    #region Monitoring Engine Initialize
 
-                    refreshConfigTimer.Interval = refreshInterval * 1000;
+                    timerME.Interval = intervalME * 1000; // Default
+                    SetMonitoringInterval(); //set intervalME of checking here
+                    timerME.Elapsed += TimerME_Elapsed;
+                    timerME.Start();
+
+                    #endregion
+
+                    #region Website Monitoring Engine Initialize
+
+                    timerWME.Interval = intervalWME * 1000; // Default
+                    SetWebsiteMonitoringInterval(); //set intervalWME of checking here
+                    timerWME.Elapsed += TimerWME_Elapsed;
+                    timerWME.Start();
+
+                    #endregion
+
+                    #region Configuration Timer Initialize
+
+                    refreshConfigTimer.Interval = refreshInterval*1000;
                     refreshConfigTimer.Elapsed += refreshConfigTimer_Elapsed;
                     refreshConfigTimer.Start();
 
-                    SetInterval();
+                    #endregion
+
+                    SetMonitoringInterval();
 
                     while (Console.ReadLine() != "exit")
                     {
@@ -88,7 +119,7 @@ namespace RMS.Centralize.Engine.MonitoringEngine
             }
         }
 
-        private static void SetInterval()
+        private static void SetMonitoringInterval()
         {
             try
             {
@@ -110,56 +141,99 @@ namespace RMS.Centralize.Engine.MonitoringEngine
                     }
                 }
 
-                if (tempInterval < 15) tempInterval = 15;
+                if (tempInterval < 30) tempInterval = 30;
 
-                if (interval != tempInterval)
+                if (intervalME != tempInterval)
                 {
-                    interval = tempInterval;
-                    timer.Interval = interval * 1000;
+                    intervalME = tempInterval;
+                    timerME.Interval = intervalME * 1000;
                 }
-
-                if (interval < refreshInterval)
-                {
-                    refreshInterval = interval;
-                    refreshConfigTimer.Interval = refreshInterval * 1000;
-                }
-                else if (interval > refreshInterval)
-                {
-                    refreshInterval = interval;
-                    if (refreshInterval > 60) refreshInterval = 60;
-
-                    if (refreshConfigTimer != null && refreshConfigTimer.Interval != (refreshInterval * 1000))
-                        refreshConfigTimer.Interval = refreshInterval * 1000;
-                }
-
 
             }
             catch (Exception ex)
             {
-                throw new RMSAppException("SetInterval failed. " + ex.Message, ex, false);
+                throw new RMSAppException("SetMonitoringInterval failed. " + ex.Message, ex, false);
             }
         }
-
-        private static void CallEngine()
+        private static void SetWebsiteMonitoringInterval()
         {
             try
             {
-                //WebRequest webRequest = WebRequest.Create(WebMonitoringEngineURL);
-                //WebResponse webResp = webRequest.GetResponse();
+                int tempInterval = 60;
 
-                var webpage = new WebDownload();
-                
-                string s = webpage.DownloadString(new Uri(WebMonitoringEngineURL));
-                s = s.Substring(0,s.Length-9).Substring(68);
-                Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : Finished -> " + s);
+                using (var db = new MyDbContext())
+                {
+                    var config = db.RmsSystemConfigs.Find("WebsiteMonitoringEngine.Interval");
+                    if (config != null)
+                    {
+                        if (!string.IsNullOrEmpty(config.Value))
+                        {
+                            tempInterval = Convert.ToInt32(config.Value);
+                        }
+                        else
+                        {
+                            tempInterval = Convert.ToInt32(config.DefaultValue);
+                        }
+                    }
+                }
+
+                if (tempInterval < 60) tempInterval = 60;
+
+                if (intervalWME != tempInterval)
+                {
+                    intervalWME = tempInterval;
+                    timerWME.Interval = intervalWME * 1000;
+                }
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : Error -> " + ex.Message);
-                new RMSAppException("CallEngine failed. WebMonitoringEngineURL = " + WebMonitoringEngineURL + ", " + ex.Message, ex, true);
+                throw new RMSAppException("SetWebsiteMonitoringInterval failed. " + ex.Message, ex, false);
             }
         }
 
+        private static void CallMonitoringEngine()
+        {
+            try
+            {
+                //WebRequest webRequest = WebRequest.Create(monitoringEngineURL);
+                //WebResponse webResp = webRequest.GetResponse();
+                Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : Started Monitoring");
+
+                var webpage = new WebDownload();
+                
+                string s = webpage.DownloadString(new Uri(monitoringEngineURL));
+                s = s.Substring(0,s.Length-9).Substring(68);
+                Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : Finished Monitoring -> " + s);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : Error Monitoring -> " + ex.Message);
+                new RMSAppException("CallMonitoringEngine failed. monitoringEngineURL = " + monitoringEngineURL + ", " + ex.Message, ex, true);
+            }
+        }
+        private static void CallWebsiteMonitoringEngine()
+        {
+            try
+            {
+                if (ConfigurationManager.AppSettings["RMS.WebsiteMonitoringEnable"] == null ||
+                    !Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.WebsiteMonitoringEnable"])) return;
+
+                Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : Started Website Monitoring");
+
+                var webpage = new WebDownload();
+
+                string s = webpage.DownloadString(new Uri(websiteMonitoringEngineURL));
+                s = s.Substring(0, s.Length - 9).Substring(68);
+                Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : Finished Website Monitoring -> " + s);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : Error Website Monitoring -> " + ex.Message);
+                new RMSAppException("CallWebsiteMonitoringEngine failed. websiteMonitoringEngineURL = " + websiteMonitoringEngineURL + ", " + ex.Message, ex, true);
+            }
+        }
+   
         public class WebDownload : WebClient
         {
             /// <summary>
@@ -167,7 +241,7 @@ namespace RMS.Centralize.Engine.MonitoringEngine
             /// </summary>
             public int Timeout { get; set; }
 
-            public WebDownload() : this(5) { }
+            public WebDownload() : this(10) { }
 
             public WebDownload(int timeoutMinute)
             {
@@ -184,7 +258,7 @@ namespace RMS.Centralize.Engine.MonitoringEngine
                 return request;
             }
         }
-
+        
         private static void SetAppGUID()
         {
             try
@@ -199,24 +273,36 @@ namespace RMS.Centralize.Engine.MonitoringEngine
             }
         }
 
-        static void timer_Elapsed(object sender, ElapsedEventArgs e)
+        static void TimerME_Elapsed(object sender, ElapsedEventArgs e)
         {
             try
             {
-                Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : Started");
-                CallEngine();
+                CallMonitoringEngine();
             }
             catch (Exception ex)
             {
-                Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : timer_Elapsed failed. " + ex.Message);
-                throw new RMSAppException("timer_Elapsed failed. " + ex.Message, ex, true);
+                Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : TimerME_Elapsed failed. " + ex.Message);
+                throw new RMSAppException("TimerME_Elapsed failed. " + ex.Message, ex, true);
             }
         }
+        static void TimerWME_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            try
+            {
+                CallWebsiteMonitoringEngine();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") + " : TimerWME_Elapsed failed. " + ex.Message);
+                throw new RMSAppException("TimerWME_Elapsed failed. " + ex.Message, ex, true);
+            }
+        }
+        
         static void refreshConfigTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             try
             {
-                SetInterval();
+                SetMonitoringInterval();
             }
             catch (Exception ex)
             {

@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 using RMS.Agent.Proxy.ClientProxy;
 using RMS.Agent.Proxy.MonitoringProxy;
 using RMS.Common.Exception;
+using RMS.Monitoring.Device.ATMCardReader;
 using RMS.Monitoring.Device.CardDespenser;
+using RMS.Monitoring.Device.IDCardScanner;
 using RMS.Monitoring.Device.Keyboard;
 using RMS.Monitoring.Device.MonitorDisplay;
 using RMS.Monitoring.Device.PerformanceCounter;
+using RMS.Monitoring.Device.Printer;
 using RMS.Monitoring.Device.SignaturePad;
 using RMS.Monitoring.Device.SmartCardReader;
 using RMS.Monitoring.Device.ThermalPrinter;
@@ -105,8 +108,9 @@ namespace RMS.Monitoring.Core
                             {
                                 if (deviceTypeCode == Models.DeviceCode.ATMCardReader)
                                 {
-                            
-
+                                    var ds = new ATMCardReaderService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, mpd.BooleanValue ?? false, mpd.ComPort, cr);
+                                    var rmsReportMonitoringRaws = ds.Monitoring();
+                                    lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
                                 }
                                 else if (deviceTypeCode == Models.DeviceCode.BarcodeReader)
                                 {
@@ -116,6 +120,18 @@ namespace RMS.Monitoring.Core
                                 else if (deviceTypeCode == Models.DeviceCode.CardDispenser)
                                 {
                                     var ds = new CardDispenserService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, mpd.BooleanValue ?? false, mpd.ComPort, cr);
+                                    var rmsReportMonitoringRaws = ds.Monitoring();
+                                    lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
+                                }
+                                else if (deviceTypeCode == Models.DeviceCode.EncryptedPinPad)
+                                {
+                                    var ds = new EncryptedPinPadService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, mpd.BooleanValue ?? false, mpd.ComPort, cr);
+                                    var rmsReportMonitoringRaws = ds.Monitoring();
+                                    lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
+                                }
+                                else if (deviceTypeCode == Models.DeviceCode.IDCardSanner)
+                                {
+                                    var ds = new IDCardScannerService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
                                     var rmsReportMonitoringRaws = ds.Monitoring();
                                     lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
                                 }
@@ -134,6 +150,12 @@ namespace RMS.Monitoring.Core
                                 else if (deviceTypeCode == Models.DeviceCode.MonitorDisplay)
                                 {
                                     var ds = new MonitorDisplayService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
+                                    var rmsReportMonitoringRaws = ds.Monitoring();
+                                    lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
+                                }
+                                else if (deviceTypeCode == Models.DeviceCode.Printer)
+                                {
+                                    var ds = new PrinterService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, mpd.DeviceManagerName, mpd.BooleanValue ?? false, mpd.ComPort, cr);
                                     var rmsReportMonitoringRaws = ds.Monitoring();
                                     lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
                                 }

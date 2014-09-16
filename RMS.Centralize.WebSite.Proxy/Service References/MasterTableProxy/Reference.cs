@@ -104,6 +104,9 @@ namespace RMS.Centralize.WebSite.Proxy.MasterTableProxy {
         private System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.MasterTableProxy.RmsColorLabel> ListColorLabelsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.MasterTableProxy.ListOfValueInfo> ListListOfValueInfosField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.MasterTableProxy.MessageMasterInfo> ListMessageMasterInfosField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -143,6 +146,19 @@ namespace RMS.Centralize.WebSite.Proxy.MasterTableProxy {
                 if ((object.ReferenceEquals(this.ListColorLabelsField, value) != true)) {
                     this.ListColorLabelsField = value;
                     this.RaisePropertyChanged("ListColorLabels");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.MasterTableProxy.ListOfValueInfo> ListListOfValueInfos {
+            get {
+                return this.ListListOfValueInfosField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ListListOfValueInfosField, value) != true)) {
+                    this.ListListOfValueInfosField = value;
+                    this.RaisePropertyChanged("ListListOfValueInfos");
                 }
             }
         }
@@ -675,6 +691,29 @@ namespace RMS.Centralize.WebSite.Proxy.MasterTableProxy {
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ListOfValueInfo", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model")]
+    [System.SerializableAttribute()]
+    public partial class ListOfValueInfo : RMS.Centralize.WebSite.Proxy.MasterTableProxy.RmsListOfValue {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PItemValueField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PItemValue {
+            get {
+                return this.PItemValueField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PItemValueField, value) != true)) {
+                    this.PItemValueField = value;
+                    this.RaisePropertyChanged("PItemValue");
+                }
             }
         }
     }
@@ -1819,6 +1858,114 @@ namespace RMS.Centralize.WebSite.Proxy.MasterTableProxy {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RmsListOfValue", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Centralize.WebSite.Proxy.MasterTableProxy.ListOfValueInfo))]
+    public partial class RmsListOfValue : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private string ListNameField;
+        
+        private string ItemIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ItemValueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PListNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PItemIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public string ListName {
+            get {
+                return this.ListNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ListNameField, value) != true)) {
+                    this.ListNameField = value;
+                    this.RaisePropertyChanged("ListName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=1)]
+        public string ItemId {
+            get {
+                return this.ItemIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ItemIdField, value) != true)) {
+                    this.ItemIdField = value;
+                    this.RaisePropertyChanged("ItemId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+        public string ItemValue {
+            get {
+                return this.ItemValueField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ItemValueField, value) != true)) {
+                    this.ItemValueField = value;
+                    this.RaisePropertyChanged("ItemValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+        public string PListName {
+            get {
+                return this.PListNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PListNameField, value) != true)) {
+                    this.PListNameField = value;
+                    this.RaisePropertyChanged("PListName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+        public string PItemId {
+            get {
+                return this.PItemIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PItemIdField, value) != true)) {
+                    this.PItemIdField = value;
+                    this.RaisePropertyChanged("PItemId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="JQueryDataTableParamModel", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model")]
     [System.SerializableAttribute()]
     public partial class JQueryDataTableParamModel : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -2037,6 +2184,12 @@ namespace RMS.Centralize.WebSite.Proxy.MasterTableProxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasterTableService/UpdateSystemConfig", ReplyAction="http://tempuri.org/IMasterTableService/UpdateSystemConfigResponse")]
         System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MasterTableProxy.Result> UpdateSystemConfigAsync(string name, string value, string defaultValue, string description, string updatedBy);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasterTableService/ListLOVByListName", ReplyAction="http://tempuri.org/IMasterTableService/ListLOVByListNameResponse")]
+        RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult ListLOVByListName(string listName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasterTableService/ListLOVByListName", ReplyAction="http://tempuri.org/IMasterTableService/ListLOVByListNameResponse")]
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult> ListLOVByListNameAsync(string listName);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -2144,6 +2297,14 @@ namespace RMS.Centralize.WebSite.Proxy.MasterTableProxy {
         
         public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MasterTableProxy.Result> UpdateSystemConfigAsync(string name, string value, string defaultValue, string description, string updatedBy) {
             return base.Channel.UpdateSystemConfigAsync(name, value, defaultValue, description, updatedBy);
+        }
+        
+        public RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult ListLOVByListName(string listName) {
+            return base.Channel.ListLOVByListName(listName);
+        }
+        
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.MasterTableProxy.MasterTableResult> ListLOVByListNameAsync(string listName) {
+            return base.Channel.ListLOVByListNameAsync(listName);
         }
     }
 }

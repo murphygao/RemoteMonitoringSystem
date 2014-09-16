@@ -105,10 +105,10 @@
     <None Include="Service References\ClientProxy\RMS.Agent.Proxy.ClientProxy.ClientResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\ClientProxy\RMS.Agent.Proxy.ClientProxy.LocationResult.datasource">
+    <None Include="Service References\ClientProxy\RMS.Agent.Proxy.ClientProxy.ClientSeverityActionResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\ClientProxy\RMS.Agent.Proxy.ClientProxy.MainAppClientResult.datasource">
+    <None Include="Service References\ClientProxy\RMS.Agent.Proxy.ClientProxy.LocationResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ClientProxy\RMS.Agent.Proxy.ClientProxy.Result.datasource">

@@ -56,6 +56,14 @@ namespace RMS.Centralize.WebService
 
         #endregion
 
+        #region List Of Value
+
+        [OperationContract]
+        MasterTableResult ListLOVByListName(string listName);
+
+        #endregion
+
+
     }
 
     public class MasterTableResult : Result
@@ -94,6 +102,13 @@ namespace RMS.Centralize.WebService
 
         [DataMember]
         public RmsSystemConfig SystemConfig { get; set; }
+
+        #endregion
+
+        #region List Of Value
+
+        [DataMember]
+        public List<ListOfValueInfo> ListListOfValueInfos { get; set; }
 
         #endregion
 

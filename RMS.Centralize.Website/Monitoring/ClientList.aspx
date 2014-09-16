@@ -456,7 +456,8 @@
                             "sClass": "nowrap",
                             "fnRender": function (oObj) {
                                 return '<a id="edit_item_' + oObj.aData["ClientID"] + '" class="btn btn-primary btn-xs" href="javascript:toEditRow(' + oObj.aData["ClientID"] + ')"><i class="glyphicon glyphicon-edit"></i></a>' +
-                                    '&nbsp;<a id="del_item_' + oObj.aData["ClientID"] + '" class="btn btn-danger btn-xs" href="javascript:deleteRow(' + oObj.aData["ClientID"] + ');"><i class="glyphicon glyphicon-trash"></i></a>';
+                                    '&nbsp;<a id="del_item_' + oObj.aData["ClientID"] + '" class="btn btn-danger btn-xs" href="javascript:deleteRow(' + oObj.aData["ClientID"] + ');"><i class="glyphicon glyphicon-trash"></i></a>' +
+                                    '&nbsp;&nbsp;&nbsp;&nbsp;<a id="website_item_' + oObj.aData["ClientID"] + '" class="btn btn-warning btn-xs" href="javascript:toWebsiteRow(' + oObj.aData["ClientID"] + ');"><i class="glyphicon glyphicon-screenshot"></i></a>';
                             }
                         }
                     ],
@@ -746,6 +747,13 @@
 
             post_to_url("ClientReport.aspx", params, null);
         }
+        function toWebsiteRow(id) {
+            var params = new Array();
+            params["clientID"] = id;
+
+            post_to_url("WebsiteMonitoringList.aspx", params, null);
+        }
+
     </script>
 
 </asp:Content>

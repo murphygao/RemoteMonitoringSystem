@@ -94,6 +94,12 @@
   <wsdl:message name="IMasterTableService_UpdateSystemConfig_OutputMessage">
     <wsdl:part name="parameters" element="tns:UpdateSystemConfigResponse" />
   </wsdl:message>
+  <wsdl:message name="IMasterTableService_ListLOVByListName_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListLOVByListName" />
+  </wsdl:message>
+  <wsdl:message name="IMasterTableService_ListLOVByListName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListLOVByListNameResponse" />
+  </wsdl:message>
   <wsdl:portType name="IMasterTableService">
     <wsdl:operation name="TestConnection">
       <wsdl:input wsaw:Action="http://tempuri.org/IMasterTableService/TestConnection" message="tns:IMasterTableService_TestConnection_InputMessage" />
@@ -134,6 +140,10 @@
     <wsdl:operation name="UpdateSystemConfig">
       <wsdl:input wsaw:Action="http://tempuri.org/IMasterTableService/UpdateSystemConfig" message="tns:IMasterTableService_UpdateSystemConfig_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMasterTableService/UpdateSystemConfigResponse" message="tns:IMasterTableService_UpdateSystemConfig_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListLOVByListName">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMasterTableService/ListLOVByListName" message="tns:IMasterTableService_ListLOVByListName_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMasterTableService/ListLOVByListNameResponse" message="tns:IMasterTableService_ListLOVByListName_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IMasterTableService" type="tns:IMasterTableService">
@@ -228,6 +238,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ListLOVByListName">
+      <soap:operation soapAction="http://tempuri.org/IMasterTableService/ListLOVByListName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="BasicHttpsBinding_IMasterTableService" type="tns:IMasterTableService">
     <wsp:PolicyReference URI="#BasicHttpsBinding_IMasterTableService_policy" />
@@ -315,6 +334,15 @@
     </wsdl:operation>
     <wsdl:operation name="UpdateSystemConfig">
       <soap:operation soapAction="http://tempuri.org/IMasterTableService/UpdateSystemConfig" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListLOVByListName">
+      <soap:operation soapAction="http://tempuri.org/IMasterTableService/ListLOVByListName" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

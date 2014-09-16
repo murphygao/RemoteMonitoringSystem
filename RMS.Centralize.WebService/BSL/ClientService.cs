@@ -437,6 +437,7 @@ namespace RMS.Centralize.WebService.BSL
                         //RMS_Client
                         db.Database.ExecuteSqlCommand("DELETE FROM RMS_ClientSeverityAction WHERE ClientID = {0}; " +
                                                       "DELETE FROM RMS_ClientMonitoring WHERE ClientID = {0}; " +
+                                                      "DELETE FROM RMS_WebsiteMonitoring WHERE ClientID = {0}; " +
                                                       "DELETE FROM RMS_Client Where ClientID = {0};", id);
 
                         db.SaveChanges();

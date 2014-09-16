@@ -21,7 +21,7 @@
         }
 
         .result {
-            width: 650px;
+            width: 900px;
         }
 
         th, td {

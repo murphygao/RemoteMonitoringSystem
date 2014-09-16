@@ -25,7 +25,9 @@ namespace RMS.Monitoring.Device.CardDespenser
 
             List<string> ret = new List<string>();
 
-            if (model.ToLower().EndsWith("_sks"))
+            bool checkDispenserCardLevelViaTextFile = (ConfigurationManager.AppSettings["RMS.CheckDispenserCardLevelViaTextFile"] != null && Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.CheckDispenserCardLevelViaTextFile"]));
+
+            if (checkDispenserCardLevelViaTextFile || model.ToLower().EndsWith("_sks"))
             {
                 // เครื่อง MUTEK ใช้ 2 ports คือ USB กับ COM
                 // โดยที่ COM จะสามารถตรวจสอบ Card Level ได้เท่านั้น

@@ -60,6 +60,7 @@ namespace RMS.Centralize.DAL
         IDbSet<RmsRunningNumber> RmsRunningNumbers { get; set; } // RMS_RunningNumber
         IDbSet<RmsSeverityLevel> RmsSeverityLevels { get; set; } // RMS_SeverityLevel
         IDbSet<RmsSystemConfig> RmsSystemConfigs { get; set; } // RMS_SystemConfig
+        IDbSet<RmsTrnHttpResult> RmsTrnHttpResults { get; set; } // RMS_Trn_HTTPResult
         IDbSet<RmsTrnPingResult> RmsTrnPingResults { get; set; } // RMS_Trn_PingResult
         IDbSet<RmsTrnTelnetResult> RmsTrnTelnetResults { get; set; } // RMS_Trn_TelnetResult
         IDbSet<RmsWebsiteMonitoring> RmsWebsiteMonitorings { get; set; } // RMS_WebsiteMonitoring
@@ -101,6 +102,7 @@ namespace RMS.Centralize.DAL
         public IDbSet<RmsRunningNumber> RmsRunningNumbers { get; set; } // RMS_RunningNumber
         public IDbSet<RmsSeverityLevel> RmsSeverityLevels { get; set; } // RMS_SeverityLevel
         public IDbSet<RmsSystemConfig> RmsSystemConfigs { get; set; } // RMS_SystemConfig
+        public IDbSet<RmsTrnHttpResult> RmsTrnHttpResults { get; set; } // RMS_Trn_HTTPResult
         public IDbSet<RmsTrnPingResult> RmsTrnPingResults { get; set; } // RMS_Trn_PingResult
         public IDbSet<RmsTrnTelnetResult> RmsTrnTelnetResults { get; set; } // RMS_Trn_TelnetResult
         public IDbSet<RmsWebsiteMonitoring> RmsWebsiteMonitorings { get; set; } // RMS_WebsiteMonitoring
@@ -160,6 +162,7 @@ namespace RMS.Centralize.DAL
             modelBuilder.Configurations.Add(new RmsRunningNumberConfiguration());
             modelBuilder.Configurations.Add(new RmsSeverityLevelConfiguration());
             modelBuilder.Configurations.Add(new RmsSystemConfigConfiguration());
+            modelBuilder.Configurations.Add(new RmsTrnHttpResultConfiguration());
             modelBuilder.Configurations.Add(new RmsTrnPingResultConfiguration());
             modelBuilder.Configurations.Add(new RmsTrnTelnetResultConfiguration());
             modelBuilder.Configurations.Add(new RmsWebsiteMonitoringConfiguration());
@@ -198,6 +201,7 @@ namespace RMS.Centralize.DAL
             modelBuilder.Configurations.Add(new RmsRunningNumberConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsSeverityLevelConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsSystemConfigConfiguration(schema));
+            modelBuilder.Configurations.Add(new RmsTrnHttpResultConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsTrnPingResultConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsTrnTelnetResultConfiguration(schema));
             modelBuilder.Configurations.Add(new RmsWebsiteMonitoringConfiguration(schema));
@@ -373,6 +377,9 @@ namespace RMS.Centralize.DAL
         [DataMember]
         public virtual ICollection<RmsClientSeverityAction> RmsClientSeverityActions { get; set; } // Many to many mapping
 
+        [DataMember]
+        public virtual ICollection<RmsWebsiteMonitoring> RmsWebsiteMonitorings { get; set; } // RMS_WebsiteMonitoring.FK_RMS_WebsiteMonitoring_RMS_Client
+
         // Foreign keys
         public virtual RmsClientType RmsClientType { get; set; } // FK_RMS_Client_RMS_ClientType
 
@@ -383,6 +390,7 @@ namespace RMS.Centralize.DAL
             State = 1;
             RmsClientMonitorings = new List<RmsClientMonitoring>();
             RmsClientSeverityActions = new List<RmsClientSeverityAction>();
+            RmsWebsiteMonitorings = new List<RmsWebsiteMonitoring>();
             InitializePartial();
         }
         partial void InitializePartial();
@@ -1530,6 +1538,52 @@ namespace RMS.Centralize.DAL
         partial void InitializePartial();
     }
 
+    // RMS_Trn_HTTPResult
+    [DataContract]
+    public partial class RmsTrnHttpResult
+    {
+        [DataMember(Order = 1, IsRequired = true)]
+        public int Id { get; set; } // ID (Primary key)
+
+        [DataMember(Order = 2, IsRequired = false)]
+        public int? ClientId { get; set; } // ClientID
+
+        [DataMember(Order = 3, IsRequired = false)]
+        public string ClientCode { get; set; } // ClientCode
+
+        [DataMember(Order = 4, IsRequired = false)]
+        public int? WebsiteMonitoringId { get; set; } // WebsiteMonitoringID
+
+        [DataMember(Order = 5, IsRequired = false)]
+        public string Url { get; set; } // URL
+
+        [DataMember(Order = 6, IsRequired = false)]
+        public int? ResponseCode { get; set; } // ResponseCode
+
+        [DataMember(Order = 7, IsRequired = false)]
+        public string SelectedBody { get; set; } // SelectedBody
+
+        [DataMember(Order = 8, IsRequired = false)]
+        public bool? IsSuccess { get; set; } // IsSuccess
+
+        [DataMember(Order = 9, IsRequired = false)]
+        public string ErrorMessage { get; set; } // ErrorMessage
+
+        [DataMember(Order = 10, IsRequired = false)]
+        public string Remark { get; set; } // Remark
+
+        [DataMember(Order = 11, IsRequired = false)]
+        public DateTime? CreatedDate { get; set; } // CreatedDate
+
+
+        public RmsTrnHttpResult()
+        {
+            CreatedDate = System.DateTime.Now;
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
     // RMS_Trn_PingResult
     [DataContract]
     public partial class RmsTrnPingResult
@@ -1654,7 +1708,7 @@ namespace RMS.Centralize.DAL
         public string DomainName { get; set; } // DomainName
 
         [DataMember(Order = 7, IsRequired = false)]
-        public int? Status { get; set; } // Status
+        public bool? Enable { get; set; } // Enable
 
         [DataMember(Order = 8, IsRequired = false)]
         public DateTime? CreatedDate { get; set; } // CreatedDate
@@ -1668,6 +1722,9 @@ namespace RMS.Centralize.DAL
         [DataMember(Order = 11, IsRequired = false)]
         public string UpdatedBy { get; set; } // UpdatedBy
 
+
+        // Foreign keys
+        public virtual RmsClient RmsClient { get; set; } // FK_RMS_WebsiteMonitoring_RMS_Client
 
         public RmsWebsiteMonitoring()
         {
@@ -2393,6 +2450,30 @@ namespace RMS.Centralize.DAL
         partial void InitializePartial();
     }
 
+    // RMS_Trn_HTTPResult
+    internal partial class RmsTrnHttpResultConfiguration : EntityTypeConfiguration<RmsTrnHttpResult>
+    {
+        public RmsTrnHttpResultConfiguration(string schema = "dbo")
+        {
+            ToTable(schema + ".RMS_Trn_HTTPResult");
+            HasKey(x => x.Id);
+
+            Property(x => x.Id).HasColumnName("ID").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            Property(x => x.ClientId).HasColumnName("ClientID").IsOptional();
+            Property(x => x.ClientCode).HasColumnName("ClientCode").IsOptional().HasMaxLength(50);
+            Property(x => x.WebsiteMonitoringId).HasColumnName("WebsiteMonitoringID").IsOptional();
+            Property(x => x.Url).HasColumnName("URL").IsOptional().HasMaxLength(500);
+            Property(x => x.ResponseCode).HasColumnName("ResponseCode").IsOptional();
+            Property(x => x.SelectedBody).HasColumnName("SelectedBody").IsOptional().HasMaxLength(1000);
+            Property(x => x.IsSuccess).HasColumnName("IsSuccess").IsOptional();
+            Property(x => x.ErrorMessage).HasColumnName("ErrorMessage").IsOptional().HasMaxLength(250);
+            Property(x => x.Remark).HasColumnName("Remark").IsOptional().HasMaxLength(250);
+            Property(x => x.CreatedDate).HasColumnName("CreatedDate").IsOptional();
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
     // RMS_Trn_PingResult
     internal partial class RmsTrnPingResultConfiguration : EntityTypeConfiguration<RmsTrnPingResult>
     {
@@ -2458,11 +2539,14 @@ namespace RMS.Centralize.DAL
             Property(x => x.WebsiteMonitoringProtocolId).HasColumnName("WebsiteMonitoringProtocolID").IsOptional().HasMaxLength(50);
             Property(x => x.PortNumber).HasColumnName("PortNumber").IsOptional();
             Property(x => x.DomainName).HasColumnName("DomainName").IsOptional().HasMaxLength(500);
-            Property(x => x.Status).HasColumnName("Status").IsOptional();
+            Property(x => x.Enable).HasColumnName("Enable").IsOptional();
             Property(x => x.CreatedDate).HasColumnName("CreatedDate").IsOptional();
             Property(x => x.CreatedBy).HasColumnName("CreatedBy").IsOptional().HasMaxLength(100);
             Property(x => x.UpdatedDate).HasColumnName("UpdatedDate").IsOptional();
             Property(x => x.UpdatedBy).HasColumnName("UpdatedBy").IsOptional().HasMaxLength(100);
+
+            // Foreign keys
+            HasRequired(a => a.RmsClient).WithMany(b => b.RmsWebsiteMonitorings).HasForeignKey(c => c.ClientId); // FK_RMS_WebsiteMonitoring_RMS_Client
             InitializePartial();
         }
         partial void InitializePartial();

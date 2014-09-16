@@ -51,6 +51,9 @@ namespace RMS.Agent.Proxy.MonitoringProxy {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> CreatedDateField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> WebsiteMonitoringIdField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -191,6 +194,19 @@ namespace RMS.Agent.Proxy.MonitoringProxy {
             }
         }
         
+        [System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+        public System.Nullable<int> WebsiteMonitoringId {
+            get {
+                return this.WebsiteMonitoringIdField;
+            }
+            set {
+                if ((this.WebsiteMonitoringIdField.Equals(value) != true)) {
+                    this.WebsiteMonitoringIdField = value;
+                    this.RaisePropertyChanged("WebsiteMonitoringId");
+                }
+            }
+        }
+        
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
@@ -229,11 +245,23 @@ namespace RMS.Agent.Proxy.MonitoringProxy {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/AddBusinessMessage", ReplyAction="http://tempuri.org/IMonitoringService/AddBusinessMessageResponse")]
         System.Threading.Tasks.Task AddBusinessMessageAsync(RMS.Agent.Proxy.MonitoringProxy.RmsReportMonitoringRaw rawMessage);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/AddWebsiteMessage", ReplyAction="http://tempuri.org/IMonitoringService/AddWebsiteMessageResponse")]
+        void AddWebsiteMessage(System.Collections.Generic.List<RMS.Agent.Proxy.MonitoringProxy.RmsReportMonitoringRaw> lRawMessages);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/AddWebsiteMessage", ReplyAction="http://tempuri.org/IMonitoringService/AddWebsiteMessageResponse")]
+        System.Threading.Tasks.Task AddWebsiteMessageAsync(System.Collections.Generic.List<RMS.Agent.Proxy.MonitoringProxy.RmsReportMonitoringRaw> lRawMessages);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/StartMonitoringEngine", ReplyAction="http://tempuri.org/IMonitoringService/StartMonitoringEngineResponse")]
         void StartMonitoringEngine();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/StartMonitoringEngine", ReplyAction="http://tempuri.org/IMonitoringService/StartMonitoringEngineResponse")]
         System.Threading.Tasks.Task StartMonitoringEngineAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/StartWebsiteMonitoringEngine", ReplyAction="http://tempuri.org/IMonitoringService/StartWebsiteMonitoringEngineResponse")]
+        void StartWebsiteMonitoringEngine();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMonitoringService/StartWebsiteMonitoringEngine", ReplyAction="http://tempuri.org/IMonitoringService/StartWebsiteMonitoringEngineResponse")]
+        System.Threading.Tasks.Task StartWebsiteMonitoringEngineAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -295,12 +323,28 @@ namespace RMS.Agent.Proxy.MonitoringProxy {
             return base.Channel.AddBusinessMessageAsync(rawMessage);
         }
         
+        public void AddWebsiteMessage(System.Collections.Generic.List<RMS.Agent.Proxy.MonitoringProxy.RmsReportMonitoringRaw> lRawMessages) {
+            base.Channel.AddWebsiteMessage(lRawMessages);
+        }
+        
+        public System.Threading.Tasks.Task AddWebsiteMessageAsync(System.Collections.Generic.List<RMS.Agent.Proxy.MonitoringProxy.RmsReportMonitoringRaw> lRawMessages) {
+            return base.Channel.AddWebsiteMessageAsync(lRawMessages);
+        }
+        
         public void StartMonitoringEngine() {
             base.Channel.StartMonitoringEngine();
         }
         
         public System.Threading.Tasks.Task StartMonitoringEngineAsync() {
             return base.Channel.StartMonitoringEngineAsync();
+        }
+        
+        public void StartWebsiteMonitoringEngine() {
+            base.Channel.StartWebsiteMonitoringEngine();
+        }
+        
+        public System.Threading.Tasks.Task StartWebsiteMonitoringEngineAsync() {
+            return base.Channel.StartWebsiteMonitoringEngineAsync();
         }
     }
 }

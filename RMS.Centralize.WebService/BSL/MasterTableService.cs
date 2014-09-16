@@ -196,7 +196,7 @@ namespace RMS.Centralize.WebService.BSL
                 using (var db = new MyDbContext())
                 {
                     //RMS_MessageMaster
-                    var rms = db.RmsMessageMasters.Find(message);
+                    var rms = db.RmsMessageMasters.FirstOrDefault(w => w.Message == message);
                     if (rms == null) throw new Exception("MessageMaster (" + message + ") Not Found");
 
                     rms.Description = description;
@@ -316,6 +316,53 @@ namespace RMS.Centralize.WebService.BSL
             {
                 throw new RMSWebException(this, "0500", "UpdateSystemConfig failed. " + ex.Message, ex, true);
             }
+        }
+
+
+        #endregion
+
+
+        #region List Of Value
+
+        public List<ListOfValueInfo> ListLOVByListName(string listName)
+        {
+            List<ListOfValueInfo> lResult = new List<ListOfValueInfo>();
+            SqlParameter[] parameters = new SqlParameter[1];
+
+            try
+            {
+                using (var db = new MyDbContext())
+                {
+                    SqlParameter p1;
+
+                    if (String.IsNullOrEmpty(listName))
+                    {
+                        p1 = new SqlParameter("ListName", DBNull.Value);
+                    }
+                    else
+                    {
+                        p1 = new SqlParameter("ListName", listName);
+                    }
+
+                    parameters[0] = p1;
+
+                    db.Configuration.ProxyCreationEnabled = false;
+                    //db.Configuration.LazyLoadingEnabled = false;
+
+                    var listOfType = db.Database.SqlQuery<ListOfValueInfo>("RMS_ListListOfValueByListName " +
+                                                                             "@ListName"
+                        , parameters);
+
+                    lResult = new List<ListOfValueInfo>(listOfType.ToList());
+
+                    return lResult;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new RMSWebException(this, "0500", "ListLOVByListName failed. " + ex.Message, ex, false);
+            }
+
         }
 
 

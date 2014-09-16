@@ -58,27 +58,30 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="ClientInfoResult" nillable="true" type="tns:ClientInfoResult" />
-  <xs:complexType name="MainAppClientResult">
+  <xs:complexType name="LocationResult">
     <xs:complexContent mixed="false">
       <xs:extension xmlns:q9="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" base="q9:Result">
         <xs:sequence>
-          <xs:element minOccurs="0" name="ListMainAppClients" nillable="true" type="q9:ArrayOfMainAppClient" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="MainAppClientResult" nillable="true" type="tns:MainAppClientResult" />
-  <xs:complexType name="LocationResult">
-    <xs:complexContent mixed="false">
-      <xs:extension xmlns:q10="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" base="q10:Result">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="ListLocationInfos" nillable="true" type="q10:ArrayOfLocationInfo" />
-          <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="ListLocations" nillable="true" type="q11:ArrayOfRmsLocation" />
-          <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="Location" nillable="true" type="q12:RmsLocation" />
+          <xs:element minOccurs="0" name="ListLocationInfos" nillable="true" type="q9:ArrayOfLocationInfo" />
+          <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="ListLocations" nillable="true" type="q10:ArrayOfRmsLocation" />
+          <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="Location" nillable="true" type="q11:RmsLocation" />
           <xs:element minOccurs="0" name="TotalRecords" type="xs:int" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="LocationResult" nillable="true" type="tns:LocationResult" />
+  <xs:complexType name="ClientSeverityActionResult">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q12="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" base="q12:Result">
+        <xs:sequence>
+          <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="ClientSeverityAction" nillable="true" type="q13:RmsClientSeverityAction" />
+          <xs:element minOccurs="0" name="Info" nillable="true" type="q12:ClientSeverityActionInfo" />
+          <xs:element minOccurs="0" name="ListClientSeverityActionInfos" nillable="true" type="q12:ArrayOfClientSeverityActionInfo" />
+          <xs:element minOccurs="0" name="TotalRecords" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ClientSeverityActionResult" nillable="true" type="tns:ClientSeverityActionResult" />
 </xs:schema>

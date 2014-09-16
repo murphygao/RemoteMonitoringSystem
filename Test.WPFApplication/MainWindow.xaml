@@ -70,12 +70,21 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Website Monitoring">
+            <TabItem Header="Ping">
                 <Grid>
                     <Label Content="Host / IP Address" HorizontalAlignment="Left" Margin="30,32,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="txtWMHostName" HorizontalAlignment="Left" Height="23" Margin="149,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="283"/>
                     <Button Content="Ping" HorizontalAlignment="Left" Margin="30,82,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
                     <TextBox x:Name="txtWMResult" HorizontalAlignment="Left" Height="336" Margin="30,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="703" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="List Website Monitoring">
+                <Grid>
+                    <TextBox x:Name="txtWMClientID" HorizontalAlignment="Left" Height="23" Margin="114,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="184"/>
+                    <Label Content="ClientID" HorizontalAlignment="Left" Margin="42,56,0,0" VerticalAlignment="Top"/>
+                    <Button x:Name="btnWMList" Content="List" HorizontalAlignment="Left" Margin="42,97,0,0" VerticalAlignment="Top" Width="75" Click="btnWMList_Click"/>
+                    <DataGrid x:Name="dtgWMResultListWebsiteMonitoring" HorizontalAlignment="Left" Margin="42,141,0,0" VerticalAlignment="Top" Height="372" Width="684"/>
 
                 </Grid>
             </TabItem>

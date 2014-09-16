@@ -305,6 +305,33 @@ namespace RMS.Centralize.WebService
             }
         }
 
+        public MasterTableResult ListLOVByListName(string listName)
+        {
+            try
+            {
+                BSL.MasterTableService service = new BSL.MasterTableService();
+                var rms = service.ListLOVByListName(listName);
+
+                var sr = new MasterTableResult
+                {
+                    IsSuccess = true,
+                    ListListOfValueInfos = rms,
+                };
+                return sr;
+            }
+            catch (Exception ex)
+            {
+                new RMSWebException(this, "0500", "ListLOVByListName failed. " + ex.Message, ex, true);
+
+                var sr = new MasterTableResult
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "ListLOVByListName errors. " + ex.Message
+                };
+                return sr;
+            }
+        }
+
         #endregion
 
     }

@@ -110,8 +110,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\WebsiteMonitoringProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="SeverityLevelService.cs" />
     <Compile Include="SummaryReportService.cs" />
+    <Compile Include="WebsiteMonitoringService.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -360,6 +366,28 @@
     <None Include="Service References\SummaryReportProxy\SummaryReportService65.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\WebsiteMonitoringProxy\RMS.Centralize.WebSite.Proxy.WebsiteMonitoringProxy.Result.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WebsiteMonitoringProxy\RMS.Centralize.WebSite.Proxy.WebsiteMonitoringProxy.WebsiteMonitoringResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WebsiteMonitoringProxy\WebsiteMonitoringService.wsdl" />
+    <None Include="Service References\WebsiteMonitoringProxy\WebsiteMonitoringService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WebsiteMonitoringProxy\WebsiteMonitoringService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WebsiteMonitoringProxy\WebsiteMonitoringService11.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WebsiteMonitoringProxy\WebsiteMonitoringService12.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WebsiteMonitoringProxy\WebsiteMonitoringService13.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ActionProfileProxy\" />
@@ -373,6 +401,7 @@
     <WCFMetadataStorage Include="Service References\SelfTestingProxy\" />
     <WCFMetadataStorage Include="Service References\SeverityLevelProxy\" />
     <WCFMetadataStorage Include="Service References\SummaryReportProxy\" />
+    <WCFMetadataStorage Include="Service References\WebsiteMonitoringProxy\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\MessageActionProxy\configuration91.svcinfo" />
@@ -541,6 +570,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\MasterTableProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WebsiteMonitoringProxy\WebsiteMonitoringService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WebsiteMonitoringProxy\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WebsiteMonitoringProxy\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WebsiteMonitoringProxy\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

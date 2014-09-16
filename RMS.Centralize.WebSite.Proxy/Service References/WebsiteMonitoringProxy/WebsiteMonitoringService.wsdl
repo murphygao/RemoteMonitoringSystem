@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="WebsiteMonitoringService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="BasicHttpsBinding_IWebsiteMonitoringService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/WebsiteMonitoringService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/WebsiteMonitoringService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/WebsiteMonitoringService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" />
+      <xsd:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/WebsiteMonitoringService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" />
+      <xsd:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/WebsiteMonitoringService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IWebsiteMonitoringService_TestConnection_InputMessage">
+    <wsdl:part name="parameters" element="tns:TestConnection" />
+  </wsdl:message>
+  <wsdl:message name="IWebsiteMonitoringService_TestConnection_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TestConnectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebsiteMonitoringService_ListWebsiteMonitoringsByClient_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListWebsiteMonitoringsByClient" />
+  </wsdl:message>
+  <wsdl:message name="IWebsiteMonitoringService_ListWebsiteMonitoringsByClient_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListWebsiteMonitoringsByClientResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebsiteMonitoringService_GetWebsiteMonitoring_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWebsiteMonitoring" />
+  </wsdl:message>
+  <wsdl:message name="IWebsiteMonitoringService_GetWebsiteMonitoring_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWebsiteMonitoringResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebsiteMonitoringService_UpdateWebsiteMonitoring_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateWebsiteMonitoring" />
+  </wsdl:message>
+  <wsdl:message name="IWebsiteMonitoringService_UpdateWebsiteMonitoring_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateWebsiteMonitoringResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebsiteMonitoringService_DeleteWebsiteMonitoring_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteWebsiteMonitoring" />
+  </wsdl:message>
+  <wsdl:message name="IWebsiteMonitoringService_DeleteWebsiteMonitoring_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteWebsiteMonitoringResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IWebsiteMonitoringService">
+    <wsdl:operation name="TestConnection">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebsiteMonitoringService/TestConnection" message="tns:IWebsiteMonitoringService_TestConnection_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebsiteMonitoringService/TestConnectionResponse" message="tns:IWebsiteMonitoringService_TestConnection_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListWebsiteMonitoringsByClient">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebsiteMonitoringService/ListWebsiteMonitoringsByClient" message="tns:IWebsiteMonitoringService_ListWebsiteMonitoringsByClient_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebsiteMonitoringService/ListWebsiteMonitoringsByClientResponse" message="tns:IWebsiteMonitoringService_ListWebsiteMonitoringsByClient_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWebsiteMonitoring">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebsiteMonitoringService/GetWebsiteMonitoring" message="tns:IWebsiteMonitoringService_GetWebsiteMonitoring_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebsiteMonitoringService/GetWebsiteMonitoringResponse" message="tns:IWebsiteMonitoringService_GetWebsiteMonitoring_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateWebsiteMonitoring">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebsiteMonitoringService/UpdateWebsiteMonitoring" message="tns:IWebsiteMonitoringService_UpdateWebsiteMonitoring_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebsiteMonitoringService/UpdateWebsiteMonitoringResponse" message="tns:IWebsiteMonitoringService_UpdateWebsiteMonitoring_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteWebsiteMonitoring">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebsiteMonitoringService/DeleteWebsiteMonitoring" message="tns:IWebsiteMonitoringService_DeleteWebsiteMonitoring_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebsiteMonitoringService/DeleteWebsiteMonitoringResponse" message="tns:IWebsiteMonitoringService_DeleteWebsiteMonitoring_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IWebsiteMonitoringService" type="tns:IWebsiteMonitoringService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="TestConnection">
+      <soap:operation soapAction="http://tempuri.org/IWebsiteMonitoringService/TestConnection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListWebsiteMonitoringsByClient">
+      <soap:operation soapAction="http://tempuri.org/IWebsiteMonitoringService/ListWebsiteMonitoringsByClient" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWebsiteMonitoring">
+      <soap:operation soapAction="http://tempuri.org/IWebsiteMonitoringService/GetWebsiteMonitoring" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateWebsiteMonitoring">
+      <soap:operation soapAction="http://tempuri.org/IWebsiteMonitoringService/UpdateWebsiteMonitoring" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteWebsiteMonitoring">
+      <soap:operation soapAction="http://tempuri.org/IWebsiteMonitoringService/DeleteWebsiteMonitoring" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="BasicHttpsBinding_IWebsiteMonitoringService" type="tns:IWebsiteMonitoringService">
+    <wsp:PolicyReference URI="#BasicHttpsBinding_IWebsiteMonitoringService_policy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="TestConnection">
+      <soap:operation soapAction="http://tempuri.org/IWebsiteMonitoringService/TestConnection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListWebsiteMonitoringsByClient">
+      <soap:operation soapAction="http://tempuri.org/IWebsiteMonitoringService/ListWebsiteMonitoringsByClient" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWebsiteMonitoring">
+      <soap:operation soapAction="http://tempuri.org/IWebsiteMonitoringService/GetWebsiteMonitoring" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateWebsiteMonitoring">
+      <soap:operation soapAction="http://tempuri.org/IWebsiteMonitoringService/UpdateWebsiteMonitoring" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteWebsiteMonitoring">
+      <soap:operation soapAction="http://tempuri.org/IWebsiteMonitoringService/DeleteWebsiteMonitoring" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WebsiteMonitoringService">
+    <wsdl:port name="BasicHttpBinding_IWebsiteMonitoringService" binding="tns:BasicHttpBinding_IWebsiteMonitoringService">
+      <soap:address location="http://esn-nb01/RMS.Centralize.WebService/WebsiteMonitoringService.svc" />
+    </wsdl:port>
+    <wsdl:port name="BasicHttpsBinding_IWebsiteMonitoringService" binding="tns:BasicHttpsBinding_IWebsiteMonitoringService">
+      <soap:address location="https://esn-nb01/RMS.Centralize.WebService/WebsiteMonitoringService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

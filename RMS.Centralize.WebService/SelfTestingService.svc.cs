@@ -33,122 +33,108 @@ namespace RMS.Centralize.WebService
             string ret = "";
             try
             {
-                /*
-                    <add key="RMS.OverrideProxy" value="false"/>
-                    <add key="RMS.NetTcpBinding_AgentService" value="net.tcp://client_ip_address:8081/AgentNetTcp"/>
-                    <add key="RMS.WebServicURL_MonitoringService" value="http://localhost/RMS.Centralize.WebService/MonitoringService.svc"/>
-                    <add key="RMS.ActionModeTest" value="true"/>
 
-                    <add key="SKAdapter.SMSGW.URL" value="http://10.217.83.125:2288" />
-                    <add key="SKAdapter.SMSGW.CODE" value="CALLBACK" />
-                    <add key="SKAdapter.SMSGW.ServiceTimeoutMilliseconds" value="10000" />
-                    <add key="SKAdapter.SMSGW.Sender" value="SKS" />
-                    <add key="SKAdapter.SMSGW.TestReceiver" value="0860506900" />
-
-                    <add key="SKAdapter.Email.Server" value="10.252.160.41" />
-                    <add key="SKAdapter.Email.Port" value="25" />
-                    <add key="SKAdapter.Email.SSL" value="False" />
-                    <add key="SKAdapter.Email.FromAddress" value="sks@corp.ais900dev.org" />
-                    <add key="SKAdapter.Email.FromName" value="AIS Service Kiosk System" />
-                    <add key="SKAdapter.Email.ServiceTimeoutMilliseconds" value="10000" />
-                    <add key="SKAdapter.Email.TestReceiver" value="satht471@corp.ais900dev.org" />
-
-                 */
-
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.ErrorLogFile"]))
+                var nameValueCollection = ConfigurationManager.AppSettings;
+                foreach (string s in nameValueCollection.AllKeys)
                 {
-                    ret += "<br/>AppSettings[\"RMS.ErrorLogFile\"] not found or empty.";
+                    var value = ConfigurationManager.AppSettings[s];
+                    ret += "<b>" + s + "</b> = " + value + "<br/>";
                 }
 
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.LicenseLogFile"]))
-                {
-                    ret += "<br/>AppSettings[\"RMS.LicenseLogFile\"] not found or empty.";
-                }
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.ErrorLogFile"]))
+                //{
+                //    ret += "<br/>AppSettings[\"RMS.ErrorLogFile\"] not found or empty.";
+                //}
 
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.OverrideProxy"]))
-                {
-                    ret += "<br/>AppSettings[\"RMS.OverrideProxy\"] not found or empty.";
-                }
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.LicenseLogFile"]))
+                //{
+                //    ret += "<br/>AppSettings[\"RMS.LicenseLogFile\"] not found or empty.";
+                //}
 
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.NetTcpBinding_AgentService"]))
-                {
-                    ret += "<br/>AppSettings[\"RMS.NetTcpBinding_AgentService\"] not found or empty.";
-                }
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.OverrideProxy"]))
+                //{
+                //    ret += "<br/>AppSettings[\"RMS.OverrideProxy\"] not found or empty.";
+                //}
 
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_MonitoringService"]))
-                {
-                    ret += "<br/>AppSettings[\"RMS.WebServicURL_MonitoringService\"] not found or empty.";
-                }
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.NetTcpBinding_AgentService"]))
+                //{
+                //    ret += "<br/>AppSettings[\"RMS.NetTcpBinding_AgentService\"] not found or empty.";
+                //}
 
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.ActionModeTest"]))
-                {
-                    ret += "<br/>AppSettings[\"RMS.ActionModeTest\"] not found or empty.";
-                }
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_MonitoringService"]))
+                //{
+                //    ret += "<br/>AppSettings[\"RMS.WebServicURL_MonitoringService\"] not found or empty.";
+                //}
 
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.LicenseFile"]))
-                {
-                    ret += "<br/>AppSettings[\"RMS.LicenseFile\"] not found or empty.";
-                }
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.ActionModeTest"]))
+                //{
+                //    ret += "<br/>AppSettings[\"RMS.ActionModeTest\"] not found or empty.";
+                //}
 
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.SMSGW.URL"]))
-                {
-                    ret += "<br/>AppSettings[\"SKAdapter.SMSGW.URL\"] not found or empty.";
-                }
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.LicenseFile"]))
+                //{
+                //    ret += "<br/>AppSettings[\"RMS.LicenseFile\"] not found or empty.";
+                //}
 
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.SMSGW.CODE"]))
-                {
-                    ret += "<br/>AppSettings[\"SKAdapter.SMSGW.CODE\"] not found or empty.";
-                }
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.SMSGW.URL"]))
+                //{
+                //    ret += "<br/>AppSettings[\"SKAdapter.SMSGW.URL\"] not found or empty.";
+                //}
 
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.SMSGW.ServiceTimeoutMilliseconds"]))
-                {
-                    ret += "<br/>AppSettings[\"SKAdapter.SMSGW.ServiceTimeoutMilliseconds\"] not found or empty.";
-                }
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.SMSGW.CODE"]))
+                //{
+                //    ret += "<br/>AppSettings[\"SKAdapter.SMSGW.CODE\"] not found or empty.";
+                //}
 
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.SMSGW.Sender"]))
-                {
-                    ret += "<br/>AppSettings[\"SKAdapter.SMSGW.Sender\"] not found or empty.";
-                }
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.SMSGW.ServiceTimeoutMilliseconds"]))
+                //{
+                //    ret += "<br/>AppSettings[\"SKAdapter.SMSGW.ServiceTimeoutMilliseconds\"] not found or empty.";
+                //}
 
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.SMSGW.TestReceiver"]))
-                {
-                    ret += "<br/>AppSettings[\"SKAdapter.SMSGW.TestReceiver\"] not found or empty.";
-                }
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.SMSGW.Sender"]))
+                //{
+                //    ret += "<br/>AppSettings[\"SKAdapter.SMSGW.Sender\"] not found or empty.";
+                //}
 
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.Email.Server"]))
-                {
-                    ret += "<br/>AppSettings[\"SKAdapter.Email.Server\"] not found or empty.";
-                }
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.SMSGW.TestReceiver"]))
+                //{
+                //    ret += "<br/>AppSettings[\"SKAdapter.SMSGW.TestReceiver\"] not found or empty.";
+                //}
 
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.Email.Port"]))
-                {
-                    ret += "<br/>AppSettings[\"SKAdapter.Email.Port\"] not found or empty.";
-                }
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.Email.Server"]))
+                //{
+                //    ret += "<br/>AppSettings[\"SKAdapter.Email.Server\"] not found or empty.";
+                //}
 
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.Email.SSL"]))
-                {
-                    ret += "<br/>AppSettings[\"SKAdapter.Email.SSL\"] not found or empty.";
-                }
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.Email.Port"]))
+                //{
+                //    ret += "<br/>AppSettings[\"SKAdapter.Email.Port\"] not found or empty.";
+                //}
 
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.Email.FromAddress"]))
-                {
-                    ret += "<br/>AppSettings[\"SKAdapter.Email.FromAddress\"] not found or empty.";
-                }
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.Email.SSL"]))
+                //{
+                //    ret += "<br/>AppSettings[\"SKAdapter.Email.SSL\"] not found or empty.";
+                //}
 
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.Email.FromName"]))
-                {
-                    ret += "<br/>AppSettings[\"SKAdapter.Email.FromName\"] not found or empty.";
-                }
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.Email.FromAddress"]))
+                //{
+                //    ret += "<br/>AppSettings[\"SKAdapter.Email.FromAddress\"] not found or empty.";
+                //}
 
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.Email.ServiceTimeoutMilliseconds"]))
-                {
-                    ret += "<br/>AppSettings[\"SKAdapter.Email.ServiceTimeoutMilliseconds\"] not found or empty.";
-                }
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.Email.FromName"]))
+                //{
+                //    ret += "<br/>AppSettings[\"SKAdapter.Email.FromName\"] not found or empty.";
+                //}
 
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.Email.TestReceiver"]))
-                {
-                    ret += "<br/>AppSettings[\"SKAdapter.Email.TestReceiver\"] not found or empty.";
-                }
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.Email.ServiceTimeoutMilliseconds"]))
+                //{
+                //    ret += "<br/>AppSettings[\"SKAdapter.Email.ServiceTimeoutMilliseconds\"] not found or empty.";
+                //}
+
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SKAdapter.Email.TestReceiver"]))
+                //{
+                //    ret += "<br/>AppSettings[\"SKAdapter.Email.TestReceiver\"] not found or empty.";
+                //}
 
                 return ret;
             }
@@ -226,10 +212,11 @@ namespace RMS.Centralize.WebService
         public string TestAgentConnection(string ipAddress)
         {
             string ret = "";
+            string clientEndpiont = "";
             try
             {
                 var asc = new AgentServiceClient();
-                string clientEndpiont = ConfigurationManager.AppSettings["RMS.NetTcpBinding_AgentService"];
+                clientEndpiont = ConfigurationManager.AppSettings["RMS.NetTcpBinding_AgentService"];
                 clientEndpiont = clientEndpiont.Replace("client_ip_address", ipAddress);
 
                 //System.Uri uri = new Uri(clientEndpiont);
@@ -238,8 +225,15 @@ namespace RMS.Centralize.WebService
                 //EndpointIdentity endpointIdentity = endpointAddress.Identity;
 
                 asc.Endpoint.Address = new EndpointAddress(clientEndpiont);
-                asc.Endpoint.Binding.OpenTimeout = new TimeSpan(0, 0, 5);
-                
+                asc.Endpoint.Binding.OpenTimeout = new TimeSpan(0, 0, 30);
+
+                NetTcpBinding myBinding = new NetTcpBinding();
+                myBinding.Security.Mode = SecurityMode.None;
+                myBinding.Security.Transport.ClientCredentialType = TcpClientCredentialType.None;
+                myBinding.OpenTimeout = new TimeSpan(0, 0, 30);
+                asc.Endpoint.Binding = myBinding;
+
+
                 var ar = asc.InnerChannel.BeginOpen(null, null);
                 if (!ar.AsyncWaitHandle.WaitOne(asc.Endpoint.Binding.OpenTimeout, true))
                     throw new CommunicationException(ipAddress + " Monitoring Agent is not available.");
@@ -249,7 +243,7 @@ namespace RMS.Centralize.WebService
             }
             catch (Exception ex)
             {
-                new RMSWebException(this, "0500", "TestAgentConnection failed. " + ex.Message, ex, true);
+                new RMSWebException(this, "0500", "TestAgentConnection failed (" + clientEndpiont + "). " + ex.Message, ex, true);
 
                 return "<br/>" + ex.Message;
             }

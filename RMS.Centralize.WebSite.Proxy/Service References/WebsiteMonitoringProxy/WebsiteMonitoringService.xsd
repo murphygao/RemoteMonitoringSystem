@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/WebsiteMonitoringService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" />
+  <xs:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/WebsiteMonitoringService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" />
+  <xs:element name="TestConnection">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TestConnectionResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListWebsiteMonitoringsByClient">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" minOccurs="0" name="param" nillable="true" type="q1:JQueryDataTableParamModel" />
+        <xs:element minOccurs="0" name="clientID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListWebsiteMonitoringsByClientResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="ListWebsiteMonitoringsByClientResult" nillable="true" type="q2:WebsiteMonitoringResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWebsiteMonitoring">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="websiteMonitoringID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWebsiteMonitoringResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="GetWebsiteMonitoringResult" nillable="true" type="q3:WebsiteMonitoringResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateWebsiteMonitoring">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="id" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="m" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="clientID" type="xs:int" />
+        <xs:element minOccurs="0" name="websiteMonitoringTypeID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="websiteMonitoringProtocolID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="portNumber" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="domainName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="enable" type="xs:boolean" />
+        <xs:element minOccurs="0" name="updatedBy" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateWebsiteMonitoringResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" minOccurs="0" name="UpdateWebsiteMonitoringResult" nillable="true" type="q4:Result" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteWebsiteMonitoring">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="websiteMonitoringID" type="xs:int" />
+        <xs:element minOccurs="0" name="updatedBy" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteWebsiteMonitoringResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" minOccurs="0" name="DeleteWebsiteMonitoringResult" nillable="true" type="q5:Result" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

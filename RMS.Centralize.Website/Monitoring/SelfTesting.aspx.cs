@@ -53,64 +53,71 @@ namespace RMS.Centralize.Website.Monitoring
                     <add key="RMS.WebServicURL_SelfTestingService" value="http://localhost/RMS.Centralize.WebService/SelfTestingService.svc" />
 
                  */
+                var nameValueCollection = ConfigurationManager.AppSettings;
+                foreach (string s in nameValueCollection.AllKeys)
+                {
+                    var value = ConfigurationManager.AppSettings[s];
+                    ret += "<b>" + s + "</b> = " + value + "<br/>";
+                }
+                    rWebConfig.InnerHtml = ret;
 
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.OverrideProxy"]))
-                {
-                    ret += "<br/>AppSettings[\"RMS.OverrideProxy\"] not found or empty.";
-                }
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_ActionProfileService"]))
-                {
-                    ret += "<br/>AppSettings[\"RMS.WebServicURL_ActionProfileService\"] not found or empty.";
-                }
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_MessageActionService"]))
-                {
-                    ret += "<br/>AppSettings[\"RMS.WebServicURL_MessageActionService\"] not found or empty.";
-                }
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_ClientService"]))
-                {
-                    ret += "<br/>AppSettings[\"RMS.WebServicURL_ClientService\"] not found or empty.";
-                }
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_MonitoringService"]))
-                {
-                    ret += "<br/>AppSettings[\"RMS.WebServicURL_MonitoringService\"] not found or empty.";
-                }
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_SummaryReportService"]))
-                {
-                    ret += "<br/>AppSettings[\"RMS.WebServicURL_SummaryReportService\"] not found or empty.";
-                }
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_SelfTestingService"]))
-                {
-                    ret += "<br/>AppSettings[\"RMS.WebServicURL_SelfTestingService\"] not found or empty.";
-                }
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_LocationService"]))
-                {
-                    ret += "<br/>AppSettings[\"RMS.WebServicURL_LocationService\"] not found or empty.";
-                }
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_ClientMonitoringService"]))
-                {
-                    ret += "<br/>AppSettings[\"RMS.WebServicURL_ClientMonitoringService\"] not found or empty.";
-                }
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_MonitoringProfileService"]))
-                {
-                    ret += "<br/>AppSettings[\"RMS.WebServicURL_MonitoringProfileService\"] not found or empty.";
-                }
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_SeverityLevelService"]))
-                {
-                    ret += "<br/>AppSettings[\"RMS.WebServicURL_SeverityLevelService\"] not found or empty.";
-                }
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_MasterTableService"]))
-                {
-                    ret += "<br/>AppSettings[\"RMS.WebServicURL_MasterTableService\"] not found or empty.";
-                }
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.OverrideProxy"]))
+                //{
+                //    ret += "<br/>AppSettings[\"RMS.OverrideProxy\"] not found or empty.";
+                //}
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_ActionProfileService"]))
+                //{
+                //    ret += "<br/>AppSettings[\"RMS.WebServicURL_ActionProfileService\"] not found or empty.";
+                //}
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_MessageActionService"]))
+                //{
+                //    ret += "<br/>AppSettings[\"RMS.WebServicURL_MessageActionService\"] not found or empty.";
+                //}
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_ClientService"]))
+                //{
+                //    ret += "<br/>AppSettings[\"RMS.WebServicURL_ClientService\"] not found or empty.";
+                //}
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_MonitoringService"]))
+                //{
+                //    ret += "<br/>AppSettings[\"RMS.WebServicURL_MonitoringService\"] not found or empty.";
+                //}
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_SummaryReportService"]))
+                //{
+                //    ret += "<br/>AppSettings[\"RMS.WebServicURL_SummaryReportService\"] not found or empty.";
+                //}
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_SelfTestingService"]))
+                //{
+                //    ret += "<br/>AppSettings[\"RMS.WebServicURL_SelfTestingService\"] not found or empty.";
+                //}
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_LocationService"]))
+                //{
+                //    ret += "<br/>AppSettings[\"RMS.WebServicURL_LocationService\"] not found or empty.";
+                //}
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_ClientMonitoringService"]))
+                //{
+                //    ret += "<br/>AppSettings[\"RMS.WebServicURL_ClientMonitoringService\"] not found or empty.";
+                //}
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_MonitoringProfileService"]))
+                //{
+                //    ret += "<br/>AppSettings[\"RMS.WebServicURL_MonitoringProfileService\"] not found or empty.";
+                //}
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_SeverityLevelService"]))
+                //{
+                //    ret += "<br/>AppSettings[\"RMS.WebServicURL_SeverityLevelService\"] not found or empty.";
+                //}
+                //if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["RMS.WebServicURL_MasterTableService"]))
+                //{
+                //    ret += "<br/>AppSettings[\"RMS.WebServicURL_MasterTableService\"] not found or empty.";
+                //}
 
-                if (ret == "")
-                {
-                    rWebConfig.InnerHtml = "<span class=\"txt-green\">Passed</span>";
-                }
-                else
-                {
-                    rWebConfig.InnerHtml = "<span class=\"txt-red\">Failed</span>" + ret;
-                }
+                //if (ret == "")
+                //{
+                //    rWebConfig.InnerHtml = "<span class=\"txt-green\">Passed</span>";
+                //}
+                //else
+                //{
+                //    rWebConfig.InnerHtml = "<span class=\"txt-red\">Failed</span>" + ret;
+                //}
             }
             catch (Exception ex)
             {
@@ -197,15 +204,15 @@ namespace RMS.Centralize.Website.Monitoring
             {
                 var service = new SelfTestingService();
                 ret = service.selfTestingService.TestWebConfig();
-
-                if (ret == "")
-                {
-                    rWebServiceConfig.InnerHtml = "<span class=\"txt-green\">Passed</span>";
-                }
-                else
-                {
-                    rWebServiceConfig.InnerHtml = "<span class=\"txt-red\">Failed</span>" + ret;
-                }
+                rWebServiceConfig.InnerHtml = ret;
+                //if (ret == "")
+                //{
+                //    rWebServiceConfig.InnerHtml = "<span class=\"txt-green\">Passed</span>";
+                //}
+                //else
+                //{
+                //    rWebServiceConfig.InnerHtml = "<span class=\"txt-red\">Failed</span>" + ret;
+                //}
             }
             catch (Exception ex)
             {

@@ -21,6 +21,7 @@ namespace RMS.Monitoring.Device.Scanner
                 this.clientResult = clientResult;
 
                 if (brand.ToLower() == "brother") _device = new Brother(model, deviceManagerName, deviceManagerID);
+                else if (brand.ToLower() == "syscan") _device = new Syscan(model, deviceManagerName, deviceManagerID);
                 else
                     throw new Exception("Brand Not Found. brand=" + brand);
             }

@@ -20,7 +20,7 @@ namespace RMS.Monitoring.Device.IDCardScanner
             {
                 this.clientResult = clientResult;
 
-                if (brand.ToLower() == "syscantech") _device = new Syscantech(model, deviceManagerName, deviceManagerID);
+                if (brand.ToLower() == "syscantech") _device = new Syscan(model, deviceManagerName, deviceManagerID);
                 else
                     throw new Exception("Brand Not Found. brand=" + brand);
             }

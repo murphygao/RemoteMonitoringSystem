@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Odbc;
 using System.Linq;
+using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
@@ -151,7 +152,7 @@ namespace RMS.Centralize.BSL.MonitoringEngine
                 {
                     db.Configuration.ProxyCreationEnabled = false;
                     db.Configuration.LazyLoadingEnabled = false;
-                    var listofdata = db.RmsWebsiteMonitorings.Where(c => c.ClientId == client.ClientId);
+                    var listofdata = db.RmsWebsiteMonitorings.Where(c => c.ClientId == client.ClientId && c.Enable == true);
 
                     List<RmsWebsiteMonitoring> lWebMonitorings = new List<RmsWebsiteMonitoring>(listofdata.ToList());
                     List<RmsReportMonitoringRaw> lRmsReportMonitoringRaws = new List<RmsReportMonitoringRaw>();
@@ -203,9 +204,11 @@ namespace RMS.Centralize.BSL.MonitoringEngine
                                     break;
                                 case "3":
                                     //Uptime.HTTP
+                                    lRmsReportMonitoringRaws.Add(MyHTTPStatus(client, websiteMonitoring));
                                     break;
                                 case "4":
                                     //Uptime.HTTPS
+                                    lRmsReportMonitoringRaws.Add(MyHTTPStatus(client, websiteMonitoring));
                                     break;
                                 case "5":
                                     //Webpage.HTTP
@@ -360,7 +363,7 @@ namespace RMS.Centralize.BSL.MonitoringEngine
 
                             }
 
-                            if (totalTime != 0)
+                            if (_max != null)
                                 _avg = totalTime/_sent;
 
                         }
@@ -479,5 +482,109 @@ namespace RMS.Centralize.BSL.MonitoringEngine
 
         }
 
+        private WebService.Proxy.MonitoringProxy.RmsReportMonitoringRaw MyHTTPStatus(RmsClient client, RmsWebsiteMonitoring websiteMonitoring)
+        {
+            if (client == null) throw new RMSWebException(this, "500", "MyHTTPStatus failed. RmsClient cannot be null", true);
+            if (websiteMonitoring == null) throw new RMSWebException(this, "500", "MyHTTPStatus failed. RmsWebsiteMonitoring cannot be null", true);
+
+            try
+            {
+                RMS.Centralize.WebService.Proxy.MonitoringProxy.RmsReportMonitoringRaw rawMessage = new WebService.Proxy.MonitoringProxy.RmsReportMonitoringRaw();
+
+                rawMessage.ClientCode = client.ClientCode;
+                rawMessage.MessageGroupCode = "W001"; //Uptime
+                rawMessage.MessageDateTime = DateTime.Now;
+                rawMessage.WebsiteMonitoringId = websiteMonitoring.WebsiteMonitoringId;
+
+                using (var db = new MyDbContext())
+                {
+                    RmsTrnHttpResult rmsTrn = db.RmsTrnHttpResults.Create();
+                    rmsTrn.ClientId = client.ClientId;
+                    rmsTrn.ClientCode = client.ClientCode;
+                    rmsTrn.Url = websiteMonitoring.DomainName;
+                    rmsTrn.WebsiteMonitoringId = websiteMonitoring.WebsiteMonitoringId;
+                    rawMessage.MessageRemark = "URL: " + websiteMonitoring.DomainName;
+
+                    try
+                    {
+                        if (rmsTrn.Url == null)
+                            throw new ArgumentNullException("rmsTrn.Url");
+
+                        if (rmsTrn.Url.ToLower().IndexOf("http:") < 0 && rmsTrn.Url.ToLower().IndexOf("https:") < 0)
+                        {
+                            // HTTP
+                            if (websiteMonitoring.WebsiteMonitoringProtocolId == "3")
+                            {
+                                rmsTrn.Url = "http://" + rmsTrn.Url.Trim();
+                            
+                            }
+                                // HTTPS
+                            else if (websiteMonitoring.WebsiteMonitoringProtocolId == "4")
+                            {
+                                rmsTrn.Url = "https://" + rmsTrn.Url.Trim();
+                            
+                            }
+                        }
+
+                        rawMessage.MessageRemark = "URL: " + rmsTrn.Url;
+
+                        if (!Uri.IsWellFormedUriString(rmsTrn.Url, UriKind.Absolute))
+                            throw new ArgumentException("rmsTrn.Url [" + rmsTrn.Url + "] is invalid format.");
+
+                        var request = (HttpWebRequest) WebRequest.Create(rmsTrn.Url);
+                        request.Method = "HEAD";
+                        request.Timeout = 5000;
+
+                        using (var response = (HttpWebResponse) request.GetResponse())
+                        {
+                            rmsTrn.ResponseCode = (int) response.StatusCode;
+
+                            if (response.StatusCode == HttpStatusCode.OK)
+                            {
+                                rawMessage.Message = "OK";
+                            }
+                            else
+                            {
+                                rawMessage.Message = "UPTIME_HTTP_FAILED";
+                                rawMessage.MessageRemark += " HttpStatusCode: " + (int) response.StatusCode;
+                            }
+
+                            response.Close();
+                        }
+                    }
+                    catch (WebException e)
+                    {
+                        if (e.Status == WebExceptionStatus.ProtocolError &&
+                            e.Response != null)
+                        {
+                            var resp = (HttpWebResponse)e.Response;
+                            rmsTrn.ResponseCode = (int)resp.StatusCode;
+                        }
+
+                        rawMessage.Message = "UPTIME_HTTP_FAILED";
+                        rawMessage.MessageRemark += " Error: " + e.Message + (e.InnerException != null ? e.InnerException.Message : "");
+                        rmsTrn.IsSuccess = false;
+                        rmsTrn.ErrorMessage = "Error: " + e.Message + (e.InnerException != null ? e.InnerException.Message : "");
+                    }
+                    catch (Exception e)
+                    {
+                        rawMessage.Message = "UPTIME_HTTP_FAILED";
+                        rawMessage.MessageRemark += " Error: " + e.Message + (e.InnerException != null ? e.InnerException.Message : "");
+                        rmsTrn.IsSuccess = false;
+                        rmsTrn.ErrorMessage = "Error: " + e.Message + (e.InnerException != null ? e.InnerException.Message : "");
+                    }
+
+                    db.RmsTrnHttpResults.Add(rmsTrn);
+                    db.SaveChanges();
+
+                    return rawMessage;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new RMSWebException(this, "0500", "MyHTTPStatus failed. " + ex.Message, ex, false);
+            }
+
+        }
     }
 }

@@ -126,6 +126,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="WebEngineService.svc" />
+    <Content Include="WebsiteMonitoringService.svc" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionProfileService.svc.cs">
@@ -150,6 +151,7 @@
     <Compile Include="BSL\WebDownload.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="BSL\WebsiteMonitoringService.cs" />
     <Compile Include="ClientMonitoringService.svc.cs">
       <DependentUpon>ClientMonitoringService.svc</DependentUpon>
     </Compile>
@@ -176,6 +178,7 @@
     <Compile Include="Interface\IWebEngineService.cs" />
     <Compile Include="Interface\ISelfTestingService.cs" />
     <Compile Include="Interface\ISeverityLevelService.cs" />
+    <Compile Include="Interface\IWebsiteMonitoringService.cs" />
     <Compile Include="LocationService.svc.cs">
       <DependentUpon>LocationService.svc</DependentUpon>
     </Compile>
@@ -192,6 +195,7 @@
     <Compile Include="Model\ClientMonitoringInfo.cs" />
     <Compile Include="Model\ClientSeverityActionInfo.cs" />
     <Compile Include="Model\JQueryDataTableParamModel.cs" />
+    <Compile Include="Model\ListOfValueInfo.cs" />
     <Compile Include="Model\LocationInfo.cs" />
     <Compile Include="Model\MainAppClient.cs" />
     <Compile Include="Model\MessageDetail.cs" />
@@ -202,6 +206,7 @@
     <Compile Include="Model\SeverityLevelInfo.cs" />
     <Compile Include="Model\SummaryMonitoringReport.cs" />
     <Compile Include="Model\SummaryStatusAllClientsInfo.cs" />
+    <Compile Include="Model\WebsiteMonitoringInfo.cs" />
     <Compile Include="MonitoringProfileService.svc.cs">
       <DependentUpon>MonitoringProfileService.svc</DependentUpon>
     </Compile>
@@ -220,6 +225,9 @@
     </Compile>
     <Compile Include="WebEngineService.svc.cs">
       <DependentUpon>WebEngineService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="WebsiteMonitoringService.svc.cs">
+      <DependentUpon>WebsiteMonitoringService.svc</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

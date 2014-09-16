@@ -759,7 +759,7 @@ namespace RMS.Centralize.WebService.BSL
 
                     #endregion
 
-                    int? lastMonitoringProfileDeviceId = null;
+                    int? lastWebsiteMonitoringId = null;
                     int counterResetToZero = 1;
 
                     var listLevels = db.RmsSeverityLevels.Include("RmsColorLabel");
@@ -776,10 +776,10 @@ namespace RMS.Centralize.WebService.BSL
                         if (reportMonitoringRaw.WebsiteMonitoringId == null) continue;
 
 
-                        if (lastMonitoringProfileDeviceId != reportMonitoringRaw.MonitoringProfileDeviceId)
+                        if (lastWebsiteMonitoringId != reportMonitoringRaw.WebsiteMonitoringId)
                         {
                             counterResetToZero = 1;
-                            lastMonitoringProfileDeviceId = reportMonitoringRaw.MonitoringProfileDeviceId;
+                            lastWebsiteMonitoringId = reportMonitoringRaw.WebsiteMonitoringId;
                         }
 
                         var rmsMessageGroup = db.RmsMessageGroups.FirstOrDefault(w => w.MessageGroupCode.ToLower() == reportMonitoringRaw.MessageGroupCode.ToLower());

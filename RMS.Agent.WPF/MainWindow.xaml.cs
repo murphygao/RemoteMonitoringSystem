@@ -222,8 +222,12 @@ namespace RMS.Agent.WPF
                 //host.AddServiceEndpoint(typeof(RMS.Agent.WCF.IAgentService),
                 //    new WSHttpBinding(), "http://localhost:8080/agent/wsAddress");
 
-                host.AddServiceEndpoint(typeof(RMS.Agent.WCF.IAgentService),
-                    new NetTcpBinding(SecurityMode.Transport), netTCP);
+                NetTcpBinding myBinding = new NetTcpBinding();
+                myBinding.Security.Mode = SecurityMode.None;
+                myBinding.Security.Transport.ClientCredentialType = TcpClientCredentialType.None;
+
+                host.AddServiceEndpoint(typeof(RMS.Agent.WCF.IAgentService), myBinding, netTCP);
+
                 host.Open();
                 lblStatus.Content = "Started";
             }

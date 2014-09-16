@@ -12,6 +12,7 @@
       <xs:element minOccurs="0" name="MessageRemark" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MonitoringProfileDeviceId" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="CreatedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="WebsiteMonitoringId" nillable="true" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="RmsReportMonitoringRaw" nillable="true" type="tns:RmsReportMonitoringRaw" />

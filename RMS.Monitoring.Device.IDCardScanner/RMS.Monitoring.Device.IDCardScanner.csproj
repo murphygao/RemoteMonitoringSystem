@@ -46,7 +46,7 @@
     <Compile Include="IDCardScanner.cs" />
     <Compile Include="IDCardScannerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Syscantech.cs" />
+    <Compile Include="Syscan.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RMS.Agent.Proxy\RMS.Agent.Proxy.csproj">

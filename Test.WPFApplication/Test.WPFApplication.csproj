@@ -132,9 +132,17 @@
       <Project>{20cf9b66-1c90-4a26-a143-fd66e29b77db}</Project>
       <Name>RMS.Agent.BSL.Monitoring</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RMS.Centralize.DAL\RMS.Centralize.DAL.csproj">
+      <Project>{9423b0b0-cb3a-4c5a-ab94-ecba517a303f}</Project>
+      <Name>RMS.Centralize.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RMS.Centralize.WebService.Gateway\RMS.Centralize.WebService.Gateway.csproj">
       <Project>{22541ddd-75fd-403f-a67a-2843fcc2a670}</Project>
       <Name>RMS.Centralize.WebService.Gateway</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Centralize.WebService\RMS.Centralize.WebService.csproj">
+      <Project>{55de9dc6-2aba-4f31-a456-e0de6873763c}</Project>
+      <Name>RMS.Centralize.WebService</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

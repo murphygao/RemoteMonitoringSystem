@@ -34,6 +34,7 @@
       <HintPath>..\Solution Items\ESN\ESN.Common.Exception.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
     <Reference Include="System.Printing" />

@@ -376,7 +376,7 @@
 
                         setTimeout(function () {
                             window.location.href = 'MessageAction.aspx';
-                        }, 1000);
+                        }, 1500);
 
                     } else if (ret.status == "-1") {
 

@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RMS.Monitoring.Device.IDCardScanner
+namespace RMS.Monitoring.Device.Scanner
 {
-    public class Syscantech : IDCardScanner
+    public class Syscan : Scanner
     {
-        public Syscantech(string model, string deviceManagerName, string deviceManagerID)
-            : base("Syscantech", model, deviceManagerName, deviceManagerID)
+        public Syscan(string model, string deviceManagerName, string deviceManagerID)
+            : base("Syscan", model, deviceManagerName, deviceManagerID)
         {
         }
 

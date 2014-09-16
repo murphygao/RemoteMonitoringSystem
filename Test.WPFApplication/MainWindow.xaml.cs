@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Net.NetworkInformation;
 using System.Reflection;
@@ -18,9 +19,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RMS.Agent.BSL.Monitoring.Models;
+using RMS.Centralize.DAL;
+using RMS.Centralize.WebService.BSL;
 using RMS.Centralize.WebService.Gateway;
 using TaskScheduler;
 using Test.WPFApplication.MonitoringService;
+using RmsReportMonitoringRaw = Test.WPFApplication.MonitoringService.RmsReportMonitoringRaw;
 
 namespace Test.WPFApplication
 {
@@ -32,6 +36,8 @@ namespace Test.WPFApplication
         public MainWindow()
         {
             InitializeComponent();
+            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+
         }
 
         private void btnCallAddMessage_Click(object sender, RoutedEventArgs e)
@@ -418,6 +424,20 @@ Approximate round trip times in milli-seconds:
             catch (Exception ex)
             {
                 txtWMResult.Text = "Error: " + ex.Message + (ex.InnerException != null ? ex.InnerException.Message : "");
+            }
+        }
+
+        private void btnWMList_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                WebsiteMonitoringService wmService = new WebsiteMonitoringService();
+                var listWebsiteMonitorings = wmService.ListWebsiteMonitoringsByClient(Convert.ToInt32(txtWMClientID.Text));
+                dtgWMResultListWebsiteMonitoring.ItemsSource = listWebsiteMonitorings;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 

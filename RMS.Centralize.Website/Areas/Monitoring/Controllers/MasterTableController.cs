@@ -364,5 +364,43 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
         #endregion
 
+        #region ListOfValue
+
+        public ActionResult ListLOVByListName(string listName)
+        {
+            if (string.IsNullOrEmpty(listName)) throw new ArgumentNullException("listName");
+
+            try
+            {
+                var service = new MasterTableService().masterTableService;
+
+                var result = service.ListLOVByListName(listName);
+
+                var ret = new
+                {
+                    status = (result.IsSuccess) ? 1 : 0,
+                    listofvalue = result.ListListOfValueInfos,
+                    data = JsonConvert.SerializeObject(result.MessageMaster, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })
+                };
+                return Json(ret);
+
+            }
+            catch (Exception ex)
+            {
+                var ret = new
+                {
+                    status = -1,
+                    error = ex.Message
+                };
+                new RMSWebException(this, "0500", "ListLOVByListName failed. " + ex.Message, ex, true);
+
+                return Json(ret);
+            }
+
+        }
+
+
+        #endregion
+
     }
 }

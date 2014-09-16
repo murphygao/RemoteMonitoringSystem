@@ -132,6 +132,16 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfRmsColorLabel" nillable="true" type="tns:ArrayOfRmsColorLabel" />
+  <xs:complexType name="RmsListOfValue">
+    <xs:sequence>
+      <xs:element name="ListName" nillable="true" type="xs:string" />
+      <xs:element name="ItemId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ItemValue" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PListName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PItemId" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RmsListOfValue" nillable="true" type="tns:RmsListOfValue" />
   <xs:complexType name="RmsMessageMaster">
     <xs:sequence>
       <xs:element name="Message" nillable="true" type="xs:string" />

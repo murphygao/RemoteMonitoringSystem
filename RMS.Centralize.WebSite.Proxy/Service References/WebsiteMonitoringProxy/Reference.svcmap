@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="68547ebe-ad52-415f-b07f-e8ef8d75bfba" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://esn-nb01/RMS.Centralize.WebService/WebsiteMonitoringService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="WebsiteMonitoringService1.xsd" MetadataType="Schema" ID="9c7f400d-dce3-4c4c-8284-1af33c901bf3" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/WebsiteMonitoringService.svc?xsd=xsd4" />
+    <MetadataFile FileName="WebsiteMonitoringService.xsd" MetadataType="Schema" ID="b184efae-6b08-43d0-a47e-cf1fc899adb8" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/WebsiteMonitoringService.svc?xsd=xsd0" />
+    <MetadataFile FileName="WebsiteMonitoringService11.xsd" MetadataType="Schema" ID="27df5b24-d4d9-4d12-a042-89ca394e4408" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/WebsiteMonitoringService.svc?xsd=xsd1" />
+    <MetadataFile FileName="WebsiteMonitoringService12.xsd" MetadataType="Schema" ID="b3ee2f71-6809-48d4-a136-bed053059f34" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/WebsiteMonitoringService.svc?xsd=xsd3" />
+    <MetadataFile FileName="WebsiteMonitoringService.wsdl" MetadataType="Wsdl" ID="b493ae17-3828-4edc-8e32-f6dea62712cb" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/WebsiteMonitoringService.svc?wsdl" />
+    <MetadataFile FileName="WebsiteMonitoringService.disco" MetadataType="Disco" ID="2615a800-6c01-4d06-8978-f7c46c7eeae9" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/WebsiteMonitoringService.svc?disco" />
+    <MetadataFile FileName="WebsiteMonitoringService13.xsd" MetadataType="Schema" ID="a57024a1-ebf0-4013-a34a-d35ef5502e85" SourceId="1" SourceUrl="https://esn-nb01/RMS.Centralize.WebService/WebsiteMonitoringService.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
