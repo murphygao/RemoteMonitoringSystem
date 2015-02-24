@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using RMS.Centralize.DAL;
+using RMS.Centralize.WebService.Model;
 
 namespace RMS.Centralize.WebService
 {
@@ -23,6 +24,15 @@ namespace RMS.Centralize.WebService
 
         [OperationContract]
         void AddBusinessMessage(RmsReportMonitoringRaw rawMessage);
+
+        [OperationContract]
+        void AddMessageWithAttachFiles(RmsReportMonitoringRaw rawMessage, List<RMSAttachment> lAttachments);
+
+        [OperationContract]
+        void AddMessagesWithAttachFiles(List<RmsReportMonitoringRaw> lRawMessages, List<RMSAttachment> lAttachments);
+
+        [OperationContract]
+        void AddBusinessMessageWithAttachFiles(RmsReportMonitoringRaw rawMessage, List<RMSAttachment> lAttachments);
 
         [OperationContract]
         void AddWebsiteMessage(List<RmsReportMonitoringRaw> lRawMessages);

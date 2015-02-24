@@ -32,7 +32,6 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
     [System.Runtime.Serialization.DataContractAttribute(Name="Result", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model")]
     [System.SerializableAttribute()]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Centralize.WebSite.Proxy.ClientProxy.ClientInfoResult))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Centralize.WebSite.Proxy.ClientProxy.MainAppClientResult))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Centralize.WebSite.Proxy.ClientProxy.LocationResult))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Centralize.WebSite.Proxy.ClientProxy.ClientSeverityActionResult))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult))]
@@ -159,29 +158,6 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
                 if ((this.TotalRecordsField.Equals(value) != true)) {
                     this.TotalRecordsField = value;
                     this.RaisePropertyChanged("TotalRecords");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="MainAppClientResult", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService")]
-    [System.SerializableAttribute()]
-    public partial class MainAppClientResult : RMS.Centralize.WebSite.Proxy.ClientProxy.Result {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.ClientProxy.MainAppClient> ListMainAppClientsField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.ClientProxy.MainAppClient> ListMainAppClients {
-            get {
-                return this.ListMainAppClientsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ListMainAppClientsField, value) != true)) {
-                    this.ListMainAppClientsField = value;
-                    this.RaisePropertyChanged("ListMainAppClients");
                 }
             }
         }
@@ -463,6 +439,9 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.ClientProxy.RmsClientSeverityAction> RmsClientSeverityActionsField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.ClientProxy.RmsWebsiteMonitoring> RmsWebsiteMonitoringsField;
+        
         private int ClientIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -549,7 +528,20 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=2)]
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<RMS.Centralize.WebSite.Proxy.ClientProxy.RmsWebsiteMonitoring> RmsWebsiteMonitorings {
+            get {
+                return this.RmsWebsiteMonitoringsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RmsWebsiteMonitoringsField, value) != true)) {
+                    this.RmsWebsiteMonitoringsField = value;
+                    this.RaisePropertyChanged("RmsWebsiteMonitorings");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=3)]
         public int ClientId {
             get {
                 return this.ClientIdField;
@@ -562,7 +554,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=4)]
         public System.Nullable<int> ClientTypeId {
             get {
                 return this.ClientTypeIdField;
@@ -575,7 +567,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=5)]
         public string ClientCode {
             get {
                 return this.ClientCodeField;
@@ -588,7 +580,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=6)]
         public System.Nullable<bool> UseLocalInfo {
             get {
                 return this.UseLocalInfoField;
@@ -601,7 +593,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=7)]
         public System.Nullable<int> ReferenceClientId {
             get {
                 return this.ReferenceClientIdField;
@@ -614,7 +606,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=8)]
         public System.Nullable<int> LocationId {
             get {
                 return this.LocationIdField;
@@ -627,7 +619,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=9)]
         public string IpAddress {
             get {
                 return this.IpAddressField;
@@ -640,7 +632,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=10)]
         public System.Nullable<bool> HasMonitoringAgent {
             get {
                 return this.HasMonitoringAgentField;
@@ -653,7 +645,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=11)]
         public System.Nullable<bool> ActiveList {
             get {
                 return this.ActiveListField;
@@ -666,7 +658,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=11)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=12)]
         public System.Nullable<bool> Enable {
             get {
                 return this.EnableField;
@@ -679,7 +671,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=12)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=13)]
         public System.Nullable<System.DateTime> EffectiveDate {
             get {
                 return this.EffectiveDateField;
@@ -692,7 +684,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=13)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=14)]
         public System.Nullable<System.DateTime> ExpiredDate {
             get {
                 return this.ExpiredDateField;
@@ -705,7 +697,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=14)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=15)]
         public System.Nullable<int> State {
             get {
                 return this.StateField;
@@ -718,7 +710,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=15)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=16)]
         public System.Nullable<System.DateTime> CreatedDate {
             get {
                 return this.CreatedDateField;
@@ -731,7 +723,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=16)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=17)]
         public string CreatedBy {
             get {
                 return this.CreatedByField;
@@ -744,7 +736,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=17)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=18)]
         public System.Nullable<System.DateTime> UpdatedDate {
             get {
                 return this.UpdatedDateField;
@@ -757,7 +749,7 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=18)]
+        [System.Runtime.Serialization.DataMemberAttribute(Order=19)]
         public string UpdatedBy {
             get {
                 return this.UpdatedByField;
@@ -1851,83 +1843,6 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="MainAppClient", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model")]
-    [System.SerializableAttribute()]
-    public partial class MainAppClient : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ClientCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int ClientIDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ClientNameField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ClientCode {
-            get {
-                return this.ClientCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ClientCodeField, value) != true)) {
-                    this.ClientCodeField = value;
-                    this.RaisePropertyChanged("ClientCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int ClientID {
-            get {
-                return this.ClientIDField;
-            }
-            set {
-                if ((this.ClientIDField.Equals(value) != true)) {
-                    this.ClientIDField = value;
-                    this.RaisePropertyChanged("ClientID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ClientName {
-            get {
-                return this.ClientNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ClientNameField, value) != true)) {
-                    this.ClientNameField = value;
-                    this.RaisePropertyChanged("ClientName");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="RmsLocation", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL")]
     [System.SerializableAttribute()]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(RMS.Centralize.WebSite.Proxy.ClientProxy.LocationInfo))]
@@ -2938,6 +2853,209 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RmsWebsiteMonitoring", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL")]
+    [System.SerializableAttribute()]
+    public partial class RmsWebsiteMonitoring : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private int WebsiteMonitoringIdField;
+        
+        private int ClientIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string WebsiteMonitoringTypeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string WebsiteMonitoringProtocolIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> PortNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DomainNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> EnableField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> CreatedDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CreatedByField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> UpdatedDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UpdatedByField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int WebsiteMonitoringId {
+            get {
+                return this.WebsiteMonitoringIdField;
+            }
+            set {
+                if ((this.WebsiteMonitoringIdField.Equals(value) != true)) {
+                    this.WebsiteMonitoringIdField = value;
+                    this.RaisePropertyChanged("WebsiteMonitoringId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=1)]
+        public int ClientId {
+            get {
+                return this.ClientIdField;
+            }
+            set {
+                if ((this.ClientIdField.Equals(value) != true)) {
+                    this.ClientIdField = value;
+                    this.RaisePropertyChanged("ClientId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+        public string WebsiteMonitoringTypeId {
+            get {
+                return this.WebsiteMonitoringTypeIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.WebsiteMonitoringTypeIdField, value) != true)) {
+                    this.WebsiteMonitoringTypeIdField = value;
+                    this.RaisePropertyChanged("WebsiteMonitoringTypeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+        public string WebsiteMonitoringProtocolId {
+            get {
+                return this.WebsiteMonitoringProtocolIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.WebsiteMonitoringProtocolIdField, value) != true)) {
+                    this.WebsiteMonitoringProtocolIdField = value;
+                    this.RaisePropertyChanged("WebsiteMonitoringProtocolId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+        public System.Nullable<int> PortNumber {
+            get {
+                return this.PortNumberField;
+            }
+            set {
+                if ((this.PortNumberField.Equals(value) != true)) {
+                    this.PortNumberField = value;
+                    this.RaisePropertyChanged("PortNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+        public string DomainName {
+            get {
+                return this.DomainNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DomainNameField, value) != true)) {
+                    this.DomainNameField = value;
+                    this.RaisePropertyChanged("DomainName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+        public System.Nullable<bool> Enable {
+            get {
+                return this.EnableField;
+            }
+            set {
+                if ((this.EnableField.Equals(value) != true)) {
+                    this.EnableField = value;
+                    this.RaisePropertyChanged("Enable");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+        public System.Nullable<System.DateTime> CreatedDate {
+            get {
+                return this.CreatedDateField;
+            }
+            set {
+                if ((this.CreatedDateField.Equals(value) != true)) {
+                    this.CreatedDateField = value;
+                    this.RaisePropertyChanged("CreatedDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+        public string CreatedBy {
+            get {
+                return this.CreatedByField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CreatedByField, value) != true)) {
+                    this.CreatedByField = value;
+                    this.RaisePropertyChanged("CreatedBy");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+        public System.Nullable<System.DateTime> UpdatedDate {
+            get {
+                return this.UpdatedDateField;
+            }
+            set {
+                if ((this.UpdatedDateField.Equals(value) != true)) {
+                    this.UpdatedDateField = value;
+                    this.RaisePropertyChanged("UpdatedDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+        public string UpdatedBy {
+            get {
+                return this.UpdatedByField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UpdatedByField, value) != true)) {
+                    this.UpdatedByField = value;
+                    this.RaisePropertyChanged("UpdatedBy");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="RmsMessage", Namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL")]
     [System.SerializableAttribute()]
     public partial class RmsMessage : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -3347,10 +3465,10 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.Result> SetClientStateAsync(int clientID, RMS.Centralize.WebSite.Proxy.ClientProxy.ClientState state);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/Search", ReplyAction="http://tempuri.org/IClientService/SearchResponse")]
-        RMS.Centralize.WebSite.Proxy.ClientProxy.ClientInfoResult Search(RMS.Centralize.WebSite.Proxy.ClientProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> asOfDate, System.Nullable<int> clientTypeID, string clientCode, System.Nullable<bool> clientStatus, string ipAddress);
+        RMS.Centralize.WebSite.Proxy.ClientProxy.ClientInfoResult Search(RMS.Centralize.WebSite.Proxy.ClientProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> asOfDate, System.Nullable<int> clientTypeID, string clientCode, System.Nullable<bool> clientStatus, string ipAddress, string location);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/Search", ReplyAction="http://tempuri.org/IClientService/SearchResponse")]
-        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.ClientInfoResult> SearchAsync(RMS.Centralize.WebSite.Proxy.ClientProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> asOfDate, System.Nullable<int> clientTypeID, string clientCode, System.Nullable<bool> clientStatus, string ipAddress);
+        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.ClientInfoResult> SearchAsync(RMS.Centralize.WebSite.Proxy.ClientProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> asOfDate, System.Nullable<int> clientTypeID, string clientCode, System.Nullable<bool> clientStatus, string ipAddress, string location);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/Update", ReplyAction="http://tempuri.org/IClientService/UpdateResponse")]
         RMS.Centralize.WebSite.Proxy.ClientProxy.Result Update(System.Nullable<int> id, string m, string clientCode, System.Nullable<int> clientTypeID, System.Nullable<bool> useLocalInfo, System.Nullable<int> referenceClientID, string ipAddress, System.Nullable<int> locationID, System.Nullable<bool> hasMonitoringAgent, System.Nullable<bool> activeList, System.Nullable<bool> status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, System.Nullable<int> state, string updatedBy);
@@ -3369,12 +3487,6 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/ExistingClientCode", ReplyAction="http://tempuri.org/IClientService/ExistingClientCodeResponse")]
         System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult> ExistingClientCodeAsync(string clientCode);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/ListMainAppClient", ReplyAction="http://tempuri.org/IClientService/ListMainAppClientResponse")]
-        RMS.Centralize.WebSite.Proxy.ClientProxy.MainAppClientResult ListMainAppClient();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/ListMainAppClient", ReplyAction="http://tempuri.org/IClientService/ListMainAppClientResponse")]
-        System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.MainAppClientResult> ListMainAppClientAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientService/ListLocation", ReplyAction="http://tempuri.org/IClientService/ListLocationResponse")]
         RMS.Centralize.WebSite.Proxy.ClientProxy.LocationResult ListLocation();
@@ -3452,12 +3564,12 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
             return base.Channel.SetClientStateAsync(clientID, state);
         }
         
-        public RMS.Centralize.WebSite.Proxy.ClientProxy.ClientInfoResult Search(RMS.Centralize.WebSite.Proxy.ClientProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> asOfDate, System.Nullable<int> clientTypeID, string clientCode, System.Nullable<bool> clientStatus, string ipAddress) {
-            return base.Channel.Search(param, asOfDate, clientTypeID, clientCode, clientStatus, ipAddress);
+        public RMS.Centralize.WebSite.Proxy.ClientProxy.ClientInfoResult Search(RMS.Centralize.WebSite.Proxy.ClientProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> asOfDate, System.Nullable<int> clientTypeID, string clientCode, System.Nullable<bool> clientStatus, string ipAddress, string location) {
+            return base.Channel.Search(param, asOfDate, clientTypeID, clientCode, clientStatus, ipAddress, location);
         }
         
-        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.ClientInfoResult> SearchAsync(RMS.Centralize.WebSite.Proxy.ClientProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> asOfDate, System.Nullable<int> clientTypeID, string clientCode, System.Nullable<bool> clientStatus, string ipAddress) {
-            return base.Channel.SearchAsync(param, asOfDate, clientTypeID, clientCode, clientStatus, ipAddress);
+        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.ClientInfoResult> SearchAsync(RMS.Centralize.WebSite.Proxy.ClientProxy.JQueryDataTableParamModel param, System.Nullable<System.DateTime> asOfDate, System.Nullable<int> clientTypeID, string clientCode, System.Nullable<bool> clientStatus, string ipAddress, string location) {
+            return base.Channel.SearchAsync(param, asOfDate, clientTypeID, clientCode, clientStatus, ipAddress, location);
         }
         
         public RMS.Centralize.WebSite.Proxy.ClientProxy.Result Update(System.Nullable<int> id, string m, string clientCode, System.Nullable<int> clientTypeID, System.Nullable<bool> useLocalInfo, System.Nullable<int> referenceClientID, string ipAddress, System.Nullable<int> locationID, System.Nullable<bool> hasMonitoringAgent, System.Nullable<bool> activeList, System.Nullable<bool> status, System.Nullable<System.DateTime> effectiveDate, System.Nullable<System.DateTime> expiredDate, System.Nullable<int> state, string updatedBy) {
@@ -3482,14 +3594,6 @@ namespace RMS.Centralize.WebSite.Proxy.ClientProxy {
         
         public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.ClientResult> ExistingClientCodeAsync(string clientCode) {
             return base.Channel.ExistingClientCodeAsync(clientCode);
-        }
-        
-        public RMS.Centralize.WebSite.Proxy.ClientProxy.MainAppClientResult ListMainAppClient() {
-            return base.Channel.ListMainAppClient();
-        }
-        
-        public System.Threading.Tasks.Task<RMS.Centralize.WebSite.Proxy.ClientProxy.MainAppClientResult> ListMainAppClientAsync() {
-            return base.Channel.ListMainAppClientAsync();
         }
         
         public RMS.Centralize.WebSite.Proxy.ClientProxy.LocationResult ListLocation() {

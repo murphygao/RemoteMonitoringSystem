@@ -57,10 +57,6 @@
       <Project>{F8EC98BC-37BB-42FD-9B50-78F928BB08A2}</Project>
       <Name>RMS.Common.Exception</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RMS.Monitoring.Device.MonitorDisplay\RMS.Monitoring.Device.MonitorDisplay.csproj">
-      <Project>{D1474861-2F1D-4511-98DA-A7FDD03CBA3E}</Project>
-      <Name>RMS.Monitoring.Device.MonitorDisplay</Name>
-    </ProjectReference>
     <ProjectReference Include="..\RMS.Monitoring.Device\RMS.Monitoring.Device.csproj">
       <Project>{ba999f8e-4f2b-443a-b59a-f8f82c4d9103}</Project>
       <Name>RMS.Monitoring.Device</Name>

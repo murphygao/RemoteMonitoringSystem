@@ -17,6 +17,10 @@ namespace RMS.Centralize.WebService.Model
         public int CounterNotOK { get; set; }
         public int CounterBizMessage { get; set; }
         public int AgentNotAlive { get; set; }
-
+        public int iRMSStatus { get; set; }
+        public string sRMSStatus { get; set; }
+        public int ClientTypeID { get; set; }
+        public bool HasMonitoringAgent { get; set; }
+        public DateTime? OldestErrorMessageDateTime { get; set; }
     }
 }

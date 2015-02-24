@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +42,20 @@ namespace RMS.Centralize.DAL
 
                 }
                 return base.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                string err = "";
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    err += "Entity of type \"" + eve.Entry.Entity.GetType().Name + "\" in state \"" + eve.Entry.State +
+                           "\" has the following validation errors:" + Environment.NewLine;
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        err += "- Property: \"" + ve.PropertyName + "\", Error: \"" + ve.ErrorMessage + "\"" + Environment.NewLine;
+                    }
+                }
+                throw new RMSWebException(this, "0500", "SaveChanges failed. " + e.Message + err, e, false);
             }
             catch (Exception ex)
             {

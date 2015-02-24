@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RMS.Common.Exception;
 using RMS.Monitoring.Helper;
 
 namespace RMS.Monitoring.Device.ThermalPrinter
@@ -26,7 +25,13 @@ namespace RMS.Monitoring.Device.ThermalPrinter
         /// <summary>
         /// 
         /// </summary>
-        /// <returns>Return Paper Status -> int[0] = Near End, int [1] = Out of Paper
+        /// <returns>Return Paper Status -> 
+        /// int[0] = Near End, 
+        /// int[1] = Out of Paper
+        /// int[2] = Paper Jam
+        /// int[3] = Ticket not present in output
+        /// int[4] = Cutter error
+        /// 
         /// -1 ตรวจสอบไม่ได้
         /// 0 ปกติ
         /// >0  ไม่ปกติ
@@ -35,67 +40,77 @@ namespace RMS.Monitoring.Device.ThermalPrinter
         {
             try
             {
-                bool checkThermalPaperViaTextFile = (ConfigurationManager.AppSettings["RMS.CheckThermalPaperViaTextFile"] != null && Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.CheckThermalPaperViaTextFile"]));
+                string sVid = deviceManagerID.Substring(deviceManagerID.ToUpper().IndexOf("VID_") + 4, 4);
+                int iVid = Int32.Parse(sVid, NumberStyles.HexNumber);
+                string sPid = deviceManagerID.Substring(deviceManagerID.ToUpper().IndexOf("PID_") + 4, 4);
+                int iPid = Int32.Parse(sPid, NumberStyles.HexNumber);
 
-                if (checkThermalPaperViaTextFile)
+                byte[] byteArray = new byte[3];
+                byteArray[0] = 0x10;
+                byteArray[1] = 0x04;
+                byteArray[2] = 20;
+
+                byte[] read = null;
+
+                try
                 {
-                    var ret = new int[] { 0, 0 };
-                    string messageStorageFolder = ConfigurationManager.AppSettings["RMS.MessageStorageFolder"];
-                    messageStorageFolder = (messageStorageFolder.EndsWith(@"\")) ? messageStorageFolder : messageStorageFolder + @"\";
-
-                    // Check Low Paper
-                    string lowPaper = "LOW_PAPER_" + brand + ".txt";
-                    if (File.Exists(messageStorageFolder + lowPaper))
-                    {
-                        ret[0] = 1;
-                    }
-
-                    // Check End Paper
-                    string endPaper = "END_PAPER_" + brand + ".txt";
-                    if (File.Exists(messageStorageFolder + endPaper))
-                    {
-                        ret[1] = 1;
-                    }
-
-                    return ret;
-
+                    read = USBCustomThermalPrinter.WriteAndRead(iVid, iPid, byteArray);
                 }
-                else
+                catch (Exception ex)
                 {
+                    if (ex.Message.IndexOf("Device Not Found") > -1)
+                    {
+                        //Try to install USB Filter
+                        Helper.USBFilter.InstallUSBFilter(sVid, sPid);
 
-                    string sVid = deviceManagerID.Substring(deviceManagerID.ToUpper().IndexOf("VID_") + 4, 4);
-                    int iVid = Int32.Parse(sVid, NumberStyles.HexNumber);
-                    string sPid = deviceManagerID.Substring(deviceManagerID.ToUpper().IndexOf("PID_") + 4, 4);
-                    int iPid = Int32.Parse(sPid, NumberStyles.HexNumber);
-
-                    byte[] byteArray = new byte[3];
-                    byteArray[0] = 0x10;
-                    byteArray[1] = 0x04;
-                    byteArray[2] = 4;
-
-                    byte[] read = USBCustomThermalPrinter.WriteAndRead(iVid, iPid, byteArray);
-
-                    if (read == null || read.Length == 0)
-                        return new int[] {500, 500};
-
-                    int[] ret = new int[2] {0, 0};
-                    var bit2 = (read[0] & (1 << 2)) != 0; // Near End
-                    var bit3 = (read[0] & (1 << 3)) != 0; // Near End
-                    var bit5 = (read[0] & (1 << 5)) != 0; // Out of Paper
-                    var bit6 = (read[0] & (1 << 6)) != 0; // Out of Paper
-
-                    if (bit2 || bit3)
-                        ret[0] = 1;
-                    if (bit5 || bit6)
-                        ret[1] = 1;
-
-                    return ret;
+                        //Then re-try check paper
+                        read = USBCustomThermalPrinter.WriteAndRead(iVid, iPid, byteArray);
+                    }
                 }
+
+                if (read == null || read.Length == 0)
+                    return new int[] {-1, -1, -1, -1, -1};
+
+                int[] ret = new int[5] {0, 0, 0, 0, 0};
+
+                // ตรวจสอบ Near End - Byte ที่ 3, Bit ที่ 2
+                if ((read[2] & (1 << 2)) != 0)
+                {
+                    ret[0] = 1;
+                }
+
+                // ตรวจสอบ Out of Paper - Byte ที่ 3, Bit ที่ 0
+                if ((read[2] & (1 << 0)) != 0)
+                {
+                    ret[1] = 1;
+                }
+
+                // ตรวจสอบ Paper Jam - Byte ที่ 5, Bit ที่ 6
+                if ((read[4] & (1 << 6)) != 0)
+                {
+                    ret[2] = 1;
+                }
+
+                // ตรวจสอบ Ticket not present in output - Byte ที่ 5, Bit ที่ 6
+                if ((read[2] & (1 << 6)) != 0)
+                {
+                    ret[3] = 1;
+                }
+
+                // ตรวจสอบ Cutter Error - Byte ที่ 6, Bit ที่ 0
+                if ((read[5] & (1 << 0)) != 0)
+                {
+                    ret[4] = 1;
+                }
+
+                return ret;
+
             }
             catch (Exception ex)
             {
-                throw new RMSAppException(this, "0500", "CheckPaperStatus failed. " + ex.Message, ex, false);
+                throw new Exception("CheckPaperStatus failed. " + ex.Message, ex);
             }
+
         }
     }
 }

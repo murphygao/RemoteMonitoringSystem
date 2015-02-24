@@ -312,7 +312,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
         }
 
         // GET: /Monitoring/SummaryReport/ResendAction
-        public ActionResult ResendAction(ActionServiceActionSendType sentType, long? id)
+        public ActionResult ResendAction(ActionSendServiceActionSendType sentType, long? id)
         {
             if (id == null)
             {
@@ -352,6 +352,80 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
                 return Json(exError);
             }
         }
+
+        // GET: /Monitoring/SummaryReport/SearchSummaryStatusAllClients/
+        public ActionResult SearchSummaryStatusAllClients(string txtClientCode, string txtLocation, int? ddlMonitoringStatus)
+        {
+            try
+            {
+                var service = new RMS.Centralize.WebSite.Proxy.SummaryReportService().summaryReportService;
+
+                var result = service.SearchSummaryStatusAllClients();
+
+                for (int i = 2; i < 50; i++)
+                {
+                    SummaryStatusAllClientsInfo tmp = new SummaryStatusAllClientsInfo();
+                    tmp.ClientID = 1;
+                    tmp.ClientCode = "K1404-" + i.ToString().PadLeft(3, '0');
+                    tmp.CounterOK = 16;
+                    tmp.CounterNotOK = 0;
+                    tmp.iRMSStatus = 10;
+                    tmp.sRMSStatus = "RMS is up";
+                    tmp.LocationName = "อาคารสำนักงานใหญ่ 2";
+
+                    if (i == 21 || i == 32)
+                    {
+                        tmp.CounterOK = 15;
+                        tmp.CounterNotOK = 1;
+                        tmp.iRMSStatus = 0;
+                        tmp.sRMSStatus = "RMS is down";
+                        tmp.OldestErrorMessageDateTime = DateTime.Now.AddDays(-i);
+                    }
+                    if (i == 49 || i == 84)
+                    {
+                        tmp.CounterOK = 14;
+                        tmp.CounterNotOK = 2;
+                        tmp.OldestErrorMessageDateTime = DateTime.Now.AddDays(-i);
+                    }
+                    result.ListSummaryStatusAllClientsInfos.Add(tmp);
+                }
+
+                if (ddlMonitoringStatus != null && ddlMonitoringStatus == 1)
+                {
+                    result.ListSummaryStatusAllClientsInfos =
+                        new List<SummaryStatusAllClientsInfo>(
+                            result.ListSummaryStatusAllClientsInfos.Where(
+                                w => w.CounterNotOK > 0 || (w.iRMSStatus >= 0 && w.iRMSStatus < 10) || w.iRMSStatus >= 30));
+                }
+
+                List<SummaryStatusAllClientsInfo> newOrder = new List<SummaryStatusAllClientsInfo>();
+                newOrder.AddRange(result.ListSummaryStatusAllClientsInfos.Where(w => (w.iRMSStatus >= 0 && w.iRMSStatus < 10) || w.CounterNotOK > 0).OrderBy(o => o.OldestErrorMessageDateTime).ThenBy(o => o.ClientCode));
+                newOrder.AddRange(result.ListSummaryStatusAllClientsInfos.Where(w => !((w.iRMSStatus >= 0 && w.iRMSStatus < 10) || w.CounterNotOK > 0)).OrderBy(o => o.ClientCode));
+                result.ListSummaryStatusAllClientsInfos = newOrder;
+
+                var ret = new
+                {
+                    status = (result.IsSuccess) ? 1 : 0,
+                    error = result.ErrorMessage,
+                    data = result.ListSummaryStatusAllClientsInfos
+                };
+
+                return Json(ret);
+
+            }
+            catch (Exception ex)
+            {
+                var ret = new
+                {
+                    status = -1,
+                    error = ex.Message
+                };
+                new RMSWebException(this, "0500", "SearchSummaryStatusAllClients failed. " + ex.Message, ex, true);
+                return Json(ret);
+            }
+
+        }
+
 
         private int? FindDeviceTypeIDByDeviceID(List<RmsDevice> devices, int? deviceID)
         {

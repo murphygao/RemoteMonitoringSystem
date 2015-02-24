@@ -28,6 +28,8 @@ namespace RMS.Centralize.WebService
         [OperationContract]
         Result ActionRequest(ActionSendService.ActionSendType actionSendType, long reportID);
 
+        [OperationContract]
+        SummaryStatusAllClientsInfoResult SearchSummaryStatusAllClients();
 
     }
     
@@ -51,6 +53,16 @@ namespace RMS.Centralize.WebService
 
         [DataMember]
         public ClientInfo Client { get; set; }
+
+    }
+
+    public class SummaryStatusAllClientsInfoResult : Result
+    {
+        [DataMember]
+        public List<SummaryStatusAllClientsInfo> ListSummaryStatusAllClientsInfos { get; set; }
+
+        [DataMember]
+        public int TotalRecords { get; set; }
 
     }
 

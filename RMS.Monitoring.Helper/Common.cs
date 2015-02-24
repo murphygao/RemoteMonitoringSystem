@@ -46,12 +46,13 @@ namespace RMS.Monitoring.Helper
             // Refer to RMS Database, Table : RMS_DeviceType
             public const string Client = "CLI";
             public const string Performance = "PERF";
+            public const string Alarm = "ALARM";
             public const string ATMCardReader = "ACR";
             public const string BarcodeReader = "BR";
             public const string CardDispenser = "CD";
             public const string ElectronicSignaturePad = "ESP";
             public const string EncryptedPinPad = "EPP";
-            public const string IDCardSanner = "IDCS";
+            public const string IDCardScanner = "IDCS";
             public const string Keyboard = "KB";
             public const string MonitorDisplay = "MD";
             public const string Printer = "PRINT";
@@ -60,6 +61,7 @@ namespace RMS.Monitoring.Helper
             public const string ThermalPrinter = "TMP";
             public const string WebCamera = "WC";
             public const string UPS = "UPS";
+            public const string BasicUSBDevice = "USB";
 
         }
     }

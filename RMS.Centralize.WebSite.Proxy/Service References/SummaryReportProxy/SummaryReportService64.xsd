@@ -52,7 +52,7 @@
   <xs:element name="ActionRequest">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.BSL" minOccurs="0" name="actionSendType" type="q4:ActionService.ActionSendType" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.BSL" minOccurs="0" name="actionSendType" type="q4:ActionSendService.ActionSendType" />
         <xs:element minOccurs="0" name="reportID" type="xs:long" />
       </xs:sequence>
     </xs:complexType>
@@ -61,6 +61,18 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" minOccurs="0" name="ActionRequestResult" nillable="true" type="q5:Result" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SearchSummaryStatusAllClients">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SearchSummaryStatusAllClientsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="SearchSummaryStatusAllClientsResult" nillable="true" type="q6:SummaryStatusAllClientsInfoResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

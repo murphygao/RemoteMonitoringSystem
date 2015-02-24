@@ -20,6 +20,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ESN.AutoUpdate.API;
 using RMS.Agent.BSL.AutoUpate;
 using RMS.Agent.Watchdog.BSL;
 using RMS.Common.Exception;
@@ -38,31 +39,33 @@ namespace RMS.Agent.Watchdog
 
         public static string applicationStartupPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
+        //private static string processToEnd;// = ConfigurationManager.AppSettings["RMS.AGENT_PROCESS_NAME"] ?? "RMS.Agent.WPF";
+        //private static string postProcess;// = applicationStartupPath + @"\" + processToEnd + ".exe";
+        //public const string updaterPrefix = "M1234_";
+        //public static string updater = applicationStartupPath + @"\ESN.AutoUpdate.exe";
+        //private bool skipUpdate = false;
 
-        private static string processToEnd;// = ConfigurationManager.AppSettings["RMS.AGENT_PROCESS_NAME"] ?? "RMS.Agent.WPF";
-        private static string postProcess;// = applicationStartupPath + @"\" + processToEnd + ".exe";
-        public const string updaterPrefix = "M1234_";
-        public static string updater = applicationStartupPath + @"\ESN.AutoUpdate.exe";
-        private bool skipUpdate = false;
+        //public const string updateSuccess = "UpdateMe has been successfully updated";
+        //public const string updateCurrent = "No updates available for UpdateMe";
+        //public const string updateInfoError = "Error in retrieving UpdateMe information";
 
-        public const string updateSuccess = "UpdateMe has been successfully updated";
-        public const string updateCurrent = "No updates available for UpdateMe";
-        public const string updateInfoError = "Error in retrieving UpdateMe information";
+        //public decimal currentVerionOnClient = 0;
+        //public decimal updateToVersion = 0;
 
-        public decimal currentVerionOnClient = 0;
-        public decimal updateToVersion = 0;
+        //public string downloadURL = ConfigurationManager.AppSettings["RMS.AutoUpdate.DownloadURL"];
+        //public string versionFileNameOnServer = ConfigurationManager.AppSettings["RMS.AutoUpdate.VersionFileNameOnServer"];
 
-        public string downloadURL = ConfigurationManager.AppSettings["RMS.AutoUpdate.DownloadURL"];
-        public string versionFileNameOnServer = ConfigurationManager.AppSettings["RMS.AutoUpdate.VersionFileNameOnServer"];
+        //public static List<string> info = new List<string>();
 
-        public static List<string> info = new List<string>();
+        private ESN.AutoUpdate.API.UpdateService _updateService;
 
         public MainWindow()
         {
             try
             {
                 InitializeComponent();
-                this.SourceInitialized += (x, y) => this.HideMinimizeAndMaximizeButtons();
+
+                SetProcessPriority();
 
                 ni = new System.Windows.Forms.NotifyIcon();
 
@@ -76,6 +79,8 @@ namespace RMS.Agent.Watchdog
                         this.WindowState = WindowState.Normal;
                     };
 
+                ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+
                 lblAppStatus.Content = "Stopped";
                 btnStart.IsEnabled = true;
                 btnStop.IsEnabled = false;
@@ -88,10 +93,23 @@ namespace RMS.Agent.Watchdog
                 dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
                 dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
 
-                StartAutoUpdateProcess();
+                #region Auto Update Process
 
-                txtCurrentVersion.Content = currentVerionOnClient;
+                _updateService = new UpdateService();
+                _updateService.EventAutoUpdateResult += AddAutoUpdateLog;
 
+                try
+                {
+                    txtCurrentVersion.Content = _updateService.StartAutoUpdateProcess();
+                }
+                catch (Exception exception)
+                {
+                    new RMSAppException(this, "0500", "MainWindow - StartAutoUpdateProcess failed. " + exception.Message, exception, true);
+                }
+
+                #endregion
+
+                FixAppConfig();
                 System.Threading.Thread.Sleep(10000);
                 btnStart_Click(null, null);
 
@@ -164,7 +182,7 @@ namespace RMS.Agent.Watchdog
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Exit Application", System.Windows.MessageBoxButton.YesNo);
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Exit Watchdog", System.Windows.MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
             {
                 ni.Visible = false;
@@ -172,7 +190,10 @@ namespace RMS.Agent.Watchdog
                 {
                     RemoveTaskScheduler();
                 }
-                catch{ }
+                catch
+                {
+                    App.Current.Shutdown();
+                }
             }
             else
             {
@@ -180,202 +201,47 @@ namespace RMS.Agent.Watchdog
             }
         }
 
+        private void SetProcessPriority()
+        {
+            try
+            {
+                Process myProcess = Process.GetCurrentProcess();
+                var priority = Convert.ToString(ConfigurationManager.AppSettings["RMS.ProcessPriority"] ?? "high");
+                switch (priority.ToLower())
+                {
+                    case "realtime":
+                        myProcess.PriorityClass = ProcessPriorityClass.RealTime;
+                        break;
+                    case "normal":
+                        myProcess.PriorityClass = ProcessPriorityClass.Normal;
+                        break;
+                    default:
+                        myProcess.PriorityClass = ProcessPriorityClass.High;
+                        break;
+
+                }
+                myProcess.PriorityClass = ProcessPriorityClass.High;
+            }
+            catch { }
+
+        }
+
 
         #region Auto Update Methods
 
-        private void StartAutoUpdateProcess()
+        private void AddAutoUpdateLog(object sender, EventArgs e)
         {
             try
             {
-                LoadLocalAutoUpdateInfo();
-                Update.updateMe(updaterPrefix, applicationStartupPath + @"\");
-                UnpackCommandline();
+                UpdateService.AutoUpdateResultEventArgs args = (UpdateService.AutoUpdateResultEventArgs)e;
 
-                if (!skipUpdate)
-                    CheckforUpdate();
-            }
-            catch (Exception ex)
-            {
-                new RMSAppException(this, "0500", "StartAutoUpdateProcess failed. " + ex.Message, ex, true);
-            }
-        }
+                string strUpdateVersion = string.IsNullOrEmpty(args.updateVersion) ? "" : " (" + args.updateVersion + ")";
 
-        private void UnpackCommandline()
-        {
-            try
-            {
-                bool commandPresent = false;
-                string tempStr = "";
-
-                string updateVersion = string.Empty;
-                bool? isComplete = null;
-                string errorMessage = string.Empty;
-
-                List<string> listArg = new List<string>(Environment.GetCommandLineArgs());
-
-                foreach (string arg in Environment.GetCommandLineArgs())
-                {
-                    if (!commandPresent)
-                    {
-                        commandPresent = arg.Trim().StartsWith("/");
-                    }
-
-                    if (commandPresent)
-                    {
-                        tempStr += arg;
-                    }
-
-
-
-                }
-                for (int i = 0; i < listArg.Count; i++)
-                {
-
-                    if (listArg[i].ToLower().Trim() == "/skipupdate") skipUpdate = true;
-                    if (listArg[i].ToLower().Trim() == "/updated" && string.IsNullOrEmpty(errorMessage)) isComplete = true;
-                    if (listArg[i].ToLower().Trim() == "/updateversion")
-                    {
-                        updateVersion = listArg[i + 1];
-                        decimal.TryParse(updateVersion, out updateToVersion);
-
-                    }
-                    if (listArg[i].ToLower().Trim() == "/error")
-                    {
-                        errorMessage = listArg[i + 1];
-                        isComplete = false;
-                    }
-
-                }
-
-                string strUpdateVersion = string.IsNullOrEmpty(updateVersion) ? "" : " (" + updateVersion + ")";
-
-                if (isComplete == true)
-                {
-
-                    if (currentVerionOnClient == updateToVersion)
-                    {
-                        AddAutoUpdateLog(updateVersion, isComplete.Value, errorMessage);
-                    }
-                    else
-                    {
-                        string err = "Update Version (" + updateVersion + ") and Current Version (" + currentVerionOnClient + ") must be the same. version.txt in Update File is not correct. Please contact administrator.";
-
-                        skipUpdate = true;
-
-                        AddAutoUpdateLog(updateVersion, false, err);
-
-                    }
-
-                }
-                else if (isComplete == false)
-                {
-                    AddAutoUpdateLog(updateVersion, isComplete.Value, errorMessage);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                new RMSAppException(this, "0500", "CheckforUpdate failed. " + ex.Message, ex, true);
-            }
-        }
-
-        private void LoadLocalAutoUpdateInfo()
-        {
-            var path = System.Reflection.Assembly.GetEntryAssembly().Location;
-            processToEnd = System.IO.Path.GetFileNameWithoutExtension(path);
-            postProcess = applicationStartupPath + @"\" + processToEnd + ".exe";
-
-            var versionFilePathOnClient = applicationStartupPath + @"\version.txt";
-            string strVersion = "0";
-
-            if (File.Exists(versionFilePathOnClient))
-            {
-                strVersion = System.IO.File.ReadAllText(versionFilePathOnClient);
-            }
-
-            decimal.TryParse(strVersion, out currentVerionOnClient);
-
-        }
-
-        private void CheckforUpdate()
-        {
-
-            try
-            {
-                info = Update.getUpdateInfo(downloadURL, versionFileNameOnServer, applicationStartupPath + @"\", 1);
-
-                if (info == null)
-                {
-
-                    //Update_bttn.Visible = false;
-                    //updateResult.Text = updateInfoError;
-                    //updateResult.Visible = true;
-
-                }
-                else
-                {
-                    //ตรวจสอบ version ถ้าบน server ใหม่กว่า แสดงว่าสามารถ update ได้
-                    if (decimal.Parse(info[1]) > currentVerionOnClient)
-                    {
-
-                        if (URLExists(info[3] + info[4]))
-                        {
-                            UpdateNow(info[1]);
-                        }
-                        else
-                        {
-                        }
-                        //Update_bttn.Visible = true;
-                        //updateResult.Visible = false;
-
-                    }
-
-
-                }
-            }
-            catch (Exception ex)
-            {
-                new RMSAppException(this, "0500", "CheckforUpdate failed. " + ex.Message, ex, true);
-            }
-
-        }
-
-        private void UpdateNow(string updateVersion = "")
-        {
-            Update.installUpdateRestart(info[3], info[4], "\"" + applicationStartupPath + "\\", processToEnd, postProcess, "updated", updater, updateVersion);
-            Close();
-        }
-
-        public bool URLExists(string url)
-        {
-            bool result = true;
-
-            try
-            {
-                WebRequest webRequest = WebRequest.Create(url);
-                webRequest.Timeout = 5000; // miliseconds
-                webRequest.Method = "HEAD";
-
-                webRequest.GetResponse();
-
-            }
-            catch
-            {
-                result = false;
-            }
-
-            return result;
-        }
-
-        private void AddAutoUpdateLog(string updateVersion, bool isComplete, string errorMessage)
-        {
-            try
-            {
                 var path = System.Reflection.Assembly.GetEntryAssembly().Location;
                 var appName = System.IO.Path.GetFileNameWithoutExtension(path);
 
                 var service = new RMS.Agent.BSL.AutoUpate.AutoUpdateService();
-                service.UpdateResult("", appName, currentVerionOnClient.ToString(), updateVersion, isComplete, errorMessage);
+                service.UpdateResult("", appName, _updateService.currentVerionOnClient.ToString(), args.updateVersion, args.isComplete, args.errorMessage);
 
             }
             catch (Exception ex)
@@ -511,34 +377,23 @@ namespace RMS.Agent.Watchdog
 
         #endregion
 
-    }
-
-    internal static class WindowExtensions
-    {
-        // from winuser.h
-        private const int GWL_STYLE = -16,
-                          WS_MAXIMIZEBOX = 0x10000,
-                          WS_MINIMIZEBOX = 0x20000;
-
-        [DllImport("user32.dll")]
-        extern private static int GetWindowLong(IntPtr hwnd, int index);
-
-        [DllImport("user32.dll")]
-        extern private static int SetWindowLong(IntPtr hwnd, int index, int value);
-
-        internal static void HideMinimizeAndMaximizeButtons(this Window window)
+        private void FixAppConfig()
         {
             try
             {
-                IntPtr hwnd = new WindowInteropHelper(window).Handle;
-                var currentStyle = GetWindowLong(hwnd, GWL_STYLE);
+                string filePath = @"d:\app\RMS.Agent.WPF\RMS.Agent.WPF.exe.config";
+                string text = File.ReadAllText(filePath);
+                if (text.IndexOf("ESN.AutoUpdate.DownloadURL") < 0)
+                    text = text.Replace("RMS.AutoUpdate.DownloadURL", "ESN.AutoUpdate.DownloadURL");
 
-                SetWindowLong(hwnd, GWL_STYLE, (currentStyle & ~WS_MAXIMIZEBOX));
+                if (text.IndexOf("ESN.AutoUpdate.VersionFileNameOnServer") < 0)
+                    text = text.Replace("RMS.AutoUpdate.VersionFileNameOnServer", "ESN.AutoUpdate.VersionFileNameOnServer");
+                File.WriteAllText(@"d:\app\RMS.Agent.WPF\RMS.Agent.WPF.exe.config", text);
             }
             catch
             {
             }
         }
-    }
 
+    }
 }

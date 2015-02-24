@@ -34,7 +34,7 @@
                                 <th width="80" style="text-align: center; font-weight: bold">OK Message</th>
                                 <th width="80" style="text-align: center; font-weight: bold">Issue Message</th>
                                 <th width="100" style="text-align: center; font-weight: bold">Today Biz Message</th>
-                                <th width="60" style="text-align: center; font-weight: bold">Alive</th>
+                                <th width="200" style="font-weight: bold">Status</th>
                             </tr>
                     </HeaderTemplate>
 
@@ -67,9 +67,8 @@
                                 <asp:Label runat="server" ID="Label8"
                                     Text='<%# Eval("CounterBizMessage") %>' />
                             </td>
-                            <td style="text-align: center; background-color: #eeeeee">
-                                <asp:Label runat="server" ID="Label9"
-                                    Text='<%# (Eval("AgentNotAlive").ToString() ==  "0" )? "Yes" : "No" %>' />
+                            <td style="background-color: #eeeeee">
+                                <asp:Label runat="server" ID="Label9" Text='<%# Eval("sRMSStatus") %>' />
                             </td>
                         </tr>
                     </ItemTemplate>
@@ -104,9 +103,9 @@
                                 <asp:Label runat="server" ID="Label8"
                                     Text='<%# Eval("CounterBizMessage") %>' />
                             </td>
-                            <td style="text-align: center">
+                            <td>
                                 <asp:Label runat="server" ID="Label9"
-                                    Text='<%# (Eval("AgentNotAlive").ToString() ==  "0" )? "Yes" : "No" %>' />
+                                    Text='<%# Eval("sRMSStatus") %>' />
                             </td>
                         </tr>
                     </AlternatingItemTemplate>

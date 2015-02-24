@@ -105,6 +105,7 @@
                                                         <option value="1">CPU</option>
                                                         <option value="2">Memory</option>
                                                         <option value="3">Disk</option>
+                                                        <option value="23">Alarm</option>
                                                         <option value="4">ATM Card Reader</option>
                                                         <option value="5">Barcode Reader</option>
                                                         <option value="6">Card Dispenser</option>
@@ -441,6 +442,7 @@
                             "bSortable": false,
                             "sWidth": "120",
                             "sClass": "center",
+                            "bUseRendered": false,
                             "fnRender": function (oObj) {
                                 if (oObj.aData["Status"] == 1) {
                                     return '<span class="label bg-color-redLight">Issue</span>';
@@ -468,8 +470,15 @@
                             "bSortable": false,
                             "sWidth": "150",
                             "sClass": "center",
+                            "bUseRendered": false,
                             "fnRender": function (oObj) {
-                                return oObj.aData["ColorTagStart"] + oObj.aData["LevelName"] + oObj.aData["ColorTagEnd"];
+                                if (oObj.aData["Status"] == 1) {
+                                    return oObj.aData["ColorTagStart"] + oObj.aData["LevelName"] + oObj.aData["ColorTagEnd"];
+                                } else if (oObj.aData["Status"] == 0) {
+                                    return "<span class='label label-default'>" + oObj.aData["LevelName"] + "</span>";
+                                } else if (oObj.aData["Status"] == 2) {
+                                    return oObj.aData["ColorTagStart"] + oObj.aData["LevelName"] + oObj.aData["ColorTagEnd"];
+                                }
                             }
                         },
                         {
@@ -656,6 +665,10 @@
                 }
             });
 
+            if ($('input[type="checkbox"]#start_interval').prop('checked')) {
+                $('input[type="checkbox"]#start_interval').prop('checked', false);
+            }
+
             function update() {
                 if ($on == true) {
 
@@ -670,6 +683,7 @@
             }
 
             var $on = false;
+
 
             if ($('#hdDt').val() != "") {
 

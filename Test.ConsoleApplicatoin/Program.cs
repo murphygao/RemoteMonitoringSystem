@@ -16,11 +16,14 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using LibUsbDotNet;
 using LibUsbDotNet.Info;
 using LibUsbDotNet.Main;
 using RMS.Centralize.BSL.MonitoringEngine;
+using RMS.Monitoring.Device;
 using RMS.Monitoring.Device.DeviceManager;
+using RMS.Monitoring.Device.ThermalPrinter;
 using Test.ConsoleApplication.ClientProxy;
 using Test.ConsoleApplication.MonitoringProxy;
 
@@ -43,9 +46,11 @@ namespace Test.ConsoleApplication
             Console.WriteLine(pr.CheckPrinterOnline());
             */
 
+            DateTime startTime = DateTime.Now;
 
-            int iVid = Int32.Parse("072F", NumberStyles.HexNumber);
-
+            //int iVid = Int32.Parse("072F", NumberStyles.HexNumber);
+            //A4PaperStatus(true);
+            int counter = 1;
             do
             {
                 Console.WriteLine();
@@ -58,7 +63,7 @@ namespace Test.ConsoleApplication
                 //CallMonitoringAgent();
                 //LocalIPAddress();
                 //testNewCheckDevice();
-                SendBusinessMessage();
+                //SendBusinessMessage();
 
                 //TestPrinter("Brother MFC-7450 Printer");
                 //TestCustomThermalPrinter();
@@ -70,10 +75,25 @@ namespace Test.ConsoleApplication
                 //string sPid = x.ToUpper().Substring(x.IndexOf("PID_") + 4, 4);
                 //int iPid = Int32.Parse(sPid, System.Globalization.NumberStyles.HexNumber);
 
+                ThermalPrinterService();
+
+                continue;
+
 
                 //TestUSBLib();
-                //TestReadWriteUSBLib();
-            } while (Console.ReadKey().KeyChar == 'a');
+                Console.WriteLine(counter++);
+                Console.WriteLine(startTime.ToString("HH:mm:ss") + " " + DateTime.Now.ToString("HH:mm:ss"));
+
+                A4PaperStatus(false);
+                if (startTime.AddMinutes(3) > DateTime.Now)
+                    ReinstallUSBFilter();
+                
+                ThermalPaperStatus();
+                if (startTime.AddMinutes(3) > DateTime.Now)
+                    ReinstallUSBFilter();
+
+                System.Threading.Thread.Sleep(15000);
+            } while (startTime.AddMinutes(30) > DateTime.Now); //Console.ReadKey().KeyChar == 'a');
 
 
             Console.ReadKey();
@@ -453,6 +473,8 @@ namespace Test.ConsoleApplication
         }
 
         public static UsbDevice MyUsbDevice;
+        public static UsbDevice A4PrinterUsbDevice;
+        public static UsbDevice ThermalPrinterUsbDevice;
 
         public static void TestUSBLib()
         {
@@ -493,27 +515,31 @@ namespace Test.ConsoleApplication
 
         #region SET YOUR USB Vendor and Product ID!
 
-        public static UsbDeviceFinder MyUsbFinder = new UsbDeviceFinder(0x0DD4, 0x01A8);
+        //Brother
+        public static UsbDeviceFinder BrotherUSB = new UsbDeviceFinder(0x04F9, 0x0040);
+
+        //Custom VKP80II
+        public static UsbDeviceFinder CustomUSB = new UsbDeviceFinder(0x0DD4, 0x01A8);
 
         #endregion
 
-        public static void TestReadWriteUSBLib()
+        public static void A4PaperStatus(bool setTimer = false)
         {
             ErrorCode ec = ErrorCode.None;
 
             try
             {
                 // Find and open the usb device.
-                MyUsbDevice = UsbDevice.OpenUsbDevice(MyUsbFinder);
+                A4PrinterUsbDevice = UsbDevice.OpenUsbDevice(BrotherUSB);
 
                 // If the device is open and ready
-                if (MyUsbDevice == null) throw new Exception("Device Not Found.");
+                if (A4PrinterUsbDevice == null) throw new Exception("Device Not Found.");
 
                 // If this is a "whole" usb device (libusb-win32, linux libusb)
                 // it will have an IUsbDevice interface. If not (WinUSB) the 
                 // variable will be null indicating this is an interface of a 
                 // device.
-                IUsbDevice wholeUsbDevice = MyUsbDevice as IUsbDevice;
+                IUsbDevice wholeUsbDevice = A4PrinterUsbDevice as IUsbDevice;
                 if (!ReferenceEquals(wholeUsbDevice, null))
                 {
                     // This is a "whole" USB device. Before it can be used, 
@@ -527,61 +553,74 @@ namespace Test.ConsoleApplication
                 }
 
                 // open read endpoint 1.
-                UsbEndpointReader reader = MyUsbDevice.OpenEndpointReader(ReadEndpointID.Ep01);
-
-                // open write endpoint 1.
-                UsbEndpointWriter writer = MyUsbDevice.OpenEndpointWriter(WriteEndpointID.Ep02);
-
-                // Remove the exepath/startup filename text from the begining of the CommandLine.
-                string cmdLine = Regex.Replace(
-                    Environment.CommandLine, "^\".+?\"^.*? |^.*? ", "", RegexOptions.Singleline);
-
-                if (!String.IsNullOrEmpty(cmdLine))
+                using (UsbEndpointReader reader = A4PrinterUsbDevice.OpenEndpointReader(ReadEndpointID.Ep02))
                 {
-                    int bytesWritten;
+                    //reader.Reset();
 
-
-                    byte[] byteArray = new byte[1];
-                    byteArray[0] = 0x0A;
-
-                    byteArray = new byte[6];
-                    byteArray[0] = 0x10;
-                    byteArray[1] = 0x04;
-                    byteArray[2] = 4;
-
-
-
-                    ec = writer.Write(byteArray, 2000, out bytesWritten);
-                    if (ec != ErrorCode.None) throw new Exception(UsbDevice.LastErrorString);
-
-                    byte[] readBuffer = new byte[8];
-                    while (ec == ErrorCode.None)
+                    // open write endpoint 1.
+                    using (UsbEndpointWriter writer = A4PrinterUsbDevice.OpenEndpointWriter(WriteEndpointID.Ep01))
                     {
-                        int bytesRead;
+                        //writer.Reset();
 
-                        // If the device hasn't sent data in the last 100 milliseconds,
-                        // a timeout error (ec = IoTimedOut) will occur. 
-                        ec = reader.Read(readBuffer, 100, out bytesRead);
-                        if (ec != ErrorCode.None) throw new Exception(UsbDevice.LastErrorString);
+                        // Remove the exepath/startup filename text from the begining of the CommandLine.
+                        string cmdLine = Regex.Replace(
+                            Environment.CommandLine, "^\".+?\"^.*? |^.*? ", "", RegexOptions.Singleline);
 
-                        if (bytesRead == 0) throw new Exception("No more bytes!");
+                        if (!String.IsNullOrEmpty(cmdLine))
+                        {
+                            int bytesWritten;
+
+                            string pjl = "";
+                            pjl += (char) 27 + "%-12345X@PJL " + Environment.NewLine;
+                            //pjl += "@PJL EXECUTE DEMOPAGE" + Environment.NewLine;
+
+                            pjl += "@PJL RESET " + Environment.NewLine;
+                            //if (setTimer)
+                            //pjl += "@PJL USTATUS TIMED = 0 " + Environment.NewLine;
+
+                            pjl += "@PJL INFO STATUS " + Environment.NewLine;
+                            //pjl += "@PJL USTATUS DEVICE = OFF " + Environment.NewLine;
+                            //pjl += "@PJL USTATUS DEVICE = VERBOSE " + Environment.NewLine;
 
 
-                        var bit2 = (readBuffer[0] & (1 << 2)) != 0;
-                        var bit3 = (readBuffer[0] & (1 << 3)) != 0;
-                        var bit5 = (readBuffer[0] & (1 << 5)) != 0;
-                        var bit6 = (readBuffer[0] & (1 << 6)) != 0;
+                            //pjl += "@PJL INFO VARIABLES " + Environment.NewLine;
 
-                        BitArray bits = new BitArray(readBuffer[0]);
+                            //pjl += "@PJL INFO ID " + Environment.NewLine;
+                            pjl += (char) 27 + "%-12345X ";
+                            byte[] b1 = System.Text.Encoding.ASCII.GetBytes(pjl);
 
-                        // Write that output to the console.
-                        Console.Write(Encoding.Default.GetString(readBuffer, 0, bytesRead));
+                            ec = writer.Write(b1, 2000, out bytesWritten);
+                            if (ec != ErrorCode.None) throw new Exception(UsbDevice.LastErrorString);
+                            byte[] readBuffer = new byte[256];
+                            while (ec == ErrorCode.None)
+                            {
+                                System.Threading.Thread.Sleep(1000);
+                                int bytesRead;
+
+                                // If the device hasn't sent data in the last 100 milliseconds,
+                                // a timeout error (ec = IoTimedOut) will occur. 
+                                ec = reader.Read(readBuffer, 2000, out bytesRead);
+                                if (ec != ErrorCode.None)
+                                {
+                                    throw new Exception(UsbDevice.LastErrorString);
+                                }
+
+                                if (bytesRead == 0)
+                                {
+                                    //System.Threading.Thread.Sleep(1000);
+                                    break; // throw new Exception("No more bytes!");
+                                }
+
+                              // Write that output to the console.
+                                Console.Write(Encoding.Default.GetString(readBuffer, 0, bytesRead));
+                            }
+
+                            Console.WriteLine("\r\nDone!\r\n");
+                        }
+                        else
+                            throw new Exception("Nothing to do.");
                     }
-
-                    Console.WriteLine("\r\nDone!\r\n");
                 }
-                else
-                    throw new Exception("Nothing to do.");
             }
             catch (Exception ex)
             {
@@ -590,33 +629,252 @@ namespace Test.ConsoleApplication
             }
             finally
             {
-                if (MyUsbDevice != null)
+                try
                 {
-                    if (MyUsbDevice.IsOpen)
+                    if (A4PrinterUsbDevice != null)
                     {
-                        // If this is a "whole" usb device (libusb-win32, linux libusb-1.0)
-                        // it exposes an IUsbDevice interface. If not (WinUSB) the 
-                        // 'wholeUsbDevice' variable will be null indicating this is 
-                        // an interface of a device; it does not require or support 
-                        // configuration and interface selection.
-                        IUsbDevice wholeUsbDevice = MyUsbDevice as IUsbDevice;
-                        if (!ReferenceEquals(wholeUsbDevice, null))
+                        if (A4PrinterUsbDevice.IsOpen)
                         {
-                            // Release interface #0.
-                            wholeUsbDevice.ReleaseInterface(0);
+                            // If this is a "whole" usb device (libusb-win32, linux libusb-1.0)
+                            // it exposes an IUsbDevice interface. If not (WinUSB) the 
+                            // 'wholeUsbDevice' variable will be null indicating this is 
+                            // an interface of a device; it does not require or support 
+                            // configuration and interface selection.
+                            IUsbDevice wholeUsbDevice = A4PrinterUsbDevice as IUsbDevice;
+                            if (!ReferenceEquals(wholeUsbDevice, null))
+                            {
+                                // Release interface #0.
+                                wholeUsbDevice.ReleaseInterface(0);
+                                //wholeUsbDevice.ResetDevice();
+                            }
+
+                            A4PrinterUsbDevice.Close();
                         }
+                        A4PrinterUsbDevice = null;
 
-                        MyUsbDevice.Close();
+                        // Free usb resources
+                        UsbDevice.Exit();
+
                     }
-                    MyUsbDevice = null;
 
-                    // Free usb resources
-                    UsbDevice.Exit();
+                    //System.Threading.Thread.Sleep(1500);
 
+
+                    // Wait for user input..
+                    //Console.ReadKey();
+                }
+                catch (Exception exception)
+                {
+                        
+                }
+            }
+        }
+
+        public static void ThermalPaperStatus()
+        {
+            ErrorCode ec = ErrorCode.None;
+
+            try
+            {
+                // Find and open the usb device.
+                ThermalPrinterUsbDevice = UsbDevice.OpenUsbDevice(CustomUSB);
+
+                // If the device is open and ready
+                if (ThermalPrinterUsbDevice == null) throw new Exception("Device Not Found.");
+
+                // If this is a "whole" usb device (libusb-win32, linux libusb)
+                // it will have an IUsbDevice interface. If not (WinUSB) the 
+                // variable will be null indicating this is an interface of a 
+                // device.
+                IUsbDevice wholeUsbDevice = ThermalPrinterUsbDevice as IUsbDevice;
+                if (!ReferenceEquals(wholeUsbDevice, null))
+                {
+                    // This is a "whole" USB device. Before it can be used, 
+                    // the desired configuration and interface must be selected.
+
+                    // Select config #1
+                    wholeUsbDevice.SetConfiguration(1);
+
+                    // Claim interface #0.
+                    wholeUsbDevice.ClaimInterface(1);
                 }
 
-                // Wait for user input..
-                Console.ReadKey();
+                byte[] byteArray = new byte[3];
+                byteArray[0] = 0x10;
+                byteArray[1] = 0x04;
+                byteArray[2] = 20;
+
+                // open read endpoint 1.
+                using (UsbEndpointReader reader = ThermalPrinterUsbDevice.OpenEndpointReader(ReadEndpointID.Ep01))
+                {
+                    //reader.Reset();
+                    // open write endpoint 1.
+                    using (UsbEndpointWriter writer = ThermalPrinterUsbDevice.OpenEndpointWriter(WriteEndpointID.Ep02))
+                    {
+                        //writer.Reset();
+                        // Remove the exepath/startup filename text from the begining of the CommandLine.
+
+                        if (byteArray.Length > 0)
+                        {
+                            int bytesWritten;
+
+                            ec = writer.Write(byteArray, 2000, out bytesWritten);
+                            if (ec != ErrorCode.None) throw new Exception(UsbDevice.LastErrorString);
+
+                            byte[] readBuffer = new byte[6];
+                            while (ec == ErrorCode.None)
+                            {
+                                int bytesRead;
+
+                                // If the device hasn't sent data in the last 100 milliseconds,
+                                // a timeout error (ec = IoTimedOut) will occur. 
+                                ec = reader.Read(readBuffer, 1000, out bytesRead);
+
+                                if (bytesRead == 0) break;
+                                if (ec != ErrorCode.None) throw new Exception(UsbDevice.LastErrorString);
+
+
+                                // Write that output to the console.
+                                //Console.Write(Encoding.Default.GetString(readBuffer, 0, bytesRead));
+                                string[] b = readBuffer.Select(x => Convert.ToString(x, 2).PadLeft(8, '0')).ToArray();
+                                foreach (var s in b)
+                                {
+                                    Console.WriteLine(s);
+                                }
+                            }
+
+                            Console.WriteLine("\r\nDone!\r\n");
+                        }
+                        else
+                            throw new Exception("Nothing to do.");
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine();
+                Console.WriteLine((ec != ErrorCode.None ? ec + ":" : String.Empty) + ex.Message);
+            }
+            finally
+            {
+                try
+                {
+                    if (ThermalPrinterUsbDevice != null)
+                    {
+                        if (ThermalPrinterUsbDevice.IsOpen)
+                        {
+                            // If this is a "whole" usb device (libusb-win32, linux libusb-1.0)
+                            // it exposes an IUsbDevice interface. If not (WinUSB) the 
+                            // 'wholeUsbDevice' variable will be null indicating this is 
+                            // an interface of a device; it does not require or support 
+                            // configuration and interface selection.
+                            IUsbDevice wholeUsbDevice = ThermalPrinterUsbDevice as IUsbDevice;
+                            if (!ReferenceEquals(wholeUsbDevice, null))
+                            {
+                                // Release interface #0.
+                                wholeUsbDevice.ReleaseInterface(1);
+                                //wholeUsbDevice.ResetDevice();
+                            }
+                            ThermalPrinterUsbDevice.Close();
+                        }
+                        ThermalPrinterUsbDevice = null;
+
+                        // Free usb resources
+                        UsbDevice.Exit();
+
+                    }
+                    // Wait for user input..
+                    //Console.ReadKey();
+
+                    Thread.Sleep(1000);
+                }
+                catch (Exception ex)
+                {
+                        
+                }
+            }
+        }
+
+        public static List<string> ListUSBFilter()
+        {
+            try
+            {
+                Process p = new Process();
+                // Redirect the output stream of the child process.
+                p.StartInfo.UseShellExecute = false;
+                p.StartInfo.RedirectStandardOutput = true;
+                p.StartInfo.CreateNoWindow = true;
+                p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                p.StartInfo.FileName = @"C:\Program Files\LibUSB-Win32\bin\install-filter.exe";
+                p.StartInfo.Arguments = "list";
+                p.Start();
+                // Do not wait for the child process to exit before
+                // reading to the end of its redirected stream.
+                string output = p.StandardOutput.ReadToEnd();
+                List<string> listAllDevices = new List<string>(output.Split(new string[] { "\n" }, StringSplitOptions.None));
+
+                List<string> listInstalledDevices = new List<string>();
+                for (int i = 0; i < listAllDevices.Count; i++)
+                {
+                    if (listAllDevices[i].ToLower().IndexOf("device upper filters:libusb0") > -1)
+                    {
+                        string usbDeviceID = listAllDevices[i - 1].Substring(0, listAllDevices[i - 1].IndexOf("PID_") + 8).Trim();
+                        listInstalledDevices.Add(usbDeviceID);
+                    }
+                }
+                p.WaitForExit();
+                return listInstalledDevices;
+            }
+            catch (Exception ex)
+            {
+                //new RMSAppException("ListUSBFilter failed " + ex.Message, ex, true);
+            }
+            return new List<string>();
+        }
+
+        public static void ReinstallUSBFilter()
+        {
+            try
+            {
+                ReinstallUSBFilter(ListUSBFilter());
+            }
+            catch (Exception ex)
+            {
+                //new RMSAppException("ReinstallUSBFilter failed " + ex.Message, ex, true);
+            }
+        }
+
+        public static void ReinstallUSBFilter(List<string> devices)
+        {
+            try
+            {
+                Process p = new Process();
+                // Redirect the output stream of the child process.
+                p.StartInfo.UseShellExecute = false;
+                p.StartInfo.RedirectStandardOutput = false;
+                p.StartInfo.CreateNoWindow = true;
+                p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                p.StartInfo.FileName = @"C:\Program Files\LibUSB-Win32\bin\install-filter.exe";
+
+                foreach (var device in devices)
+                {
+                    p.StartInfo.Arguments = string.Format("uninstall --device=\"{0}\"", device);
+                    p.Start();
+                    p.WaitForExit();
+                    p.StartInfo.Arguments = string.Format("install --device=\"{0}\"", device);
+                    p.Start();
+                    p.WaitForExit();
+                }
+            }
+            catch (Exception ex)
+            {
+                //new RMSAppException("ReinstallUSBFilter failed " + ex.Message, ex, true);
+            }
+            finally
+            {
+                System.Threading.Thread.Sleep(2500);
             }
         }
 
@@ -636,6 +894,12 @@ namespace Test.ConsoleApplication
             {
                 Console.WriteLine(ipAddress);
             }
+        }
+
+        private static void ThermalPrinterService()
+        {
+            RMS.Monitoring.Device.ThermalPrinter.ThermalPrinterService tps = new ThermalPrinterService("abc", "abc", "Brother MFC-7450 Printer", @"USB\VID_04F9&PID_01EE", null);
+            tps.Monitoring();
         }
     }
 

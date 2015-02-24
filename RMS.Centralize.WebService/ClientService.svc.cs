@@ -127,13 +127,13 @@ namespace RMS.Centralize.WebService
             }
         }
 
-        public ClientInfoResult Search(JQueryDataTableParamModel param, DateTime? asOfDate, int? clientTypeID, string clientCode, bool? clientStatus, string ipAddress)
+        public ClientInfoResult Search(JQueryDataTableParamModel param, DateTime? asOfDate, int? clientTypeID, string clientCode, bool? clientStatus, string ipAddress, string location)
         {
             try
             {
                 int totalRecord;
                 BSL.ClientService cs = new BSL.ClientService();
-                List<ClientInfo> clientInfos = cs.SearchClient(param, asOfDate, clientTypeID, clientCode, clientStatus, ipAddress, out totalRecord);
+                List<ClientInfo> clientInfos = cs.SearchClient(param, asOfDate, clientTypeID, clientCode, clientStatus, ipAddress, location, out totalRecord);
 
                 var sr = new ClientInfoResult
                 {

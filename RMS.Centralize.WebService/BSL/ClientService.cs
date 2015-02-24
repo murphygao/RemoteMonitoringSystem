@@ -19,10 +19,10 @@ namespace RMS.Centralize.WebService.BSL
     {
 
         public List<ClientInfo> SearchClient(JQueryDataTableParamModel param, DateTime? asOfDate, int? clientTypeID, string clientCode, bool? clientStatus,
-            string ipAddress, out int totalRecord)
+            string ipAddress, string location, out int totalRecord)
         {
             List<ClientInfo> lClientInfos = new List<ClientInfo>();
-            SqlParameter[] parameters = new SqlParameter[10];
+            SqlParameter[] parameters = new SqlParameter[11];
 
             try
             {
@@ -50,6 +50,7 @@ namespace RMS.Centralize.WebService.BSL
                     SqlParameter p8;
                     SqlParameter p9;
                     SqlParameter p10;
+                    SqlParameter p11;
 
                     if (asOfDate == null)
                     {
@@ -100,6 +101,17 @@ namespace RMS.Centralize.WebService.BSL
                         p10 = new SqlParameter("IPAddress", ipAddress);
                     }
 
+                    if (String.IsNullOrEmpty(location))
+                    {
+                        p11 = new SqlParameter("Location", DBNull.Value);
+                    }
+                    else
+                    {
+                        p11 = new SqlParameter("Location", location);
+                    }
+
+
+
                     parameters[0] = p1;
                     parameters[1] = p2;
                     parameters[2] = p3;
@@ -110,13 +122,14 @@ namespace RMS.Centralize.WebService.BSL
                     parameters[7] = p8;
                     parameters[8] = p9;
                     parameters[9] = p10;
+                    parameters[10] = p11;
 
                     db.Configuration.ProxyCreationEnabled = false;
                     //db.Configuration.LazyLoadingEnabled = false;
 
                     var listOfType = db.Database.SqlQuery<ClientInfo>("RMS_ListClientMonitoring " +
                                                                             "@AsOfDate, @ClientTypeID, @ClientCode, @Enable" +
-                                                                            ", @IPAddress" +
+                                                                            ", @IPAddress, @Location" +
                                                                             ", @PageNbr, @PageSize, @FirstRec, @SortCol, @TotalRecords OUTPUT"
                         , parameters);
 
@@ -193,16 +206,8 @@ namespace RMS.Centralize.WebService.BSL
                     else if (getClientBy == GetClientBy.IPAddress)
                     {
 
-                        SqlParameter[] parameters = new SqlParameter[1];
-                        SqlParameter p1 = new SqlParameter("IPAddress", ipAddress);
-                        parameters[0] = p1;
-
-                        var details = db.Database.SqlQuery<RmsClient>("RMS_GetClientByIPAddress " +
-                                                                      "@IPAddress", parameters);
-
-                        var actives = details.Where(c => (!activeClient || (c.Enable == true && c.EffectiveDate <= DateTime.Today && (c.ExpiredDate == null || c.ExpiredDate >= DateTime.Today))));
-
-                        var lClients = new List<RmsClient>(actives.ToList());
+                        var ret = db.RmsClients.Where(c => c.IpAddress == ipAddress && c.ClientTypeId == 1 && (!activeClient || (c.Enable == true && c.EffectiveDate <= DateTime.Today && (c.ExpiredDate == null || c.ExpiredDate >= DateTime.Today))));
+                        var lClients = new List<RmsClient>(ret.ToList());
 
                         if (lClients.Count > 1)
                             throw new Exception("Found more thand one client by IPAddress: " + ipAddress +

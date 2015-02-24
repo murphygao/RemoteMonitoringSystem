@@ -7,13 +7,18 @@ using System.Threading.Tasks;
 using RMS.Agent.Proxy.ClientProxy;
 using RMS.Agent.Proxy.MonitoringProxy;
 using RMS.Common.Exception;
+using RMS.Monitoring.Device.Alarm;
 using RMS.Monitoring.Device.ATMCardReader;
+using RMS.Monitoring.Device.BarcodeReader;
+using RMS.Monitoring.Device.BasicUSBDevice;
 using RMS.Monitoring.Device.CardDespenser;
+using RMS.Monitoring.Device.EncryptedPinPad;
 using RMS.Monitoring.Device.IDCardScanner;
 using RMS.Monitoring.Device.Keyboard;
 using RMS.Monitoring.Device.MonitorDisplay;
 using RMS.Monitoring.Device.PerformanceCounter;
 using RMS.Monitoring.Device.Printer;
+using RMS.Monitoring.Device.Scanner;
 using RMS.Monitoring.Device.SignaturePad;
 using RMS.Monitoring.Device.SmartCardReader;
 using RMS.Monitoring.Device.ThermalPrinter;
@@ -106,16 +111,29 @@ namespace RMS.Monitoring.Core
 
                             try
                             {
-                                if (deviceTypeCode == Models.DeviceCode.ATMCardReader)
+                                if (deviceTypeCode == Models.DeviceCode.Alarm)
+                                {
+                                    var ds = new AlarmService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, mpd.BooleanValue ?? false, mpd.ComPort, cr);
+                                    var rmsReportMonitoringRaws = ds.Monitoring();
+                                    lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
+                                }
+                                else if (deviceTypeCode == Models.DeviceCode.ATMCardReader)
                                 {
                                     var ds = new ATMCardReaderService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, mpd.BooleanValue ?? false, mpd.ComPort, cr);
                                     var rmsReportMonitoringRaws = ds.Monitoring();
                                     lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
                                 }
+                                else if (deviceTypeCode == Models.DeviceCode.BasicUSBDevice)
+                                {
+                                    var ds = new BasicUSBDeviceService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
+                                    var rmsReportMonitoringRaws = ds.Monitoring();
+                                    lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
+                                }
                                 else if (deviceTypeCode == Models.DeviceCode.BarcodeReader)
                                 {
-
-
+                                    var ds = new BarcodeReaderService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
+                                    var rmsReportMonitoringRaws = ds.Monitoring();
+                                    lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
                                 }
                                 else if (deviceTypeCode == Models.DeviceCode.CardDispenser)
                                 {
@@ -129,7 +147,7 @@ namespace RMS.Monitoring.Core
                                     var rmsReportMonitoringRaws = ds.Monitoring();
                                     lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
                                 }
-                                else if (deviceTypeCode == Models.DeviceCode.IDCardSanner)
+                                else if (deviceTypeCode == Models.DeviceCode.IDCardScanner)
                                 {
                                     var ds = new IDCardScannerService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
                                     var rmsReportMonitoringRaws = ds.Monitoring();
@@ -156,6 +174,12 @@ namespace RMS.Monitoring.Core
                                 else if (deviceTypeCode == Models.DeviceCode.Printer)
                                 {
                                     var ds = new PrinterService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, mpd.DeviceManagerName, mpd.BooleanValue ?? false, mpd.ComPort, cr);
+                                    var rmsReportMonitoringRaws = ds.Monitoring();
+                                    lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
+                                }
+                                else if (deviceTypeCode == Models.DeviceCode.Scanner)
+                                {
+                                    var ds = new ScannerService(device.Brand, device.Model, mpd.DeviceManagerName, mpd.DeviceManagerId, cr);
                                     var rmsReportMonitoringRaws = ds.Monitoring();
                                     lRmsReportMonitoringRaws.AddRange(rmsReportMonitoringRaws);
                                 }

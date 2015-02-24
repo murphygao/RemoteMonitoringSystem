@@ -57,9 +57,21 @@
       <Project>{F8EC98BC-37BB-42FD-9B50-78F928BB08A2}</Project>
       <Name>RMS.Common.Exception</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.Device.Alarm\RMS.Monitoring.Device.Alarm.csproj">
+      <Project>{9cf891a5-c132-435c-9ff2-fe7ba2f0ae4f}</Project>
+      <Name>RMS.Monitoring.Device.Alarm</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RMS.Monitoring.Device.ATMCardReader\RMS.Monitoring.Device.ATMCardReader.csproj">
       <Project>{330cd943-974e-4190-99f8-b17ca700e082}</Project>
       <Name>RMS.Monitoring.Device.ATMCardReader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.Device.BarcodeReader\RMS.Monitoring.Device.BarcodeReader.csproj">
+      <Project>{7361badc-616d-470f-838e-86c0eb4bd01b}</Project>
+      <Name>RMS.Monitoring.Device.BarcodeReader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.Device.BasicUSBDevice\RMS.Monitoring.Device.BasicUSBDevice.csproj">
+      <Project>{c6fd8000-3df7-4ec2-ab9a-bf662afc195b}</Project>
+      <Name>RMS.Monitoring.Device.BasicUSBDevice</Name>
     </ProjectReference>
     <ProjectReference Include="..\RMS.Monitoring.Device.CardDespenser\RMS.Monitoring.Device.CardDespenser.csproj">
       <Project>{407de06d-39ac-4b2a-8486-e84068a2a3f9}</Project>
@@ -104,6 +116,10 @@
     <ProjectReference Include="..\RMS.Monitoring.Device.ThermalPrinter\RMS.Monitoring.Device.ThermalPrinter.csproj">
       <Project>{8EA25F3B-8501-4107-A663-60757B6A9503}</Project>
       <Name>RMS.Monitoring.Device.ThermalPrinter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.Device.UPS\RMS.Monitoring.Device.UPS.csproj">
+      <Project>{05dcbbdb-bb9d-4902-927b-9410d2cd2cb7}</Project>
+      <Name>RMS.Monitoring.Device.UPS</Name>
     </ProjectReference>
     <ProjectReference Include="..\RMS.Monitoring.Device.WebCamera\RMS.Monitoring.Device.WebCamera.csproj">
       <Project>{d77923d6-3238-4a20-9993-0c3113acbdd2}</Project>

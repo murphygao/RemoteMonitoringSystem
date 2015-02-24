@@ -54,6 +54,11 @@ namespace RMS.Agent.OutOfServiceApp
                 keyInValue = keyInValue.PadLeft(password.Length, '0');
 
                 doBtnTransparent = new btnTransparentDelegate(MakebtnTranspalent);
+
+                if (this.NavigationService.CanGoBack)
+                {
+                    this.NavigationService.RemoveBackEntry();
+                }
             }
             catch (Exception ex)
             {
@@ -70,7 +75,40 @@ namespace RMS.Agent.OutOfServiceApp
                 keyInValue = keyInValue.Substring(1);
                 if (keyInValue == password)
                 {
-                    this.NavigationService.Navigate(new ExitPage());
+                    string mainAppFilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\mainapplication.txt";
+
+                    int validateMainAppFile = 0;
+                    if (File.Exists(mainAppFilePath))
+                    {
+                        string line;
+                        int counter = 0;
+
+                        // Read the file and display it line by line.
+                        using (var file = new System.IO.StreamReader(mainAppFilePath))
+                        {
+                            while ((line = file.ReadLine()) != null)
+                            {
+                                counter++;
+                                if (counter == 1)
+                                {
+                                    validateMainAppFile++;
+                                }
+                                else if (counter == 2)
+                                {
+                                    validateMainAppFile++;
+                                }
+                            }
+                        }
+                    }
+
+                    if (validateMainAppFile == 2)
+                    {
+                        this.NavigationService.Navigate(new ChoicePage());
+                    }
+                    else
+                    {
+                        this.NavigationService.Navigate(new ExitPage());
+                    }
                     //OOSService service = new OOSService();
                     //if (service.PrepareForClosing())
                     //    Application.Current.Shutdown();

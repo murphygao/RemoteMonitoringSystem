@@ -4,6 +4,8 @@ using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Runtime.Remoting.Proxies;
 using System.Text;
 using System.Threading;
@@ -68,10 +70,11 @@ namespace RMS.Agent.BSL.Monitoring
                 ClientServiceClient cs = new ClientService().clientService;
                 var clientResult = cs.GetClient(GetClientBy.ClientCode, null, clientCode, null, true, true);
 
+                string localStorage = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\LocalStorage";
+                localStorage = (ConfigurationManager.AppSettings["RMS.LocalStorage"] ?? localStorage);
+
                 try
                 {
-                    string localStorage = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\LocalStorage";
-                    localStorage = (ConfigurationManager.AppSettings["RMS.LocalStorage"] ?? localStorage);
                     string localClientFile = localStorage + @"\clientResult.xml";
 
                     var directoryName = Path.GetDirectoryName(localClientFile);
@@ -119,7 +122,42 @@ namespace RMS.Agent.BSL.Monitoring
                 List<RmsReportMonitoringRaw> monitoringRaws = new List<RmsReportMonitoringRaw>();
                 MonitoringServiceClient mp = new Proxy.MonitoringService().monitoringService;
 
-                #region 2. Check Application Running
+                #region 2. Check Maintenance State
+
+                bool MAMode = false;
+
+                try
+                {
+                    string maFilePath = ConfigurationManager.AppSettings["RMS.MA_FILE_PATH"];
+
+                    // MA State?
+                    if (File.Exists(maFilePath))
+                    {
+                        if (clientResult.Client.State == (int) ClientState.Normal)
+                        {
+                            var client = new ClientService().clientService;
+                            client.SetClientState(clientResult.Client.ClientId, ClientState.Maintenance);
+                        }
+                        MAMode = true;
+                    }
+                        // Normal State
+                    else
+                    {
+                        if (clientResult.Client.State == (int)ClientState.Maintenance)
+                        {
+                            var client = new ClientService().clientService;
+                            client.SetClientState(clientResult.Client.ClientId, ClientState.Normal);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new RMSAppException(this, "0500", "Check Maintenance State failed. " + ex.Message, ex, false);
+                }
+
+                #endregion
+
+                #region 3. Check Application Running
 
                 bool checkedAgent = false;
                 foreach (var monitoringClient in rmsMonitoringProfileDevices)
@@ -129,7 +167,7 @@ namespace RMS.Agent.BSL.Monitoring
                     List<string> appNameList = new List<string>(monitoringClient.StringValue.Split('|'));
 
                     // ถ้า device string ไม่มีค่า หรือมีค่าเท่ากับ agent process name แสดงว่า ให้ตรวจสอบ agent ว่ายังทำงานอยู่หรือไม่
-                    if (!checkedAgent && appNameList.Any(s => string.IsNullOrEmpty(s) || s == ConfigurationManager.AppSettings["RMS.AGENT_PROCESS_NAME"].ToLower().Trim()))
+                    if (!checkedAgent && appNameList.Any(s => string.IsNullOrEmpty(s) || s.ToLower().Trim() == ConfigurationManager.AppSettings["RMS.AGENT_PROCESS_NAME"].ToLower().Trim()))
                     {
                         checkedAgent = true;
                         // การที่สามารถทำ process ต่างๆ ได้อยู่ในนี้ แสดงว่า agent ทำงาได้ปกติ
@@ -153,7 +191,7 @@ namespace RMS.Agent.BSL.Monitoring
                         }
 
                     }
-                    else // หากเข้า case นี้แสดงว่า ระบบอยากให้ตรวจสอบการทำงานของ application ภายนอก
+                    else if (!MAMode) // หากเข้า case นี้แสดงว่า ระบบอยากให้ตรวจสอบการทำงานของ application ภายนอก และไม่ต้องอยู่ใน MA Mode
                     {
                         try
                         {
@@ -191,38 +229,7 @@ namespace RMS.Agent.BSL.Monitoring
                     }
                 }
 
-                #endregion
-
-                #region 3. Check Maintenance State
-
-                try
-                {
-                    string maFilePath = ConfigurationManager.AppSettings["RMS.MA_FILE_PATH"];
-
-                    // MA State?
-                    if (File.Exists(maFilePath))
-                    {
-                        if (clientResult.Client.State == (int) ClientState.Normal)
-                        {
-                            var client = new ClientService().clientService;
-                            client.SetClientState(clientResult.Client.ClientId, ClientState.Maintenance);
-                        }
-                        return;
-                    }
-                        // Normal State
-                    else
-                    {
-                        if (clientResult.Client.State == (int)ClientState.Maintenance)
-                        {
-                            var client = new ClientService().clientService;
-                            client.SetClientState(clientResult.Client.ClientId, ClientState.Normal);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new RMSAppException(this, "0500", "Check Maintenance State failed. " + ex.Message, ex, false);
-                }
+                if (MAMode) return; //ถ้าอยู่ใน MA Mode ให้หยุดการ Monitoring
 
                 #endregion
 
@@ -246,7 +253,60 @@ namespace RMS.Agent.BSL.Monitoring
                             new RMSDebugLog(log, true);
                         }
 
-                        mp.AddMessages(monitoringRaws);
+                        List<RMSAttachment> lRMSAttachment = new List<RMSAttachment>();
+                        if (monitoringRaws.Exists(w => w.DeviceCode == "CLIENT" && w.Message == "APPLICATION_NOT_RUNNING"))
+                        {
+                            try
+                            {
+                                if (Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.EnableAttachEventLog"] ?? "false"))
+                                {
+                                    var query = "*[System[TimeCreated[@SystemTime >= '" + DateTime.Now.AddHours(-1).ToUniversalTime().ToString("o") + "']]]";
+                                    string eventLogFileName = "EventLog.evtx";
+                                    Helper.Common.ExtractLog(query, localStorage, eventLogFileName);
+                                    byte[] byteEventLog = File.ReadAllBytes(localStorage + @"\" + eventLogFileName);
+
+                                    RMSAttachment rmsAttachment = new RMSAttachment();
+                                    rmsAttachment.FileBytes = byteEventLog;
+                                    rmsAttachment.Message = "APPLICATION_NOT_RUNNING";
+                                    rmsAttachment.DeviceCode = "CLIENT";
+                                    rmsAttachment.FileName = eventLogFileName;
+                                    lRMSAttachment.Add(rmsAttachment);
+                                }
+
+                                //MainAppTempLog
+                                if (Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.EnableAttachMainAppLog"] ?? "false"))
+                                {
+                                    string mainAppTempLog = ConfigurationManager.AppSettings["RMS.MainAppTempLog"];
+                                    if (!string.IsNullOrEmpty(mainAppTempLog))
+                                    {
+                                        if (File.Exists(mainAppTempLog))
+                                        {
+                                            byte[] byteMainAppTempLog = File.ReadAllBytes(mainAppTempLog);
+                                            RMSAttachment rmsAttachment = new RMSAttachment();
+                                            rmsAttachment.FileBytes = byteMainAppTempLog;
+                                            rmsAttachment.Message = "APPLICATION_NOT_RUNNING";
+                                            rmsAttachment.DeviceCode = "CLIENT";
+                                            rmsAttachment.FileName = Path.GetFileName(mainAppTempLog);
+                                            lRMSAttachment.Add(rmsAttachment);
+                                        }
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                new RMSAppException(this, "0500", "Check Device Monitoring - Prepare Attachfile failed. " + ex.Message, ex, true);
+                            }
+                        }
+
+                        if (lRMSAttachment.Count == 0)
+                        {
+                            mp.AddMessages(monitoringRaws);
+                        }
+                        else
+                        {
+                            mp.AddMessagesWithAttachFiles(monitoringRaws, lRMSAttachment);
+                        }
+
                     }
                 }
                 catch (Exception ex)
@@ -430,7 +490,21 @@ namespace RMS.Agent.BSL.Monitoring
                 var cs = new ClientService().clientService;
                 var clientResult = cs.GetClient(GetClientBy.ClientCode, null, clientCode, null, false, false);
 
-                if (clientResult != null)
+                if (clientResult == null || clientResult.Client == null)
+                {
+                    List<string> listLocalIPs = GetLocalIPAddress();
+                    foreach (var localIP in listLocalIPs)
+                    {
+                        clientResult = cs.GetClient(GetClientBy.IPAddress, null, null, localIP, false, false);
+                        if (clientResult != null && clientResult.Client != null)
+                        {
+                            UpdateClientCode(clientResult.Client.ClientCode);
+                            break;
+                        }
+                    }
+                }
+
+                if (clientResult != null && clientResult.Client != null)
                 {
                     if (clientResult.Client.State == (int) ClientState.Normal && clientState == ClientState.Maintenance)
                     {
@@ -495,6 +569,21 @@ namespace RMS.Agent.BSL.Monitoring
             {
                 throw new RMSAppException(this, "0500", "IsProcessRunning failed. " + ex.Message, ex, false);
             }
+        }
+
+        private List<string> GetLocalIPAddress()
+        {
+            IPHostEntry host;
+            List<string> listLocalIPs = new List<string>();
+            host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (IPAddress ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    listLocalIPs.Add(ip.ToString());
+                }
+            }
+            return listLocalIPs;
         }
     }
 }

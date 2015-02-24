@@ -64,3 +64,4 @@ window.paceOptions = {
         ignoreURLs: ['arterySignalR', 'browserLink', 'themes.googleusercontent.com', 'fonts.googleapis.com']
     }
 };
+

@@ -36,6 +36,13 @@ namespace RMS.Monitoring.Device.CardDespenser
                 string messageStorageFolder = ConfigurationManager.AppSettings["RMS.MessageStorageFolder"];
                 messageStorageFolder = (messageStorageFolder.EndsWith(@"\")) ? messageStorageFolder : messageStorageFolder + @"\";
 
+                // Port Cannot Open
+                string portOpen = "PORT_CANNOT_OPEN_" + comPort + ".txt";
+                if (File.Exists(messageStorageFolder + portOpen))
+                {
+                    ret.Add("port_cannot_open");
+                }
+
                 // Check Low Card
                 string lowCard = "LOW_CARD_" + comPort + ".txt";
                 if (File.Exists(messageStorageFolder + lowCard))
@@ -48,6 +55,20 @@ namespace RMS.Monitoring.Device.CardDespenser
                 if (File.Exists(messageStorageFolder + endCard))
                 {
                     ret.Add("end_card");
+                }
+
+                // Check Card Jam
+                string cardJam = "CARD_JAM_" + comPort + ".txt";
+                if (File.Exists(messageStorageFolder + endCard))
+                {
+                    ret.Add("card_jam");
+                }
+
+                // Check End Card
+                string binFull = "BIN_FULL_" + comPort + ".txt";
+                if (File.Exists(messageStorageFolder + endCard))
+                {
+                    ret.Add("bin_full");
                 }
             }
 

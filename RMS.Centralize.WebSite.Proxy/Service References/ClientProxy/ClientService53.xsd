@@ -53,20 +53,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfClientInfo" nillable="true" type="tns:ArrayOfClientInfo" />
-  <xs:complexType name="ArrayOfMainAppClient">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="MainAppClient" nillable="true" type="tns:MainAppClient" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfMainAppClient" nillable="true" type="tns:ArrayOfMainAppClient" />
-  <xs:complexType name="MainAppClient">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="ClientCode" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ClientID" type="xs:int" />
-      <xs:element minOccurs="0" name="ClientName" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="MainAppClient" nillable="true" type="tns:MainAppClient" />
   <xs:complexType name="ArrayOfLocationInfo">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="LocationInfo" nillable="true" type="tns:LocationInfo" />

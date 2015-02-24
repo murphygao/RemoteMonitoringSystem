@@ -218,21 +218,13 @@ namespace RMS.Centralize.WebService
                 var asc = new AgentServiceClient();
                 clientEndpiont = ConfigurationManager.AppSettings["RMS.NetTcpBinding_AgentService"];
                 clientEndpiont = clientEndpiont.Replace("client_ip_address", ipAddress);
-
-                //System.Uri uri = new Uri(clientEndpiont);
-                //var endpointAddress = asc.Endpoint.Address;
-                //AddressHeaderCollection addressHeaderCollection = endpointAddress.Headers;
-                //EndpointIdentity endpointIdentity = endpointAddress.Identity;
-
                 asc.Endpoint.Address = new EndpointAddress(clientEndpiont);
-                asc.Endpoint.Binding.OpenTimeout = new TimeSpan(0, 0, 30);
 
                 NetTcpBinding myBinding = new NetTcpBinding();
                 myBinding.Security.Mode = SecurityMode.None;
                 myBinding.Security.Transport.ClientCredentialType = TcpClientCredentialType.None;
-                myBinding.OpenTimeout = new TimeSpan(0, 0, 30);
+                myBinding.OpenTimeout = new TimeSpan(0, 5, 0);
                 asc.Endpoint.Binding = myBinding;
-
 
                 var ar = asc.InnerChannel.BeginOpen(null, null);
                 if (!ar.AsyncWaitHandle.WaitOne(asc.Endpoint.Binding.OpenTimeout, true))

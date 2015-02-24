@@ -17,6 +17,12 @@ namespace RMS.Monitoring.Device
         public string deviceManagerName;
         public string deviceManagerID;
 
+        /// <summary>
+        /// If using COM-USB adapter, useCOMPort is true;
+        /// </summary>
+        public bool useCOMPort;
+        public string comPort;
+
         protected Device()
         {
         }
@@ -28,6 +34,15 @@ namespace RMS.Monitoring.Device
             this.deviceManagerID = deviceManagerID;
             this.model = model;
         }
+        protected Device(string brand, string model, string deviceManagerName, string deviceManagerID, bool useCOMPort, string comPort)
+        {
+            this.brand = brand;
+            this.deviceManagerName = deviceManagerName;
+            this.deviceManagerID = deviceManagerID;
+            this.model = model;
+            this.useCOMPort = useCOMPort;
+            this.comPort = comPort;
+        }
 
         public virtual int CheckDeviceManager()
         {
@@ -35,6 +50,24 @@ namespace RMS.Monitoring.Device
             {
                 if (string.IsNullOrEmpty(deviceManagerName) && string.IsNullOrEmpty(deviceManagerID)) return -1;
 
+                if (!string.IsNullOrEmpty(deviceManagerID))
+                {
+                    ManagementObject device = DeviceManagerService.GetPnPDeviceByID(deviceManagerID);
+                    if (device != null)
+                    {
+                        foreach (PropertyData propertyData in device.Properties)
+                        {
+                            if (propertyData.Name != "ConfigManagerErrorCode") continue;
+
+                            return Convert.ToInt32(propertyData.Value);
+                        }
+                    }
+                    else
+                    {
+                        return -1;
+                    }
+                }   
+                 
                 if (!string.IsNullOrEmpty(deviceManagerName))
                 {
 
@@ -54,23 +87,7 @@ namespace RMS.Monitoring.Device
                     }
                 }
 
-                if (!string.IsNullOrEmpty(deviceManagerID))
-                {
-                    ManagementObject device = DeviceManagerService.GetPnPDeviceByID(deviceManagerID);
-                    if (device != null)
-                    {
-                        foreach (PropertyData propertyData in device.Properties)
-                        {
-                            if (propertyData.Name != "ConfigManagerErrorCode") continue;
 
-                            return Convert.ToInt32(propertyData.Value);
-                        }
-                    }
-                    else
-                    {
-                        return -1;
-                    }
-                }
 
                 return -1;
             }

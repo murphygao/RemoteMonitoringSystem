@@ -6,9 +6,9 @@ using RMS.Common.Exception;
 
 namespace RMS.Monitoring.Device.BarcodeReader
 {
-    class BarcodeReaderService
+    public class BarcodeReaderService
     {
-        private global::RMS.Monitoring.Device.BarcodeReader.BarcodeReader _device;
+        private BarcodeReader _device;
         private ClientResult clientResult;
 
         public BarcodeReaderService(string brand, string model, string deviceManagerName, string deviceManagerID, ClientResult clientResult)
@@ -19,7 +19,8 @@ namespace RMS.Monitoring.Device.BarcodeReader
 
                 if (brand.ToLower() == "honeywell") _device = new Honeywell(model, deviceManagerName, deviceManagerID);
                 else
-                    throw new Exception("Brand Not Found. brand=" + brand);
+                    _device = new BarcodeReader(brand, model, deviceManagerName, deviceManagerID);
+                    //throw new Exception("Brand Not Found. brand=" + brand);
 
             }
             catch (Exception ex)

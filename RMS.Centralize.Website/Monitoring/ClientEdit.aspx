@@ -241,7 +241,7 @@
                 <!-- NEW WIDGET START -->
                 <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <!-- Widget ID (each widget will need unique ID)-->
-                    <div class="jarviswidget jarviswidget-color-blueDark" id="list-client-monitoring-1"
+                    <div class="jarviswidget jarviswidget-color-blueDark" id="list-client-monitoring-<%=DateTime.Now.ToString("yyyyMMddHHmmss") %>"
                         data-widget-togglebutton="false"
                         data-widget-colorbutton="false"
                         data-widget-editbutton="false"
@@ -323,7 +323,7 @@
                 <!-- NEW WIDGET START -->
                 <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <!-- Widget ID (each widget will need unique ID)-->
-                    <div class="jarviswidget jarviswidget-color-blueDark" id="list-client-severity-1"
+                    <div class="jarviswidget jarviswidget-color-blueDark" id="list-client-severity-<%=DateTime.Now.ToString("yyyyMMddHHmmss") %>"
                         data-widget-togglebutton="false"
                         data-widget-colorbutton="false"
                         data-widget-editbutton="false"

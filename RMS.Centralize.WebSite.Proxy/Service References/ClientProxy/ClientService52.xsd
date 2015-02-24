@@ -55,6 +55,7 @@
         <xs:element minOccurs="0" name="clientCode" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="clientStatus" nillable="true" type="xs:boolean" />
         <xs:element minOccurs="0" name="ipAddress" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="location" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -122,18 +123,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="ListMainAppClient">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="ListMainAppClientResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="ListMainAppClientResult" nillable="true" type="q10:MainAppClientResult" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="ListLocation">
     <xs:complexType>
       <xs:sequence />
@@ -142,7 +131,7 @@
   <xs:element name="ListLocationResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="ListLocationResult" nillable="true" type="q11:LocationResult" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="ListLocationResult" nillable="true" type="q10:LocationResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -156,7 +145,7 @@
   <xs:element name="ListClientSeverityActionsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="ListClientSeverityActionsResult" nillable="true" type="q12:ClientSeverityActionResult" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="ListClientSeverityActionsResult" nillable="true" type="q11:ClientSeverityActionResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -171,7 +160,7 @@
   <xs:element name="GetClientSeverityActionResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="GetClientSeverityActionResult" nillable="true" type="q13:ClientSeverityActionResult" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="GetClientSeverityActionResult" nillable="true" type="q12:ClientSeverityActionResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -191,7 +180,7 @@
   <xs:element name="UpdateClientSeverityActionResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="UpdateClientSeverityActionResult" nillable="true" type="q14:ClientSeverityActionResult" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService" minOccurs="0" name="UpdateClientSeverityActionResult" nillable="true" type="q13:ClientSeverityActionResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

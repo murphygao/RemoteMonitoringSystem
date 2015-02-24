@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
@@ -7,6 +8,7 @@ using System.Globalization;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
+using System.Net.Mail;
 using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Threading;
@@ -22,6 +24,9 @@ namespace RMS.Centralize.WebService.BSL
     public class ActionSendService : BaseService
     {
         internal string destinationPath = @"c:\monitoring\email\";
+
+        private static DateTime? lastDeleteOldFile = null;
+        private static object lockForDeleteOldFile = new object();
 
         public void ActionRequest(List<RmsReportSummaryMonitoring> lRmsReportSummaryMonitorings)
         {
@@ -40,14 +45,14 @@ namespace RMS.Centralize.WebService.BSL
             SummaryHighLevelSending,
         }
 
-        public void ActionSend(ActionSendType actionSendType, List<RmsReportSummaryMonitoring> lRmsReportSummaryMonitorings, List<RmsReportSummaryMonitoring> lSolvedMonitorings = null)
+        public void ActionSend(ActionSendType actionSendType, List<RmsReportSummaryMonitoring> lRmsReportSummaryMonitorings, List<RmsReportSummaryMonitoring> lSolvedMonitorings = null, List<RMSAttachment> lAttachments = null)
         {
             try
             {
                 switch (actionSendType)
                 {
                     case ActionSendType.ManualSending:
-                        ManualSending(lRmsReportSummaryMonitorings, lSolvedMonitorings);
+                        ManualSending(lRmsReportSummaryMonitorings, lSolvedMonitorings, lAttachments);
                         break;
                 }
             }
@@ -74,7 +79,7 @@ namespace RMS.Centralize.WebService.BSL
             }
         }
 
-        private void ManualSending(List<RmsReportSummaryMonitoring> lRmsReportSummaryMonitorings, List<RmsReportSummaryMonitoring> lSolvedMonitorings = null)
+        private void ManualSending(List<RmsReportSummaryMonitoring> lRmsReportSummaryMonitorings, List<RmsReportSummaryMonitoring> lSolvedMonitorings = null, List<RMSAttachment> lRMSAttachments = null)
         {
 
             new RMSDebugLog("Start ManualSending ", true);
@@ -411,6 +416,65 @@ namespace RMS.Centralize.WebService.BSL
 
                     #endregion
 
+                    #region Attach File
+
+                    if (lRMSAttachments != null)
+                    {
+
+                        //Prepare Temp Folder
+                        string tempFolder = string.Empty;
+                        if (ConfigurationManager.AppSettings["RMS.AttachFileFolderPath"] == null)
+                            tempFolder = HttpRuntime.AppDomainAppPath + @"\attachfile\";
+                        else
+                            tempFolder = ConfigurationManager.AppSettings["RMS.AttachFileFolderPath"];
+                        tempFolder = (tempFolder + @"\").Replace(@"\\", @"\");
+
+                        Directory.CreateDirectory(tempFolder);
+
+                        //ลบ AttachFile เก่าๆ
+                        if (lastDeleteOldFile == null || (lastDeleteOldFile != null && lastDeleteOldFile.Value < DateTime.Now.AddDays(-1)))
+                        {
+                            DeleteOldFiles(tempFolder, 1);
+                            lastDeleteOldFile = DateTime.Now;
+                        }
+
+                        foreach (var attachment in lRMSAttachments)
+                        {
+                            try
+                            {
+                                //Filter ไฟล์ที่ไม่ถูกต้องออก
+                                if (attachment.FileBytes == null || attachment.FileBytes.Length == 0) continue;
+                                if (string.IsNullOrEmpty(attachment.FileName)) continue;
+
+                                if (attachment.FileName.ToLower().EndsWith(".exe") ||
+                                    attachment.FileName.ToLower().EndsWith(".msi") ||
+                                    attachment.FileName.ToLower().EndsWith(".bat") ||
+                                    attachment.FileName.ToLower().EndsWith(".reg"))
+                                {
+                                    new RMSWebException(this, "0500", "Attach File Fiter is working. Cannot save some file types (" + attachment.FileName + ").", true);
+                                    continue;
+                                }
+                            
+                                //สร้างชื่อไฟล์ใหม่
+                                // clientcode_yyyyMMdd_HHmmss_FILENAME
+                                string newFileName = _clientCode + "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss", new CultureInfo("en-AU")) + "_" +
+                                                     attachment.FileName;
+
+
+                                File.WriteAllBytes(tempFolder + newFileName, attachment.FileBytes);
+
+                                attachment.TempFileName = newFileName;
+                                attachment.TempFullPath = tempFolder + newFileName;
+                            }
+                            catch (Exception ex)
+                            {
+                                new RMSWebException(this, "0500", ex.Message, ex, true);
+                            }
+                        }
+
+                    }
+
+                    #endregion
 
                     #region Action Process
 
@@ -467,6 +531,8 @@ namespace RMS.Centralize.WebService.BSL
                         string tableOfSummaryReport = Environment.NewLine;
                         //bool writeHeader = false;
 
+                        List<System.Net.Mail.Attachment> mailAttachments = new List<Attachment>();
+
                         foreach (var actionInfo in actionInfos)
                         {
                             //if (!writeHeader)
@@ -516,6 +582,24 @@ namespace RMS.Centralize.WebService.BSL
                                 .Replace("::portnumber::", actionInfo.PortNumber+"");
 
                             tableOfSummaryReport += tEmail + Environment.NewLine;
+
+                            if (lRMSAttachments != null)
+                            {
+                                var rmsAttachments = lRMSAttachments.Where(w => w.Message == actionInfo.Message && w.DeviceCode == actionInfo.DeviceCode).ToList();
+
+                                foreach (var rmsAttachment in rmsAttachments)
+                                {
+                                    System.Net.Mail.Attachment attachment;
+                                    attachment = new System.Net.Mail.Attachment(rmsAttachment.TempFullPath);
+                                    attachment.Name = rmsAttachment.TempFileName; //ตั้งชื่อไฟล์แนบ
+
+                                    //ป้องกันแนบไฟล์ซ้ำกัน
+                                    if (!mailAttachments.Exists(e => e.Name == rmsAttachment.TempFileName))
+                                    {
+                                        mailAttachments.Add(attachment);
+                                    }
+                                }
+                            }
                         }
 
                         string tBody =
@@ -532,11 +616,10 @@ namespace RMS.Centralize.WebService.BSL
                             var actionGatewayService = new ActionGateway();
                             try
                             {
-                                var actionResult = actionGatewayService.SendEmail(gateway, emailFrom, new List<string> {to}, tSubject, tBody);
+                                var actionResult = actionGatewayService.SendEmail(gateway, emailFrom, new List<string> { to }, tSubject, tBody, true, mailAttachments);
                                 if (actionResult.IsSuccess)
                                 {
                                     AddLogActionSend("Email", emailFrom, to, tBody, true, null);
-                                
                                 }
                                 else
                                 {
@@ -563,6 +646,12 @@ namespace RMS.Centralize.WebService.BSL
                                 using (StreamWriter sw = File.AppendText(destinationPath + fileName))
                                 {
                                     sw.WriteLine(tBody);
+                                }
+
+                                Directory.CreateDirectory(destinationPath + @"attachfile\");
+                                foreach (var attachment in lRMSAttachments)
+                                {
+                                    File.WriteAllBytes(destinationPath + @"attachfile\" + attachment.TempFileName, attachment.FileBytes);
                                 }
 
                                 AddLogActionSend("Email", emailFrom, to, tBody, true, "Testing Mode");
@@ -932,6 +1021,34 @@ namespace RMS.Centralize.WebService.BSL
             catch (Exception ex)
             {
                 throw new RMSWebException(this, "0500", "AddLogActionSend failed. " + ex.Message, ex, false);
+            }
+        }
+
+        /// <summary>
+        /// ลบไฟล์ที่มีอายุเกินกำหนด
+        /// </summary>
+        /// <param name="dirName">folder ที่ต้องลบไฟล์ภายใน</param>
+        /// <param name="oldDay">หน่วยเป็นวัน เป็นค่าบวก</param>
+        private void DeleteOldFiles(string dirName, int oldDay)
+        {
+            try
+            {
+                lock (lockForDeleteOldFile)
+                {
+                    string[] files = Directory.GetFiles(dirName);
+
+                    foreach (string file in files)
+                    {
+                        FileInfo fi = new FileInfo(file);
+                        if (fi.CreationTime < DateTime.Now.AddDays(-1 * oldDay))
+                            fi.Delete();
+                    }
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                new RMSWebException(this, "0500", "DeleteOldFiles failed. " + ex.Message, ex, true);
             }
         }
 

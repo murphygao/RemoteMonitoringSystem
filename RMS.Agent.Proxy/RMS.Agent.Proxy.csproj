@@ -139,6 +139,9 @@
     <None Include="Service References\MonitoringProxy\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Service References\MonitoringProxy\MonitoringService.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\MonitoringProxy\MonitoringService1.wsdl" />
     <None Include="Service References\MonitoringProxy\MonitoringService3.xsd">
       <SubType>Designer</SubType>

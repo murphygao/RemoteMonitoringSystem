@@ -16,7 +16,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
 
         // GET: /Monitoring/Client/Search/
         public ActionResult Search(JQueryDataTableParamModel param, DateTime? txtAsOfDate, int? dllClientType, string txtClientCode,
-            bool? ddlClientStatus, string txtIPAddress)
+            bool? ddlClientStatus, string txtIPAddress, string txtLocation)
         {
             //JQueryDataTableParamModel param = new JQueryDataTableParamModel();
             //param.sEcho = String.IsNullOrEmpty(Context.Request["sEcho"]) ? "0" : Context.Request["sEcho"];
@@ -32,7 +32,7 @@ namespace RMS.Centralize.Website.Areas.Monitoring.Controllers
             {
                 var cClient = new ClientService().clientService;
 
-                var searchResult = cClient.Search(param, txtAsOfDate, dllClientType, txtClientCode, ddlClientStatus, txtIPAddress);
+                var searchResult = cClient.Search(param, txtAsOfDate, dllClientType, txtClientCode, ddlClientStatus, txtIPAddress, txtLocation);
 
                 int? totalRecords = 0;
                 totalRecords = searchResult.TotalRecords;

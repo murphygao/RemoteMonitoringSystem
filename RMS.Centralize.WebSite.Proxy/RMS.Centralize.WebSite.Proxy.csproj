@@ -199,9 +199,6 @@
     <None Include="Service References\ClientProxy\RMS.Centralize.WebSite.Proxy.ClientProxy.LocationResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\ClientProxy\RMS.Centralize.WebSite.Proxy.ClientProxy.MainAppClientResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Service References\ClientProxy\RMS.Centralize.WebSite.Proxy.ClientProxy.Result.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -345,6 +342,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\SummaryReportProxy\RMS.Centralize.WebSite.Proxy.SummaryReportProxy.SummaryMonitoringResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SummaryReportProxy\RMS.Centralize.WebSite.Proxy.SummaryReportProxy.SummaryStatusAllClientsInfoResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\SummaryReportProxy\SummaryReportService1.wsdl" />

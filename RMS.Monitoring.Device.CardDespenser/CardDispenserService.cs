@@ -23,7 +23,8 @@ namespace RMS.Monitoring.Device.CardDespenser
 
                 if (brand.ToLower() == "mutek") _device = new MUTEK(model, deviceManagerName, deviceManagerID, useCOMPort, comPort);
                 else
-                    throw new Exception("Brand Not Found. brand=" + brand);
+                    _device = new CardDispenser(brand, model, deviceManagerName, deviceManagerID, useCOMPort, comPort);
+                    //throw new Exception("Brand Not Found. brand=" + brand);
 
             }
             catch (Exception ex)
@@ -70,6 +71,18 @@ namespace RMS.Monitoring.Device.CardDespenser
                             else if (s.ToLower() == "end_card")
                             {
                                 cardLevelRaw.Message = "END_CARD";
+                            }
+                            else if (s.ToLower() == "card_jam")
+                            {
+                                cardLevelRaw.Message = "CARD_JAM";
+                            }
+                            else if (s.ToLower() == "bin_full")
+                            {
+                                cardLevelRaw.Message = "BIN_FULL";
+                            }
+                            else if (s.ToLower() == "port_cannot_open")
+                            {
+                                cardLevelRaw.Message = "PORT_CANNOT_OPEN";
                             }
 
                             if (!string.IsNullOrEmpty(cardLevelRaw.Message))

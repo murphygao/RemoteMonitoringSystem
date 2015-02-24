@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -52,7 +55,7 @@ namespace RMS.Agent.OutOfServiceApp
         {
             try
             {
-                this.NavigationService.GoBack();
+                this.NavigationService.Navigate(new HomePage());
             }
             catch (Exception ex)
             {
@@ -67,16 +70,19 @@ namespace RMS.Agent.OutOfServiceApp
                 if (txtPassword.Password == password)
                 {
                     OOSService service = new OOSService();
+
                     if (service.PrepareForClosing())
                         Application.Current.Shutdown();
                 }
                 else
                 {
                     txtPassword.Password = "";
+                    lblPasswordInvalid.Content = "Password is invalid.";
                 }
             }
             catch (Exception ex)
             {
+                lblPasswordInvalid.Content = ex.Message;
                 new RMSAppException(this, "0500", "btnOk_Click failed. " + ex.Message, ex, true);
             }
         }

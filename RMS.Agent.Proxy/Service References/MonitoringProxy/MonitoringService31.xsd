@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/MonitoringService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" />
+  <xs:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/MonitoringService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" />
   <xs:element name="TestConnection">
     <xs:complexType>
       <xs:sequence />
@@ -47,10 +48,49 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="AddMessageWithAttachFiles">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="rawMessage" nillable="true" type="q4:RmsReportMonitoringRaw" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" minOccurs="0" name="lAttachments" nillable="true" type="q5:ArrayOfRMSAttachment" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddMessageWithAttachFilesResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddMessagesWithAttachFiles">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="lRawMessages" nillable="true" type="q6:ArrayOfRmsReportMonitoringRaw" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" minOccurs="0" name="lAttachments" nillable="true" type="q7:ArrayOfRMSAttachment" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddMessagesWithAttachFilesResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddBusinessMessageWithAttachFiles">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="rawMessage" nillable="true" type="q8:RmsReportMonitoringRaw" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" minOccurs="0" name="lAttachments" nillable="true" type="q9:ArrayOfRMSAttachment" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddBusinessMessageWithAttachFilesResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="AddWebsiteMessage">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="lRawMessages" nillable="true" type="q4:ArrayOfRmsReportMonitoringRaw" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" minOccurs="0" name="lRawMessages" nillable="true" type="q10:ArrayOfRmsReportMonitoringRaw" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

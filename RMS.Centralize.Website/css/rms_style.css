@@ -76,6 +76,16 @@
     font-weight: bold;
     padding: 6px 15px 3px 7px;
 }
+
+.monitoring-liveupdate-2 {
+    font-size: 12px !important;
+    position: absolute !important;
+    right: 55px;
+    display: block;
+    z-index: 2;
+    font-weight: bold;
+    padding: 6px 15px 3px 7px;
+}
 .width40 {
     width: 40px!important;
 }

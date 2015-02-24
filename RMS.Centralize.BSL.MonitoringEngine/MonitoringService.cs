@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -12,6 +13,7 @@ using RMS.Centralize.BSL.MonitoringEngine.Model;
 using RMS.Centralize.DAL;
 using RMS.Common.Exception;
 using RMS.Monitoring.Helper;
+using RmsReportMonitoringRaw = RMS.Centralize.WebService.Proxy.MonitoringProxy.RmsReportMonitoringRaw;
 
 
 namespace RMS.Centralize.BSL.MonitoringEngine
@@ -20,6 +22,7 @@ namespace RMS.Centralize.BSL.MonitoringEngine
     {
         public SmartThreadPool stp;
         public static bool isRunning = false ;
+        private static Hashtable agentNotAliveHashtable = new Hashtable();
 
         public void Start(LicenseInfo licenseInfo)
         {
@@ -153,6 +156,11 @@ namespace RMS.Centralize.BSL.MonitoringEngine
                 AddLogMonitoringClient(refID, client.ClientId, client.ClientCode, client.IpAddress, client.State, null);
                 var result = asc.Monitoring(client.ClientCode);
 
+                if (agentNotAliveHashtable.Contains(client.ClientCode))
+                {
+                    agentNotAliveHashtable.Remove(client.ClientCode);
+                }
+
             }
             catch (Exception e)
             {
@@ -170,7 +178,26 @@ namespace RMS.Centralize.BSL.MonitoringEngine
                         using (var db = new MyDbContext())
                         {
                             var rmsSystemConfig = db.RmsSystemConfigs.Find("AgentProcessName");
-                            var agentProcessName = rmsSystemConfig.Value ?? rmsSystemConfig.DefaultValue;
+                            string agentProcessName;
+                            if (rmsSystemConfig == null)
+                            {
+                                agentProcessName = "RMS.Agent.WPF";
+                            }
+                            else
+                            {
+                                agentProcessName = rmsSystemConfig.Value ?? rmsSystemConfig.DefaultValue;
+                            } 
+                            
+                            rmsSystemConfig = db.RmsSystemConfigs.Find("DelayAlert.AgentNotAlive");
+                            string dalayInSecond;
+                            if (rmsSystemConfig == null)
+                            {
+                                dalayInSecond = "90";
+                            }
+                            else
+                            {
+                                dalayInSecond = rmsSystemConfig.Value ?? rmsSystemConfig.DefaultValue;
+                            }
 
                             SqlParameter[] parameters = new SqlParameter[1];
                             SqlParameter p1 = new SqlParameter("ClientID", client.ClientId);
@@ -183,19 +210,44 @@ namespace RMS.Centralize.BSL.MonitoringEngine
                             
                             if (device != null)
                             {
-                                var mp = new Centralize.WebService.Proxy.MonitoringService().monitoringService;
+                                bool CanSendMessage = Convert.ToInt32(dalayInSecond) == 0;
 
-                                RMS.Centralize.WebService.Proxy.MonitoringProxy.RmsReportMonitoringRaw rawMessage = new WebService.Proxy.
-                                    MonitoringProxy.RmsReportMonitoringRaw
+                                if (agentNotAliveHashtable.Contains(client.ClientCode))
                                 {
-                                    ClientCode = client.ClientCode,
-                                    DeviceCode = "CLIENT",
-                                    Message = "AGENT_NOT_ALIVE",
-                                    MessageDateTime = DateTime.Now,
-                                    MonitoringProfileDeviceId = device.MonitoringProfileDeviceId
-                                };
+                                    DateTime a = (DateTime)agentNotAliveHashtable[client.ClientCode];
+                                    var diffInSeconds = (DateTime.Now - a).TotalSeconds;
+                                    if (diffInSeconds > Convert.ToInt32(dalayInSecond))
+                                    {
+                                        CanSendMessage = true;
+                                    }
+                                }
+                                else
+                                {
+                                    agentNotAliveHashtable.Add(client.ClientCode, DateTime.Now);
+                                }
 
-                                mp.AddMessage(rawMessage);
+
+                                if (CanSendMessage)
+                                {
+                                    var mp = new WebService.Proxy.MonitoringService().monitoringService;
+
+                                    RmsReportMonitoringRaw rawMessage = new RmsReportMonitoringRaw
+                                    {
+                                        ClientCode = client.ClientCode,
+                                        DeviceCode = "CLIENT",
+                                        Message = "AGENT_NOT_ALIVE",
+                                        MessageDateTime = DateTime.Now,
+                                        MonitoringProfileDeviceId = device.MonitoringProfileDeviceId
+                                    };
+
+                                    mp.AddMessage(rawMessage);
+
+                                    if (agentNotAliveHashtable.Contains(client.ClientCode))
+                                    {
+                                        agentNotAliveHashtable.Remove(client.ClientCode);
+
+                                    }
+                                }
                             }
                         }
                     }
@@ -397,7 +449,7 @@ namespace RMS.Centralize.BSL.MonitoringEngine
                     if (startTime <= myToday && myToday <= endTime) return true;
                 }
 
-                else if ((int) myToday.DayOfWeek == 7) // Sunday
+                else if ((int) myToday.DayOfWeek == 0) // Sunday
                 {
                     if (location.SundayEnable == null || location.SundayEnable == false) return false;
                     if (location.SundayWholeDay == true) return true;

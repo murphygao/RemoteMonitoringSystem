@@ -141,7 +141,7 @@ namespace RMS.Centralize.Engine.MonitoringEngine
                     }
                 }
 
-                if (tempInterval < 30) tempInterval = 30;
+                if (tempInterval < 15) tempInterval = 15;
 
                 if (intervalME != tempInterval)
                 {

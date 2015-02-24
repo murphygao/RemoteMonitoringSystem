@@ -59,6 +59,12 @@
   <wsdl:message name="ISummaryReportService_ActionRequest_OutputMessage">
     <wsdl:part name="parameters" element="tns:ActionRequestResponse" />
   </wsdl:message>
+  <wsdl:message name="ISummaryReportService_SearchSummaryStatusAllClients_InputMessage">
+    <wsdl:part name="parameters" element="tns:SearchSummaryStatusAllClients" />
+  </wsdl:message>
+  <wsdl:message name="ISummaryReportService_SearchSummaryStatusAllClients_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SearchSummaryStatusAllClientsResponse" />
+  </wsdl:message>
   <wsdl:portType name="ISummaryReportService">
     <wsdl:operation name="TestConnection">
       <wsdl:input wsaw:Action="http://tempuri.org/ISummaryReportService/TestConnection" message="tns:ISummaryReportService_TestConnection_InputMessage" />
@@ -75,6 +81,10 @@
     <wsdl:operation name="ActionRequest">
       <wsdl:input wsaw:Action="http://tempuri.org/ISummaryReportService/ActionRequest" message="tns:ISummaryReportService_ActionRequest_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISummaryReportService/ActionRequestResponse" message="tns:ISummaryReportService_ActionRequest_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchSummaryStatusAllClients">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISummaryReportService/SearchSummaryStatusAllClients" message="tns:ISummaryReportService_SearchSummaryStatusAllClients_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISummaryReportService/SearchSummaryStatusAllClientsResponse" message="tns:ISummaryReportService_SearchSummaryStatusAllClients_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ISummaryReportService" type="tns:ISummaryReportService">
@@ -115,6 +125,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SearchSummaryStatusAllClients">
+      <soap:operation soapAction="http://tempuri.org/ISummaryReportService/SearchSummaryStatusAllClients" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="BasicHttpsBinding_ISummaryReportService" type="tns:ISummaryReportService">
     <wsp:PolicyReference URI="#BasicHttpsBinding_ISummaryReportService_policy" />
@@ -148,6 +167,15 @@
     </wsdl:operation>
     <wsdl:operation name="ActionRequest">
       <soap:operation soapAction="http://tempuri.org/ISummaryReportService/ActionRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchSummaryStatusAllClients">
+      <soap:operation soapAction="http://tempuri.org/ISummaryReportService/SearchSummaryStatusAllClients" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

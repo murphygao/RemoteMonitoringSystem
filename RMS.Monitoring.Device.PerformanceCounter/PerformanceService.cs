@@ -13,9 +13,10 @@ namespace RMS.Monitoring.Device.PerformanceCounter
     {
         public List<RmsReportMonitoringRaw> Monitoring(ClientResult clientResult)
         {
+
+            List<RmsReportMonitoringRaw> lRmsReportMonitoringRaws = new List<RmsReportMonitoringRaw>();
             try
             {
-                List<RmsReportMonitoringRaw> lRmsReportMonitoringRaws = new List<RmsReportMonitoringRaw>();
 
                 /*
              * 1. Check CPU
@@ -132,14 +133,13 @@ namespace RMS.Monitoring.Device.PerformanceCounter
 
                 #endregion
 
-
-                return lRmsReportMonitoringRaws;
             }
             catch (Exception ex)
             {
-                throw new RMSAppException(this, "0500", "Monitoring failed. " + ex.Message, ex, false);
-
+                new RMSAppException(this, "0500", "Monitoring failed. " + ex.Message, ex, true);
             }
+
+            return lRmsReportMonitoringRaws;
         }
 
         #region Private Methods

@@ -9,7 +9,7 @@ namespace RMS.Adapter.KTB
     public class VTMAdapter : IDisposable
     {
         private bool disposed = false;
-        public Result SendEmail(MailAddress from, List<MailAddress> lTo, string subject, string body, bool isHtml = true)
+        public Result SendEmail(MailAddress from, List<MailAddress> lTo, string subject, string body, IEnumerable<Attachment> lAttachFiles, bool isHtml = true)
         {
             try
             {
@@ -18,9 +18,9 @@ namespace RMS.Adapter.KTB
                     from = new MailAddress(ConfigurationManager.AppSettings["RMS.KTB.SMTP.From"]);
                 if (string.IsNullOrEmpty(from.Address)) throw new ArgumentNullException("from", "Please check database and Web.config > appSettings > RMS.KTB.SMTP.From ");
 
-
+                if (isHtml) body = body.Replace(Environment.NewLine, "<br/>");
                 var emailService = new SendEmailService();
-                var result = emailService.SendEmail(@from, lTo, subject, body, isHtml);
+                var result = emailService.SendEmail(@from, lTo, subject, body, lAttachFiles, isHtml);
                 if (result.IsSuccess)
                 {
                     return new Result {IsSuccess = true};

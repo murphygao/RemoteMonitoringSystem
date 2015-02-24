@@ -30,6 +30,7 @@
       <xsd:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/MonitoringService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/MonitoringService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/MonitoringService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.DAL" />
+      <xsd:import schemaLocation="https://esn-nb01/RMS.Centralize.WebService/MonitoringService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/RMS.Centralize.WebService.Model" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IMonitoringService_TestConnection_InputMessage">
@@ -55,6 +56,24 @@
   </wsdl:message>
   <wsdl:message name="IMonitoringService_AddBusinessMessage_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddBusinessMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMonitoringService_AddMessageWithAttachFiles_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddMessageWithAttachFiles" />
+  </wsdl:message>
+  <wsdl:message name="IMonitoringService_AddMessageWithAttachFiles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddMessageWithAttachFilesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMonitoringService_AddMessagesWithAttachFiles_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddMessagesWithAttachFiles" />
+  </wsdl:message>
+  <wsdl:message name="IMonitoringService_AddMessagesWithAttachFiles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddMessagesWithAttachFilesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMonitoringService_AddBusinessMessageWithAttachFiles_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddBusinessMessageWithAttachFiles" />
+  </wsdl:message>
+  <wsdl:message name="IMonitoringService_AddBusinessMessageWithAttachFiles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddBusinessMessageWithAttachFilesResponse" />
   </wsdl:message>
   <wsdl:message name="IMonitoringService_AddWebsiteMessage_InputMessage">
     <wsdl:part name="parameters" element="tns:AddWebsiteMessage" />
@@ -90,6 +109,18 @@
     <wsdl:operation name="AddBusinessMessage">
       <wsdl:input wsaw:Action="http://tempuri.org/IMonitoringService/AddBusinessMessage" message="tns:IMonitoringService_AddBusinessMessage_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMonitoringService/AddBusinessMessageResponse" message="tns:IMonitoringService_AddBusinessMessage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddMessageWithAttachFiles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMonitoringService/AddMessageWithAttachFiles" message="tns:IMonitoringService_AddMessageWithAttachFiles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMonitoringService/AddMessageWithAttachFilesResponse" message="tns:IMonitoringService_AddMessageWithAttachFiles_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddMessagesWithAttachFiles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMonitoringService/AddMessagesWithAttachFiles" message="tns:IMonitoringService_AddMessagesWithAttachFiles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMonitoringService/AddMessagesWithAttachFilesResponse" message="tns:IMonitoringService_AddMessagesWithAttachFiles_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddBusinessMessageWithAttachFiles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMonitoringService/AddBusinessMessageWithAttachFiles" message="tns:IMonitoringService_AddBusinessMessageWithAttachFiles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMonitoringService/AddBusinessMessageWithAttachFilesResponse" message="tns:IMonitoringService_AddBusinessMessageWithAttachFiles_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="AddWebsiteMessage">
       <wsdl:input wsaw:Action="http://tempuri.org/IMonitoringService/AddWebsiteMessage" message="tns:IMonitoringService_AddWebsiteMessage_InputMessage" />
@@ -135,6 +166,33 @@
     </wsdl:operation>
     <wsdl:operation name="AddBusinessMessage">
       <soap:operation soapAction="http://tempuri.org/IMonitoringService/AddBusinessMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddMessageWithAttachFiles">
+      <soap:operation soapAction="http://tempuri.org/IMonitoringService/AddMessageWithAttachFiles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddMessagesWithAttachFiles">
+      <soap:operation soapAction="http://tempuri.org/IMonitoringService/AddMessagesWithAttachFiles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddBusinessMessageWithAttachFiles">
+      <soap:operation soapAction="http://tempuri.org/IMonitoringService/AddBusinessMessageWithAttachFiles" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -202,6 +260,33 @@
     </wsdl:operation>
     <wsdl:operation name="AddBusinessMessage">
       <soap:operation soapAction="http://tempuri.org/IMonitoringService/AddBusinessMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddMessageWithAttachFiles">
+      <soap:operation soapAction="http://tempuri.org/IMonitoringService/AddMessageWithAttachFiles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddMessagesWithAttachFiles">
+      <soap:operation soapAction="http://tempuri.org/IMonitoringService/AddMessagesWithAttachFiles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddBusinessMessageWithAttachFiles">
+      <soap:operation soapAction="http://tempuri.org/IMonitoringService/AddBusinessMessageWithAttachFiles" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

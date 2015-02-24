@@ -16,7 +16,7 @@ namespace RMS.Centralize.WebService.Gateway
 {
     public class ActionGateway
     {
-        public ActionResult SendEmail(GatewayName gatewayName, string from, List<string> toList, string subject, string body)
+        public ActionResult SendEmail(GatewayName gatewayName, string from, List<string> toList, string subject, string body, bool isHTML = true, IEnumerable<Attachment> lAttachFiles = null)
         {
             try
             {
@@ -25,10 +25,10 @@ namespace RMS.Centralize.WebService.Gateway
                 switch (gatewayName)
                 {
                     case GatewayName.AIS_SKS:
-                        return AIS_SKS_Email(from, toList, subject, body);
+                        return AIS_SKS_Email(from, toList, subject, body, isHTML, lAttachFiles);
                         break;
                     case GatewayName.KTB_VTM:
-                        return KTB_VTM_Email(from, toList, subject, body);
+                        return KTB_VTM_Email(from, toList, subject, body, lAttachFiles);
                         break;
                 }
 
@@ -66,7 +66,7 @@ namespace RMS.Centralize.WebService.Gateway
 
         #region AIS Gateway
 
-        private ActionResult AIS_SKS_Email(string from, List<string> toList, string subject, string body)
+        private ActionResult AIS_SKS_Email(string from, List<string> toList, string subject, string body, bool isHTML = true, IEnumerable<Attachment> lAttachFiles = null)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace RMS.Centralize.WebService.Gateway
                         lMailAddresses.Add(new MailAddress(toEmail));
                     }
 
-                    var result = adapter.SendEmail(new MailAddress(from), lMailAddresses.ToArray(), subject, body);
+                    var result = adapter.SendEmail(new MailAddress(from), lMailAddresses.ToArray(), subject, body, isHTML, lAttachFiles == null ? null : lAttachFiles.ToArray());
 
                     return new ActionResult
                     {
@@ -140,7 +140,7 @@ namespace RMS.Centralize.WebService.Gateway
 
         #region KTB Gateway
 
-        private ActionResult KTB_VTM_Email(string from, List<string> toList, string subject, string body)
+        private ActionResult KTB_VTM_Email(string from, List<string> toList, string subject, string body, IEnumerable<Attachment> lAttachFiles)
         {
             try
             {
@@ -152,7 +152,7 @@ namespace RMS.Centralize.WebService.Gateway
                         lMailAddresses.Add(new MailAddress(toEmail));
                     }
 
-                    var result = adapter.SendEmail(new MailAddress(from), lMailAddresses, subject, body);
+                    var result = adapter.SendEmail(new MailAddress(from), lMailAddresses, subject, body, lAttachFiles);
 
                     return new ActionResult
                     {

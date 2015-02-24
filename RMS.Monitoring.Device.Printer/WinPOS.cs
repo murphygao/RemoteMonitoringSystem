@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO.Ports;
 
 namespace RMS.Monitoring.Device.Printer
@@ -19,7 +20,7 @@ namespace RMS.Monitoring.Device.Printer
         /// 
         /// </summary>
         /// <returns>-1 Cannot Check, 0 OK, 3 Near Paper End </returns>
-        public override int[] CheckPaperStatus()
+        public override string[] CheckPaperStatus()
         {
             if (!useCOMPort || string.IsNullOrEmpty(comPort)) return null;
 
@@ -39,24 +40,22 @@ namespace RMS.Monitoring.Device.Printer
                     //label1.Text = serialPort.ReadExisting();
                     serialPort.ReadTimeout = 1500;
                     int status = serialPort.ReadByte();
+                    List<string> retString = new List<string>();
                     int[] ret = new int[2];
                     if (status == 0)
                     {
-                        ret[1] = 0;
-                        ret[2] = 0;
-
+                        retString.Add("ok");
                     }
                     if (status == 3)
                     {
-                        ret[1] = 1;
-                        ret[2] = 0;
+                        retString.Add("low_paper");
                     }
                     else
                     {
-                        ret[1] = 1;
-                        ret[2] = 1;
+                        retString.Add("low_paper");
+                        retString.Add("end_paper");
                     }
-                    return ret;
+                    return retString.ToArray();
                 }
                 catch (Exception ex)
                 {

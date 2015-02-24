@@ -167,6 +167,9 @@
                     <a href="#"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i><span class="menu-item-parent">Remote Monitoring</span></a>
                     <ul>
                         <li>
+                            <a href="<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/AllClientStatusReport.aspx">All Client Status Report</a>
+                        </li>
+                        <li>
                             <a href="<%= HttpContext.Current.Request.ApplicationPath %>/Monitoring/MonitoringReport.aspx">Monitoring Report</a>
                         </li>
                         <li>

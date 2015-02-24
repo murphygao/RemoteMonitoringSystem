@@ -21,8 +21,9 @@ namespace RMS.Monitoring.Device.UPS
                 this.clientResult = clientResult;
 
                 if (brand.ToLower() == "powermatic") _device = new PowerMatic(model, deviceManagerName, deviceManagerID);
-
-                throw new Exception("Brand Not Found. brand=" + brand);
+                else
+                    _device = new UPS(brand, model, deviceManagerName, deviceManagerID);
+                    //throw new Exception("Brand Not Found. brand=" + brand);
 
             }
             catch (Exception ex)

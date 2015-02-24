@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -7,6 +8,7 @@ using System.ServiceModel.Channels;
 using System.Text;
 using RMS.Centralize.DAL;
 using RMS.Centralize.WebService.BSL;
+using RMS.Centralize.WebService.Model;
 using RMS.Common.Exception;
 
 namespace RMS.Centralize.WebService
@@ -24,12 +26,7 @@ namespace RMS.Centralize.WebService
         {
             try
             {
-                var ip = GetIP();
-                rawMessage.ClientIpAddress = ip;
-
-                var lRawMessages = new List<RmsReportMonitoringRaw>();
-                lRawMessages.Add(rawMessage);
-                AddTechnicalMessages(lRawMessages);
+                AddMessageWithAttachFiles(rawMessage, null);
             }
             catch (Exception ex)
             {
@@ -41,12 +38,7 @@ namespace RMS.Centralize.WebService
         {
             try
             {
-                var ip = GetIP();
-                foreach (var rmsReportMonitoringRaw in lRawMessages)
-                {
-                    rmsReportMonitoringRaw.ClientIpAddress = ip;
-                }
-                AddTechnicalMessages(lRawMessages);
+                AddMessagesWithAttachFiles(lRawMessages, null);
             }
             catch (Exception ex)
             {
@@ -54,7 +46,7 @@ namespace RMS.Centralize.WebService
             }
         }
 
-        private void AddTechnicalMessages(List<RmsReportMonitoringRaw> lRawMessages)
+        private void AddTechnicalMessages(List<RmsReportMonitoringRaw> lRawMessages, List<RMSAttachment> lAttachments = null)
         {
             try
             {
@@ -72,11 +64,11 @@ namespace RMS.Centralize.WebService
 
                 var sv = new SummaryService();
                 var caller = new SummaryService.DoSummaryMonitoringAsync(sv.DoSummaryMonitoring);
-                caller.BeginInvoke(lRawMessages, null, null);
+                caller.BeginInvoke(lRawMessages, lAttachments, null, null);
             }
             catch (Exception ex)
             {
-                new RMSWebException(this, "0500", "AddTechnicalMessages failed. " + ex.Message, ex, false);
+                throw new RMSWebException(this, "0500", "AddTechnicalMessages failed. " + ex.Message, ex, false);
             }
         }
 
@@ -110,6 +102,70 @@ namespace RMS.Centralize.WebService
                 new RMSWebException(this, "0500", "AddBusinessMessage failed. " + ex.Message, ex, true);
             }
 
+        }
+
+        public void AddMessageWithAttachFiles(RmsReportMonitoringRaw rawMessage, List<RMSAttachment> lAttachments)
+        {
+            try
+            {
+                var ip = GetIP();
+                rawMessage.ClientIpAddress = ip;
+
+                var lRawMessages = new List<RmsReportMonitoringRaw>();
+                lRawMessages.Add(rawMessage);
+                AddTechnicalMessages(lRawMessages, lAttachments);
+            }
+            catch (Exception ex)
+            {
+                new RMSWebException(this, "0500", "AddMessageWithAttachFiles failed. " + ex.Message, ex, true);
+            }
+        }
+
+        public void AddMessagesWithAttachFiles(List<RmsReportMonitoringRaw> lRawMessages, List<RMSAttachment> lAttachments)
+        {
+            try
+            {
+                var ip = GetIP();
+                foreach (var rmsReportMonitoringRaw in lRawMessages)
+                {
+                    rmsReportMonitoringRaw.ClientIpAddress = ip;
+                }
+                AddTechnicalMessages(lRawMessages, lAttachments);
+            }
+            catch (Exception ex)
+            {
+                new RMSWebException(this, "0500", "AddMessagesWithAttachFiles failed. " + ex.Message, ex, true);
+            }
+        }
+
+        public void AddBusinessMessageWithAttachFiles(RmsReportMonitoringRaw rawMessage, List<RMSAttachment> lAttachments)
+        {
+            try
+            {
+                var ip = GetIP();
+                rawMessage.ClientIpAddress = ip;
+
+                using (var db = new MyDbContext())
+                {
+                    db.Configuration.AutoDetectChangesEnabled = false;
+
+                    db.RmsReportMonitoringRaws.Add(rawMessage);
+
+                    db.SaveChanges();
+                }
+
+                if (string.IsNullOrEmpty(rawMessage.ClientCode)) return;
+                if (string.IsNullOrEmpty(rawMessage.MessageGroupCode)) return;
+                if (string.IsNullOrEmpty(rawMessage.Message)) return;
+
+                var sv = new SummaryService();
+                var caller = new SummaryService.DoSummaryMonitoringForBusinessAsync(sv.DoSummaryMonitoringForBusiness);
+                caller.BeginInvoke(rawMessage, null, null);
+            }
+            catch (Exception ex)
+            {
+                new RMSWebException(this, "0500", "AddBusinessMessageWithAttachFiles failed. " + ex.Message, ex, true);
+            }
         }
 
         public void AddWebsiteMessage(List<RmsReportMonitoringRaw> lRawMessages)

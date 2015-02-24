@@ -53,6 +53,7 @@
       <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Enable" type="xs:boolean" />
       <xs:element minOccurs="0" name="ExpiredDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="HasMonitoringAgent" type="xs:boolean" />
       <xs:element minOccurs="0" name="IPAddress" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="LocationCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="LocationCode2" nillable="true" type="xs:string" />
@@ -73,4 +74,30 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfClientInfo" nillable="true" type="tns:ArrayOfClientInfo" />
+  <xs:complexType name="ArrayOfSummaryStatusAllClientsInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SummaryStatusAllClientsInfo" nillable="true" type="tns:SummaryStatusAllClientsInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSummaryStatusAllClientsInfo" nillable="true" type="tns:ArrayOfSummaryStatusAllClientsInfo" />
+  <xs:complexType name="SummaryStatusAllClientsInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AgentNotAlive" type="xs:int" />
+      <xs:element minOccurs="0" name="ClientCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ClientID" type="xs:int" />
+      <xs:element minOccurs="0" name="ClientTypeID" type="xs:int" />
+      <xs:element minOccurs="0" name="CounterBizMessage" type="xs:int" />
+      <xs:element minOccurs="0" name="CounterNotOK" type="xs:int" />
+      <xs:element minOccurs="0" name="CounterOK" type="xs:int" />
+      <xs:element minOccurs="0" name="HasMonitoringAgent" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IPAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LocationCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LocationID" type="xs:int" />
+      <xs:element minOccurs="0" name="LocationName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OldestErrorMessageDateTime" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="iRMSStatus" type="xs:int" />
+      <xs:element minOccurs="0" name="sRMSStatus" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SummaryStatusAllClientsInfo" nillable="true" type="tns:SummaryStatusAllClientsInfo" />
 </xs:schema>

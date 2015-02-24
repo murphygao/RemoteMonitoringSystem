@@ -75,6 +75,9 @@
     <Reference Include="ESN.AutoUpdate">
       <HintPath>..\Solution Items\ESN\ESN.AutoUpdate.exe</HintPath>
     </Reference>
+    <Reference Include="ESN.AutoUpdate.API">
+      <HintPath>..\Solution Items\ESN\ESN.AutoUpdate.API.dll</HintPath>
+    </Reference>
     <Reference Include="ESN.Common.Exception">
       <HintPath>..\Solution Items\ESN\ESN.Common.Exception.dll</HintPath>
     </Reference>
@@ -153,7 +156,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Images\icon-16.ico" />

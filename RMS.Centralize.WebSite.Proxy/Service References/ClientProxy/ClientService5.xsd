@@ -4,6 +4,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="RmsClientMonitorings" nillable="true" type="tns:ArrayOfRmsClientMonitoring" />
       <xs:element minOccurs="0" name="RmsClientSeverityActions" nillable="true" type="tns:ArrayOfRmsClientSeverityAction" />
+      <xs:element minOccurs="0" name="RmsWebsiteMonitorings" nillable="true" type="tns:ArrayOfRmsWebsiteMonitoring" />
       <xs:element name="ClientId" type="xs:int" />
       <xs:element minOccurs="0" name="ClientTypeId" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="ClientCode" nillable="true" type="xs:string" />
@@ -63,6 +64,28 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="RmsClientSeverityAction" nillable="true" type="tns:RmsClientSeverityAction" />
+  <xs:complexType name="ArrayOfRmsWebsiteMonitoring">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RmsWebsiteMonitoring" nillable="true" type="tns:RmsWebsiteMonitoring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRmsWebsiteMonitoring" nillable="true" type="tns:ArrayOfRmsWebsiteMonitoring" />
+  <xs:complexType name="RmsWebsiteMonitoring">
+    <xs:sequence>
+      <xs:element name="WebsiteMonitoringId" type="xs:int" />
+      <xs:element name="ClientId" type="xs:int" />
+      <xs:element minOccurs="0" name="WebsiteMonitoringTypeId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WebsiteMonitoringProtocolId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PortNumber" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="DomainName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Enable" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CreatedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpdatedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="UpdatedBy" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RmsWebsiteMonitoring" nillable="true" type="tns:RmsWebsiteMonitoring" />
   <xs:complexType name="ArrayOfRmsClient">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="RmsClient" nillable="true" type="tns:RmsClient" />

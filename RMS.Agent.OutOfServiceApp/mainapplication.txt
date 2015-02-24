@@ -1,0 +1,2 @@
+﻿Launch SKS Kiosk
+C:\Users\::userlogin::\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Microsoft\ServiceKiosk.appref-ms

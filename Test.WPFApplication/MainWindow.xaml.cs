@@ -42,6 +42,7 @@ namespace Test.WPFApplication
 
         private void btnCallAddMessage_Click(object sender, RoutedEventArgs e)
         {
+
             MonitoringServiceClient msc = new MonitoringServiceClient();
 
             var rawMessage = new RmsReportMonitoringRaw();
@@ -429,6 +430,7 @@ Approximate round trip times in milli-seconds:
 
         private void btnWMList_Click(object sender, RoutedEventArgs e)
         {
+
             try
             {
                 WebsiteMonitoringService wmService = new WebsiteMonitoringService();

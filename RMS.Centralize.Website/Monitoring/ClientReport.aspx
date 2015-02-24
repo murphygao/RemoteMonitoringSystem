@@ -430,6 +430,7 @@
                         "bSearchable": false,
                         "bSortable": true,
                         "sClass": "center",
+                        "bUseRendered": false,
                         "sWidth": "50",
                         "fnRender": function (oObj) {
                             if (oObj.aData["Status"] == 1) {
@@ -449,7 +450,7 @@
                         "sWidth": "200",
                         "sClass": "center",
                         "bUseRendered": false,
-                        "fnRender": function(oObj) {
+                        "fnRender": function (oObj) {
                             if (oObj.aData["Status"] == 0 && oObj.aData["UpdatedDate"] != null) {
                                 var date = new Date(parseInt(oObj.aData["UpdatedDate"].substr(6)));
                                 return dateFormat(date, "dd/mm/yyyy HH:MM:ss");

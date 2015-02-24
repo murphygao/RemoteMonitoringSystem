@@ -60,7 +60,7 @@ namespace RMS.Monitoring.Device.Printer
             this.comPort = comPort;
         }
 
-        public virtual int[] CheckPaperStatus()
+        public virtual string[] CheckPaperStatus()
         {
             return null;
         }

@@ -40,6 +40,10 @@
     <Reference Include="ESN.AutoUpdate">
       <HintPath>..\Solution Items\ESN\ESN.AutoUpdate.exe</HintPath>
     </Reference>
+    <Reference Include="ESN.AutoUpdate.API, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Solution Items\ESN\ESN.AutoUpdate.API.dll</HintPath>
+    </Reference>
     <Reference Include="ESN.Common.Exception">
       <HintPath>..\Solution Items\ESN\ESN.Common.Exception.dll</HintPath>
     </Reference>
@@ -112,6 +116,10 @@
     <Content Include="Local.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="AutoUpdate.lic" />
+    <None Include="App - Copy.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

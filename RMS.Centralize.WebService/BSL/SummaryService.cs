@@ -18,13 +18,13 @@ namespace RMS.Centralize.WebService.BSL
 {
     public class SummaryService : BaseService
     {
-        public delegate void DoSummaryMonitoringAsync(List<RmsReportMonitoringRaw> lRaw);
+        public delegate void DoSummaryMonitoringAsync(List<RmsReportMonitoringRaw> lRaw, List<RMSAttachment> lAttachments);
 
         public delegate void DoSummaryMonitoringForBusinessAsync(RmsReportMonitoringRaw raw);
 
         public delegate void DoSummaryWebsiteMonitoringAsync(List<RmsReportMonitoringRaw> lRaw);
 
-        public void DoSummaryMonitoring(List<RmsReportMonitoringRaw> lRaw)
+        public void DoSummaryMonitoring(List<RmsReportMonitoringRaw> lRaw, List<RMSAttachment> lAttachments)
         {
             #region DB Info
 
@@ -414,7 +414,7 @@ namespace RMS.Centralize.WebService.BSL
                 if (lPrepareForActions.Count > 0 || lSolvedStatus.Count > 0)
                 {
                     var action = new ActionSendService();
-                    action.ActionSend(ActionSendService.ActionSendType.ManualSending, lPrepareForActions, lSolvedStatus);
+                    action.ActionSend(ActionSendService.ActionSendType.ManualSending, lPrepareForActions, lSolvedStatus, lAttachments);
                 }
 
             }

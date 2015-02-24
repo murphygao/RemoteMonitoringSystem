@@ -22,7 +22,8 @@ namespace RMS.Monitoring.Device.SignaturePad
 
                 if (brand.ToLower() == "signotec") _device = new Signotec(model, deviceManagerName, deviceManagerID);
                 else
-                    throw new Exception("Brand Not Found. brand=" + brand);
+                    _device = new SignaturePad(brand, model, deviceManagerName, deviceManagerID);
+                    //throw new Exception("Brand Not Found. brand=" + brand);
             }
             catch (Exception ex)
             {

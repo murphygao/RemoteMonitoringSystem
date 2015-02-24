@@ -123,6 +123,12 @@
                                                 <input type="text" class="input-sm" id="txtIPAddress" placeholder="IP Address" />
                                             </label>
                                         </section>
+                                        
+                                        <section class="col col-md-6 col-xs-12">
+                                            <label class="input">
+                                                <input type="text" class="input-sm" id="txtLocation" placeholder="Location" />
+                                            </label>
+                                        </section>
 
                                        <section class="col col-md-12 col-xs-12">
                                             <button type="submit" class="btn btn-primary" style="padding: 5px 16px">
@@ -307,6 +313,7 @@
                         aoData.push({ "name": "txtClientCode", "value": $('#txtClientCode').val() });
                         aoData.push({ "name": "ddlClientStatus", "value": $('#ddlClientStatus').val() });
                         aoData.push({ "name": "txtIPAddress", "value": $('#txtIPAddress').val() });
+                        aoData.push({ "name": "txtLocation", "value": $('#txtLocation').val() });
                         aoData.push({ "name": "dt", "value": dateFormat(new Date(), "yyyymmddHHMMss") });
 
                         
@@ -457,7 +464,8 @@
                             "fnRender": function (oObj) {
                                 return '<a id="edit_item_' + oObj.aData["ClientID"] + '" class="btn btn-primary btn-xs" href="javascript:toEditRow(' + oObj.aData["ClientID"] + ')"><i class="glyphicon glyphicon-edit"></i></a>' +
                                     '&nbsp;<a id="del_item_' + oObj.aData["ClientID"] + '" class="btn btn-danger btn-xs" href="javascript:deleteRow(' + oObj.aData["ClientID"] + ');"><i class="glyphicon glyphicon-trash"></i></a>' +
-                                    '&nbsp;&nbsp;&nbsp;&nbsp;<a id="website_item_' + oObj.aData["ClientID"] + '" class="btn btn-warning btn-xs" href="javascript:toWebsiteRow(' + oObj.aData["ClientID"] + ');"><i class="glyphicon glyphicon-screenshot"></i></a>';
+                                    '&nbsp;&nbsp;&nbsp;&nbsp;<a id="edit_item_' + oObj.aData["ClientID"] + '" class="btn btn-primary btn-xs" href="javascript:ViewClientReport(' + oObj.aData["ClientID"] + ')"><i class="glyphicon glyphicon-search"></i></a>' +
+                                    '&nbsp;<a id="website_item_' + oObj.aData["ClientID"] + '" class="btn btn-warning btn-xs" href="javascript:toWebsiteRow(' + oObj.aData["ClientID"] + ');"><i class="glyphicon glyphicon-screenshot"></i></a>';
                             }
                         }
                     ],
@@ -584,6 +592,12 @@
 
         });
 
+        function ViewClientReport(id) {
+            var params = new Array();
+            params["id"] = id;
+
+            post_to_url("ClientReport.aspx", params, null);
+        }
         function deleteRow(id) {
             Row = function (id) {
                 this.actionprofileid = id;

@@ -76,12 +76,6 @@
   <wsdl:message name="IClientService_ExistingClientCode_OutputMessage">
     <wsdl:part name="parameters" element="tns:ExistingClientCodeResponse" />
   </wsdl:message>
-  <wsdl:message name="IClientService_ListMainAppClient_InputMessage">
-    <wsdl:part name="parameters" element="tns:ListMainAppClient" />
-  </wsdl:message>
-  <wsdl:message name="IClientService_ListMainAppClient_OutputMessage">
-    <wsdl:part name="parameters" element="tns:ListMainAppClientResponse" />
-  </wsdl:message>
   <wsdl:message name="IClientService_ListLocation_InputMessage">
     <wsdl:part name="parameters" element="tns:ListLocation" />
   </wsdl:message>
@@ -134,10 +128,6 @@
     <wsdl:operation name="ExistingClientCode">
       <wsdl:input wsaw:Action="http://tempuri.org/IClientService/ExistingClientCode" message="tns:IClientService_ExistingClientCode_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IClientService/ExistingClientCodeResponse" message="tns:IClientService_ExistingClientCode_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="ListMainAppClient">
-      <wsdl:input wsaw:Action="http://tempuri.org/IClientService/ListMainAppClient" message="tns:IClientService_ListMainAppClient_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IClientService/ListMainAppClientResponse" message="tns:IClientService_ListMainAppClient_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="ListLocation">
       <wsdl:input wsaw:Action="http://tempuri.org/IClientService/ListLocation" message="tns:IClientService_ListLocation_InputMessage" />
@@ -214,15 +204,6 @@
     </wsdl:operation>
     <wsdl:operation name="ExistingClientCode">
       <soap:operation soapAction="http://tempuri.org/IClientService/ExistingClientCode" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="ListMainAppClient">
-      <soap:operation soapAction="http://tempuri.org/IClientService/ListMainAppClient" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -326,15 +307,6 @@
     </wsdl:operation>
     <wsdl:operation name="ExistingClientCode">
       <soap:operation soapAction="http://tempuri.org/IClientService/ExistingClientCode" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="ListMainAppClient">
-      <soap:operation soapAction="http://tempuri.org/IClientService/ListMainAppClient" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

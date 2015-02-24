@@ -111,9 +111,17 @@
     <WCFMetadataStorage Include="Service References\MonitoringProxy\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RMS.Agent.Proxy\RMS.Agent.Proxy.csproj">
+      <Project>{34cc6b3a-d552-480a-b3d1-f94a389c1c86}</Project>
+      <Name>RMS.Agent.Proxy</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RMS.Centralize.BSL.MonitoringEngine\RMS.Centralize.BSL.MonitoringEngine.csproj">
       <Project>{a19cdbe1-0153-4050-9327-ca142fc67b34}</Project>
       <Name>RMS.Centralize.BSL.MonitoringEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.Device.ThermalPrinter\RMS.Monitoring.Device.ThermalPrinter.csproj">
+      <Project>{8ea25f3b-8501-4107-a663-60757b6a9503}</Project>
+      <Name>RMS.Monitoring.Device.ThermalPrinter</Name>
     </ProjectReference>
     <ProjectReference Include="..\RMS.Monitoring.Device.WebCamera\RMS.Monitoring.Device.WebCamera.csproj">
       <Project>{d77923d6-3238-4a20-9993-0c3113acbdd2}</Project>

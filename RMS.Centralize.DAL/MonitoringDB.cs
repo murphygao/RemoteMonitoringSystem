@@ -2327,8 +2327,8 @@ namespace RMS.Centralize.DAL
             Property(x => x.Id).HasColumnName("ID").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(x => x.ClientCode).HasColumnName("ClientCode").IsOptional().HasMaxLength(50);
             Property(x => x.ClientIpAddress).HasColumnName("ClientIPAddress").IsOptional().HasMaxLength(50);
-            Property(x => x.DeviceCode).HasColumnName("DeviceCode").IsOptional().HasMaxLength(20);
-            Property(x => x.MessageGroupCode).HasColumnName("MessageGroupCode").IsOptional().HasMaxLength(10);
+            Property(x => x.DeviceCode).HasColumnName("DeviceCode").IsOptional().HasMaxLength(50);
+            Property(x => x.MessageGroupCode).HasColumnName("MessageGroupCode").IsOptional().HasMaxLength(50);
             Property(x => x.Message).HasColumnName("Message").IsOptional().HasMaxLength(50);
             Property(x => x.MessageDateTime).HasColumnName("MessageDateTime").IsOptional();
             Property(x => x.MessageRemark).HasColumnName("MessageRemark").IsOptional().HasMaxLength(500);
@@ -2355,7 +2355,7 @@ namespace RMS.Centralize.DAL
             Property(x => x.ClientIpAddress).HasColumnName("ClientIPAddress").IsOptional().HasMaxLength(50);
             Property(x => x.LocationId).HasColumnName("LocationID").IsOptional();
             Property(x => x.DeviceId).HasColumnName("DeviceID").IsOptional();
-            Property(x => x.DeviceCode).HasColumnName("DeviceCode").IsOptional().HasMaxLength(20);
+            Property(x => x.DeviceCode).HasColumnName("DeviceCode").IsOptional().HasMaxLength(50);
             Property(x => x.DeviceDescription).HasColumnName("DeviceDescription").IsOptional().HasMaxLength(250);
             Property(x => x.MessageGroupId).HasColumnName("MessageGroupID").IsOptional();
             Property(x => x.MessageGroupCode).HasColumnName("MessageGroupCode").IsOptional().HasMaxLength(10);

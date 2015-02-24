@@ -23,7 +23,7 @@ namespace RMS.Centralize.WebService
         Result SetClientState(int clientID, ClientState state);
 
         [OperationContract]
-        ClientInfoResult Search(JQueryDataTableParamModel param, DateTime? asOfDate, int? clientTypeID, string clientCode, bool? clientStatus, string ipAddress);
+        ClientInfoResult Search(JQueryDataTableParamModel param, DateTime? asOfDate, int? clientTypeID, string clientCode, bool? clientStatus, string ipAddress, string location);
 
 
         [OperationContract]

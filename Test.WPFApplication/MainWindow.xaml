@@ -31,7 +31,7 @@
                     <Button x:Name="btnCallAddWebsiteMessage" Content="Call Add Website Message" HorizontalAlignment="Left" Margin="322,164,0,0" VerticalAlignment="Top" Width="149" Click="btnCallAddWebsiteMessage_Click"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="KTB">
+            <TabItem Header="KTB" IsEnabled="False">
                 <Grid>
                     <Label Content="E-Mail" Height="27" Width="100" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     <Label Content="From" Height="27" Width="100" Margin="10,37,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -55,14 +55,14 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Self Testing">
+            <TabItem Header="Self Testing" IsEnabled="False">
                 <Grid>
                     <TextBox x:Name="txtSelfTesting_ClientCode" Height="23" TextWrapping="Wrap" Width="120" Margin="24,26,0,0" Text="SKSAQAC01" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     <Button x:Name="btnSelfTesting" Content="Self Testing" Margin="23,63,0,0" Click="btnSelfTesting_Click" HorizontalAlignment="Left" Width="100" Height="27" VerticalAlignment="Top"/>
                     <DataGrid x:Name="dtgSelfTestingResult" Margin="23,115,21,27"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Task Scheduler">
+            <TabItem Header="Task Scheduler" IsEnabled="False">
                 <Grid>
                     <Button x:Name="btnCreateTaskScheduler" Content="Create" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="75" Click="btnCreateTaskScheduler_Click"/>
                     <Button x:Name="btnRemoveTaskScheduler" Content="Remove" HorizontalAlignment="Left" Margin="104,35,0,0" VerticalAlignment="Top" Width="75" Click="btnRemoveTaskScheduler_Click"/>
@@ -70,7 +70,7 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Ping">
+            <TabItem Header="Ping" IsEnabled="False">
                 <Grid>
                     <Label Content="Host / IP Address" HorizontalAlignment="Left" Margin="30,32,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="txtWMHostName" HorizontalAlignment="Left" Height="23" Margin="149,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="283"/>
@@ -79,7 +79,7 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="List Website Monitoring">
+            <TabItem Header="List Website Monitoring" IsEnabled="False">
                 <Grid>
                     <TextBox x:Name="txtWMClientID" HorizontalAlignment="Left" Height="23" Margin="114,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="184"/>
                     <Label Content="ClientID" HorizontalAlignment="Left" Margin="42,56,0,0" VerticalAlignment="Top"/>
