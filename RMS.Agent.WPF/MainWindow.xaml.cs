@@ -50,7 +50,7 @@ namespace RMS.Agent.WPF
         private string historyFile = applicationStartupPath + @"\logs\history.txt";
         private string tempEventFile = applicationStartupPath + @"\logs\TempEvent.txt";
         private bool processingTempEvent = false;
-        private string currentState = string.Empty;
+        private string currentStateOnServer = string.Empty;
 
         private string maFilePath = ConfigurationManager.AppSettings["RMS.MA_FILE_PATH"];
         private string clientCode;
@@ -107,7 +107,7 @@ namespace RMS.Agent.WPF
 
                 // MA State?
                 lblState.Content = File.Exists(maFilePath) ? "Maintenance" : "Normal";
-                currentState = lblState.Content.ToString();
+                currentStateOnServer = "N/A";
 
                 dispatcherTimer = new DispatcherTimer();
                 dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
@@ -349,23 +349,39 @@ namespace RMS.Agent.WPF
                 
                 if (File.Exists(maFilePath))
                 {
-                    if (currentState == lblState.Content.ToString())
+                    if (currentStateOnServer != "Maintenance")
                     {
                         ReloadLocalConfiguration();
                         MonitoringService ms = new MonitoringService();
-                        ms.SetMonitoringState(clientCode, ClientState.Maintenance);
+                        if (ms.SetMonitoringState(clientCode, ClientState.Maintenance))
+                        {
+                            currentStateOnServer = "Maintenance";
+                        }
+                        else
+                        {
+                            currentStateOnServer = "N/A";
+                        }
                     }
 
                     lblState.Content = "Maintenance";
+
                 }
                 else
                 {
-                    if (currentState == lblState.Content.ToString())
+                    if (currentStateOnServer != "Normal")
                     {
                         ReloadLocalConfiguration();
                         MonitoringService ms = new MonitoringService();
-                        ms.SetMonitoringState(clientCode, ClientState.Normal);
+                        if (ms.SetMonitoringState(clientCode, ClientState.Normal))
+                        {
+                            currentStateOnServer = "Normal";
+                        }
+                        else
+                        {
+                            currentStateOnServer = "N/A";
+                        }
                     }
+
                     lblState.Content = "Normal";
                 }
 

@@ -25,7 +25,7 @@ namespace RMS.Agent.BSL.Monitoring
     public class MonitoringService
     {
         private delegate void ExecuteCommandAsync(string clientCode);
-        private delegate void SetMonitoringStateAsync(string clientCode, ClientState clientState);
+        private delegate bool SetMonitoringStateAsync(string clientCode, ClientState clientState);
 
         private static object _lockClientFile = new object();
 
@@ -483,7 +483,7 @@ namespace RMS.Agent.BSL.Monitoring
             }
         }
 
-        public void SetMonitoringState(string clientCode, ClientState clientState)
+        public bool SetMonitoringState(string clientCode, ClientState clientState)
         {
             try
             {
@@ -519,11 +519,14 @@ namespace RMS.Agent.BSL.Monitoring
                 else
                 {
                     new RMSAppException(this, "0500", "SetMonitoringState failed. ClientCode=" + clientCode + " not found.", true);
+                    return false;
                 }
+                return true;
             }
             catch (Exception ex)
             {
                 new RMSAppException(this, "0500", "SetMonitoringState failed. ClientCode="+ clientCode + "   " + ex.Message, ex, true);
+                return false;
             }
 
         }
