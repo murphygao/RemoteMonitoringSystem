@@ -4,6 +4,7 @@ using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using RMS.Common.Exception;
@@ -14,6 +15,8 @@ namespace RMS.Agent.Helper
     {
         public static void ExtractLog(string query, string dirName, string fileName)
         {
+            string fileNameFullPath = string.Empty;
+
             try
             {
                 //query = "*[System[TimeCreated[@SystemTime >= '" + DateTime.Now.AddHours(-1).ToUniversalTime().ToString("o") + "']]]";
@@ -25,7 +28,7 @@ namespace RMS.Agent.Helper
                 //" and (TimeCreated/@SystemTime <= " + toDate.Ticks + ")]]";
                 //" and TimeCreated[timediff(@SystemTime) <= 86400000]]]";  
 
-                string fileNameFullPath = (dirName + @"\" + fileName).Replace(@"\\", @"\");
+                fileNameFullPath = (dirName + @"\" + fileName).Replace(@"\\", @"\");
                 //query = "*";
 
                 if (File.Exists(fileNameFullPath))
@@ -33,7 +36,35 @@ namespace RMS.Agent.Helper
 
                 using (var logSession = new EventLogSession())
                 {
-                    logSession.ExportLogAndMessages("System", PathType.LogName, query, fileNameFullPath, true, CultureInfo.CurrentCulture);
+                    logSession.ExportLogAndMessages("Application", PathType.LogName, query, fileNameFullPath, true, CultureInfo.CurrentCulture);
+                    logSession.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new RMSAppException("ExtractLog failed. " + ex.Message, ex, false);
+            }
+        }
+
+        public static void ExtractLog(string query, string dirName, string fileName, string serverName, string domainName, string userName, string password)
+        {
+            string fileNameFullPath = string.Empty;
+
+            try
+            {
+
+                fileNameFullPath = (dirName + @"\" + fileName).Replace(@"\\", @"\");
+                //query = "*";
+
+                if (File.Exists(fileNameFullPath))
+                    File.Delete(fileNameFullPath);
+
+                var secureString = new SecureString();
+                password.ToCharArray().ToList().ForEach(p => secureString.AppendChar(p));
+
+                using (var logSession = new EventLogSession(serverName, domainName, userName, secureString, SessionAuthentication.Default))
+                {
+                    logSession.ExportLogAndMessages("Application", PathType.LogName, query, fileNameFullPath, true, CultureInfo.CurrentCulture);
                     logSession.Dispose();
                 }
             }

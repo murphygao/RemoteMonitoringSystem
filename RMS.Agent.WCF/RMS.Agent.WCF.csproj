@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IAgentService.cs" />
+    <Compile Include="Model\PaperStatusResult.cs" />
     <Compile Include="Model\Result.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AgentService.cs" />
@@ -88,6 +89,10 @@
     <ProjectReference Include="..\RMS.Common.Exception\RMS.Common.Exception.csproj">
       <Project>{F8EC98BC-37BB-42FD-9B50-78F928BB08A2}</Project>
       <Name>RMS.Common.Exception</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMS.Monitoring.API\RMS.Monitoring.API.csproj">
+      <Project>{9913ae34-ed26-4cda-ab46-d460fbce28b5}</Project>
+      <Name>RMS.Monitoring.API</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

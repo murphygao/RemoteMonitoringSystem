@@ -27,6 +27,10 @@ namespace RMS.Agent.WCF
 
         [OperationContract]
         List<BSL.Monitoring.Models.DeviceStatus> SelfMonitoring(string clientCode);
+
+        [OperationContract]
+        PaperStatusResult CheckPaperStatus(string brand, string model, string vid, string pid, bool enableTextFileStatus);
+        
     }
 
 }

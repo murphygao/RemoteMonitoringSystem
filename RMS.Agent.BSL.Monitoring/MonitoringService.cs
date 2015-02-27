@@ -256,13 +256,24 @@ namespace RMS.Agent.BSL.Monitoring
                         List<RMSAttachment> lRMSAttachment = new List<RMSAttachment>();
                         if (monitoringRaws.Exists(w => w.DeviceCode == "CLIENT" && w.Message == "APPLICATION_NOT_RUNNING"))
                         {
-                            try
+                            if (Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.EnableAttachEventLog"] ?? "false"))
                             {
-                                if (Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.EnableAttachEventLog"] ?? "false"))
+                                try
                                 {
-                                    var query = "*[System[TimeCreated[@SystemTime >= '" + DateTime.Now.AddHours(-1).ToUniversalTime().ToString("o") + "']]]";
+                                    var query = "*[System[TimeCreated[@SystemTime >= '" + DateTime.Now.AddHours(-1).ToUniversalTime().ToString("o") +
+                                                "']]]";
                                     string eventLogFileName = "EventLog.evtx";
-                                    Helper.Common.ExtractLog(query, localStorage, eventLogFileName);
+
+                                    if (Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.EventLog.NeedImpersonate"] ?? "false"))
+                                    {
+                                        var userName = ConfigurationManager.AppSettings["RMS.EventLog.UserName"];
+                                        var password = ConfigurationManager.AppSettings["RMS.EventLog.Password"];
+                                        Helper.Common.ExtractLog(query, localStorage, eventLogFileName, clientCode, clientCode, userName, password);
+                                    }
+                                    else
+                                    {
+                                        Helper.Common.ExtractLog(query, localStorage, eventLogFileName);
+                                    }
                                     byte[] byteEventLog = File.ReadAllBytes(localStorage + @"\" + eventLogFileName);
 
                                     RMSAttachment rmsAttachment = new RMSAttachment();
@@ -272,9 +283,16 @@ namespace RMS.Agent.BSL.Monitoring
                                     rmsAttachment.FileName = eventLogFileName;
                                     lRMSAttachment.Add(rmsAttachment);
                                 }
+                                catch (Exception ex)
+                                {
+                                    new RMSAppException(this, "0500", "Check Device Monitoring - Prepare EventLog Attachfile failed. " + ex.Message, ex, true);
+                                }
+                            }
 
-                                //MainAppTempLog
-                                if (Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.EnableAttachMainAppLog"] ?? "false"))
+                            //MainAppTempLog
+                            if (Convert.ToBoolean(ConfigurationManager.AppSettings["RMS.EnableAttachMainAppLog"] ?? "false"))
+                            {
+                                try
                                 {
                                     string mainAppTempLog = ConfigurationManager.AppSettings["RMS.MainAppTempLog"];
                                     if (!string.IsNullOrEmpty(mainAppTempLog))
@@ -291,10 +309,10 @@ namespace RMS.Agent.BSL.Monitoring
                                         }
                                     }
                                 }
-                            }
-                            catch (Exception ex)
-                            {
-                                new RMSAppException(this, "0500", "Check Device Monitoring - Prepare Attachfile failed. " + ex.Message, ex, true);
+                                catch (Exception ex)
+                                {
+                                    new RMSAppException(this, "0500", "Check Device Monitoring - Prepare AppLog Attachfile failed. " + ex.Message, ex, true);
+                                }
                             }
                         }
 

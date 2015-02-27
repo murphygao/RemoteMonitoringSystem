@@ -71,6 +71,8 @@ namespace RMS.Agent.Proxy
             {
                 try
                 {
+                    ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+
                     if (urlWebService != null)
                         webServicURL = urlWebService;
                     else

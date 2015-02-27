@@ -86,7 +86,7 @@ namespace RMS.Monitoring.Device.ThermalPrinter
             {
                 if (second == null) second = 7;
 
-                int ret = 0;
+                int ret = 0; 
 
                 PrintServer server = new PrintServer();
 

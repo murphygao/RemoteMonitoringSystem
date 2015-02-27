@@ -104,6 +104,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="RMS.Agent.BSL.Monitoring.Models.DeviceStatus.datasource" />
     <None Include="Service References\MonitoringService\MonitoringService.wsdl" />
     <None Include="Service References\MonitoringService\MonitoringService.xsd">
       <SubType>Designer</SubType>

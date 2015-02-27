@@ -33,8 +33,9 @@
     <Reference Include="ESN.Common.Exception">
       <HintPath>..\Solution Items\ESN\ESN.Common.Exception.dll</HintPath>
     </Reference>
-    <Reference Include="LibUsbDotNet">
-      <HintPath>..\packages\LibUsbDotNet.2.2.8\lib\LibUsbDotNet.dll</HintPath>
+    <Reference Include="LibUsbDotNet, Version=2.2.8.104, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Solution Items\ESN\LibUsbDotNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
